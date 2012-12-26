@@ -1,0 +1,100 @@
+﻿@model IEnumerable<HDMS.Models.Order>
+@{ 
+    Layout = null;
+}
+@if (Model.Count() == 0)
+{
+    <span>No request in this region!</span>
+}
+else
+{
+    foreach (var order in Model)
+    {
+    <li id="order-@order.OrderId">
+        <div class="ticket-container span12 ticket order-ticket">
+            <div class="order-ticket-info span11 left-column">
+                <div class="row-fluid">
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <img src="/img/icons/info.png" title="Properties" width="15px" /></dt>
+                            <dd class="properties">
+                                <span class="label label-success">@order.DeliveryOption.Name</span> <span class="label label-info">@order.OrderPaymentType.Name</span>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <img src="/img/icons/bill.png" title="Amount to collect from receiver" width="15px" />
+                            </dt>
+                            <dd class="amount-to-be-collected">
+                                @order.AmountToBeCollectedFromReceiver VNĐ</dd>
+                        </dl>
+                    </div>
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <img src="/img/icons2/calendar.png" title="Due Date" width="15px" /></dt>
+                            <dd class="dueDate">
+                                @if (order.DueDate != null)
+                                {
+                                    <span class="label label-important">@String.Format("{0:dd/MM/yyyy hh:mm tt}", order.DueDate)</span><text>&nbsp;</text>
+                                }
+                                else
+                                {
+                                    <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <img src="/img/icons/coin.png" title="Fee" width="15px" /></dt>
+                            <dd class="fee">
+                                @if (order.Fee != null)
+                                {
+                                    @order.Fee <text>VNĐ</text>
+                                }
+                                else
+                                {
+                                    <span class="label label-important">Not set yet</span>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <img src="/img/icons/notepencil32.png" title="Note" width="15px" /></dt>
+                            <dd class="note">
+                                @if(string.IsNullOrWhiteSpace(order.Note))
+                                {
+                                    <text>None</text>        
+                                }
+                                else
+                                {
+                                    @order.Note
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="column">
+                        <dl class="dl-horizontal">
+                            <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                            <dd class="full-address">
+                                @order.FullAddress</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="span1 right-column">
+                <a href="javascript:void(0)" onclick="addToPlan(@order.OrderId)" title="Add to plan">
+                    <img src="/img/icons/arrow_right2.png" alt="Add" width="18px" style="margin-top: 12px;" />
+                </a>
+            </div>
+        </div>
+    </li>
+    }
+}

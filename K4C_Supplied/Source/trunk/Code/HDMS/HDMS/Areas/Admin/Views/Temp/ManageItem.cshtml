@@ -1,0 +1,202 @@
+﻿@{
+    ViewBag.Title = "ManageItem";
+}
+
+<div class="page-header">
+    <h2>Manage Item</h2>
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+    <div id="Div1" class="dataTables_wrapper form-inline" role="grid">
+        <div class="DTTT btn-group">
+            <a href="#create" role="button" data-toggle="modal" class="btn DTTT_button_text"
+                id="ToolTables_example_0"><span>New</span></a> <a class="btn DTTT_button_text disabled"
+                    id="ToolTables_example_1"><span>Edit</span></a> <a class="btn DTTT_button_text disabled"
+                        id="ToolTables_example_2"><span>Delete</span></a>
+        </div>
+        <div class="dataTables_filter" id="example_filter">
+            <label>
+                Search:
+                <input type="text" aria-controls="example"></label>
+        </div>
+        <!-- Begin Table -->
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable"
+            id="Table1" aria-describedby="example_info">
+            <thead>
+                <tr role="row">
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 10%;" aria-sort="ascending" aria-label="Order ID">
+                        Order ID
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 30%;" aria-label="Name">
+                        Name
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Quantity">
+                        Quantity
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 20%;" aria-label="Size">
+                        Size
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 20%;" aria-label="Weight">
+                        Weight
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Status">                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        1
+                    </td>
+                    <td class=" ">
+                        T-Shirt
+                    </td>
+                    <td class=" ">
+                        5
+                    </td>
+                    <td class=" ">
+                        Small
+                    </td>    
+                    <td class=" ">
+                        1KG
+                    </td>                    
+                    <td class=" ">
+                        <button class="btn" type="button">Activate</button>
+                    </td>
+                </tr>
+                <tr class="gradeA even">
+                    <td class="  sorting_1">
+                        2
+                    </td>
+                    <td class=" ">
+                        Televison
+                    </td>
+                    <td class=" ">
+                        1
+                    </td>
+                    <td class=" ">
+                        Big
+                    </td>
+                    <td class=" ">
+                        20KG
+                    </td>                        
+                    <td class=" ">
+                        <button class="btn" type="button">Deactivate</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End Table -->
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="dataTables_info" id="Div4">
+                    Showing 1 to 10 of 57 entries</div>
+            </div>
+            <div class="span6">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul>
+                        <li class="prev disabled"><a href="#">← Previous</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="next"><a href="#">Next → </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Begin Modal -->
+<div class="modal hide fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Item</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="Order">
+                    Order</label>
+                <div class="controls">
+                    <select>
+                        <option value="">--Choose Order ID--</option>
+                        <option value="">1</option>
+                        <option value="">2</option>
+                    </select>  
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Name">
+                    Name</label>
+                <div class="controls">
+                    <input type="text" id="Name" placeholder="Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Quantity">
+                    Quantity</label>
+                <div class="controls">
+                    <input type="text" id="Quantity" placeholder="Quantity">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="isFragile">
+                    isFragile</label>
+                <div class="controls">
+                    <label class="checkbox inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="true"> True
+                    </label>
+                    <label class="checkbox inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="false"> False
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Size">
+                    Size</label>
+                <div class="controls">
+                    <select>
+                        <option value="">--Choose Size--</option>
+                        <option value="">Small</option>
+                        <option value="">Medium</option>
+                        <option value="">Big</option>
+                    </select>  
+                </div>
+            </div>           
+            <div class="control-group">
+                <label class="control-label" for="Weight">
+                    Weight</label>
+                <div class="controls">
+                    <input type="text" id="Weight" placeholder="Weight">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Description">
+                    Description</label>
+                <div class="controls">
+                    <textarea rows="3"></textarea>
+                </div>
+            </div>            
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->
+
+

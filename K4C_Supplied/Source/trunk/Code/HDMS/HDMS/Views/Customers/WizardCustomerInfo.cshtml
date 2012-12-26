@@ -1,0 +1,68 @@
+﻿@model HDMS.Models.Customer
+<h2 class="StepTitle">
+    Enter Customer Information</h2>
+<div class="form-only">
+    @using (Html.BeginForm("ConfirmCreate", "Customers", FormMethod.Post, new { id = "customer-create-form", Class="form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="span6">
+                <div class="control-group">
+                    <label class="control-label">
+                        Company Name
+                    </label>
+                    <div class="controls">
+                        @Html.EditorFor(model => model.CompanyName)
+                        @Html.ValidationMessageFor(model => model.CompanyName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Display Name
+                    </label>
+                    <div class="controls">
+                        @Html.EditorFor(model => model.DisplayName)
+                        @Html.ValidationMessageFor(model => model.DisplayName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Phone Number
+                    </label>
+                    <div class="controls">
+                        @Html.EditorFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </div>
+                
+            </div>
+            <div class="span6">
+                <div class="control-group">
+        <label class="control-label">
+            Current Contract Code
+        </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.CurrentContractCode)
+            @Html.ValidationMessageFor(model => model.CurrentContractCode)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Note
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Note, new {Rows = "4"})
+            @Html.ValidationMessageFor(model => model.Note)
+        </div>
+    </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

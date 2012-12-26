@@ -1,0 +1,307 @@
+@model IEnumerable<HDMS.Models.Request>
+@using System.Text.RegularExpressions;
+@using HDMS.Models.Statuses
+@{
+    ViewBag.Title = "Requests";
+    ViewBag.Heading = "Requests";
+}
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="/js/crud.js" type="text/javascript"></script>
+<script src="/js/form-action.js" type="text/javascript"></script>
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date.js" type="text/javascript"></script>
+@using (Html.BeginForm("RequestListByStatus", "Request", FormMethod.Post, new { id = "statusFilter" }))
+{          
+    <div class="row-fluid">
+        <div class="span10">
+            <div class="checkButtonStatus">
+                <div class="row-fluid">
+                    <button type="button" class="btn btn-inverse pull-left" id="checkAll">
+                        All</button>
+                    <div class="btn-group pull-left" data-toggle="buttons-checkbox">
+                        <button type="button" class="sttDraft btn status" data-status="draft">
+                            Draft</button>
+                        <button type="button" class="sttNew btn status" data-status="new">
+                            New</button>
+                        <button type="button" class="sttApproved btn status" data-status="approved">
+                            Approved</button>
+                        @*<button type="button" class="btn status active" data-status-id="3">
+                            Planning</button>*@
+                        <button type="button" class="sttPlanned btn status" data-status="planned">
+                            Planned For Collecting</button>
+                        @*<button type="button" class="btn status active" data-status-id="5">
+                            Collecting</button>*@
+                        <button type="button" class="sttCollected btn status" data-status="collected">
+                            Collected</button>
+                        @*<button type="button" class="btn status active" data-status-id="7">
+                            Delivering</button>*@
+                        <button type="button" class="sttFinished btn status" data-status="finished">
+                            Finished</button>
+                        <button type="button" class="sttCanceled btn status" data-status="canceled">
+                            Canceled</button>
+                        @*<button type="button" class="btn status" data-status-id="9">
+                            Finished</button>*@ @*<button type="button" class="btn status" data-status-id="10">
+                            Canceled</button>*@
+                    </div>
+                    <button type="button" class="btn btn-inverse pull-left" id="checkNone">
+                        None</button>
+                </div>
+            </div>
+            <div id="dateFilterSelector">
+                <div class="row-fluid bordered">
+                    <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
+                        Requested Date: 
+                    </div>
+                    <div class="pull-left" data-date-format="dd/mm/yyyy">
+                        From
+                        <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter"
+                            name="startDate"><br />
+                    </div>
+                    <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left: 30px;">
+                        To
+                        <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter"
+                            name="endDate">
+                    </div>
+                    <div class="span3" style="height: 28px; position: relative;margin-left: 30px;line-height: 28px;">
+                        <div style="position: absolute; bottom: 0; left: 0;">
+                            <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
+                            Disable Date Filter
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            @*<input type="submit" class="btn btn-primary" value="Filter" id="btnFilter" />*@
+            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter" style="line-height:40px">Filter</a>
+        </div>
+    </div>
+}
+<div id="divTable">
+    @Html.Partial("RequestTable", Model)
+</div>
+<div class="modal hide fade" id="updateStatusModal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabels">
+            Update Request Status</h3>
+    </div>
+    <div class="modal-body">
+        <select id="ddlStatus">
+            <option value="0">Draft</option>
+            <option value="1">New</option>
+            <option value="2">Verified</option>
+            @*<option value="3">Planning</option>*@
+            <option value="4">Planned For Collecting</option>
+            @*<option value="5">Collecting</option>*@
+            <option value="6">Collected</option>
+            @*<option value="7">Delivering</option>*@
+            <option value="8">Delivered</option>
+            @*<option value="9">Finished</option>*@
+            <option value="10">Canceled</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Update" id="btnUpdateStatus" />
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Cancel</button>
+    </div>
+</div>
+<!-- Begin "Create" Modal -->
+<div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<!-- End "Create" Modal -->
+<!-- Begin "Edit" Modal -->
+<div class="modal hide fade" id="editModal">
+</div>
+<!-- End "Edit" Modal -->
+<script>
+    @foreach (var status in ViewBag.SelectedStatuses)
+    {
+        if (status == (int)RequestStatus.Draft)
+        {
+            <text>$('.sttDraft').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.New)
+        {
+            <text>$('.sttNew').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.Approved)
+        {
+            <text>$('.sttApproved').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.PlannedForCollecting)
+        {
+            <text>$('.sttPlanned').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.Collected)
+        {
+            <text>$('.sttCollected').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.Finished)
+        {
+            <text>$('.sttFinished').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.Canceled)
+        {
+            <text>$('.sttCanceled').addClass('active');</text>
+        }
+    }
+
+    @if(ViewBag.StartDate != null)
+    {
+        <text>$('#startDateFilter').val("@ViewBag.StartDate")</text>
+    }
+    @if(ViewBag.EndDate != null)
+    {
+        <text>$('#endDateFilter').val("@ViewBag.EndDate")</text>
+    }
+
+    //check values exist in array
+    function in_array(array, id) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function toggleStatus() {
+        if ($('#toggleElement').is(':checked')) {
+            $('#dateFilterSelector input.datepicker').attr('disabled', true);
+            $('#dateFilterSelector input.datepicker').val("");
+        }
+        else {
+            $('#dateFilterSelector :input').removeAttr('disabled');
+        }
+    }
+
+    var showUpdateStatusModal = function (RequestId, currentStatus) {
+        $('#ddlStatus option[value="' + currentStatus + '"]').attr('selected', 'selected');
+        $('#updateStatusModal').modal();
+
+        $('#btnUpdateStatus').click(function () {
+            updateRequestStatus(RequestId);
+        });
+    };
+
+    var updateRequestStatus = function (RequestId) {
+        var status = $('#ddlStatus option:selected').val();
+        $.post('/Request/UpdateStatus/', { RequestId: RequestId, newStatus: status }, function (result) {
+            if (result.success) {
+                window.location = '/Request';
+
+            }
+        });
+    };
+
+    var setupDataTable = function () {
+        $('#main-table').dataTable({
+            "bRetrieve": true,
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "aaSorting": [],
+            "bAutoWidth": true,
+            "aoColumns": [
+                            null,
+                            { "iDataSort": 2 },
+                            { "bVisible": false },
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        ],
+            "aaSorting": [[2, "asc"]]
+        });
+
+        $("div.tblBtnGroup").html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add</span></a>');
+        setupButtonNew('Request');
+    };
+
+    var selectedStatusIds = [1, 2, 4, 6];
+    var allStatus = [0, 1, 2, 4, 6, 8];
+
+
+
+//    $('.checkButtonStatus .status.btn').click(function () {
+//        //get status of current button that pressed
+//        var status = $(this).data('status-id');
+//        //checking if that status is exist in the array or not
+//        var result = in_array(selectedStatusIds, status);
+//        if (result == true) {
+//            var removeItem = status;
+//            //remove the value of status that was pressed again(mean not checked)
+//            selectedStatusIds = jQuery.grep(selectedStatusIds, function (value) {
+//                return value != removeItem;
+//            });
+//            //alert(selectedStatusIds);
+//        }
+//        else if (result == false) {
+//            //add it to the array
+//            selectedStatusIds.push(status);
+//        }
+//    });
+
+    $('#checkAll').click(function () {
+        $('.checkButtonStatus .btn-group .btn.status').addClass("active");
+    });
+
+
+    $('#checkNone').click(function () {
+        $('.checkButtonStatus .btn-group .btn.status').removeClass("active");
+    });
+
+    $('#statusFilter').submit(function () {
+        urlParams = '';
+        $.each($('.checkButtonStatus .btn-group .btn.status'),function(index,btn){
+            if($(btn).hasClass('active')){
+                urlParams += '&status=' + $(btn).data('status');
+            }        
+        });
+        if($('#startDateFilter').val() != ''){
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateParts = $('#startDateFilter').val().split("/");
+            urlParams += '&startDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+        }
+        if($('#endDateFilter').val() != ''){
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateParts = $('#endDateFilter').val().split("/");
+            urlParams += '&endDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+        }
+        $.blockUI();
+        window.location = '/Request?' + urlParams;
+        return false;
+    });
+
+    var cancelRequest = function (requestId) {
+        bootbox.confirm("Are you sure to cancel this request?", function (result) {
+            if (result) {
+                $.post('/Request/Cancel/' + requestId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Unable to cancel this request');
+                    }
+                });
+            }
+        });
+    };
+
+    $(document).ready(function () {
+        setupDataTable();
+        $('.datepicker').datepicker({ format: "dd/mm/yyyy" });
+    });
+</script>

@@ -1,0 +1,52 @@
+@model HDMS.Models.Customer
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CompanyName)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CompanyName)
+    @Html.ValidationMessageFor(model => model.CompanyName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DisplayName)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DisplayName)
+    @Html.ValidationMessageFor(model => model.DisplayName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.PhoneNumber)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.PhoneNumber)
+    @Html.ValidationMessageFor(model => model.PhoneNumber)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CurrentContractNumber)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CurrentContractNumber)
+    @Html.ValidationMessageFor(model => model.CurrentContractNumber)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.IsActive)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IsActive)
+    @Html.ValidationMessageFor(model => model.IsActive)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.AddtionalInfo)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.AddtionalInfo)
+    @Html.ValidationMessageFor(model => model.AddtionalInfo)
+</div>
+

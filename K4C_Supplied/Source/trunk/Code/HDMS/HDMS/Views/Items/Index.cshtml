@@ -1,0 +1,87 @@
+﻿@model IEnumerable<HDMS.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+	<h2>Index</h2>
+</div>
+		<legend>Item</legend>
+		<p>
+			@Html.ActionLink("Create New", "Create")
+		</p>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>
+						OrderId
+					</th>
+					<th>
+						Name
+					</th>
+					<th>
+						Quantity
+					</th>
+					<th>
+						IsFragile
+					</th>
+					<th>
+						HasHighValue
+					</th>
+					<th>
+						ItemStatus
+					</th>
+					<th>
+						Size
+					</th>
+					<th>
+						Weight
+					</th>
+					<th>
+						Note
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+@foreach (var item in Model) {
+				<tr>
+					<td>
+						@Html.ActionLink("Edit", "Edit", new { id=item.ItemId }) |
+						@Html.ActionLink("Details", "Details", new { id=item.ItemId }) |
+						@Html.ActionLink("Delete", "Delete", new { id=item.ItemId })
+					</td>
+					<td>
+						@item.Order.ReceiverName
+					</td>
+					<td>
+						@item.Name
+					</td>
+					<td>
+						@item.Quantity
+					</td>
+					<td>
+						@item.IsFragile
+					</td>
+					<td>
+						@item.HasHighValue
+					</td>
+					<td>
+						@item.ItemStatus
+					</td>
+					<td>
+						@item.Size
+					</td>
+					<td>
+						@item.Weight
+					</td>
+					<td>
+						@item.Note
+					</td>
+			</tr>
+}
+		</tbody>
+	</table>
+

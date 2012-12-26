@@ -1,0 +1,28 @@
+@model HDMS.Models.DeliveryOption
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create New Delivery Option</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        @using (Html.BeginForm("ConfirmCreate", "DeliveryOptions", FormMethod.Post, new { id = "create-form" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.Partial("_CreateOrEdit", Model)}
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Create" id="btnCreate" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $('#btnCreate').click(function () {
+        $('#create-form').submit();
+    });
+</script>

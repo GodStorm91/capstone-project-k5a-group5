@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Heading = "Dashboard";
+}
+<div class="row-fluid">
+    <div class="span4 offset1">
+        <div class="reminder">
+            <h3 style="text-align:center;">
+                Requests
+            </h3>
+            <ul>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[0]</span> <span class="txt">Draft</span> <a href="/Customer/Requests?&status=draft" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[1]</span> <span class="txt">Submitted</span> <a href="/Customer/Requests?status=new&status=approved&status=planned" class="btn btn-info">
+                        view</a> </li>
+                @*<li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[1]</span> <span class="txt">New</span><a href="/Customer/Requests?&status=new" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[2]</span> <span class="txt">Approved</span><a href="/Customer/Requests?&status=approved" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[3]</span> <span class="txt">Planned for collecting</span> <a href="/Customer/Requests?&status=planned" class="btn btn-info">
+                        view</a> </li>*@
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[2]</span> <span class="txt">Delivering</span><a href="/Customer/Requests?&status=collected" class="btn btn-info">
+                        view</a> </li>
+                @*<li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[5]</span> <span class="txt">Finished</span><a href="/Customer/Requests?&status=finished" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfRequests[6]</span> <span class="txt">Canceled</span><a href="/Customer/Requests?&status=canceled" class="btn btn-info">
+                        view</a> </li>*@
+            </ul>
+        </div>
+        <!-- End .reminder -->
+    </div>
+    <div class="span4 offset2">
+        <div class="reminder">
+            <h3 style="text-align:center;">
+                Orders
+            </h3>
+            <ul>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[0]</span> <span class="txt">Draft</span> <a href="/Customer/Orders?&status=draft" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[1]</span> <span class="txt">Rejected</span><a href="/Customer/Orders?&status=Rejected" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[2]</span> <span class="txt">Submitted</span><a href="/Customer/Orders?status=New&status=Approved&status=Plannedforcollecting" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[3]</span> <span class="txt">Delivering</span><a href="/Customer/Orders?&status=Collected&status=Plannedfordelivering" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[4]</span> <span class="txt">To be returned</span><a href="/Customer/Orders?&status=Tobereturned" class="btn btn-info">
+                        view</a> </li>
+            </ul>
+        </div>
+        <!-- End .reminder -->
+    </div>
+    <!-- End .span4 -->
+</div>

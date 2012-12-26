@@ -1,0 +1,56 @@
+﻿html,body {
+    height: 100%;
+}
+
+body {
+    /*padding-top: 60px;*/
+    /*padding-bottom: 40px;*/
+    overflow: auto;
+}
+
+body div.container-fluid {
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: 100%;
+}
+
+body .container-fluid .row-fluid:first-child {
+    min-height: 100%;
+    /*margin-bottom: -44px;*/
+    position: relative;
+}
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+footer {
+    position: relative;
+    margin-top: -44px;
+}
+
+#content {
+    padding-right: 20px;
+}
+
+.DTTT {
+    margin-bottom: 10px;
+}
+.accordion-heading, .accordion-inner {
+    overflow: auto;
+}
+.accordion-inner {
+    padding: 0px;
+    padding-left: 40px;
+}
+.no-padding{
+    padding: 0px!important;
+}
+.accordion-group{
+    border:none;
+}
+.modal-body {
+    /*height: 400px;    */
+}
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+    height: 30px;
+}

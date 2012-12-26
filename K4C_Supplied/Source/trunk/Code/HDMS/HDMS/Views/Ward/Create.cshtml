@@ -1,0 +1,42 @@
+@model HDMS.Models.Ward
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create new Ward</h3>
+</div>
+<div class="modal-body" style="min-height:400px;">
+
+    <fieldset>
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">
+                    City/Province <span style="color:Red">*</span>
+                </label>
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.District.CityProvinceId, ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province", new { id = "ddlCityProvince", Class = "chzn-select" })
+            @Html.ValidationMessageFor(model => model.District.CityProvinceId)
+                </div>
+            </div>
+        </form>
+        @using (Html.BeginForm("ConfirmCreate", "Ward", FormMethod.Post, new { id = "create-form" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.Partial("_CreateOrEdit", Model)           
+        
+        }
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create"/>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $('#btnCreate').click(function () {
+        $('#create-form').submit();
+    });
+</script>
