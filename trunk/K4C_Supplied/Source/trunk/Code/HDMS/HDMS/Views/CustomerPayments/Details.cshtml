@@ -1,0 +1,41 @@
+@model HDMS.Models.CustomerPayment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>CustomerPayment</legend>
+
+    <div class="display-label">IsInbound</div>
+    <div class="display-field">@Model.IsInbound</div>
+
+    <div class="display-label">Amount</div>
+    <div class="display-field">@Model.Amount</div>
+
+    <div class="display-label">Detail</div>
+    <div class="display-field">@Model.Detail</div>
+
+    <div class="display-label">CompletedDate</div>
+    <div class="display-field">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CompletedDate)</div>
+
+    <div class="display-label">Note</div>
+    <div class="display-field">@Model.Note</div>
+
+    <div class="display-label">Requests</div>
+    <div class="display-field">@(Model.Requests == null ? "None" : Model.Requests.Count.ToString())</div>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Customer).ToString()</div>
+
+    <div class="display-label">CustomerPaymentType</div>
+    <div class="display-field">@(Model.CustomerPaymentType == null ? "None" : Model.CustomerPaymentType.Name)</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CustomerPaymentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

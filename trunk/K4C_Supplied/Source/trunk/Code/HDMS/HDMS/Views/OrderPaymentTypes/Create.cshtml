@@ -1,0 +1,27 @@
+@model HDMS.Models.OrderPaymentType
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create New Order Payment Type</h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("ConfirmCreate", "OrderPaymentTypes", FormMethod.Post, new { id = "create-form", Class="form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.Partial("_CreateOrEdit", Model)            
+    }
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Create" id="btnCreate"/>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $("#btnCreate").click(function () {
+        $("#create-form").submit();
+    });
+</script>

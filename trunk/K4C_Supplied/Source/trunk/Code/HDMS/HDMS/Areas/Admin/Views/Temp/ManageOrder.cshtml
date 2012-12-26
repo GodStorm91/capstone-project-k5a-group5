@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "ManageOrder";
+}
+
+<div class="page-header">
+    <h2>Manage Order</h2>
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+    <div id="Div1" class="dataTables_wrapper form-inline" role="grid">
+        <div class="DTTT btn-group">
+            <a href="#create" role="button" data-toggle="modal" class="btn DTTT_button_text"
+                id="ToolTables_example_0"><span>New</span></a> <a class="btn DTTT_button_text disabled"
+                    id="ToolTables_example_1"><span>Edit</span></a> <a class="btn DTTT_button_text disabled"
+                        id="ToolTables_example_2"><span>Delete</span></a>
+        </div>
+        <div class="dataTables_filter" id="example_filter">
+            <label>
+                Search:
+                <input type="text" aria-controls="example"></label>
+        </div>
+        <!-- Begin Table -->
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable"
+            id="Table1" aria-describedby="example_info">
+            <thead>
+                <tr role="row">
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 5%;" aria-sort="ascending" aria-label="Request ID">
+                        Request ID
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Delivery Option">
+                        Delivery Option
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Payment Type">
+                        Payment Type
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 15%;" aria-label="Receiver Name">
+                        Receiver Name
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Receiver Phone">
+                        Receiver Phone
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 25%;" aria-label="Receiver Address">
+                        Receiver Address
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 15%;" aria-label="Amount to be collected from Receiver">
+                        Amount to be collected from Receiver
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Status">                        
+                    </th>                     
+                </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        1
+                    </td>
+                    <td class=" ">
+                        Normal
+                    </td>
+                    <td class=" ">
+                        COD
+                    </td>
+                    <td class=" ">
+                        Hồ Hữu Tài
+                    </td>
+                    <td class=" ">
+                        01687533843
+                    </td>
+                    <td class=" ">
+                        13 Lê Đức Thọ, Q Gò Vấp, TP HCM
+                    </td>
+                    <td class=" ">
+                        100,000 VNĐ
+                    </td>                       
+                    <td class=" ">
+                        <button class="btn" type="button">Activate</button>
+                    </td>
+                </tr>
+                <tr class="gradeA even">
+                    <td class="  sorting_1">
+                        2
+                    </td>
+                    <td class=" ">
+                        Fast
+                    </td>
+                    <td class=" ">
+                        COD
+                    </td>
+                    <td class=" ">
+                        ThanhTV
+                    </td>
+                    <td class=" ">
+                        01645687943
+                    </td>
+                    <td class=" ">
+                        13 Quang Trung, Q 12, TP HCM
+                    </td>
+                    <td class=" ">
+                        500,000 VNĐ
+                    </td>                     
+                    <td class=" ">
+                        <button class="btn" type="button">Deactivate</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End Table -->
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="dataTables_info" id="Div4">
+                    Showing 1 to 10 of 57 entries</div>
+            </div>
+            <div class="span6">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul>
+                        <li class="prev disabled"><a href="#">← Previous</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="next"><a href="#">Next → </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Begin Modal -->
+<div class="modal hide fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Order</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="Request">
+                    Request</label>
+                <div class="controls">
+                    <select>
+                        <option value="">--Choose Request ID--</option>
+                        <option value="">1</option>
+                        <option value="">2</option>
+                    </select>  
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Delivery Option">
+                    Delivery Option</label>
+                <div class="controls">
+                    <select>
+                        <option value="">--Choose Delivery Option--</option>
+                        <option value="">Normal</option>
+                        <option value="">Fast</option>
+                        <option value="">Time Slot</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Payment Type">
+                    Payment Type</label>
+                <div class="controls">
+                    <select>
+                        <option value="">--Choose Payment Type--</option>
+                        <option value="">COD</option>
+                        <option value="">Thu trực tiếp khi nhận hàng</option>
+                        <option value="">Thu khi giao hàng</option>
+                    </select>
+                </div>
+            </div>       
+            <div class="control-group">
+                <label class="control-label" for="Receiver Name">
+                    Receiver Name</label>
+                <div class="controls">
+                    <input type="text" id="receiverName" placeholder="Receiver Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Receiver Phone">
+                    Receiver Phone</label>
+                <div class="controls">
+                    <input type="text" id="receiverPhone" placeholder="Receiver Phone">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Receiver Address">
+                    Receiver Address</label>
+                <div class="controls">
+                    <input type="text" id="receiverAddress" placeholder="Receiver Address">
+                </div>
+            </div>            
+            <div class="control-group">
+                <label class="control-label" for="Amount to be collected from Receiver">
+                    Amount to be collected from Receiver</label>
+                <div class="controls">
+                    <input type="text" id="amount" placeholder="Amount to be collected from Receiver">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Description">
+                    Description</label>
+                <div class="controls">
+                    <textarea rows="3"></textarea>
+                </div>
+            </div>            
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->
+

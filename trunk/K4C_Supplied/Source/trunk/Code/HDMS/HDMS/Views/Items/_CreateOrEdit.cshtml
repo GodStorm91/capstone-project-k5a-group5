@@ -1,0 +1,63 @@
+﻿@model HDMS.Models.Item
+@{
+    Layout = null;
+}
+<div class="control-group">
+    <label class="control-label" for="Name">
+        Item <span style="color: Red">*</span></label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.Name, new { Placeholder = "Item" })<br />
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Quantity">
+        Quantity <span style="color: Red">*</span></label>
+    <div class="controls">
+        <input type="number" name="Quantity" min="1"
+        @if (Model != null)
+        { <text>value="@Model.Quantity"</text> }
+        else
+        {<text>value="1"</text>}
+        /><br />
+        @Html.ValidationMessageFor(model => model.Quantity)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Fragile">
+        Fragile</label>
+    <div class="controls">
+        @Html.CheckBoxFor(model => model.IsFragile)<span>&nbsp;</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Fragile">
+        High Value</label>
+    <div class="controls">
+        @Html.CheckBoxFor(model => model.HasHighValue)<span>&nbsp;</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Size">
+        Size <span style="color: Red">*</span></label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.Size, new { Placeholder = "100 x 200 x 300 mm" })<br />
+        @Html.ValidationMessageFor(model => model.Size)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Weight">
+        Weight <span style="color: Red">*</span></label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.Weight, new { Placeholder = "350g" })<br />
+        @Html.ValidationMessageFor(model => model.Weight)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Description">
+        Note</label>
+    <div class="controls">
+        @Html.TextAreaFor(model => model.Note, new { Placeholder = "Note", Row = 4 })<br />
+        @Html.ValidationMessageFor(model => model.Note)
+    </div>
+</div>

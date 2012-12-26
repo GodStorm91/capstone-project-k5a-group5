@@ -1,0 +1,73 @@
+﻿@model IEnumerable<HDMS.Models.Contact>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="contact-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Position
+                        </th>
+                        <th>
+                            Email Address
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>@*
+                        <th class="tbl-status-col">
+                            Status
+                        </th>*@
+                        <th class="tbl-action-col">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Position
+                            </td>
+                            <td>
+                                @item.EmailAddress
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            @*<td class="">
+                                <a class="toggleActivate" href="javascript:toggleActivate('Contacts',@item.ContactId)">
+                                    @if (item.IsActive)
+                                    {
+                                        <img id="contact-@item.ContactId-status" src="/img/icons2/checkmark2.png" width="18px" height="18px" alt="Active - Click to Deactivate"
+                                            title="Active - Click to Deactivate" />
+                                    }
+                                    else
+                                    {
+                                        <img id="contact-@item.ContactId-status" src="/img/icons2/delete.png" width="18px" height="18px" alt="Inactive - Click to Activate"
+                                            title="Deactive - Click to Activate" />
+                                    }
+                                </a>
+                            </td>*@
+                            <td class="action-column">
+                                <a class="btn action edit" href="javascript:editContact(@item.ContactId);">
+                                    <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a>
+                                <a class="btn action delete" href="javascript:deleteContact(@item.ContactId);">
+                                    <img src="/img/icons2/cross.png" alt="Delete" title="Delete" width="18px"/></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>

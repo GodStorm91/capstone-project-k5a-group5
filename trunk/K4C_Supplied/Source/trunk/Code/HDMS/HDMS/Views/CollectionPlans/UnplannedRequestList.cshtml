@@ -1,0 +1,61 @@
+﻿@model IEnumerable<HDMS.Models.Request>
+@{ 
+    Layout = null;
+}
+@if (Model.Count() == 0)
+{
+    <span>No request in this region!</span>
+}
+else
+{
+    foreach (var item in Model)
+    {
+    <li id="request-@item.RequestId">
+        <div class="ticket-container span12 ticket request-ticket" id="1">
+            <div class="span11 left-column">
+                <div class="column">
+                    <dl class="dl-horizontal">
+                        <dt>
+                                <img src="/img/icons/user.png" alt="Customer" width="15px" class="myToolTip"  rel="tooltip" title="Customer"/>
+                        </dt>
+                        <dd>
+                            @item.Customer.DisplayName</dd>
+                    </dl>
+                </div>
+                <div class="column">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            <img src="/img/icons/sharp.png" alt="Request Number" class="myToolTip"  rel="tooltip" title="Request Number" width="15px" /></dt>
+                        <dd>
+                            @item.RequestId</dd>
+                    </dl>
+                </div>
+                <div class="column">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            <img src="/img/icons/calendar2.png" alt="Requested Date" class="myToolTip"  rel="tooltip" title="Request Date" width="15px" /></dt>
+                        <dd>
+                            @string.Format("{0:dd/MM/yyyy hh:mm tt}",item.RequestedDate)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="column">
+                    <dl class="dl-horizontal">
+                        <dt><span style="font-size: 15px; color: #969696" class="myToolTip" rel="tooltip" title="Collection Address">@@</span> </dt>
+                        <dd>
+                            @item.CollectionAddress</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="span1 right-column">
+                <a href="javascript:void(0)" class="btn action myToolTip" onclick="addToPlan(@item.RequestId)" rel="tooltip" title="Add to plan">
+                    <img src="/img/icons/arrow_right2.png" alt="Add" width="18px" />
+                </a>
+            </div>
+        </div>
+    </li>
+    }
+}
+<script>
+    $('.myToolTip').tooltip();
+</script>

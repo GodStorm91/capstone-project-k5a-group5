@@ -1,0 +1,103 @@
+﻿@model IEnumerable<HDMS.Models.Request>
+@using System.Text.RegularExpressions;  
+@{ 
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+        <thead>
+            <tr>
+                <th>
+                    Request No.
+                </th>
+                <th>
+                    Requested Date
+                </th>
+                <th>
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Orders
+                </th>
+                <th>
+                    Collection Address
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Note
+                </th>
+                <th class="tbl-action-col">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        #@item.RequestId
+                    </td>
+                    <td>
+                        @if (item.RequestedDate != null)
+                        {
+                            @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.RequestedDate)
+                        }
+                    </td>
+                    <td>
+                        @if (item.RequestedDate != null)
+                        {
+                            @String.Format("{0:yyyyMMddHHmm}", item.RequestedDate)
+                        }
+                        else
+                        {
+                            <text>000</text>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.Customer.DisplayName).ToString()
+                    </td>
+                    <td>
+                        @item.ValidOrders.Count
+                    </td>
+                    <td>@item.CollectionAddress
+                    </td>
+                    <td style="min-width:65px;">
+                        @Regex.Replace(item.Status.ToString(), "(\\B[A-Z])", " $1")
+                        @if (item.Status == HDMS.Models.Statuses.RequestStatus.Draft)
+                        {
+                            <a class="update btn action" href="/Request/AddOrders/@item.RequestId">
+                                <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a>   
+                        }
+                        
+                        @if (item.Status == HDMS.Models.Statuses.RequestStatus.New)
+                        {
+                            <a class="update btn action" href="/Request/ApproveOrders/@item.RequestId">
+                                <img src="/img/icons/arrow_right2.png" alt="Approve Orders" title="Approve Orders" /></a>   
+                        }
+                    </td>
+                    <td>
+                        @item.Note
+                    </td>
+                    <td class="action-column"@if (item.Status == HDMS.Models.Statuses.RequestStatus.Draft){<text>style="min-wid"</text>}>
+                        <a class="btn action view" href="/Request/Details/@item.RequestId">
+                            <img src="/img/icons/notepad.png" alt="View" title="View" width="15px"></a> 
+                        @*<a class="btn action update" href="#" onclick="showUpdateStatusModal(@item.RequestId,@item.RequestStatus)">
+                                <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" width="15px" /></a>*@ 
+                        @if (item.Status != HDMS.Models.Statuses.RequestStatus.Finished)
+                        {
+                                if (item.Status != HDMS.Models.Statuses.RequestStatus.Canceled)
+                                {
+                                    <a class="btn action delete" href="#" onclick="cancelRequest(@item.RequestId);">
+                                        <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Request" width="15px"/>
+                                    </a> 
+                                }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

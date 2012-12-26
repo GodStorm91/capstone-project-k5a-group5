@@ -1,0 +1,44 @@
+@model HDMS.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Customer</legend>
+
+    <div class="display-label">CompanyName</div>
+    <div class="display-field">@Model.CompanyName</div>
+
+    <div class="display-label">MainAddressId</div>
+    <div class="display-field">@Model.MainAddressId</div>
+
+    <div class="display-label">CurrentContractNumber</div>
+    <div class="display-field">@Model.CurrentContractNumber</div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">@Model.IsActive</div>
+
+    <div class="display-label">AddtionalInfo</div>
+    <div class="display-field">@Model.AddtionalInfo</div>
+
+    <div class="display-label">CollectionRequests</div>
+    <div class="display-field">@(Model.CollectionRequests == null ? "None" : Model.CollectionRequests.Count.ToString())</div>
+
+    <div class="display-label">Contacts</div>
+    <div class="display-field">@(Model.Contacts == null ? "None" : Model.Contacts.Count.ToString())</div>
+
+    <div class="display-label">CustomerAddresses</div>
+    <div class="display-field">@(Model.CustomerAddresses == null ? "None" : Model.CustomerAddresses.Count.ToString())</div>
+
+    <div class="display-label">CustomerPayments</div>
+    <div class="display-field">@(Model.CustomerPayments == null ? "None" : Model.CustomerPayments.Count.ToString())</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CustomerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

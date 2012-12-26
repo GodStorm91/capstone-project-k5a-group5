@@ -1,0 +1,72 @@
+﻿@model HDMS.Models.Item
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="page-header">
+	<h2>Delete</h2>
+</div>
+
+	<h3>Are you sure you want to delete this?</h3>
+	@using (Html.BeginForm()) {
+		<div>
+			<fieldset>
+				<legend>Item</legend>
+				<br />
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Order)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Order.ReceiverName)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Name)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Name)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Quantity)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Quantity)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.IsFragile)</div>
+                <div class="span10">@Html.DisplayFor(model => model.IsFragile)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.HasHighValue)</div>
+                <div class="span10">@Html.DisplayFor(model => model.HasHighValue)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.ItemStatus)</div>
+                <div class="span10">@Html.DisplayFor(model => model.ItemStatus)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Size)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Size)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Weight)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Weight)</div>
+            </div>
+
+            <div>
+                <div class="span2">@Html.LabelFor(model => model.Note)</div>
+                <div class="span10">@Html.DisplayFor(model => model.Note)</div>
+            </div>
+
+		
+		</fieldset>
+		<div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="Delete" />
+		</div>
+		<br />
+	</div>
+	}
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+

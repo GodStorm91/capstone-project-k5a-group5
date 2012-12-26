@@ -1,0 +1,65 @@
+@model HDMS.Models.DeliveryPlan
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<div class="editor-label">
+    @Html.LabelFor(model => model.CreatedDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CreatedDate)
+    @Html.ValidationMessageFor(model => model.CreatedDate)
+</div>
+<div class="editor-label">
+    Created By
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CreatedByUserId)
+    @Html.ValidationMessageFor(model => model.CreatedByUserId)
+</div>
+<div class="editor-label">
+    Assigned To
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.AssignedDeliveryStaffId)
+    @Html.ValidationMessageFor(model => model.AssignedDeliveryStaffId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.StartDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.StartDate)
+    @Html.ValidationMessageFor(model => model.StartDate)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.EndDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.EndDate)
+    @Html.ValidationMessageFor(model => model.EndDate)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.DeliveryPlanStatus)
+</div>
+<div class="editor-field">
+    @*@Html.EditorFor(model => model.DeliveryPlanStatus)
+    @Html.ValidationMessageFor(model => model.DeliveryPlanStatus)*@
+    <select>
+        <option value="New">New</option>
+        <option value="Assigned">Assigned</option>
+        <option value="Delivering">Delivering</option>
+        <option value="Finished">Finished</option>
+    </select>
+    @*@Html.DropDownListFor(model => model.DeliveryPlanStatus, ((IEnumerable<HDMS.Models.DeliveryPlanStatus>)ViewBag.PossibleDeliveryPlanStatuses).Select(option => new SelectListItem
+{
+    Text = (option == null ? "None" : option.Name),
+    Value = option.DeliveryPlanStatus.ToString();
+    Selected = (Model != null) && (option.DeliveryPlanStatus == Model.DeliveryPlanStatus)
+}), "-- Choose a DeliveryPlanStatus --", new { Class = "chzn-select" })
+    @Html.ValidationMessageFor(model => model.DeliveryPlanStatus)*@
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Note)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Note)
+    @Html.ValidationMessageFor(model => model.Note)
+</div>

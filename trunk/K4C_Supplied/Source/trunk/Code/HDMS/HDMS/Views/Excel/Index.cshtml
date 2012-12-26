@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upload Test</h2>
+
+<form id ="uploadExcelForm" action="/Excel/Index" enctype="multipart/form-data" method="post">
+    <input type="file" id="excelFile" name="excelFile" />
+    <input type="submit" value="Upload" />
+</form>
+
+<script>   
+    $('#uploadExcelForm').submit(function () {
+        if (document.getElementById('excelFile').value.match(/xls$/) || document.getElementById('excelFile').value.match(/xlsx$/)) {
+            return true;
+        } else {
+            alert('Must be a excel file !!!!!');
+            return false;
+        }
+    });
+</script>

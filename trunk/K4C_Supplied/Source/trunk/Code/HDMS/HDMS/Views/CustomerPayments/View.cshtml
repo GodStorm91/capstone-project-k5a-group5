@@ -1,0 +1,67 @@
+﻿@model HDMS.Models.CustomerPayment
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        View Customer Payment</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        @using (Html.BeginForm())
+        {            
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.CustomerPaymentId)
+            //@Html.Partial("_CreateOrEdit", Model)
+            
+            <dl class="dl-horizontal">
+                <dt style="text-align: left; width: 160px">Customer: </dt>
+                <dd>
+                    @(Model.Customer == null ? "None" : Model.Customer.CompanyName)</dd>
+                <dt style="text-align: left; width: 160px">Requests: </dt>
+                <dd>
+                    @{
+                        var requestIds = "";
+                        foreach (var collectionRequest in Model.Requests)
+                        {
+                            requestIds += collectionRequest.RequestId + ", ";
+                        }
+                        if (Model.Requests.Count > 0)
+                        {
+                            requestIds = requestIds.Substring(0, requestIds.Length - 2);
+                        }
+                    }
+                    @requestIds
+                    @*@(Model.Requests == null ? "None" : Model.Requests.Count.ToString())*@</dd>
+                <dt style="text-align: left; width: 160px">Amount: </dt>
+                <dd>
+                    @Model.Amount</dd>
+                <dt style="text-align: left; width: 160px">Tranfer: </dt>
+                @if (Model.IsInbound)
+                { 
+                    <dd>
+                        Inbound</dd> }
+                else{   
+                    <dd>
+                        Outbound</dd> }
+                <dt style="text-align: left; width: 160px">Payment Type: </dt>
+                <dd>
+                    @(Model.CustomerPaymentType == null ? "None" : Model.CustomerPaymentType.Name)</dd>
+                <dt style="text-align: left; width: 160px">Completed Date: </dt>
+                <dd>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CompletedDate)</dd>
+                <dt style="text-align: left; width: 160px">Detail: </dt>
+                <dd>
+                    @Model.Detail</dd>
+            </dl>           
+                              
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">
+                    Cancel</button>
+            </div>
+        
+        }
+    </fieldset>
+</div>

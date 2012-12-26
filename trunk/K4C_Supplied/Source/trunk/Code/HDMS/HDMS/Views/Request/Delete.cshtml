@@ -1,0 +1,47 @@
+@model HDMS.Models.Request
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Request</legend>
+
+    <div class="display-label">CollectionAddressId</div>
+    <div class="display-field">@Model.CollectionAddressId</div>
+
+    <div class="display-label">RequestedDate</div>
+    <div class="display-field">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</div>
+
+    <div class="display-label">RequestStatus</div>
+    <div class="display-field">@Model.RequestStatus</div>
+
+    <div class="display-label">Note</div>
+    <div class="display-field">@Model.Note</div>
+
+    <div class="display-label">Collection</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Collection).ToString()</div>
+
+    <div class="display-label">CustomerPayment</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.CustomerPayment).ToString()</div>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Customer).ToString()</div>
+
+    <div class="display-label">CustomerAddress</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.CustomerAddress).ToString()</div>
+
+    <div class="display-label">Orders</div>
+    <div class="display-field">@(Model.Orders == null ? "None" : Model.Orders.Count.ToString())</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

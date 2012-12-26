@@ -1,0 +1,31 @@
+﻿div, a, input, table, th, td, textarea, select, .uneditable-input, .btn, .input-append .add-on:last-child, .input-append .btn:last-child, .label {
+    -webkit-border-radius: 0px!important;
+    -moz-border-radius: 0px!important;
+    border-radius: 0px!important;
+    -webkit-border-top-left-radius: 0px!important;
+    border-top-left-radius: 0px!important;
+    -moz-border-radius-topleft: 0px!important;
+    -webkit-border-bottom-left-radius: 0px!important;
+    border-bottom-left-radius: 0px!important;
+    -moz-border-radius-bottomleft: 0px!important;
+    -webkit-border-top-right-radius: 0px!important;
+    border-top-right-radius: 0px!important;
+    -moz-border-radius-topright: 0px!important;
+    -webkit-border-bottom-right-radius: 0px!important;
+    border-bottom-right-radius: 0px!important;
+    -moz-border-radius-bottomright: 0px!important;
+}
+
+.btn-group .btn
+{        
+    border-left: 1px solid #ccc!important;
+    border-right: 1px solid #ccc!important;
+    font-weight: normal!important;
+}
+
+.btn{
+    background-image: none!important;
+    box-shadow: none!important;
+    border: 0px!important;
+    font-weight: bold!important;
+}

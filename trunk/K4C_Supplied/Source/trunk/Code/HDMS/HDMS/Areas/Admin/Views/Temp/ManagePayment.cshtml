@@ -1,0 +1,356 @@
+﻿@{
+    ViewBag.Title = "ManagePayment";
+}
+<div class="page-header">
+    <h2>
+        Payment Management</h2>
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+    <div id="Div1" class="dataTables_wrapper form-inline" role="grid">
+        <div class="DTTT btn-group">
+            <a href="#create" role="button" data-toggle="modal" class="btn DTTT_button_text"
+                id="ToolTables_example_0"><span>New</span></a> <a class="btn DTTT_button_text disabled"
+                    id="ToolTables_example_1"><span>Edit</span></a> <a class="btn DTTT_button_text disabled"
+                        id="ToolTables_example_2"><span>Delete</span></a>
+        </div>
+        <div class="dataTables_filter" id="example_filter">
+            <label>
+                Search:
+                <input type="text" aria-controls="example"></label>
+        </div>
+        <!-- Begin Table -->
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable"
+            id="Table1" aria-describedby="example_info">
+            <thead>
+                <tr role="row">
+                    <th class="sortingPay_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 30%;" aria-sort="ascending" aria-label="Customer">
+                        Customer
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 20%;" aria-label="Amount">
+                        Amount
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Direction">
+                        Direction
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="PayType">
+                        Payment Type
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 20%;" aria-label="CompleteDate">
+                        Completed Date
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="ViewDetail">                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Apple
+                    </td>
+                    <td class=" ">
+                        300000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        26-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        IBM
+                    </td>
+                    <td class=" ">
+                        10000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Cash
+                    </td>
+                    <td class=" ">
+                        30-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        FPT
+                    </td>
+                    <td class=" ">
+                        1000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        28-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Asus
+                    </td>
+                    <td class=" ">
+                        3000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Cash
+                    </td>
+                    <td class=" ">
+                        29-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        HP
+                    </td>
+                    <td class=" ">
+                        50000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        1-Oct-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Dell
+                    </td>
+                    <td class=" ">
+                        500
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        30-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Honda
+                    </td>
+                    <td class=" ">
+                        6000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Cash
+                    </td>
+                    <td class=" ">
+                        28-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Suzuki
+                    </td>
+                    <td class=" ">
+                        9000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        27-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Yamaha
+                    </td>
+                    <td class=" ">
+                        2500
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        29-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>
+                <tr class="gradeA odd">
+                    <td class="  sorting_1">
+                        Ford
+                    </td>
+                    <td class=" ">
+                        36000
+                    </td>
+                    <td class=" ">
+                        In Bound
+                    </td>
+                    <td class=" ">
+                        Transfer
+                    </td>
+                    <td class=" ">
+                        30-Sep-2012
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">Detail</button>
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+        <!-- End Table -->
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="dataTables_info" id="Div4">
+                    Showing 1 to 10 of 57 entries</div>
+            </div>
+            <div class="span6">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul>
+                        <li class="prev disabled"><a href="#">← Previous</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="next"><a href="#">Next → </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Begin Modal -->
+<div class="modal hide fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Payment</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="Customer">
+                    Customer</label>
+                <div class="controls">
+                @*<input type="text" id="customer" placeholder="Customer" />*@
+                    <select>
+                        <option value="">Apple</option>
+                        <option value="">Dell</option>
+                        <option value="">FPT</option>
+                        <option value="">IBM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Amount">
+                    Amount</label>
+                <div class="controls">
+                    <input type="text" id="Amount" placeholder="Amount">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="PaymentType">
+                    Payment Type</label>
+                <div class="controls">
+                @*<input type="text" id="paytype" placeholder="Paytype" />*@
+                    <select>
+                        <option value="">Transfer</option>
+                        <option value="">Cash</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Direction">
+                    Direction</label>
+                    <div class="controls">
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="inbound" checked>
+                                 Inbound
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="outbound">
+                                 Outbound
+                        </label>
+                    </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="CompleteDate">
+                    Completed Date</label>
+                <div class="controls">
+                    <input type="date" id="CompleteDate" placeholder="CompleteDate">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="PaymentDetail">
+                    Payment Detail</label>
+                <div class="controls">
+                    <textarea rows="3"></textarea>
+                </div>
+            </div>   
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->

@@ -1,0 +1,62 @@
+﻿@model HDMS.Models.Item
+@{
+    Layout = null;
+}
+<li>
+    <div class="ticket-container span12 ticket item-ticket" id="order-@Model.ItemId">
+        <div class="row-fluid">
+            <div class="column left-column">
+                <dl class="dl-horizontal">
+                    <dt>
+                        <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                    <dd>
+                        @Model.Name</dd>
+                    <dt>
+                        <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                    <dd>
+                        @Model.Quantity</dd>
+                </dl>
+            </div>
+            <div class="column center-column">
+                <dl class="dl-horizontal">
+                    <dt>
+                        <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                    <dd>
+                        @Model.Size
+                    <dt>
+                        <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                    </dt>
+                    <dd>
+                        @Model.Weight</dd>
+                </dl>
+            </div>
+            <div class="column right-column">
+                <dl class="dl-horizontal">
+                    <dt>
+                        <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                    <dd>
+                        @if (Model.IsFragile)
+                        {
+                            <span class="label label-success">Fragile</span>
+                        }
+                        @if (Model.HasHighValue)
+                        {
+                            <span class="label label-info">High Value</span>
+                        }
+                    </dd>
+                    <dt>
+                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                        <dd>
+                            @Model.Note</dd>
+                </dl>
+                <div class="ticket-btn-group">
+                    <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                        <img src="/img/icons2/cross.png" alt="Cancel Item" title="Cancel Order" width="15">
+                    </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                        <img src="/img/icons2/pencil.png" alt="Edit Item" title="Edit Order" width="15">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
