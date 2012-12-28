@@ -6,6 +6,14 @@
 	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 	<script src="js/jquery-1.8.3.js"></script>
 	<script src="js/jquery-ui-1.9.2.custom.js"></script>
+	    <script type="text/javascript">
+        function OpenPopup(url) {
+            //url = url + encodeURIComponent(document.URL);
+            newwindow = window.open(url, 'Share on Social Network', 'height=500,width=980');
+            if (window.focus) { newwindow.focus() }
+            return false;
+        }
+    </script>
 	<script>
 	$(function() {
 				
@@ -372,7 +380,11 @@
             </table>
             
         </div>
-</div>
+</div>Click here to get your location
+                    <div id="ZingShare" class="SCIcon">
+                        <a id="A1" href="#" runat="server" onclick="return OpenPopup('Getlocation.html')">
+                            <img src="images/zingbutton.png" alt="Zing mp3" /></a>
+                    </div>
 	</div>
 	<div id="tabs-2"></div>
 	<div id="tabs-3"></div>
