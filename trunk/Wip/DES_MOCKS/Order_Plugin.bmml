@@ -1,11 +1,11 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="901" measuredH="607" mockupW="800" mockupH="600">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="908" measuredH="724" mockupW="800" mockupH="690">
   <controls>
-    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="101" y="7" w="800" h="600" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="108" y="34" w="800" h="690" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Order%20plugin%0Ahttp%3A//www.tiktakdelivery/plugin.php%3F%3Curl%3E</text>
       </controlProperties>
     </control>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::Map" x="559" y="106" w="319" h="371" measuredW="252" measuredH="222" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Map" x="559" y="106" w="319" h="410" measuredW="252" measuredH="222" zOrder="1" locked="false" isInGroup="-1"/>
     <control controlID="2" controlTypeID="com.balsamiq.mockups::FieldSet" x="123" y="106" w="388" h="260" measuredW="200" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
         <text>CartInfo</text>
@@ -16,12 +16,12 @@
         <text>Receiver%20Address</text>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextInput" x="265" y="450" w="139" h="-1" measuredW="102" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextInput" x="265" y="578" w="139" h="-1" measuredW="102" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Receiver%20Email</text>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::DateChooser" x="265" y="492" w="-1" h="-1" measuredW="114" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::DateChooser" x="265" y="620" w="-1" h="-1" measuredW="114" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>2012/12/12</text>
       </controlProperties>
@@ -31,17 +31,17 @@
         <text>Receiver%20Address</text>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="123" y="453" w="106" h="21" measuredW="94" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="123" y="581" w="106" h="21" measuredW="94" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Receiver%20Email</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="123" y="491" w="84" h="26" measuredW="84" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="123" y="619" w="84" h="26" measuredW="84" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Delivery%20Date</text>
       </controlProperties>
     </control>
-    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="219" y="538" w="197" h="27" measuredW="88" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="229" y="657" w="197" h="27" measuredW="88" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Submit%20Info</text>
       </controlProperties>
@@ -65,9 +65,29 @@
         <text>Delivery%20Type</text>
       </controlProperties>
     </control>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::TextArea" x="475" y="486" w="418" h="92" measuredW="200" measuredH="140" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::TextArea" x="475" y="516" w="418" h="141" measuredW="200" measuredH="140" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Delivery%20Type%20explanation%20here%3A%0ABlah%20blah%20blah%20blah.%20Change%20the%20delivery%20Type%20will%20trigger%20this%20to%20change%20the%20text%20to</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::TextArea" x="110" y="435" w="331" h="106" measuredW="200" measuredH="140" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>-%20If%20Delivery%20Type%20%3D%20Direct%20Delivery%2C...%0A-%20If%20Delivery%20Type%20%3D%20BufferBox%2C....%0A-%20If%20Delivery%20Type%20%3D%20Mixed%2C%0A%20%20%20%20%20%20%20%20*Se%20giao%20hang%20trong%20vong%20...ngay%20ke%20tu%20ngay%20....%0A%20%09%09%09%09%09%093days%2C%205days%2C...%09sau%20ngay%20nay%20se%20chuyen%20wa%20bufferbox%09%09%09%09</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::ComboBox" x="155" y="503" w="-1" h="-1" measuredW="118" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Day%20to%20delivery</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Label" x="123" y="544" w="106" h="21" measuredW="85" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Shop%20address</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::TextInput" x="229" y="541" w="240" h="-1" measuredW="242" measuredH="27" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Addr%20lay%20tu%20ben%20map%20wa/disable%20field%20nay</text>
       </controlProperties>
     </control>
   </controls>
