@@ -1,0 +1,68 @@
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.xml
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.xml
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.csprojResolveAssemblyReference.cache
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.dll
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.xml
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.pdb
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.xml
+F:\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.xml
+F:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.csprojResolveAssemblyReference.cache
+F:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.dll
+F:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.UnitTests.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.dll
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.Domain.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\SportsStore.WebUI.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Moq.xml
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.pdb
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\Ninject.xml
+D:\SportsStore\SportsStore.UnitTests\bin\Debug\EntityFramework.xml
+D:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.csprojResolveAssemblyReference.cache
+D:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.dll
+D:\SportsStore\SportsStore.UnitTests\obj\Debug\SportsStore.UnitTests.pdb

@@ -1,0 +1,60 @@
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\EntityFramework.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\EntityFramework.xml
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.xml
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.xml
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.csprojResolveAssemblyReference.cache
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.pdb
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.dll
+D:\MyDropBox\Dropbox\CAPSTONE\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\EntityFramework.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\EntityFramework.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Moq.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.pdb
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\bin\Ninject.xml
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.dll
+C:\Users\DarrenShan\Dropbox\Test Project\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.pdb
+F:\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.dll
+F:\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.pdb
+F:\SportsStore\SportsStore.WebUI\bin\EntityFramework.dll
+F:\SportsStore\SportsStore.WebUI\bin\Moq.dll
+F:\SportsStore\SportsStore.WebUI\bin\Ninject.dll
+F:\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.dll
+F:\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.pdb
+F:\SportsStore\SportsStore.WebUI\bin\EntityFramework.xml
+F:\SportsStore\SportsStore.WebUI\bin\Moq.pdb
+F:\SportsStore\SportsStore.WebUI\bin\Moq.xml
+F:\SportsStore\SportsStore.WebUI\bin\Ninject.pdb
+F:\SportsStore\SportsStore.WebUI\bin\Ninject.xml
+F:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.csprojResolveAssemblyReference.cache
+F:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.dll
+F:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.pdb
+D:\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.dll
+D:\SportsStore\SportsStore.WebUI\bin\SportsStore.WebUI.pdb
+D:\SportsStore\SportsStore.WebUI\bin\EntityFramework.dll
+D:\SportsStore\SportsStore.WebUI\bin\Moq.dll
+D:\SportsStore\SportsStore.WebUI\bin\Ninject.dll
+D:\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.dll
+D:\SportsStore\SportsStore.WebUI\bin\SportsStore.Domain.pdb
+D:\SportsStore\SportsStore.WebUI\bin\EntityFramework.xml
+D:\SportsStore\SportsStore.WebUI\bin\Moq.pdb
+D:\SportsStore\SportsStore.WebUI\bin\Moq.xml
+D:\SportsStore\SportsStore.WebUI\bin\Ninject.pdb
+D:\SportsStore\SportsStore.WebUI\bin\Ninject.xml
+D:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.csprojResolveAssemblyReference.cache
+D:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.dll
+D:\SportsStore\SportsStore.WebUI\obj\Debug\SportsStore.WebUI.pdb

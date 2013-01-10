@@ -1,0 +1,135 @@
+﻿@model SportsStore.WebUI.Models.CartIndexViewModel 
+@{ 
+    ViewBag.Title = "Sports Store: Your Cart"; 
+}
+<script type="text/javascript">
+    function OpenPopup(url) {
+        //url = url + encodeURIComponent(document.URL);
+        newwindow = window.open(url, 'Share on Social Network', 'height=500,width=980');
+        if (window.focus) { newwindow.focus() }
+        return false;
+    }
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var body = '';
+
+        $('table tbody tr').each(function () {   //iterate tr
+            body += '<tr>';
+            $(this).find('td').each(function () {  //iterate td
+                body += '<td>';
+                body += $(this).text();
+                $(this).find('input').each(function () {
+                    //                                    body += $(this).val();
+                    body += '</td>';
+                });
+            });
+            body += '</tr>';
+        });
+
+        var head = '';
+
+        $('table thead tr').each(function () {   //iterate tr
+            head += '<tr>';
+            $(this).find('th').each(function () {  //iterate td
+                head += '<th>';
+                head += $(this).text();
+                $(this).find('input').each(function () {
+                    //                                    body += $(this).val();
+                    head += '</th>';
+                });
+            });
+            head += '</th>';
+        });
+
+        var foot = '';
+
+        $('table tfoot tr').each(function () {   //iterate tr
+            foot += '<tr>';
+            $(this).find('td').each(function () {  //iterate td
+                foot += '<td>';
+                foot += $(this).text();
+                $(this).find('input').each(function () {
+                    //                                    body += $(this).val();
+                    foot += '</td>';
+                });
+            });
+            foot += '</tr>';
+        });
+
+
+
+        $("#A1").click(function (e) {
+            var content = '<thead>'+ head +'</thead><tbody>' + body + '</tbody><tfoot>'+ foot +'</tfoot>';
+            //                        myWindow = window.open('', 'MyNewWindow', 'width=500,height=300,left=200,top=100');
+            //                        myWindow.document.write(content);
+            //                        myWindow.document.close();
+            //                        myWindow.focus();
+            newwindow = window.open('../../Map.htm?content=' + content.replace(/\s/g, ""), 'Share on Social Network', 'height=500,width=980');
+            if (window.focus) { newwindow.focus() }
+            return false;
+        });
+    });
+</script>
+<h2>
+    Your cart</h2>
+<table width="90%" align="center">
+    <thead>
+        <tr>
+            <th align="center">
+                Quantity
+            </th>
+            <th align="left">
+                Item
+            </th>
+            <th align="right">
+                Price
+            </th>
+            <th align="right">
+                Subtotal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        { 
+            <tr>
+                <td align="center">@line.Quantity
+                </td>
+                <td align="left">@line.Product.Name
+                </td>
+                <td align="right">@line.Product.Price.ToString("c")
+                </td>
+                <td align="right">@((line.Quantity * line.Product.Price).ToString("c"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("ProductId", line.Product.ProductID)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="actionButtons" type="submit" value="Remove" />
+                    }
+                </td>
+            </tr> 
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" align="right">
+                Total:
+            </td>
+            <td align="right">
+                @Model.Cart.ComputeTotalValue().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div id="Gmap" class="SCIcon">
+    <a id="A1" href="#" runat="server">
+        <img src="/Images/BufferBox.png" alt="Google Map" /></a>
+    @*<input type="button" id="demo_button" value="Click Me to open window with clean HTML TABLE prepared for copy" />*@
+</div>
+<p align="center" class="actionButtons">
+    <a href="@Model.ReturnUrl">Continue shopping</a>
+</p>
