@@ -1,0 +1,13 @@
+Note:(ko co tren screen nha)
+Received from our company  (hang hien tai dang co o hub)
+Expired (wa' ngay khach hang nhan hang (se cho us den  thu hoi hang))
+Delivery (cus dã nhan hang)
+Deliverying to Hub (hang dang tren duong giao den hub)
+các field khác se bi disable (ko edit dc), tru field Expired Date và Status
+Status = Expired : all fields are disable
+Stt = Received: sau khi KH nhan hang xog, Hub se chuyen stt wa Delivery
+Stt = Deliverying to Hub: hang dang chuyen den hub, hub nhan dc se chuyen stt wa Received
+1 Order có nhiu item, 
+1 item co nhieu quantity
+Save: luu trang thai sau khi cap nhat
+Submit: gui du lieu sau khi update ve cty chung ta
