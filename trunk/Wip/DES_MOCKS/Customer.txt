@@ -1,0 +1,8 @@
+
+sau khi nhap ID, 
+- nhan nut OK : hien thi man hinh pop-up de cus review thong tin
+- nhan nut reset: text box id se tro thanh blank de cus nhap lai ID
+Pop-up screen
+all fields on pop-up screen will be disable
+cho khach hang review thong tin tai day, sau do nhan ok, se hien ra message thong bao lay hang
+tu noi nhan vien tai hub, va status luc nay se chuyen thanh delivered.
