@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Example Page</title>
+	<link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+	<script src="js/jquery-1.8.3.js"></script>
+	<script src="js/jquery-ui-1.9.2.custom.js"></script>
+	<script>
+	$(function() {
+		$( "#check" ).button();
+		$( "#format" ).buttonset();
+		$( "#datepickerfrom" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			showOn: "button",
+            buttonImage: "images/calendar.gif",
+            buttonImageOnly: true,
+			defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function( selectedDate ) {
+                $( "#datepickerto" ).datepicker( "option", "minDate", selectedDate );
+            }
+		});
+		$( "#datepickerto" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			showOn: "button",
+            buttonImage: "images/calendar.gif",
+            buttonImageOnly: true,
+			defaultDate: "+1w",
+            changeMonth: true,
+            onClose: function( selectedDate ) {
+                $( "#datepickerfrom" ).datepicker( "option", "maxDate", selectedDate );
+            }
+		});
+	});
+	</script>
+	<style>
+		#format { margin-top: 2em; }
+	</style>
+</head>
+<body>
+
+<div id="format">
+<table>
+<tr>
+<td>
+<input type="checkbox" id="check1" /><label for="check1">All</label>
+  <input type="checkbox" id="check2" /><label for="check2">Deliverying to Hub</label>
+  <input type="checkbox" id="check3" /><label for="check3">Received from us</label>
+  <input type="checkbox" id="check4" /><label for="check4">Deliverid to Customer</label>
+  <input type="checkbox" id="check5" /><label for="check5">Expired</label>
+  <input type="checkbox" id="check6" /><label for="check6">None</label>
+</td>
+</tr>
+<tr>
+<td>
+Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom" /> To <input type="text" id="datepickerto" /> 
+&nbsp;&nbsp;&nbsp;&nbsp;<input id="Button3" type="button" value="Filter" />
+</td>
+</tr>
+<tr>
+<td>
+<table border="1">
+<tr>
+<th>No</th>
+<th>OrderID</th>
+<th>Item</th>
+<th>Quantity</th>
+<th>Delivery Date</th>
+<th>Expired Date</th>
+<th>Status</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Order1</td>
+<td>Bag</td>
+<td>2</td>
+<td>2013/1/14</td>
+<td>2013/1/17</td>
+<td>
+<select id="slstatus">
+<option>Received</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Order2</td>
+<td>Hat</td>
+<td>5</td>
+<td>2013/1/14</td>
+<td>2013/1/17</td>
+<td>
+<select id="slstatus">
+<option>Received</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Order3</td>
+<td>Laptop</td>
+<td>3</td>
+<td>2013/1/14</td>
+<td>2013/1/17</td>
+<td>
+<select id="slstatus">
+<option>Received</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Order4</td>
+<td>Ring</td>
+<td>2</td>
+<td>2013/1/14</td>
+<td>2013/1/17</td>
+<td>
+<select id="slstatus">
+<option>Received</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<select id="slstatus">
+<option>5</option>
+<option>10</option>
+<option>15</option>
+</select>
+</td>
+<td>
+	<a href=""><< Prev
+	</a>&nbsp;
+	<a href="">1
+	</a>&nbsp;
+	<a href="">2
+	</a>&nbsp;
+	<a href="">Next >></a>
+</td>
+</tr>
+<tr>
+<td>
+<input id="Button3" type="button" value="Save" />
+<input id="Button3" type="button" value="Summit" />
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>
