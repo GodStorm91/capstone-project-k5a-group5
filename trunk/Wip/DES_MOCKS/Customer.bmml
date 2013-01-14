@@ -39,7 +39,7 @@
         <verticalScrollbar>true</verticalScrollbar>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="737" y="132" w="-1" h="-1" measuredW="41" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="737" y="132" w="-1" h="-1" measuredW="40" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Name</text>
       </controlProperties>
@@ -69,27 +69,27 @@
         <text/>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="743" y="261" w="-1" h="-1" measuredW="56" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="743" y="255" w="-1" h="-1" measuredW="56" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Order%20ID</text>
       </controlProperties>
     </control>
-    <control controlID="14" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="258" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="252" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="15" controlTypeID="com.balsamiq.mockups::DataGrid" x="743" y="351" w="-1" h="-1" measuredW="222" measuredH="53" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::DataGrid" x="743" y="328" w="-1" h="-1" measuredW="368" measuredH="83" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>No%2C%20Item%2C%20Description%2C%20Quantity%0A%20</text>
+        <text>No%2C%20Item%2C%20Description%2C%20Quantity%2C%20Price%2C%20Total%0A%2C%2C%2C%2C%2C%0ATotal%2C%2C%2CSum%28quan%29%2C%2CSum%28total%29</text>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="743" y="306" w="-1" h="-1" measuredW="42" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="743" y="292" w="-1" h="-1" measuredW="43" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Status</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="306" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="292" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
