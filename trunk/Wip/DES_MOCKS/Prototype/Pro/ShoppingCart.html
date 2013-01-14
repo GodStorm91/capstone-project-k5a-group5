@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>ShoppingCart</title>
+		<style type="text/css">
+			header{background: #adb96e;}
+		</style>
+		<meta name="description" content="" />
+		<meta name="author" content="ngocanh" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script type="text/javascript" 
+src="http://maps.googleapis.com/maps/api/js?sensor=false&language=vi"></script>
+<script type="text/javascript">
+var map;
+function initialize() {
+      var myLatlng = new google.maps.LatLng(10.776198,106.632982);
+      var myOptions = {
+    zoom: 16,
+    center: myLatlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+}
+map = new google.maps.Map(document.getElementById("div_id"), myOptions); 
+  // Biến text chứa nội dung sẽ được hiển thị
+var text;
+text= "<b style='color:#00F' " + 
+         "style='text-align:center'>Khu vuc quan 10<br />" + 
+     "<img src='citihouse-logo.jpg'  /></b>";
+   var infowindow = new google.maps.InfoWindow(
+    { content: text,
+        size: new google.maps.Size(100,50),
+        position: myLatlng
+    });
+       infowindow.open(map);    
+    var marker = new google.maps.Marker({
+      position: myLatlng, 
+      map: map,
+      title:"Trường ĐH GTVT TP.HCM!"
+  });
+}
+</script>
+	</head>
+
+	<body onLoad="initialize()">
+		<div style="width:1350px;height:100px;">
+			
+		<header style="font-size: 80px;font-weight:bold;color:red;padding-left:5px;"><img src="../Images/logo.jpg" width="50px" height="50px"/> My Website</header>
+		<div style="width:300px;float:left;border:1px;border-color:#E8E8E8  ;border-style:groove;">
+			<table cellspacing="0px"cellpadding="5px;">
+				<tr><td style="background-color:blue;font-weight:bold;width:300px;color:white;" align="center" colspan="2">Categories</td></tr>
+				<tr><td><img src="../Images/Cachien.jpg" alt="hinh ca chien" width="150px" height="110px"/></td><td align="center">Ca chien<br/>Gia:200000<br/>So Luong:<input type="text"style="width: 40px;"/><br/><br/><input type="button" value="Add to Cart"/></td></tr>
+					<tr><td><img src="../Images/Changahaphanh.jpg" alt="hinh chan ga" width="150px" height="110px"/></td><td align="center">Changa hap hanh<br/>Gia:300000<br/>So Luong:<input type="text"style="width: 40px;"/><br/><br/><input type="button" value="Add to Cart"/></td></tr>
+					<tr><td><img src="../Images/mucsate.jpg" alt="hinh muc sa te" width="150px" height="110px"/></td><td align="center">Muc sa te<br/>Gia:250000<br/>So Luong:<input type="text"style="width: 40px;"/><br/><br/><input type="button" value="Add to Cart"/></td></tr>
+					<tr><td><img src="../Images/Tomhap.jpg" alt="hinh tomhap" width="150px" height="110px"/></td><td align="center">Tom hap<br/>Gia:450000<br/>So Luong:<input type="text"style="width: 40px;"/><br/><br/><input type="button" value="Add to Cart"/></td></tr>
+								
+			</table>
+			
+		</div>
+		
+		<div style="width: 200px;float:right">
+			
+			<table cellpadding="5px" cellspacing="0px"border="1px" bordercolor="white" style="margin-right:0px;float:right;" width="200px">
+				<tr><td bgcolor="blue" style="color:white;" align="center">Your shopping cart</td></tr>
+			<tr align="center"><td>
+				<img src="../Images/Cachien.jpg" width="100px" height="100px;"/><br/>Ca chien<br />Gia:200000<br/>Soluong:<input type="text" value="1" style="width: 40px;"/><input type="button" value="Edit"/>
+		</td>	</tr><tr align="center"><td>
+				<img src="../Images/Tomhap.jpg" width="100px" height="100px;"/><br/>Tom hap<br />Gia:450000<br/>Soluong:<input type="text" value="2" style="width: 40px;"/><input type="button" value="Edit"/>
+		</td></tr>
+		<tr><td>Total:<input type="text" value="1100000"/></td></tr>
+			</table>
+		</div>
+		<div style="margin-top: 100px;margin-left:320px;color:blue;">
+		Name:         <input type="text" value="" style="width: 200px;"/><br/><br/>
+		Email:        <input type="text" value="" style="width: 250px;"/><br/><br/>
+		Telephone:    <input type="text" value=""/><br/><br/>
+		Address:      <select style="color:red;">
+			<option>Quan 1</option>
+			<option>Quan 2</option>
+			<option>Quan 3</option>
+			<option>Quan 4</option>
+			<option>Quan 5</option>
+			<option>Quan 6</option>
+			<option>Quan 7</option>
+			<option>Quan 8</option>
+			<option>Quan 9</option>
+			<option selected="selected">Quan 10</option>
+			<option>Quan 11</option>
+			<option>Quan 12</option>
+			<option>Huyen Nha Be</option>
+			<option>Quan Go Vap</option>
+			<option>Quan Binh Thanh</option>
+			<option>Quan Thu Duc</option>
+			<option>Huyen Hoc Mon</option>
+			<option>Huyen Cu Chi</option>
+		</select><br/><br/>
+		Country:    <input type="text" value=""/><br/><br/><br/><br/><br/>
+		<input type="button" value="Submit" style="width:150px;margin-left:80px;"/>
+		</div>
+		<div id="div_id" style="height:400px; width:450px;float:right;margin-top: -350px;margin-right: 20px;"></div>
+		</div>
+	</body>
+</html>
