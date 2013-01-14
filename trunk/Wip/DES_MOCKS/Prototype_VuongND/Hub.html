@@ -32,10 +32,72 @@
                 $( "#datepickerfrom" ).datepicker( "option", "maxDate", selectedDate );
             }
 		});
+		
+		$( "#dialog, #order1, #order2, #order3,#order4" ).dialog({
+			autoOpen: false,
+			width: 400,
+			buttons: [
+				{
+					text: "Ok",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				},
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});
+		
+				// Link to open the dialog
+		$( "#dialog-link" ).click(function( event ) {
+			$( "#dialog" ).dialog( "open" );
+			event.preventDefault();
+		});
+		
+				$( "#OrderNo1" ).click(function( event ) {
+			$( "#order1" ).dialog( "open" );
+			event.preventDefault();
+		});
+		$( "#OrderNo2" ).click(function( event ) {
+			$( "#order2" ).dialog( "open" );
+			event.preventDefault();
+		});
+		$( "#OrderNo3" ).click(function( event ) {
+			$( "#order3" ).dialog( "open" );
+			event.preventDefault();
+		});
+		
+				$( "#OrderNo4" ).click(function( event ) {
+			$( "#order4" ).dialog( "open" );
+			event.preventDefault();
+		});
+		
+		// Hover states on the static widgets
+		$( "#dialog-link, #icons li, #OrderNo1, #OrderNo2,#OrderNo3,#OrderNo4" ).hover(
+			function() {
+				$( this ).addClass( "ui-state-hover" );
+			},
+			function() {
+				$( this ).removeClass( "ui-state-hover" );
+			}
+		);		
 	});
 	</script>
 	<style>
 		#format { margin-top: 2em; }
+		#table
+		{
+			border:1px solid orange;
+		}
+		th
+		{
+			background-color:orange;
+			color:white;
+		}
 	</style>
 </head>
 <body>
@@ -59,22 +121,22 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 </td>
 </tr>
 <tr>
-<td>
-<table border="1">
+<td colspan="2">
+<table border="1" style="border:1px solid orange;" width="800px">
 <tr>
 <th>No</th>
 <th>OrderID</th>
-<th>Item</th>
-<th>Quantity</th>
+<th>Item No</th>
+<th>Price</th>
 <th>Delivery Date</th>
 <th>Expired Date</th>
 <th>Status</th>
 </tr>
 <tr>
 <td>1</td>
-<td>Order1</td>
-<td>Bag</td>
+<td><a id="OrderNo1" href="#">Order1</a></td>
 <td>2</td>
+<td>600.000</td>
 <td>2013/1/14</td>
 <td>2013/1/17</td>
 <td>
@@ -87,9 +149,9 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 
 <tr>
 <td>2</td>
-<td>Order2</td>
-<td>Hat</td>
-<td>5</td>
+<td><a id="OrderNo2" href="#">Order2</a></td>
+<td>2</td>
+<td>600.000</td>
 <td>2013/1/14</td>
 <td>2013/1/17</td>
 <td>
@@ -102,9 +164,9 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 
 <tr>
 <td>3</td>
-<td>Order3</td>
-<td>Laptop</td>
-<td>3</td>
+<td><a id="OrderNo3" href="#">Order3</a></td>
+<td>2</td>
+<td>600.000</td>
 <td>2013/1/14</td>
 <td>2013/1/17</td>
 <td>
@@ -117,9 +179,9 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 
 <tr>
 <td>4</td>
-<td>Order4</td>
-<td>Ring</td>
+<td><a id="OrderNo4" href="#">Order4</a></td>
 <td>2</td>
+<td>600.000</td>
 <td>2013/1/14</td>
 <td>2013/1/17</td>
 <td>
@@ -134,14 +196,7 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 </td>
 </tr>
 <tr>
-<td>
-<select id="slstatus">
-<option>5</option>
-<option>10</option>
-<option>15</option>
-</select>&nbsp;records per page
-</td>
-<td>
+<td align="right">
 	<a href=""><< Prev
 	</a>&nbsp;
 	<a href="">1
@@ -153,11 +208,200 @@ Delivery Date&nbsp;&nbsp;&nbsp;&nbsp; From <input type="text" id="datepickerfrom
 </tr>
 <tr>
 <td>
+<select id="slstatus">
+<option>5</option>
+<option>10</option>
+<option>15</option>
+</select>&nbsp;records per page
+</td>
+</tr>
+<tr>
+<td align="center">
 <input id="Button3" type="button" value="Save" />
 <input id="Button3" type="button" value="Summit" />
 </td>
 </tr>
 </table>
+</div>
+
+<div id="order1" title="Order">
+	<div>
+            <p>
+                OrderID : Order1</p>
+			<p>Delivery Date: 2013/1/14</p>
+        </div>
+        <div>
+            <table border="1" style="border:1px solid orange;">
+                <tr>
+                    <th>No</th>
+					<th>Item</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+					<td>Bag</td>
+					<td>Bag</td>
+					<td>1</td>
+					<td>400.000</td>
+					<td>200.000</td>
+                </tr>
+				<tr>
+                    <td>1</td>
+					<td>Hat</td>
+					<td>Hat</td>
+					<td>2</td>
+					<td>200.000</td>
+					<td>200.000</td>
+                </tr>
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Sum</td>
+				<td>600.000</td>
+				</tr>
+            </table>
+            
+        </div>
+</div>
+
+<div id="order2" title="Order">
+	<div>
+            <p>
+                OrderID : Order2</p>
+			<p>Delivery Date: 2013/1/14</p>
+        </div>
+        <div>
+            <table border="1" style="border:1px solid orange;">
+                <tr>
+                    <th>No</th>
+					<th>Item</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+					<td>Bag</td>
+					<td>Bag</td>
+					<td>1</td>
+					<td>400.000</td>
+					<td>400.000</td>
+                </tr>
+				<tr>
+                    <td>1</td>
+					<td>Hat</td>
+					<td>Hat</td>
+					<td>1</td>
+					<td>200.000</td>
+					<td>200.000</td>
+                </tr>
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Sum</td>
+				<td>600.000</td>
+				</tr>
+            </table>
+            
+        </div>
+</div>
+
+<div id="order3" title="Order">
+	<div>
+            <p>
+                OrderID : Order3</p>
+			<p>Delivery Date: 2013/1/14</p>
+        </div>
+        <div>
+            <table border="1" style="border:1px solid orange;"> 
+                <tr>
+                    <th>No</th>
+					<th>Item</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+					<td>Bag</td>
+					<td>Bag</td>
+					<td>1</td>
+					<td>400.000</td>
+					<td>400.000</td>
+                </tr>
+				                <tr>
+                    <td>1</td>
+					<td>Hat</td>
+					<td>Hat</td>
+					<td>1</td>
+					<td>200.000</td>
+					<td>200.000</td>
+                </tr>
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Sum</td>
+				<td>600.000</td>
+				</tr>
+            </table>
+            
+        </div>
+</div>
+
+<div id="order4" title="Order">
+	<div>
+            <p>
+                OrderID : Order1</p>
+			<p>Delivery Date: 2013/1/14</p>
+        </div>
+        <div>
+            <table border="1" style="border:1px solid orange;">
+                <tr>
+                    <th>No</th>
+					<th>Item</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+					<td>Bag</td>
+					<td>Bag</td>
+					<td>1</td>
+					<td>400.000</td>
+					<td>400.000</td>
+                </tr>
+				<tr>
+                    <td>1</td>
+					<td>Hat</td>
+					<td>Hat</td>
+					<td>1</td>
+					<td>200.000</td>
+					<td>200.000</td>
+                </tr>
+				<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>Sum</td>
+				<td>600.000</td>
+				</tr>
+            </table>
+            
+        </div>
 </div>
 </body>
 </html>
