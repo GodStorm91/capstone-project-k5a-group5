@@ -5,9 +5,9 @@
         <text>A%20Web%20Page%0Ahttp%3A//</text>
       </controlProperties>
     </control>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="31" y="189" w="674" h="125" measuredW="759" measuredH="53" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="31" y="189" w="674" h="125" measuredW="676" measuredH="53" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>No%20%20%20%20%20%20%2C%20Order%20ID%20%20%20%20%20%20%2C%20Item%20No%20%20%20%2C%20Price%20%20%2C%20Delivery%20Date%20%20%20%20%20%2C%20Expired%20Date%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20Package%20ID%2CStatus%20%2C%20Action%20%20%20%20%20%20%20%20%20%0A%2C%2C%2C%2C%2C%2C</text>
+        <text>No%20%20%20%20%20%20%2C%20Order%20ID%20%20%20%20%20%20%2C%20Item%20No%20%20%20%2C%20Price%20%20%2C%20Delivery%20Date%20%20%20%20%20%2C%20Expired%20Date%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20Status%20%2C%20Action%20%20%20%20%20%20%20%20%20%0A%2C%2C%2C%2C%2C</text>
       </controlProperties>
     </control>
     <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="668" y="91" w="106" h="74" measuredW="53" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
@@ -15,7 +15,7 @@
         <text>Filter</text>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::DateChooser" x="384" y="209" w="-1" h="-1" measuredW="149" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::DateChooser" x="415" y="209" w="-1" h="-1" measuredW="149" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <text>delivery%20date%20+%203</text>
       </controlProperties>
