@@ -311,5 +311,12 @@
         <text>Price%20%3D%20quan%20x%20price</text>
       </controlProperties>
     </control>
+    <control controlID="81" controlTypeID="com.balsamiq.mockups::Label" x="685" y="217" w="-1" h="-1" measuredW="72" measuredH="24" zOrder="63" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>16</size>
+        <text>Cart%20Add</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>
