@@ -138,20 +138,5 @@
         <text>Day%20la%20thong%20tin%20dat%20hang%20cua%20ban%20voi%20ID%20la%20.......</text>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="737" y="94" w="-1" h="-1" measuredW="72" measuredH="21" zOrder="26" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Package%20ID</text>
-      </controlProperties>
-    </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="91" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="27" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text/>
-      </controlProperties>
-    </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::Label" x="897" y="98" w="-1" h="-1" measuredW="305" measuredH="21" zOrder="28" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Vui%20long%20doc%20ma%20package%20cho%20nhan%20vien%20de%20nhan%20hang</text>
-      </controlProperties>
-    </control>
   </controls>
 </mockup>
