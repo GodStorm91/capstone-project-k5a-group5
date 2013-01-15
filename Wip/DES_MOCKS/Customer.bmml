@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1266" measuredH="476" mockupW="1011" mockupH="470">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1302" measuredH="476" mockupW="1047" mockupH="470">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="255" y="6" w="636" h="437" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -30,7 +30,7 @@
         <text>Reset</text>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::TitleWindow" x="684" y="54" w="450" h="422" measuredW="450" measuredH="400" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TitleWindow" x="684" y="21" w="555" h="455" measuredW="450" measuredH="400" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <close>true</close>
         <dragger>true</dragger>
@@ -99,7 +99,7 @@
         <text>OK</text>
       </controlProperties>
     </control>
-    <control controlID="21" controlTypeID="com.balsamiq.mockups::TitleWindow" x="989" y="155" w="277" h="162" measuredW="450" measuredH="400" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::TitleWindow" x="1025" y="155" w="277" h="162" measuredW="450" measuredH="400" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
         <bottomheight>19</bottomheight>
         <close>true</close>
@@ -108,12 +108,12 @@
         <topheight>26</topheight>
       </controlProperties>
     </control>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="1097" y="265" w="77" h="27" measuredW="43" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="1140" y="262" w="77" h="27" measuredW="43" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
         <text>OK</text>
       </controlProperties>
     </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::List" x="1004" y="186" w="247" h="76" measuredW="100" measuredH="126" zOrder="21" locked="false" isInGroup="-1">
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::List" x="1040" y="186" w="247" h="76" measuredW="100" measuredH="126" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Xin%20vui%20long%20nhan%20hang%20tu%20nhan%20vien%0AStatus%20se%20duoc%20doi%20thanh%20delivered%0ACam%20on%20da%20su%20dung%20dich%20vu%20cua%20chung%20toi</text>
       </controlProperties>
@@ -123,19 +123,34 @@
         <text>Screen%201</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="692" y="83" w="-1" h="-1" measuredW="61" measuredH="21" zOrder="23" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="690" y="51" w="-1" h="-1" measuredW="61" measuredH="21" zOrder="23" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Screen%202</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="989" y="280" w="-1" h="-1" measuredW="60" measuredH="21" zOrder="24" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="1040" y="276" w="-1" h="-1" measuredW="60" measuredH="21" zOrder="24" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Screen%203</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="716" y="102" w="-1" h="-1" measuredW="266" measuredH="21" zOrder="25" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="714" y="70" w="-1" h="-1" measuredW="266" measuredH="21" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Day%20la%20thong%20tin%20dat%20hang%20cua%20ban%20voi%20ID%20la%20.......</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="737" y="94" w="-1" h="-1" measuredW="72" measuredH="21" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Package%20ID</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="812" y="91" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Label" x="897" y="98" w="-1" h="-1" measuredW="305" measuredH="21" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vui%20long%20doc%20ma%20package%20cho%20nhan%20vien%20de%20nhan%20hang</text>
       </controlProperties>
     </control>
   </controls>
