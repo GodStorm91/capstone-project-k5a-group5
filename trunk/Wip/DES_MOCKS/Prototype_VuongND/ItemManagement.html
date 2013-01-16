@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Hub</title>
+    <title>Item Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -38,41 +38,6 @@
     <link href="css/demo_table.css" rel="stylesheet">
     <script>
         $(function () {
-            $("#from").datepicker({
-                dateFormat: "dd-mm-yy",
-                defaultDate: "+1w",
-                changeMonth: true,
-                onClose: function (selectedDate) {
-                    $("#to").datepicker("option", "minDate", selectedDate);
-                }
-            });
-            $("#to").datepicker({
-                dateFormat: "dd-mm-yy",
-                defaultDate: "+1w",
-                changeMonth: true,
-                onClose: function (selectedDate) {
-                    $("#from").datepicker("option", "maxDate", selectedDate);
-                }
-            });
-			
-			$( "#OrderNo1" ).click(function( event ) {
-				$( "#order1" ).dialog( "open" );
-				event.preventDefault();
-			});
-			
-			$( "#order1" ).dialog({
-			autoOpen: false,
-			width: 400,
-			buttons: [
-				{
-					text: "Ok",
-					click: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			]
-			});
-			
 			$('#example').dataTable();
         });
 	</script>
@@ -83,13 +48,9 @@
             <button type="button" class="btn btn-large btn-primary">
                 All</button>
             <button type="button" class="btn btn-large btn-primary">
-                Deliverying to Hub</button>
+                Active</button>
             <button type="button" class="btn btn-large btn-primary">
-                Received from us</button>
-            <button type="button" class="btn btn-large btn-primary">
-                Delivery to cus</button>
-            <button type="button" class="btn btn-large btn-primary">
-                Expired</button>
+                Deactive</button>
             <button type="button" class="btn btn-large btn-primary">
                 None</button>
         </div>
@@ -97,19 +58,23 @@
     <div style="margin-left: 30px;">
         <div class="row-fluid bordered">
             <div style="float: left">
-                Delivery Date&nbsp;&nbsp;&nbsp; From<input type="text" id="from" class="input-small"
-                    placeholder="From">&nbsp;To<input type="text" id="to" class="input-small" placeholder="To">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="checkbox inline">
-                    <input type="checkbox">
-                    Disable
-                </label>
+				  <div class="control-group">
+    
+    <div>
+	&nbsp;&nbsp;&nbsp; ID <input type="text" class="input-small" placeholder="Input ID">
+    </div>
+  </div>
             </div>
             <div style="float: left">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button class="btn btn-large btn-primary" type="button">
                     Filter</button>
             </div>
-            <div style="padding-top: 70px;">
+			<div style="clear:both"></div>
+			<div>
+			     <a href="#myModal" role="button" class="btn" data-toggle="modal">Create new</a>
+			</div>
+            <div style="padding-top: 10px;">
 					<div id="container">
 			<div id="demo">
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="800px">
@@ -119,24 +84,21 @@
                                 No
                             </th>
                             <th>
-                                OrderID
+                                ID
                             </th>
                             <th>
-                                Item No
+                                Item
+                            </th>
+                            <th>
+                                Description
                             </th>
                             <th>
                                 Price
                             </th>
                             <th>
-                                Delivery Date
-                            </th>
-                            <th>
-                                Expired Date
-                            </th>
-                            <th>
                                 Status
                             </th>
-                            <th>
+							<th>
                                 Action
                             </th>
                         </tr>
@@ -147,51 +109,47 @@
                                 1
                             </td>
                             <td>
-                                <a id="OrderNo1" href="#">Order1</a>
+                                IT1
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                100.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Received
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Delivered" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeX">
+                        <tr class="gradeA">
                             <td>
                                 2
                             </td>
                             <td>
-                                <a id="OrderNo2" href="#">Order2</a>
+                                IT2
                             </td>
                             <td>
-                                2
+                                Hat
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/15
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                         <tr class="gradeA">
@@ -199,77 +157,71 @@
                                 3
                             </td>
                             <td>
-                                <a id="OrderNo3" href="#">Order3</a>
+                                IT3
                             </td>
                             <td>
-                                2
+                                Snack
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Received
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Delivered" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeX">
+                        <tr class="gradeA">
                             <td>
                                 4
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT4
                             </td>
                             <td>
-                                2
+                                Laptop
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                300.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeX">
+                        <tr class="gradeA">
                             <td>
                                 5
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT5
                             </td>
                             <td>
-                                2
+                                Doll
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -277,25 +229,23 @@
                                 6
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT6
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Deactive
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -303,25 +253,47 @@
                                 7
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT7
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Deactive
                             </td>
                             <td>
-                                Delivered
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>
+                                7
                             </td>
                             <td>
-                                <input id="Button3" type="button" value="Received" />
+                                IT7
+                            </td>
+                            <td>
+                                Bag
+                            </td>
+                            <td>
+                                Very good
+                            </td>
+                            <td>
+                                200.000
+                            </td>
+                            <td>
+                                Deactive
+                            </td>
+                            <td>
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -329,77 +301,71 @@
                                 8
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT8
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                100.000
                             </td>
                             <td>
-                                2013/1/17
+                                Deactive
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeA">
+                        <tr class="gradeX">
                             <td>
                                 9
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT9
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                400.000
                             </td>
                             <td>
-                                2013/1/17
+                                Deactive
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeA">
+                        <tr class="gradeX">
                             <td>
                                 10
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT10
                             </td>
                             <td>
-                                2
+                                Bag
+                            </td>
+                            <td>
+                                Very good
                             </td>
                             <td>
                                 600.000
                             </td>
                             <td>
-                                2013/1/14
+                                Deactive
                             </td>
                             <td>
-                                2013/1/17
-                            </td>
-                            <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                         <tr class="gradeA">
@@ -407,77 +373,47 @@
                                 11
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT11
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
-                        <tr class="gradeX">
+                        <tr class="gradeA">
                             <td>
                                 12
                             </td>
                             <td>
-                                <a id="OrderNo4" href="#">Order4</a>
+                                IT12
                             </td>
                             <td>
-                                2
+                                Bag
                             </td>
                             <td>
-                                600.000
+                                Very good
                             </td>
                             <td>
-                                2013/1/14
+                                200.000
                             </td>
                             <td>
-                                2013/1/17
+                                Active
                             </td>
                             <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>
-                                13
-                            </td>
-                            <td>
-                                <a id="OrderNo4" href="#">Order4</a>
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                600.000
-                            </td>
-                            <td>
-                                2013/1/14
-                            </td>
-                            <td>
-                                2013/1/17
-                            </td>
-                            <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
+                                <input id="Button3" type="button" value="Edit" />
+								<input id="Button3" type="button" value="Delete" />
                             </td>
                         </tr>
                     </tbody>
@@ -487,78 +423,77 @@
                                 No
                             </th>
                             <th>
-                                OrderID
+                                ID
                             </th>
                             <th>
-                                Item No
+                                Item
+                            </th>
+                            <th>
+                                Description
                             </th>
                             <th>
                                 Price
                             </th>
                             <th>
-                                Delivery Date
-                            </th>
-                            <th>
-                                Expired Date
-                            </th>
-                            <th>
                                 Status
                             </th>
-                            <th>
+							<th>
                                 Action
                             </th>
                         </tr>
                     </tfoot>
                 </table>
 				</div>
-					<div id="order1" title="Order">
-	<div>
-            <p>
-                OrderID : Order1</p>
-			<p>Delivery Date: 2013/1/14</p>
-        </div>
-        <div>
-            <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="600px">
-                <tr>
-                    <th>No</th>
-					<th>Item</th>
-					<th>Description</th>
-					<th>Quantity</th>
-					<th>Price</th>
-					<th>Total</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-					<td>Bag</td>
-					<td>Bag</td>
-					<td>1</td>
-					<td>400.000</td>
-					<td>200.000</td>
-                </tr>
-				<tr>
-                    <td>1</td>
-					<td>Hat</td>
-					<td>Hat</td>
-					<td>2</td>
-					<td>200.000</td>
-					<td>200.000</td>
-                </tr>
-				<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>Sum</td>
-				<td>600.000</td>
-				</tr>
-            </table>
-            
-        </div>
-</div>
 				</div>
             </div>
         </div>
     </div>
+	  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <h3 id="myModalLabel">Add new item</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal">
+
+	<dl class="dl-horizontal">
+  <dt>ID</dt>
+  <dd><input type="text" class="input-small" placeholder="Input ID"></dd>
+</dl>
+
+
+		<dl class="dl-horizontal">
+  <dt>Item</dt>
+  <dd><input type="text" class="input-small" placeholder="Input item"></dd>
+</dl>
+
+
+		<dl class="dl-horizontal">
+  <dt>Description</dt>
+  <dd><input type="text" class="input-small" placeholder="Input description"></dd>
+</dl>
+
+
+		<dl class="dl-horizontal">
+  <dt>Price</dt>
+  <dd><input type="text" class="input-small" placeholder="Input price"></dd>
+</dl>
+
+
+	<dl class="dl-horizontal">
+  <dt>Status</dt>
+  <dd><div class="btn-group" data-toggle="buttons-radio">
+  <button type="button" class="btn btn-primary">Active</button>
+  <button type="button" class="btn btn-primary">Deactive</button>
+</div></dd>
+</dl>
+
+</form>
+  </div>
+  <div class="modal-footer">
+			<button class="btn btn-primary">Ok</button>
+           <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+</div>
 
 </body>
 </html>
