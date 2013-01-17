@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>CustomerOrder</title>
+		<meta name="description" content="" />
+		<meta name="author" content="ngocanh" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+		 
+<script type="text/javascript" 
+src="http://maps.googleapis.com/maps/api/js?sensor=false&language=vi"></script>
+<script type="text/javascript">
+var map;
+function initialize() {
+      var myLatlng = new google.maps.LatLng(10.776198,106.632982);
+      var myOptions = {
+    zoom: 16,
+    center: myLatlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+}
+map = new google.maps.Map(document.getElementById("div_id"), myOptions); 
+  // Biến text chứa nội dung sẽ được hiển thị
+var text;
+
+   var infowindow = new google.maps.InfoWindow(
+    { content: text,
+        size: new google.maps.Size(100,50),
+        position: myLatlng
+    });
+       infowindow.open(map);    
+    var marker = new google.maps.Marker({
+      position: myLatlng, 
+      map: map,
+      title:"Trường ĐH GTVT TP.HCM!"
+  });
+}
+</script>
+<style type="text/css">
+			#noi_dung{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung1{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung2{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung3{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+		</style>
+			<script type="text/javascript">
+			function DiChuyen()
+			{e=window.even || event;
+			s=document.getElementById("noi_dung");
+			
+			s.style.top=e.clientY+'px';
+			s.style.visibility='visible';
+			document.title=e.clientX + ':'+e.clientY;}
+			</script>
+			<script type="text/javascript">
+			function DiChuyen3()
+			{e=window.even || event;
+			s=document.getElementById("noi_dung3");
+			
+			s.style.top=e.clientY+'px';
+			s.style.visibility='visible';
+			document.title=e.clientX + ':'+e.clientY;}
+			</script>
+			<script type="text/javascript">
+			function DiChuyen1()
+			{e=window.even || event;
+			s=document.getElementById("noi_dung1");
+			
+			s.style.top=e.clientY+'px';
+			s.style.visibility='visible';
+			document.title=e.clientX + ':'+e.clientY;}
+			</script>
+			<script type="text/javascript">
+			function DiChuyen2()
+			{e=window.even || event;
+			s=document.getElementById("noi_dung2");
+			
+			s.style.top=e.clientY+'px';
+			s.style.visibility='visible';
+			document.title=e.clientX + ':'+e.clientY;}
+			</script>
+	</head>
+	<body onLoad="initialize()">
+		
+		
+		<p>
+		<div id="noi_dung" style="margin-left: 60px;margin-top: -10px;"> 
+			<img src="../Images/Cachien.jpg" width="200px" height="200px"/><br/>Ca là món ăn giàu đạm và dinh dưỡng, bạn có thể đổi món cho gia đình với món cá chiên sả ớt, mùi thơm của sả cộng với vị cay cay của ớt không những làm mất đi vị tanh của cá mà còn giúp cho thịt cá thơm ngon hơn để bữa ăn gia đình thêm ngon miệng.
+</div>
+		</p>
+		<p>
+		<div id="noi_dung1" style="margin-left: 60px;margin-top: -50px;"> 
+			<img src="../Images/Changahaphanh.jpg" width="200px" height="200px"/><br/>Ca là món ăn giàu đạm và dinh dưỡng, bạn có thể đổi món cho gia đình với món cá chiên sả ớt, mùi thơm của sả cộng với vị cay cay của ớt không những làm mất đi vị tanh của cá mà còn giúp cho thịt cá thơm ngon hơn để bữa ăn gia đình thêm ngon miệng.
+</div>
+		</p>
+		<p>
+		<div id="noi_dung2" style="margin-left: 60px;margin-top: -90px;"> 
+			<img src="../Images/Comcuon.jpg" width="200px" height="200px"/><br/>Ca là món ăn giàu đạm và dinh dưỡng, bạn có thể đổi món cho gia đình với món cá chiên sả ớt, mùi thơm của sả cộng với vị cay cay của ớt không những làm mất đi vị tanh của cá mà còn giúp cho thịt cá thơm ngon hơn để bữa ăn gia đình thêm ngon miệng.
+</div>
+		</p>
+		<p>
+		<div id="noi_dung3" style="margin-left: 60px;margin-top: -150px;"> 
+			<img src="../Images/Ngaoluoc.jpg" width="200px" height="200px"/><br/>Ca là món ăn giàu đạm và dinh dưỡng, bạn có thể đổi món cho gia đình với món cá chiên sả ớt, mùi thơm của sả cộng với vị cay cay của ớt không những làm mất đi vị tanh của cá mà còn giúp cho thịt cá thơm ngon hơn để bữa ăn gia đình thêm ngon miệng.
+</div>
+		</p>
+		
+		<div  class="bs-docs-example" style="float:left;width: 600px;margin-left: 10px;margin-top: 5px;height:100px;">
+			<legend style="font-weight:bold;color:blue;">Menu</legend>
+            <table class="table table-striped" cellpadding="5px">
+            	<thead>
+            	<tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th></th>
+                </tr>
+                </thead>
+		<tbody>
+			
+			<tr align="center">
+				<td><img src="../Images/Cachien.jpg" class="img-polaroid" width="30px" height="30px" onmouseover="DiChuyen()"
+		onmouseout="noi_dung.style.visibility='hidden';"/></td>
+				<td>Ca Chien</td><td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option>2</option> <option>3</option><option>4</option> <option>5</option>
+					</select>
+				</td>
+				<td><button class="btn btn-info" type="button">Add</button></td>
+			</tr>
+			<tr align="center">
+				<td><img src="../Images/Changahaphanh.jpg" class="img-polaroid" width="30px" height="30px" onmouseover="DiChuyen1()"
+		onmouseout="noi_dung1.style.visibility='hidden';"/></td>
+				<td>Chan ga hap hanh</td><td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option>2</option> <option>3</option><option>4</option> <option>5</option>
+					</select>
+			</td>
+				<td><button class="btn btn-info" type="button">Add</button></td>
+			</tr>
+			<tr align="center">
+				<td><img src="../Images/Comcuon.jpg" class="img-polaroid" width="30px" height="30px" onmouseover="DiChuyen2()"
+		onmouseout="noi_dung2.style.visibility='hidden';"/></td>
+				<td>Com Cuon</td><td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option>2</option> <option>3</option><option>4</option> <option>5</option>
+					</select>
+				</td>
+				<td><button class="btn btn-info" type="button">Add</button></td>
+			</tr>
+			<tr align="center">
+				<td><img src="../Images/Ngaoluoc.jpg" class="img-polaroid" width="30px" height="30px" onmouseover="DiChuyen3()"
+		onmouseout="noi_dung3.style.visibility='hidden';"/></td>
+				<td>Ngao Luoc</td><td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option>2</option> <option>3</option><option>4</option> <option>5</option>
+					</select>
+				</td>
+				<td><button class="btn btn-info" type="button">Add</button></td>
+			</tr>
+			</tbody>
+		</table>
+		</div><br/>
+		<div style="float:right;margin-top:10px;margin-right: 5px;width: 730px;">
+		<form class="form-horizontal">
+			<div class="control-group">
+    <label class="control-label" for="GenerateCode">Order ID :</label>
+    <div class="controls">
+      <input type="text" id="generateCode" value="111111">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="totalPrice">Total Price :</label>
+    <div class="controls">
+      <input type="text" id="totalPrice" value="1000000">
+    </div>
+  </div>
+		</form>
+		</div><div style="float:right;width: 730px;margin-right: 5px;margin-top: 5px;">
+		<legend style="font-weight:bold;color:blue;">Cart Add</legend>
+		<table class="table table-striped" cellpadding="0px">
+			<thead>
+			<tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                  <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            	<tr align="center">
+				<td>Ca Chien</td>
+				<td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option selected="selected">2</option> <option>3</option><option>4</option> <option>5</option>
+					</select>
+				</td>
+				<td>400000</td>
+				<td><button class="btn btn-danger" type="button">Remove</button></td>
+			</tr>
+			<tr align="center">
+				<td>Ngao Luoc</td>
+				<td>200000</td>
+				<td>
+					<select class="span1">
+					<option>0</option><option>1</option><option>2</option> <option selected="selected">3</option><option>4</option> <option>5</option>
+					</select>
+				</td>
+				<td>600000</td>
+				<td><button class="btn btn-danger" type="button">Remove</button></td>
+			</tr>
+            </tbody>
+		</table>
+		</div>
+		<div style="width: 650px;margin-top: 300px;margin-left:5px;">
+			<legend style="font-weight:bold;color:blue;">Customer Infor</legend>
+			<form class="form-horizontal">
+				<div class="control-group">
+    <label class="control-label" for="name">Name</label>
+    <div class="controls">
+      <input type="text" id="name">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="phone1">Phone 1</label>
+    <div class="controls">
+      <input type="text" id="phone1">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="phone2">Phone 2</label>
+    <div class="controls">
+      <input type="text" id="phone2">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Email</label>
+    <div class="controls">
+      <input class="span3" type="email" id="inputEmail" placeholder="A@gmail.com">
+    </div>
+    </div>
+    <div class="control-group">
+    <label class="control-label" for="city">City</label>
+    <div class="controls">
+     <select class="span3" id="city">
+    	<option selected="selected">Ho Chi Minh</option>
+    	<option>Dong Nai</option>
+    	<option>Binh Duong</option>
+    </select>   
+  </div>   
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="district">District</label>
+    <div class="controls">
+     <select class="span3" id="district">
+    	<option selected="selected">District 1</option>
+    	<option>District 3</option>
+    	<option>District7</option>
+    </select>   
+  </div>   
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="ward">Ward</label>
+    <div class="controls">
+     <select class="span3" id="ward">
+    	<option selected="selected">Ward 1</option>
+    	<option>Ward 3</option>
+    	<option>Ward 7</option>
+    </select>   
+  </div>   
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="address">Address</label>
+    <div class="controls">
+      <input type="text" id="address">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="aroundHubs">Around Hubs</label>
+    <div class="controls">
+     <select multiple="multiple" id="aroundHubs">
+    	<option>Shop ABC</option>
+    	<option>Shop BBB</option>
+    	<option>Shop CCC</option>
+    	<option>Shop AAA</option>
+    </select>   
+  </div>   
+  </div>
+  <div style="margin-left: 220px;">
+  <form class="form-inline">
+  	<button type="button" class="btn-success">OK</button>
+  	<button type="button" class=" btn-warning">Cancel</button>
+  </form>
+  </div>
+			</form>
+		</div>
+		</div>
+		<div id="div_id" style="height:500px; width:700px;float:right;margin-top: -565px;margin-right: 5px;"></div>
+		</div>
+	</body>
+</html>
