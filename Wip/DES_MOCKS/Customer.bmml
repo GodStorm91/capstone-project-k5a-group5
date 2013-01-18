@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1302" measuredH="476" mockupW="1047" mockupH="470">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1302" measuredH="476" mockupW="1173" mockupH="470">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="255" y="6" w="636" h="437" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -84,7 +84,7 @@
         <text>No%2C%20Item%2C%20Description%2C%20Quantity%2C%20Price%2C%20Total%0A%2C%2C%2C%2C%2C%0ATotal%2C%2C%2CSum%28quan%29%2C%2CSum%28total%29</text>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="743" y="292" w="-1" h="-1" measuredW="43" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="743" y="292" w="-1" h="-1" measuredW="42" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Status</text>
       </controlProperties>
@@ -94,7 +94,7 @@
         <text/>
       </controlProperties>
     </control>
-    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="897" y="416" w="77" h="27" measuredW="43" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="862" y="416" w="77" h="27" measuredW="43" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>OK</text>
       </controlProperties>
@@ -136,6 +136,16 @@
     <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="714" y="70" w="-1" h="-1" measuredW="266" measuredH="21" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Day%20la%20thong%20tin%20dat%20hang%20cua%20ban%20voi%20ID%20la%20.......</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Button" x="948" y="416" w="77" h="27" measuredW="64" measuredH="27" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::StickyNote" x="129" y="174" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>detail%20hien%20thi%20chung%20tr%EAn%201%20m%E0n%20h%ECnh%0A1%20message%20box</text>
       </controlProperties>
     </control>
   </controls>

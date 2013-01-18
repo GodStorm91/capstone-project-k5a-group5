@@ -161,12 +161,12 @@
         <text>11111111111111111</text>
       </controlProperties>
     </control>
-    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="384" y="537" w="-1" h="-1" measuredW="43" measuredH="21" zOrder="31" locked="false" isInGroup="-1">
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="384" y="537" w="-1" h="-1" measuredW="42" measuredH="21" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Status</text>
       </controlProperties>
     </control>
-    <control controlID="44" controlTypeID="com.balsamiq.mockups::ComboBox" x="459" y="537" w="-1" h="-1" measuredW="88" measuredH="94" zOrder="32" locked="false" isInGroup="-1">
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::ComboBox" x="459" y="537" w="-1" h="-1" measuredW="89" measuredH="94" zOrder="32" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Received%0ADelivered%0A..%0A..%0A..</text>
       </controlProperties>
