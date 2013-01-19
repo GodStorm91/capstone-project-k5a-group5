@@ -23,6 +23,7 @@
     <script src="js/bootstrap-button.js"></script>
     <script src="js/bootstrap-collapse.js"></script>
     <script src="js/bootstrap-carousel.js"></script>
+	<script src="js/bootstrap-fileupload.js"></script>
     <script src="js/bootstrap-typeahead.js"></script>
     <script src="js/bootstrap-affix.js"></script>
     <script src="js/holder/holder.js"></script>
@@ -457,25 +458,38 @@
 
 	<dl class="dl-horizontal">
   <dt>ID</dt>
-  <dd><input type="text" class="input-small" placeholder="Input ID"></dd>
+  <dd><input type="text" placeholder="Input ID"></dd>
 </dl>
 
 
 		<dl class="dl-horizontal">
   <dt>Item</dt>
-  <dd><input type="text" class="input-small" placeholder="Input item"></dd>
+  <dd><input type="text" placeholder="Input item"></dd>
 </dl>
 
 
 		<dl class="dl-horizontal">
   <dt>Description</dt>
-  <dd><input type="text" class="input-small" placeholder="Input description"></dd>
+  <dd><textarea rows="3"></textarea></dd>
 </dl>
+
+		<dl class="dl-horizontal">
+  <dt>Image</dt>
+  <dd>
+<div class="fileupload fileupload-new" data-provides="fileupload">
+  <div class="input-append">
+    <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-mini btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn btn-mini fileupload-exists" data-dismiss="fileupload">Remove</a>
+  </div>
+</div>
+  </dd>
+</dl>
+
+
 
 
 		<dl class="dl-horizontal">
   <dt>Price</dt>
-  <dd><input type="text" class="input-small" placeholder="Input price"></dd>
+  <dd><input type="text" placeholder="Input price"></dd>
 </dl>
 
 

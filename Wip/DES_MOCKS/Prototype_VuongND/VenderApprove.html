@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Hub</title>
+    <title>Vender Approve</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -83,13 +83,9 @@
             <button type="button" class="btn btn-large btn-primary">
                 All</button>
             <button type="button" class="btn btn-large btn-primary">
-                Deliverying to Hub</button>
+                Unapproved</button>
             <button type="button" class="btn btn-large btn-primary">
-                Received from us</button>
-            <button type="button" class="btn btn-large btn-primary">
-                Delivery to cus</button>
-            <button type="button" class="btn btn-large btn-primary">
-                Expired</button>
+                Approved</button>
             <button type="button" class="btn btn-large btn-primary">
                 None</button>
         </div>
@@ -97,7 +93,7 @@
     <div style="margin-left: 30px;">
         <div class="row-fluid bordered">
             <div style="float: left">
-                Delivery Date&nbsp;&nbsp;&nbsp; From<input type="text" id="from" class="input-small"
+                Date Order&nbsp;&nbsp;&nbsp; From<input type="text" id="from" class="input-small"
                     placeholder="From">&nbsp;To<input type="text" id="to" class="input-small" placeholder="To">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="checkbox inline">
                     <input type="checkbox">
@@ -112,7 +108,7 @@
             <div style="padding-top: 70px;">
 					<div id="container">
 			<div id="demo">
-                <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="800px">
+                <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="900px">
                     <thead>
                         <tr>
                             <th>
@@ -128,17 +124,18 @@
                                 Price
                             </th>
                             <th>
+                                Order Date
+                            </th>
+                            <th>
                                 Delivery Date
                             </th>
-                            <th>
-                                Expired Date
+							<th>
+                                Priority
                             </th>
-                            <th>
+							<th>
                                 Status
                             </th>
-                            <th>
-                                Action
-                            </th>
+							<th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,13 +159,17 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Received
+                                Medium
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Delivered" />
+							<td>
+                                Unapproved
                             </td>
+							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+						    <tr class="gradeX">
                             <td>
                                 2
                             </td>
@@ -182,19 +183,22 @@
                                 600.000
                             </td>
                             <td>
-                                2013/1/15
+                                2013/1/14
                             </td>
                             <td>
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeA">
+												    <tr class="gradeX">
                             <td>
                                 3
                             </td>
@@ -214,13 +218,16 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Received
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Delivered" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+												    <tr class="gradeA">
                             <td>
                                 4
                             </td>
@@ -240,13 +247,16 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                Medium
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Approved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+												    <tr class="gradeC">
                             <td>
                                 5
                             </td>
@@ -266,13 +276,16 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                Low
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+												    <tr class="gradeA">
                             <td>
                                 6
                             </td>
@@ -292,13 +305,16 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+												    <tr class="gradeA">
                             <td>
                                 7
                             </td>
@@ -318,18 +334,21 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeX">
+												    <tr class="gradeA">
                             <td>
                                 8
                             </td>
                             <td>
-                               <a href="#myModal" role="button" data-toggle="modal">Order8</a>
+                                <a href="#myModal" role="button" data-toggle="modal">Order8</a>
                             </td>
                             <td>
                                 2
@@ -344,18 +363,21 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeA">
+												    <tr class="gradeA">
                             <td>
                                 9
                             </td>
                             <td>
-                               <a href="#myModal" role="button" data-toggle="modal">Order9</a>
+                                <a href="#myModal" role="button" data-toggle="modal">Order9</a>
                             </td>
                             <td>
                                 2
@@ -370,18 +392,21 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
-                        <tr class="gradeA">
+												    <tr class="gradeA">
                             <td>
                                 10
                             </td>
                             <td>
-                               <a href="#myModal" role="button" data-toggle="modal">Order10</a>
+                                <a href="#myModal" role="button" data-toggle="modal">Order10</a>
                             </td>
                             <td>
                                 2
@@ -396,89 +421,14 @@
                                 2013/1/17
                             </td>
                             <td>
-                                Delivered
+                                High
                             </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
-                        </tr>
-                        <tr class="gradeA">
-                            <td>
-                                11
-                            </td>
-                            <td>
-                                <a href="#myModal" role="button" data-toggle="modal">Order11</a>
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                600.000
-                            </td>
-                            <td>
-                                2013/1/14
-                            </td>
-                            <td>
-                                2013/1/17
-                            </td>
-                            <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                <a href="#myModal" role="button" data-toggle="modal">Order12</a>
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                600.000
-                            </td>
-                            <td>
-                                2013/1/14
-                            </td>
-                            <td>
-                                2013/1/17
-                            </td>
-                            <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>
-                                13
-                            </td>
-                            <td>
-                                <a href="#myModal" role="button" data-toggle="modal">Order13</a>
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                600.000
-                            </td>
-                            <td>
-                                2013/1/14
-                            </td>
-                            <td>
-                                2013/1/17
-                            </td>
-                            <td>
-                                Delivered
-                            </td>
-                            <td>
-                                <input id="Button3" type="button" value="Received" />
-                            </td>
+							<td>
+                                Unapproved
+                            </td>							<td>
+							<input id="Button3" type="button" value="Approve" />
+								<input id="Button3" type="button" value="Reject" />
+							</td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -496,27 +446,23 @@
                                 Price
                             </th>
                             <th>
+                                Order Date
+                            </th>
+                            <th>
                                 Delivery Date
                             </th>
-                            <th>
-                                Expired Date
+							<th>
+                                Priority
                             </th>
-                            <th>
+							<th>
                                 Status
                             </th>
-                            <th>
-                                Action
-                            </th>
+							<th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
 				</div>
-
-				</div>
-            </div>
-        </div>
-    </div>
-	  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <h3 id="myModalLabel">Order Details</h3>
   </div>
@@ -524,14 +470,14 @@
     <form class="form-horizontal">
 
 	<dl class="dl-horizontal">
-  <dt>OrderID :</dt>
-  <dd>Order</dd>
+  <dt>Receiver Address :</dt>
+  <dd>Quang Trung</dd>
 </dl>
 
 
 		<dl class="dl-horizontal">
-  <dt>Delivery Date :</dt>
-  <dd>2013/01/14</dd>
+  <dt>Receiver Email :</dt>
+  <dd>dovuongnguyen@gmail.com</dd>
 </dl>
 
 <table class="table">
@@ -629,6 +575,10 @@
        <button class="btn" data-dismiss="modal" aria-hidden="true">Ok</button>
   </div>
 </div>
+				</div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
