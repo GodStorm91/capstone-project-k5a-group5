@@ -54,3 +54,17 @@ D:\SportsStore\SportsStore.Domain\bin\Debug\Ninject.xml
 D:\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.csprojResolveAssemblyReference.cache
 D:\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.dll
 D:\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.pdb
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\SportsStore.Domain.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\SportsStore.Domain.pdb
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\EntityFramework.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Moq.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Ninject.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\System.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\EntityFramework.xml
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Moq.pdb
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Moq.xml
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Ninject.pdb
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\bin\Debug\Ninject.xml
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.csprojResolveAssemblyReference.cache
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.dll
+D:\CAPSTONE\Wip\DEV_Source\TestPlugin\SportsStore\SportsStore.Domain\obj\Debug\SportsStore.Domain.pdb
