@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+    <title>DetailCollectionPlanView</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- JqueryUI styles -->
+    <link href="css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.js"></script>
+    <!-- Bootstrapt styles -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-fileupload.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+    <script src="js/holder/holder.js"></script>
+    <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="assets/js/google-code-prettify/prettify.js"></script>
+    <script src="js/application.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/prettify.css" rel="stylesheet">
+    <!-- Datatable styles -->
+    <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+    <link href="css/demo_page.css" rel="stylesheet">
+    <link href="css/demo_table.css" rel="stylesheet">
+    <style type="text/css">
+			
+				#wrapper { 
+
+width: 1024px; 
+
+margin: 0 auto; 
+
+text-align: left; 
+
+} 
+		</style>
+    <script>
+        $(function () {
+            $('#example').dataTable();
+           
+        });
+	</script>
+	
+</head>
+
+	<body>
+		<div id="wrapper">
+		<div style="float:left;margin-left:10px;margin-top: 10px;">
+			<img src="images/TicTacDelivery-logo.png" alt="hinh logo tictac" width="200px" height="150px"/>
+		</div>
+		<div style="float:left;margin-left:80px;margin-top:10px;">
+        <div class="row-fluid bordered">
+            <div class="bs-docs-example" style="position: absolute;">
+                <div class="btn-group" data-toggle="buttons-checkbox">   	
+                	<img src="images/notification.png" alt="hinh icon" width="40px" height="40px"/>
+                    <button type="button" class="btn btn-large btn-info">
+                        Plans</button>
+                    <button type="button" class="btn btn-large btn-info">
+                        Requests</button>
+                    <button type="button" class="btn btn-large btn-info">
+                        Orders</button>
+                    <button type="button" class="btn btn-large btn-info">
+                        Customers</button>
+                          <button type="button" class="btn btn-large btn-info">
+                        Options Config</button>                        
+                </div>
+            </div>  
+            <div style="float: left; position: absolute; margin-left: 400px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select class="span1" style="width:100px;margin-top:8px;">
+                	<option>user1</option>
+                	<option>user2</option>
+                	<option>user3</option>
+                </select>
+            </div>
+        </div>
+                </div><br/><br/><br/>
+              <h1 style="font-size: 15px;text-align:center;background-color:#000066;color:white;width: 1024px;">Collection Plan Detail</h1><br/>
+          <div style="width: 1024px;background-color:#FCFDFE;height: 80px;">
+          	
+          		&nbsp;&nbsp;Collection Plan no:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		Num ber Of Request:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		Assigned To:<a href="#myModal" role="button" class="btn btn-link" data-toggle="modal">KhanhNHV, VuongND and 3 others...</a><br/>
+          	    
+          		&nbsp;&nbsp;Created Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		Number of Orders:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		To tal Distance to cover:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;Created By:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		Notes:
+          	
+          </div>   <br/>
+          <div style="margin-left: 20px;">
+          	<a href="#dalmo" class="btn btn-primary" role="button" data-toggle="modal">Add Request</a>
+          </div>
+              <div style="margin-top: 100px;">
+                <div id="container">
+                    <div id="demo">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table" id="example" width="1024px">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Request No
+                                    </th>
+                                    <th>
+                                        Vendor
+                                    </th>
+                                    <th>
+                                        Collection Address
+                                    </th>
+                                    <th>
+                                        Requested Date
+                                    </th>
+                                    <th>
+                                        Num Orders
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                    	PIC
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                               <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                      1
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                      2
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                      3
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       4
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                      4
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                                <tr class="success">
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        Nhommua
+                                    </td>
+                                    <td>
+                                        452/1QL 30 My Tan
+                                    </td>
+                                    <td>
+                                        2012/12/12
+                                    </td>
+                                    <td>
+                                       5
+                                    </td>
+                                    <td>
+                                        Planned for Collecting
+                                    </td>
+                                    <td>
+                                    	KhanhNHV
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="Checkbox1" value="option1">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+        	<button class="btn btn-danger">
+                Delete Plan</button>
+            <button class="btn btn-success">
+                Accept Plan</button>
+            
+        </div>  
+               <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <h3 id="myModalLabel">
+                Add Resource</h3>
+        </div>
+        <div class="modal-body">
+           <div style="width: 100px;">
+                    
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary">
+                Ok</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Cancel</button>
+        </div>  
+         <div id="dalmo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+        </div>
+	</body>
+</html>
