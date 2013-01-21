@@ -6202,7 +6202,7 @@ textarea.editor-html {
 .uneditable-input {
   height: 20px;
   overflow: hidden;
-  white-space: pre;
+  /*white-space: pre;*/
 }
 
 .uneditable-textarea {
