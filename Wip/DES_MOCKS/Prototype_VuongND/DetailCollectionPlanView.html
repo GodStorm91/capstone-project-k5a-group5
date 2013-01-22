@@ -121,7 +121,7 @@ text-align: left;
           	
           </div>   <br/>
           <div style="margin-left: 20px;">
-          	<a href="#dalmo" class="btn btn-primary" role="button" data-toggle="modal">Add Request</a>
+          	<a href="#myModal1" class="btn btn-primary" role="button" data-toggle="modal">Add Request</a>
           </div>
               <div style="margin-top: 100px;">
                 <div id="container">
@@ -706,44 +706,88 @@ text-align: left;
                             
                         </table>
                     </div>
-                </div>
-            </div>
-        <div class="modal-footer">
+                    <div class="modal-footer">
         	<button class="btn btn-danger">
                 Delete Plan</button>
             <button class="btn btn-success">
-                Accept Plan</button>
-            
-        </div>  
+                Accept Plan</button>    
+                   </div>  
+                </div>
+            </div>
+        
                <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
+        aria-hidden="true"style="width: 400px;height: 400px;">
         <div class="modal-header">
             <h3 id="myModalLabel">
                 Add Resource</h3>
         </div>
-        <div class="modal-body">
-           <div style="width: 100px;">
-                    
-        </div>
-        <div class="modal-footer">
+        <div class="modal-body"style="float:left;">
+        	<div>
+        		<p style="font-weight:bold;">Available Resource:</p>
+            <textarea rows="10" style="width: 150px;">
+KhanhNHV
+VuongND
+ThinhNTY
+AnhAN
+            </textarea>
+            </div>
+            <div style="margin-top: -180px;margin-left: 173px;">
+           <button class="btn btn-mini btn-primary" type="button">>></button><br/><br/>
+           <button class="btn btn-mini btn-primary" type="button">&lt;&lt;</button>
+            </div>
+            <div style="margin-left: 210px;margin-top: -155px;">
+            	<p style="font-weight:bold;">Assigned Resource:</p>
+           <textarea rows="10" style="width: 150px;">
+KhanhNHV
+VuongND
+ThinhNT
+AnhAN
+            </textarea>
+            </div>
+            <div class="modal-footer">
             <button class="btn btn-primary">
                 Ok</button>
             <button class="btn" data-dismiss="modal" aria-hidden="true">
                 Cancel</button>
-        </div>  
-         <div id="dalmo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Modal header</h3>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
-  </div>
-</div>
+        </div>
+        </div>
+        
+        </div>
+          <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true"style="width: 400px;height: 430px;">
+        <div class="modal-header">
+            <h3 id="myModalLabel">
+                Add Request</h3>
+        </div>
+        <div class="modal-body"style="float:left;">
+        	<div>
+        		<p style="font-weight:bold;">TP HCM</p>
+        	</div>
+        	<div>
+        		<p style="font-weight:600;">Unplanned Request:</p>
+            <textarea rows="10" style="width: 150px;">
+
+            </textarea>
+            </div>
+            <div style="margin-top: -180px;margin-left: 173px;">
+           <button class="btn btn-mini btn-primary" type="button">>></button><br/><br/>
+           <button class="btn btn-mini btn-primary" type="button">&lt;&lt;</button>
+            </div>
+            <div style="margin-left: 210px;margin-top: -155px;">
+            	<p style="font-weight:600;">Selected Request:</p>
+           <textarea rows="10" style="width: 150px;">
+
+            </textarea>
+            </div>
+            <div class="modal-footer">
+            <button class="btn btn-primary">
+                Ok</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Cancel</button>
+        </div>
+        </div>
+        
+        </div>
         </div>
 	</body>
 </html>
