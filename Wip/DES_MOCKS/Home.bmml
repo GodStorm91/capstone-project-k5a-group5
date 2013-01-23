@@ -1,0 +1,39 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1140" measuredH="583" mockupW="1089" mockupH="581">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="51" y="2" w="1089" h="581" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::ButtonBar" x="306" y="91" w="-1" h="-1" measuredW="333" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2C%20Vendor%2C%20Admin%2C%20Hub%2C%20Customer</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::TextArea" x="66" y="135" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%0AGioi%20thieu%20so%20ve%20cty%20chung%20ta..lam%20gi%2C%20o%20khu%20vuc%20nao%2Cdia%20chi%20lien%20he...%20bla%20bla</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::TextArea" x="281" y="135" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vendor%20screen%0A%20%0AView%20Order%0AManage%20Item</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TextArea" x="496" y="135" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Admin%0A%20%0Alink%20m%E0n%20h%ECnh%20c%u0169%20cua%20DaoLA%20zo</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextArea" x="717" y="135" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hub%0A%20%0AView%20Order%0ACustomer%20order%20info</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::TextArea" x="925" y="135" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Customer%0A%20%0Acreate%20order%0ACustomer%20order%20tracking</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
