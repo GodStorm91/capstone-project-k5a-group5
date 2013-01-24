@@ -1,0 +1,116 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1377" measuredH="682" mockupW="1248" mockupH="672">
+  <controls>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="129" y="10" w="800" h="672" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//tiktak.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::ButtonBar" x="406" y="91" w="421" h="34" measuredW="420" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Plans%2C%20Requests%2C%20Orders%2C%20Customers%2C%20Options%20Config</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Image" x="144" y="91" w="166" h="34" measuredW="77" measuredH="79" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo%20Tiktak</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::ComboBox" x="835" y="97" w="87" h="-1" measuredW="64" measuredH="23" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User1</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Icon" x="374" y="96" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>GeoLocationIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::FieldSet" x="707" y="125" w="-1" h="-1" measuredW="200" measuredH="170" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Config</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Link" x="722" y="140" w="-1" h="-1" measuredW="27" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hub</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Link" x="722" y="161" w="-1" h="-1" measuredW="96" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Config%20Option%202%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="722" y="191" w="-1" h="-1" measuredW="83" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>blah%20blah%20blah</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Link" x="722" y="243" w="-1" h="-1" measuredW="123" measuredH="21" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>AutoSchedule%20Config</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::FieldSet" x="258" y="161" w="407" h="263" measuredW="200" measuredH="170" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>AutoSchedule%20configuration</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="285" y="191" w="-1" h="-1" measuredW="113" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Maximum%20Request%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::TextInput" x="398" y="188" w="31" h="-1" measuredW="28" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>12</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="285" y="234" w="-1" h="-1" measuredW="95" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Priority%20Setting%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::Label" x="310" y="264" w="-1" h="-1" measuredW="52" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>By%20Date</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::HSlider" x="435" y="269" w="118" h="-1" measuredW="33" measuredH="11" zOrder="15" locked="false" isInGroup="-1"/>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="310" y="300" w="-1" h="-1" measuredW="103" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>By%20Delivery%20Type</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::HSlider" x="435" y="305" w="118" h="-1" measuredW="33" measuredH="11" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::CheckBox" x="285" y="353" w="-1" h="-1" measuredW="137" measuredH="22" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Enable%20Notifications</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Button" x="269" y="390" w="-1" h="-1" measuredW="105" measuredH="27" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save%20Settings</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Button" x="380" y="390" w="-1" h="-1" measuredW="103" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Load%20Settings</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Button" x="492" y="390" w="-1" h="-1" measuredW="106" measuredH="27" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Auto%20Schedule</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Button" x="607" y="390" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>OK</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::StickyNote" x="953" y="110" w="424" h="123" measuredW="109" measuredH="123" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Click%20len%20AutoSchedule%20Config%20link%20thi%20hien%20thi%20popup%20auto%20schedule%20config%0AUnCheck%20Enable%20Notification%20thi%20se%20enable%20button%20Auto%20Schedule%0ACheck%20Enable%20Notification%20thi%20se%20disable%20button%20Auto%20Schedule</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
