@@ -153,5 +153,10 @@
         <text>View</text>
       </controlProperties>
     </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextArea" x="57" y="488" w="200" h="82" measuredW="200" measuredH="140" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20AutoSchedule%20Plan%20has%20created.%20Click%20to%20view</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>
