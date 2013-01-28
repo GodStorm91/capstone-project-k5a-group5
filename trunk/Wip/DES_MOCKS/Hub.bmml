@@ -20,7 +20,7 @@
         <text>delivery%20date%20+%203</text>
       </controlProperties>
     </control>
-    <control controlID="15" controlTypeID="com.balsamiq.mockups::Button" x="329" y="376" w="78" h="27" measuredW="79" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Button" x="279" y="377" w="78" h="27" measuredW="79" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Submit%20All</text>
       </controlProperties>
@@ -179,6 +179,11 @@
     <control controlID="46" controlTypeID="com.balsamiq.mockups::Button" x="483" y="638" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="34" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Button" x="363" y="377" w="122" h="27" measuredW="115" measuredH="27" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Preview%20to%20Print</text>
       </controlProperties>
     </control>
   </controls>
