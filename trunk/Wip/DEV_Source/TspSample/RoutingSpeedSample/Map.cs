@@ -75,6 +75,7 @@ namespace RoutingSpeedSample
             base.OnLoad(e);
 
             _points = new List<GeoCoordinate>();
+            _waypoints = new List<GeoCoordinate>();
 
             // register the log screen as the output stream.
             OsmSharp.Tools.Core.Output.OutputStreamHost.RegisterOutputStream(
@@ -108,7 +109,15 @@ namespace RoutingSpeedSample
 
             //Layer that contains all the points
             _points_layer = new CustomLayer();
-            map.Layers.Add(_points_layer);
+            map.Layers.Add(_points_layer);   
+            
+            _waypoints_layer = new CustomLayer();
+            map.Layers.Add(_waypoints_layer);
+            
+            //Text layer
+            _text_layer = new CustomLayer();
+            map.Layers.Add(_text_layer);
+            ElementText txt = _text_layer.AddText(0, 40, "I lOverflowExce", new GeoCoordinate(10.80141, 106.6541));
 
             // center and zoom!
             this.mapEditorUserControl1.Map = map;
@@ -270,7 +279,19 @@ namespace RoutingSpeedSample
         /// </summary>
         private CustomLayer _points_layer;
 
+        private CustomLayer _waypoints_layer;
+
+        private CustomLayer _text_layer;
+
         private List<GeoCoordinate> _points;
+
+        private List<GeoCoordinate> _waypoints;
+
+        private PointCollection _pointCollection;
+
+        private bool _flag = false;
+
+        private int _numCluster = 0;
 
         /// <summary>
         /// Called when the map is clicked.
@@ -281,17 +302,57 @@ namespace RoutingSpeedSample
             this.AddUiPoint(e.Position);
 
             _points.Add(e.Position);
-            if (_points.Count > 10)
+            if (_points.Count > 15)
             {
-                doTspCalculation(_points, VehicleEnum.Car);
+                _numCluster = Int32.Parse(txtNumCluster.Text);                
+                List<List<GeoCoordinate>> listGeo = new List<List<GeoCoordinate>>(_numCluster);
+
+                List<PointCollection> allClusters = PerformKMeans();
+                for (int i = 0; i < _numCluster; i++)
+                {
+                    txtList.Text += "Group" + i.ToString()+ ":";
+                    //get points in cluster
+                    PointCollection collection = allClusters[i];
+                    //list
+                    List<GeoCoordinate> pointsList = new List<GeoCoordinate>();
+                    if (i > 0)
+                    {
+                        pointsList.Add(_points[0]);
+                    }
+                    for (int j = 0; j < collection.Count; j++)
+                    {
+                        pointsList.Add(_points[collection[j].Id]);
+                        txtList.Text+= collection[j].Id.ToString() +",";
+                    }
+                    doTspCalculation(pointsList, VehicleEnum.Car);
+                }
+                
             }
             
+        }
+
+        //Perform Kmeans with the given points
+        private List<PointCollection> PerformKMeans()
+        {
+            //Create the collections of Point
+            _pointCollection = new PointCollection();
+            for (int i = 0; i < _points.Count; i++)
+            {
+                Point point = new Point(i, _points[i].Latitude, _points[i].Longitude);
+                _pointCollection.AddPoint(point);
+            }
+
+            return(DoKMeans(_pointCollection, _numCluster));
+
         }
 
         private void AddUiPoint(GeoCoordinate point)
         {
             _points_layer.AddImage(global::RoutingSpeedSample.Properties.Resources.house, point);
-            this.Invoke(new InvokeDelegate(Refresh));
+
+            _points_layer.AddText(0xff0000, 800, "I love you", point);
+            
+            this.Invoke(new InvokeDelegate(Refresh));            
         }
 
         private void mapEditorUserControl1_MapMove(UserControlTargetEventArgs e)
@@ -322,7 +383,7 @@ namespace RoutingSpeedSample
         {
             List<RouterPoint> resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
             Stream data_stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(@"RoutingSpeedSample.HoChiMinh.osm");
-
+            List<GeoCoordinate> waypointList = new List<GeoCoordinate>();
             
             OsmRoutingInterpreter interpreter = new OsmRoutingInterpreter();
             OsmTagsIndex tags_index = new OsmTagsIndex();
@@ -341,7 +402,7 @@ namespace RoutingSpeedSample
             IRouter<RouterPoint> router = new Router<PreProcessedEdge>(osm_data, interpreter, new DykstraRoutingPreProcessed(osm_data.TagsIndex));
 
             //Add point from _points to routerpoints
-            for (int i=0; i<_points.Count;i++)
+            for (int i=0; i<points.Count;i++)
             {
                 RouterPoint resolved= router.Resolve(VehicleEnum.Car, points.ElementAt<GeoCoordinate>(i)); 
                 if (resolved !=null && router.CheckConnectivity(VehicleEnum.Car, resolved, 100));
@@ -351,45 +412,187 @@ namespace RoutingSpeedSample
             }
             //Start to solve
             RouterTSPGenetic<RouterPoint> tsp_solver = new RouterTSPGenetic<RouterPoint>(router);
-            OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car,resolvedPoints.ToArray());            
-            ShowRoute(_route_layer, tsp);
-
-
-            RoutePointEntry[] list = tsp.Entries;
-            double totalTime = 0;
-            double totalDistance = 0;
-
-            for (int i = 0; i < list.Count<RoutePointEntry>() - 1; i++)
+            OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car,resolvedPoints.ToArray());                                   
+            
+            //double totalTime = 0;
+            //double totalDistance = 0;
+            //int order = 0;          
+            for (int i = 0; i < tsp.Entries.Length; i++)
             {
-                GeoCoordinate point1 = new GeoCoordinate(list.ElementAt<RoutePointEntry>(i).Latitude, list.ElementAt<RoutePointEntry>(i).Longitude);
-                GeoCoordinate point2 = new GeoCoordinate(list.ElementAt<RoutePointEntry>(i+1).Latitude, list.ElementAt<RoutePointEntry>(i+1).Longitude);
-                RouterPoint rpoint1 = _router.Resolve(VehicleEnum.Car, point1);
-                RouterPoint rpoint2 = _router.Resolve(VehicleEnum.Car, point2);
+                //GeoCoordinate point1 = new GeoCoordinate(tsp.Entries.ElementAt<RoutePointEntry>(i).Latitude, list.ElementAt<RoutePointEntry>(i).Longitude);
+                //GeoCoordinate point2 = new GeoCoordinate(list.ElementAt<RoutePointEntry>(i+1).Latitude, list.ElementAt<RoutePointEntry>(i+1).Longitude);
+                //RouterPoint rpoint1 = _router.Resolve(VehicleEnum.Car, point1);
+                //RouterPoint rpoint2 = _router.Resolve(VehicleEnum.Car, point2);
 
-                    if (point1 != null && point2 != null)
-                   {
-                       OsmSharpRoute route = _router.Calculate(VehicleEnum.Car, rpoint1, rpoint2);
-                       if (route != null)
-                       {
-                           totalDistance += route.TotalDistance;
-                           totalTime += route.TotalTime;
-                       }
-                       
+                RoutePointEntry entry = tsp.Entries[i];
+                if (entry.Points != null)
+                {
+                    //loop for all points to create the way
+                    for (int p_idx = 0; p_idx < entry.Points.Length; p_idx++)
+                    {
+                        RoutePoint point = entry.Points[p_idx];
+                        _waypoints.Add(new GeoCoordinate(point.Latitude,point.Longitude));
                     }
-            }
+                }
 
+                //for (int j = 0; j < _points.Count; j++)
+                //{
+                //    if (Math.Abs(point1.Latitude-_points.ElementAt<GeoCoordinate>(j).Latitude) <=0.01 && Math.Abs(point1.Longitude -_points.ElementAt<GeoCoordinate>(j).Longitude)<=0.01)
+                //    {
+                //        if (!flagArray[j]){
+                //            order++;
+                //            _route_layer.AddText(0xff00ff, 8, order.ToString(), point1);
+                //            flagArray[j] = true;
+                //        }
+                        
+                //    }
+                //}
+
+                   // if (point1 != null && point2 != null)
+                   //{
+                   //    OsmSharpRoute route = _router.Calculate(VehicleEnum.Car, rpoint1, rpoint2);
+                   //    if (route != null)
+                   //    {
+                   //        totalDistance += route.TotalDistance;
+                   //        totalTime += route.TotalTime;
+                   //    }
+                       
+                   // }
+            }
+            ShowRoute(_route_layer, tsp);
+            
             tsp.SaveAsGpx(new FileInfo(@"c:\temp\tsp.gpx"));
         }
 
         public void ShowRoute(CustomLayer layer, OsmSharpRoute route)
         {
             // clear the routes layer and add it.
-            _route_layer.Clear();
-            _route_layer.AddRoute(route, Color.FromArgb(150, Color.Blue));
-
+            //_route_layer.Clear();
+            if (_flag)
+            {
+                _route_layer.AddRoute(route, Color.FromArgb(150, Color.Blue));
+                _flag = !_flag;
+            }
+            else
+            {
+                _route_layer.AddRoute(route, Color.FromArgb(150, Color.Red));
+                _flag = !_flag;
+            }
+            
+            for (int i = 0; i < _waypoints.Count; i++)
+            {
+                //_route_layer.AddDot(_waypoints[i]);
+                _route_layer.AddText(0xff00ff, 8, i.ToString(), _waypoints[i]);                
+            }
             // invoke the cross-thread refresh.
             this.Invoke(new InvokeDelegate(Refresh));
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double latitude = Double.Parse(txtLatitude.Text);
+            double longitude = Double.Parse(txtLongitude.Text);
+            _waypoints_layer.AddDot(new GeoCoordinate(latitude,longitude));
+            // invoke the cross-thread refresh.
+            this.Invoke(new InvokeDelegate(Refresh));
+        }
+
+        
+
+        public List<List<T>> SplitList<T>(List<T> items, int groupCount)
+        {
+            List<List<T>> allGroups = new List<List<T>>();
+
+            //split into equal groups
+            int startIndex = 0;
+            int groupLength = (int)Math.Round((double)items.Count / (double)groupCount, 0);
+            while (startIndex < items.Count)
+            {
+                List<T> group = new List<T>();
+                group.AddRange(items.GetRange(startIndex, groupLength));
+                startIndex += groupLength;
+
+                //adjust group-length for last group
+                if (startIndex + groupLength > items.Count)
+                {
+                    groupLength = items.Count - startIndex;
+                }
+
+                allGroups.Add(group);
+            }
+
+            //merge last two groups, if more than required groups are formed
+            if (allGroups.Count > groupCount && allGroups.Count > 2)
+            {
+                allGroups[allGroups.Count - 2].AddRange(allGroups.Last());
+                allGroups.RemoveAt(allGroups.Count - 1);
+            }
+            return allGroups;
+
+        }
+
+        public List<PointCollection> DoKMeans(PointCollection points, int clusterCount)
+        {
+            //divide points into equal clusters
+            List<PointCollection> allClusters = new List<PointCollection>();
+            List<List<Point>> allGroups = SplitList<Point>(points, clusterCount);
+            foreach (List<Point> group in allGroups)
+            {
+                PointCollection cluster = new PointCollection();
+                cluster.AddRange(group);
+                allClusters.Add(cluster);
+            }
+
+            //start k-means clustering
+            int movements = 1;
+            while (movements > 0)
+            {
+                movements = 0;
+
+                foreach (PointCollection cluster in allClusters) //for all clusters
+                {
+                    for (int pointIndex = 0; pointIndex < cluster.Count; pointIndex++) //for all points in each cluster
+                    {
+                        Point point = cluster[pointIndex];
+
+                        int nearestCluster = FindNearestCluster(allClusters, point);
+                        if (nearestCluster != allClusters.IndexOf(cluster)) //if point has moved
+                        {
+                            if (cluster.Count > 1) //cluster shall have minimum one point
+                            {
+                                Point removedPoint = cluster.RemovePoint(point);
+                                allClusters[nearestCluster].AddPoint(removedPoint);
+                                movements += 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return (allClusters);
+        }
+
+        public static int FindNearestCluster(List<PointCollection> allClusters, Point point)
+        {
+            double minimumDistance = 0.0;
+            int nearestClusterIndex = -1;
+
+            for (int k = 0; k < allClusters.Count; k++) //find nearest cluster
+            {
+                double distance = Point.FindDistance(point, allClusters[k].Centroid);
+                if (k == 0)
+                {
+                    minimumDistance = distance;
+                    nearestClusterIndex = 0;
+                }
+                else if (minimumDistance > distance)
+                {
+                    minimumDistance = distance;
+                    nearestClusterIndex = k;
+                }
+            }
+
+            return (nearestClusterIndex);
+        }
     }
 }
