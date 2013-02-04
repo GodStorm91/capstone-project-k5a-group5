@@ -140,5 +140,10 @@
         <text>12</text>
       </controlProperties>
     </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Button" x="445" y="604" w="-1" h="-1" measuredW="146" measuredH="27" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>GetNextHighest%20Point</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>
