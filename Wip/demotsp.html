@@ -51,9 +51,9 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 			  zoom: 8,
 			  mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
-			//direction 1
+			
 			stepDisplay = new google.maps.InfoWindow();
-			for(var i =0;i< 8;i++)
+			for(var i =0;i< wpt[0].length-1;i++)
 			{
 				var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|FF0000|000000";
 				var text = "location" + i;
@@ -65,7 +65,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 				attachInstructionText(marker, text);
 			}
 			
-			for(var i =0;i< 8;i++)
+			for(var i =0;i< wpt[1].length-1;i++)
 			{
 				var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|CCCCCC|000000";
 				var text = "location" + i;
@@ -76,12 +76,19 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 				});
 				attachInstructionText(marker, text);
 			}
-			
-			
+			var a = wpt.length;
+			//direction 1
+			var polylineOptionsActual = new google.maps.Polyline({
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 5,
+			map:map
+			});
 			directions = new google.maps.DirectionsService();
 			  displayer = new google.maps.DirectionsRenderer({
 				draggable: false,
-				suppressMarkers : true
+				suppressMarkers : true,
+				polylineOptions: polylineOptionsActual
 			  });
 			displayer.setMap(map);
 			displayer.setPanel(document.getElementById("directionsPanel"));
@@ -97,8 +104,8 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 			  displayer.setDirections(result);
 			});
 			//end direction 1
-			
-				directions1 = new google.maps.DirectionsService();
+			//direction 2
+			directions1 = new google.maps.DirectionsService();
 			  displayer1 = new google.maps.DirectionsRenderer({
 				draggable: false,
 				suppressMarkers : true
@@ -116,7 +123,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 			}, function (result) {
 			  displayer1.setDirections(result);
 			});
-			
+			//end direction 2
 			//google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
 		  }
 		  
