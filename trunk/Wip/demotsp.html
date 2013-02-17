@@ -8,7 +8,8 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Google Maps V3 API Sample</title>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDtQG_NozpgE0uacggef_wCw-pF10M8bOA&sensor=false">
+</script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
     <script type="text/javascript">
@@ -19,7 +20,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
   </head>
   <body style="font-family: Arial; border: 0 none;">
     <div id="map-canvas" style="width: 800px; height: 800px;float:left;"></div>
-	<div id="directionsPanel" style="float:left;width:400px;font-size:10px;"></div>
+	<div id="directionsPanel" style="float:left;width:400px;font-size:13px;background-color:#FFEE77;margin-left:20px;"></div>
   </body>
 	<script>
 		var xml = "<plans><plan id = '1'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80023' lon='106.6673' /><wpt lat='10.80139' lon='106.6683' /><wpt lat='10.80167' lon='106.6657' /><wpt lat='10.8027' lon='106.6668' /><wpt lat='10.80382' lon='106.6658' /><wpt lat='10.80439' lon='106.6661' /><wpt lat='10.80481' lon='106.6663' /><wpt lat='10.80486' lon='106.6646' /><wpt lat='10.80348' lon='106.6626' /><wpt lat='10.80079' lon='106.6613' /></plan><plan id='2'><wpt lat='10.80097' lon='106.66' /><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80097' lon='106.66' /></plan><plans>";
@@ -58,11 +59,11 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 			for(var i = 0;i<wpt.length;i++)
 			{
 				var color = randomColor();
-				for(var j =0;j< wpt[i].length-1;j++)
+				for(var j =0;j< wpt[i].length;j++)
 				{
 					var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|"+ color +"|000000";
 					var text = "location" + j;
-					if(j===0)
+					if(j==0 || j== wpt[i].length-1)
 					{
 						icon = "http://www.lupusstudios.com/images/iconHome.png";
 						text = "TikTak";
@@ -94,17 +95,41 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 					polylineOptions: polylineOptionsActual
 				  });
 				displayer.setMap(map);
-				displayer.setPanel(document.getElementById("directionsPanel"));
+				//displayer.setPanel(document.getElementById("directionsPanel"));
 				var ppt = [
 					wpt[number][1],wpt[number][2],wpt[number][3],wpt[number][4],wpt[number][5],wpt[number][6],wpt[number][7],wpt[number][8]
-					]
+					];
 				directions.route({
 				  origin: new google.maps.LatLng(10.80079, 106.6613),
 				  destination: new google.maps.LatLng(10.80079, 106.6613),
 				  travelMode: google.maps.DirectionsTravelMode.DRIVING,
 				  waypoints: ppt
-				}, function (result) {
-				  displayer.setDirections(result);
+				}, function(response, status) {
+					if (status == google.maps.DirectionsStatus.OK) {
+					  displayer.setDirections(response);
+					  var route = response.routes[0];
+					  var summaryPanel = document.getElementById("directionsPanel");
+					  //summaryPanel.innerHTML = "";
+					  // For each route, display summary information.
+					  summaryPanel.innerHTML += "<strong>Plan: " + (number + 1) + "</strong><br />";
+					  for (var i = 0; i < route.legs.length; i++) {
+						var from = '<img src="https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (i) + '|FF0000|000000"/>';
+						if(i==0)
+						{
+							from = '<img src="http://www.lupusstudios.com/images/iconHome.png"/>';
+						}
+						var to = '<img src="https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' + (i + 1) + '|FF0000|000000"/>';
+						
+						if(i+1 == route.legs.length){
+							to = '<img src="http://www.lupusstudios.com/images/iconHome.png"/>';
+						}
+						var arrow = '<img src="http://www.iconsdb.com/icons/download/black/arrow-34-16.png"/>';
+						summaryPanel.innerHTML += "<b>Route Segment: " + from + " " + arrow +" " + to + "</b><br />";
+						summaryPanel.innerHTML += "<b>From: </b>" +route.legs[i].start_address + " <br/><b>To: </b> ";
+						summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
+						summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
+					  }
+					}
 				});
 			}
 			//end direction
