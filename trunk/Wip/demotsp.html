@@ -53,77 +53,69 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 			});
 			
 			stepDisplay = new google.maps.InfoWindow();
-			for(var i =0;i< wpt[0].length-1;i++)
-			{
-				var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|FF0000|000000";
-				var text = "location" + i;
-				var marker = new google.maps.Marker({
-					position : wpt[0][i].location,
-					map : map,
-					icon: icon
-				});
-				attachInstructionText(marker, text);
-			}
 			
-			for(var i =0;i< wpt[1].length-1;i++)
+			for(var i = 0;i<wpt.length;i++)
 			{
-				var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|CCCCCC|000000";
-				var text = "location" + i;
-				var marker = new google.maps.Marker({
-					position : wpt[1][i].location,
-					map : map,
-					icon: icon
-				});
-				attachInstructionText(marker, text);
+				var color = randomColor();
+				for(var j =0;j< wpt[i].length-1;j++)
+				{
+					var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|"+ color +"|000000";
+					var text = "location" + j;
+					var marker = new google.maps.Marker({
+						position : wpt[i][j].location,
+						map : map,
+						icon: icon
+					});
+					attachInstructionText(marker, text);
+				}
+			
+				var directions = new Array();
+				var displayer = new Array();
+				var ppt = new Array();
+				drawDirection(i,directions[i],displayer[i],ppt[i],color);
 			}
-			var a = wpt.length;
-			//direction 1
-			var polylineOptionsActual = new google.maps.Polyline({
-			strokeColor: '#FF0000',
-			strokeOpacity: 0.5,
-			strokeWeight: 5,
-			map:map
-			});
-			directions = new google.maps.DirectionsService();
-			  displayer = new google.maps.DirectionsRenderer({
-				draggable: false,
-				suppressMarkers : true,
-				polylineOptions: polylineOptionsActual
-			  });
-			displayer.setMap(map);
-			displayer.setPanel(document.getElementById("directionsPanel"));
-			var ppt = [
-				wpt[0][1],wpt[0][2],wpt[0][3],wpt[0][4],wpt[0][5],wpt[0][6],wpt[0][7],wpt[0][8]
-				]
-			directions.route({
-			  origin: new google.maps.LatLng(10.80079, 106.6613),
-			  destination: new google.maps.LatLng(10.80079, 106.6613),
-			  travelMode: google.maps.DirectionsTravelMode.DRIVING,
-			  waypoints: ppt
-			}, function (result) {
-			  displayer.setDirections(result);
-			});
-			//end direction 1
-			//direction 2
-			directions1 = new google.maps.DirectionsService();
-			  displayer1 = new google.maps.DirectionsRenderer({
-				draggable: false,
-				suppressMarkers : true
-			  });
-			displayer1.setMap(map);
-			displayer1.setPanel(document.getElementById("directionsPanel"));
-			var ppt1 = [
-				wpt[1][1],wpt[1][2],wpt[1][3],wpt[1][4],wpt[1][5],wpt[1][6],wpt[1][7],wpt[1][8]
-				]
-			directions1.route({
-			  origin: new google.maps.LatLng(10.80079, 106.6613),
-			  destination: new google.maps.LatLng(10.80079, 106.6613),
-			  travelMode: google.maps.DirectionsTravelMode.DRIVING,
-			  waypoints: ppt1
-			}, function (result) {
-			  displayer1.setDirections(result);
-			});
-			//end direction 2
+			//direction
+			function drawDirection(number,directions,displayer,ppt,color) {
+				var polylineOptionsActual = new google.maps.Polyline({
+				strokeColor: '#'+color,
+				strokeOpacity: 0.5,
+				strokeWeight: 5,
+				map:map
+				});
+				directions = new google.maps.DirectionsService();
+				  displayer = new google.maps.DirectionsRenderer({
+					draggable: false,
+					suppressMarkers : true,
+					polylineOptions: polylineOptionsActual
+				  });
+				displayer.setMap(map);
+				displayer.setPanel(document.getElementById("directionsPanel"));
+				var ppt = [
+					wpt[number][1],wpt[number][2],wpt[number][3],wpt[number][4],wpt[number][5],wpt[number][6],wpt[number][7],wpt[number][8]
+					]
+				directions.route({
+				  origin: new google.maps.LatLng(10.80079, 106.6613),
+				  destination: new google.maps.LatLng(10.80079, 106.6613),
+				  travelMode: google.maps.DirectionsTravelMode.DRIVING,
+				  waypoints: ppt
+				}, function (result) {
+				  displayer.setDirections(result);
+				});
+			}
+			//end direction
+			//function random color
+			function randomColor() {
+				var hexno=new String;
+				arr=new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");		 
+				var n1=Math.round(Math.random()*15);
+				var n2=Math.round(Math.random()*15);
+				var n3=Math.round(Math.random()*15);
+				var n4=Math.round(Math.random()*15);
+				var n5=Math.round(Math.random()*15);
+				var n6=Math.round(Math.random()*15); 
+				hexno=arr[n1]+""+arr[n2]+""+arr[n3]+""+arr[n4]+""+arr[n5]+""+arr[n6];			 
+				return hexno;
+			}
 			//google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
 		  }
 		  
