@@ -1,52 +1,314 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1825" measuredH="1602" mockupW="1825" mockupH="1602">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="2788" measuredH="4056" mockupW="2788" mockupH="4056">
   <controls>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::FieldSet" x="9" y="445" w="1334" h="65" measuredW="200" measuredH="170" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::FieldSet" x="9" y="445" w="1334" h="65" measuredW="200" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
         <backgroundAlpha>0.25</backgroundAlpha>
         <color>65535</color>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="2" controlTypeID="com.balsamiq.mockups::StickyNote" x="1462" y="24" w="363" h="123" measuredW="109" measuredH="123" zOrder="2" locked="false" isInGroup="-1">
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::StickyNote" x="1462" y="24" w="363" h="123" measuredW="109" measuredH="123" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <text>+%20Re%20chuot%20len%20tung%20row%20trong%20table%20thi%20row%20doi%20mau%0A+%20Click%20len%20order%20thi%20redirect%20qua%20page</text>
       </controlProperties>
     </control>
-    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="0" y="834" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="3" locked="false" isInGroup="-1">
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="0" y="834" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <src>./assets/OrderDetails.png</src>
       </controlProperties>
     </control>
-    <control controlID="4" controlTypeID="com.balsamiq.mockups::Image" x="0" y="0" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Image" x="0" y="0" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
         <src>./assets/OrderList.png</src>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="722" y="1153" w="621" h="77" measuredW="468" measuredH="83" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="722" y="1153" w="621" h="77" measuredW="461" measuredH="83" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>No%20%5E%2C%20Loai%20Phi%20dich%20vu%20%5Ev%2C%20Muc%20Phi%20%2C%20Ghi%20chu%20v%2C%20Chinh%20sua%0A1%2C%20Phi%20giao%20hang%20lan%201%2C%2013.000%20VND%2C%20Giao%20hang%20lan%20dau%2C%20Edit%20Remove%0A2%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A%7B5L%2C%200R%2C%205%2C%200C%2C%200R%7D</text>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="60" y="729" w="-1" h="-1" measuredW="67" measuredH="21" zOrder="5" locked="false" isInGroup="-1"/>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="722" y="1124" w="-1" h="-1" measuredW="35" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="60" y="729" w="-1" h="-1" measuredW="67" measuredH="21" zOrder="6" locked="false" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="722" y="1124" w="-1" h="-1" measuredW="36" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Price</text>
       </controlProperties>
     </control>
-    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="1263" y="1121" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="1263" y="1121" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Add%20Price</text>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="503" y="1264" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="776" y="1264" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Cancel</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::Button" x="722" y="1264" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Button" x="575" y="1265" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Image" x="0" y="1654" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/OrderDetails.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::DataGrid" x="722" y="1973" w="621" h="77" measuredW="461" measuredH="83" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>No%20%5E%2C%20Loai%20Phi%20dich%20vu%20%5Ev%2C%20Muc%20Phi%20%2C%20Ghi%20chu%20v%2C%20Chinh%20sua%0A1%2C%20Phi%20giao%20hang%20lan%201%2C%2013.000%20VND%2C%20Giao%20hang%20lan%20dau%2C%20Edit%20Remove%0A2%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A%7B5L%2C%200R%2C%205%2C%200C%2C%200R%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="788" y="2084" w="64" h="26" measuredW="64" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="558" y="2084" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::FieldSet" x="511" y="1984" w="387" h="170" measuredW="200" measuredH="170" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="526" y="2032" w="-1" h="-1" measuredW="98" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%20Category%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::ComboBox" x="659" y="2031" w="-1" h="-1" measuredW="143" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Phi%20Giao%20hang%20Lan%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Label" x="526" y="2077" w="-1" h="-1" measuredW="40" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::TextInput" x="659" y="2074" w="125" h="-1" measuredW="79" measuredH="27" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Button" x="599" y="2113" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>OK</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="753" y="2113" w="64" h="26" measuredW="64" measuredH="27" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Image" x="0" y="2469" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/OrderDetails.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::DataGrid" x="722" y="2788" w="621" h="113" measuredW="461" measuredH="113" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>No%20%5E%2C%20Loai%20Phi%20dich%20vu%20%5Ev%2C%20Muc%20Phi%20%2C%20Ghi%20chu%20v%2C%20Chinh%20sua%0A1%2C%20Phi%20giao%20hang%20lan%201%2C%2013.000%20VND%2C%20Giao%20hang%20lan%20dau%2C%20Edit%20Remove%0A2%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A3%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A%7B0L%2C%200R%2C%205%2C%200C%2C%200R%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Button" x="540" y="2924" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Button" x="694" y="2924" w="64" h="26" measuredW="64" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="722" y="1941" w="-1" h="-1" measuredW="36" measuredH="21" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Button" x="1263" y="1938" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="722" y="2758" w="-1" h="-1" measuredW="36" measuredH="21" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Button" x="1263" y="2755" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::StickyNote" x="1055" y="2077" w="184" h="123" measuredW="109" measuredH="123" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Click%20len%20nut%20add%20Price%20se%20hien%20ra%20popup%0AClick%20nut%20save%20se%20validate%20item%20trong%20price%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::StickyNote" x="1058" y="2677" w="201" h="88" measuredW="109" measuredH="123" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Bam%20nut%20OK%20se%20update%20table.</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::FieldSet" x="511" y="2208" w="387" h="170" measuredW="200" measuredH="170" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="526" y="2256" w="-1" h="-1" measuredW="98" measuredH="21" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%20Category%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ComboBox" x="659" y="2255" w="-1" h="-1" measuredW="143" measuredH="23" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Phi%20Giao%20hang%20Lan%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Label" x="526" y="2301" w="-1" h="-1" measuredW="40" measuredH="21" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextInput" x="659" y="2298" w="125" h="-1" measuredW="55" measuredH="27" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>abcxyz</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::Button" x="599" y="2337" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>OK</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="753" y="2337" w="64" h="26" measuredW="64" measuredH="27" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="791" y="2301" w="-1" h="-1" measuredW="92" measuredH="21" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13576743</color>
+        <text>***%20Input%20a%20gain</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::FieldSet" x="517" y="3569" w="387" h="170" measuredW="200" measuredH="170" zOrder="44" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Edit</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="532" y="3617" w="-1" h="-1" measuredW="98" measuredH="21" zOrder="45" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%20Category%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::ComboBox" x="665" y="3616" w="-1" h="-1" measuredW="143" measuredH="23" zOrder="46" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Phi%20Giao%20hang%20Lan%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="532" y="3662" w="-1" h="-1" measuredW="40" measuredH="21" zOrder="47" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Price%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::TextInput" x="665" y="3659" w="125" h="-1" measuredW="48" measuredH="27" zOrder="48" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1%2C000</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Button" x="605" y="3698" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="49" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>OK</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Button" x="759" y="3698" w="64" h="26" measuredW="64" measuredH="27" zOrder="50" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Image" x="0" y="3288" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/OrderDetails.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::DataGrid" x="722" y="3607" w="621" h="113" measuredW="461" measuredH="113" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>No%20%5E%2C%20Loai%20Phi%20dich%20vu%20%5Ev%2C%20Muc%20Phi%20%2C%20Ghi%20chu%20v%2C%20Chinh%20sua%0A1%2C%20Phi%20giao%20hang%20lan%201%2C%2013.000%20VND%2C%20Giao%20hang%20lan%20dau%2C%20Edit%20Remove%0A2%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A3%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A%7B0L%2C%200R%2C%205%2C%200C%2C%200R%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Button" x="540" y="3743" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="41" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Button" x="694" y="3743" w="64" h="26" measuredW="64" measuredH="27" zOrder="42" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Button" x="1263" y="3574" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="43" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::StickyNote" x="1005" y="3481" w="201" h="88" measuredW="109" measuredH="123" zOrder="51" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Click%20len%20nut%20edit</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Image" x="1422" y="3288" w="-1" h="-1" measuredW="1366" measuredH="768" zOrder="52" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/OrderDetails.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::DataGrid" x="2144" y="3607" w="621" h="113" measuredW="461" measuredH="113" zOrder="53" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>No%20%5E%2C%20Loai%20Phi%20dich%20vu%20%5Ev%2C%20Muc%20Phi%20%2C%20Ghi%20chu%20v%2C%20Chinh%20sua%0A1%2C%20Phi%20giao%20hang%20lan%201%2C%2013.000%20VND%2C%20Giao%20hang%20lan%20dau%2C%20Edit%20Remove%0A2%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A3%2C%20Phi%20giao%20hang%20lan%202%2C%2013.000%20VND%2C%20Giao%20lan%202%2C%20%20Edit%20Remove%0A%7B0L%2C%200R%2C%205%2C%200C%2C%200R%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Button" x="1962" y="3743" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="54" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Button" x="2116" y="3743" w="64" h="26" measuredW="64" measuredH="27" zOrder="55" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Button" x="2685" y="3574" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="56" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Price</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::StickyNote" x="1541" y="3442" w="274" h="123" measuredW="109" measuredH="123" zOrder="57" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>left</align>
+        <text>Click%20len%20save%20se%20save%20xuong%20database%0A%09Click%20Yes%20-%3E%20save%20va%20display%20lai%20trang%20order%0A%09Click%20No%20-%3E%20display%20lai%20trang%20page%20nay.%0A%09Click%20cancel%20-%3E%20display%20lai%20trang%20%20order</text>
+      </controlProperties>
+    </control>
+    <control controlID="60" controlTypeID="com.balsamiq.mockups::FieldSet" x="1889" y="3601" w="240" h="124" measuredW="200" measuredH="170" zOrder="58" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Confirm</text>
+      </controlProperties>
+    </control>
+    <control controlID="61" controlTypeID="com.balsamiq.mockups::Label" x="1904" y="3644" w="-1" h="-1" measuredW="136" measuredH="21" zOrder="59" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Do%20you%20want%20to%20save%20%3F%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="62" controlTypeID="com.balsamiq.mockups::Button" x="1917" y="3683" w="-1" h="-1" measuredW="47" measuredH="27" zOrder="60" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Yes</text>
+      </controlProperties>
+    </control>
+    <control controlID="63" controlTypeID="com.balsamiq.mockups::Button" x="2031" y="3683" w="64" h="26" measuredW="40" measuredH="27" zOrder="61" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>No</text>
       </controlProperties>
     </control>
   </controls>
