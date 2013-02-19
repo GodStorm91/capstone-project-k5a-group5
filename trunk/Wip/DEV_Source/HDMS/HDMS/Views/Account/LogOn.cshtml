@@ -1,0 +1,65 @@
+﻿@model HDMS.Models.LogOnModel
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Utopia, from Themio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A complete admin panel theme">
+    <meta name="author" content="theemio">
+    <link href="/css/utopia-white.css" rel="stylesheet">
+    <link href="/css/utopia-responsive.css" rel="stylesheet">
+    <link href="/css/metro-ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/validationEngine.jquery.css" rel="stylesheet">
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        if ($.cookie("css")) { $('link[href*="utopia-white.css"]').attr("href", $.cookie("css")); $('link[href*="utopia-dark.css"]').attr("href", $.cookie("css")); $('link[href*="utopia-wooden.css"]').attr("href", $.cookie("css")) } $(document).ready(function () { $(".theme-changer a").live("click", function () { $('link[href*="utopia-white.css"]').attr("href", $(this).attr("rel")); $('link[href*="utopia-dark.css"]').attr("href", $(this).attr("rel")); $('link[href*="utopia-wooden.css"]').attr("href", $(this).attr("rel")); $.cookie("css", $(this).attr("rel"), { expires: 365, path: "/" }); $(".user-info").removeClass("user-active"); $(".user-dropbox").hide() }) });
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="utopia-login-message">
+                    <img src="/img/TicTacDelivery-logo.png" alt="image" width="500px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="utopia-login-info">
+                        <img src="/img/login.png" alt="image"></div>
+                </div>
+                <div class="span6">
+                    <div class="utopia-login">
+                        @using (Html.BeginForm())
+                        {
+                            <label>
+                                Username:</label>
+                            @Html.TextBoxFor(m => m.UserName)
+                            <label>
+                                Password:</label>
+                            @Html.PasswordFor(m => m.Password)
+                            <br />
+                            <input type="submit" class="btn btn-inverse span4" value="Login" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript" src="/js/utopia.js"></script>
+    <script type="text/javascript" src="/js/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="/js/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript">        jQuery(function () { jQuery(".utopia").validationEngine("attach", { promptPosition: "topLeft", scroll: false }) });</script>
+</body>
+</html>

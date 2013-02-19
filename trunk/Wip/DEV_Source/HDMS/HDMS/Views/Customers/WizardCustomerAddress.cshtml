@@ -1,0 +1,199 @@
+﻿@model HDMS.Models.CustomerAddress
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+@*<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />  *@
+<script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+@*<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>*@
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<h2 class="StepTitle">
+    Add Customer Address</h2>
+<div class="form-and-list">
+    <div class="form">
+        @using (Html.BeginForm("ConfirmCreate", "CustomerAddresses", FormMethod.Post, new { id = "address-create-form", Class="form-horizontal" }))
+        {
+            <script src="/js/chosen.jquery.js" type="text/javascript"></script>
+            
+            <div class="control-group">
+                <label class="control-label">
+                    City/Province
+                </label>
+                <div class="controls">
+                    @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --",
+                new { id = "ddlCityProvince", Class = "chzn-select" })
+                    @Html.ValidationMessage("CityProvince")
+                    <script>
+                        $('#ddlCityProvince').attr('data-val-required', 'The City/Province is required.');
+                        $('#ddlCityProvince').attr('data-val', 'true')
+                    </script>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    District
+                </label>
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.DistrictId, ViewBag.PossibleDistricts as SelectList, "-- Choose a District --", new { id = "ddlDistrict", Class = "chzn-select" })
+                    @Html.ValidationMessageFor(model => model.DistrictId)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Ward
+                </label>
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.WardId, ViewBag.PossibleWards as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
+                    @Html.ValidationMessageFor(model => model.WardId)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Address
+                </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.Address)
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
+              
+            <input type="hidden" id="addressCustomerId" name="CustomerId" value="" /> 
+        }
+        <div class="align-center">
+            <input id="btnAddAddress" type="submit" class="btn btn-primary" value="Add >>" />
+        </div>
+    </div>
+    <div class="info-and-list">
+        <div class="customer-info">
+            <div class="row-fluid">
+                <div class="span6 offset1">
+                    <dl class="dl-horizontal">
+                        <dt>Company Name</dt>
+                        <dd id="companyName">
+                        </dd>
+                        <dt>Display Name</dt>
+                        <dd id="displayName">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="span5">
+                    <dl class="dl-horizontal">
+                        <dt>Phone</dt>
+                        <dd id="phone">
+                        </dd>
+                        <dt>Contract Code</dt>
+                        <dd id="contractNumber">
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div id="address-table-div" class="list">
+        </div>
+    </div>
+</div>
+<script>
+    $(".chzn-select").chosen();
+    refreshValidation();
+    //$(".form").block({message:null});
+
+    var refreshAddressTable = function () {
+        var customerId = $('#CustomerId').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Customers/GetAddressTable',
+            data: { customerId: customerId },
+            success: function (table) {
+                debugger
+                $('#address-table-div').html(table);
+                $("#ddlCityProvince").val('');
+                $("#ddlCityProvince").trigger('change');
+                $("#ddlCityProvince").trigger("liszt:updated");
+                $("#ddlDistrict").trigger('change');
+                $("#address-create-form input").val("");
+                $('#addressCustomerId').val($('#CustomerId').val());
+            },
+            async: false
+        });
+    };
+
+    var deleteAddress = function (addressId) {
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerAddresses/Delete',
+            data: { id: addressId },
+            success: function () {
+                refreshAddressTable();
+            },
+            async: false
+        });
+    };
+
+    $(document).ready(function () {
+        var customerId = $('#CustomerId').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Customers/GetCustomerInfo',
+            data: { customerId: customerId },
+            success: function (customer) {
+                if (customer.success) {
+                    $('#companyName').html(customer.companyName);
+                    $('#displayName').html(customer.displayName);
+                    $('#phone').html(customer.phone);
+                    $('#contractNumber').html(customer.contractNumber);
+                }
+            },
+            async: false
+        });
+
+        $("#ddlCityProvince").change(function () {
+            var id = $('#ddlCityProvince option:selected').val();
+            if (id == '') id = -1;
+            $.getJSON('/CustomerAddresses/GetDistrictsOfCityProvince/' + id, function (data) {
+                var items = '<option value>-- Choose a District --</option>';
+                $.each(data, function (i, district) {
+                    items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+                    // state.Value cannot contain ' character. We are OK because state.Value = cnt++;
+                });
+                $('#ddlDistrict').html(items);
+                $('#ddlDistrict').trigger('change');
+                $('#ddlDistrict').removeAttr('data-val-number');
+                refreshValidation();
+                $('#ddlDistrict').trigger("liszt:updated");
+            });
+        });
+
+        $("#ddlDistrict").change(function () {
+            var id = $('#ddlDistrict option:selected').val();
+            if (id == '') id = -1;
+            $.getJSON('/CustomerAddresses/GetWardOfDistricts/' + id, function (data) {
+                var items = '<option value>-- Choose a Ward --</option>';
+                $.each(data, function (i, ward) {
+                    items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+                    // state.Value cannot contain ' character. We are OK because state.Value = cnt++;
+                });
+                $('#ddlWard').html(items);
+                $('#ddlWard').removeAttr('data-val-number');
+                $('#ddlWard').trigger("liszt:updated");
+            });
+        });
+
+        $('#btnAddAddress').click(function () {
+            debugger
+            var success = false,
+                creatForm = $("#address-create-form");
+            if (creatForm.valid()) {
+                debugger
+                $.ajax({
+                    type: 'POST',
+                    url: creatForm.attr("action"),
+                    data: creatForm.serialize(),
+                    success: function (result) {
+                        success = result.success;
+                        if (success) {
+                            refreshAddressTable();
+                        }
+                    },
+                    async: false
+                });
+            }
+        });
+    });
+</script>

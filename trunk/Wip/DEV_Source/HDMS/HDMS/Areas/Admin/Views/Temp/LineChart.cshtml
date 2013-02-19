@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "LineChart";
+}
+<div class="page-header">
+    <h2>
+        LineChart</h2>
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+    <script src="/js/RGraph/RGraph.common.core.js"></script>
+    <script src="/js/RGraph/RGraph.common.tooltips.js"></script>
+    <script src="/js/RGraph/RGraph.common.dynamic.js"></script>
+    <script src="/js/RGraph/RGraph.common.effects.js"></script>
+    <script src="/js/RGraph/RGraph.line.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#showReport").click(function () {
+                $("#report").show("slow");
+            });
+            $("#showTrace").click(function () {
+                $("#traceReport").show();
+            });
+        });
+    </script>
+    <div class="DTTT btn-group">
+        <a id="showReport" role="button" class="btn DTTT_button_text"><span>view report</span></a>
+        <a id="showTrace" role="button" class="btn DTTT_button_text"><span>view trace</span></a>
+    </div>
+    <div id="report" class="hide">
+        <h2>
+            Requests per Staff</h2>
+        <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+        <script>
+            window.onload = function () {
+                var line = new RGraph.Line('cvs', [6, 4, 15, 6, 3]);
+                line.Set('chart.labels', ['Linh', 'Dao', 'Tai', 'Thanh', 'Tu']);
+                line.Draw();
+            }
+        </script>
+    </div>
+    <div id="traceReport" class="hide">
+        <h2>
+            Number of collection request per month</h2>
+        <div>
+            <canvas id="cvss" width="900" height="300" style="">[No canvas support]</canvas>
+        </div>
+        <script>
+            var line = new RGraph.Line('cvss', [84, 5, 30, 26, 45, 12, 84, 73, 60, 0, 15, 46]);
+            line.Set('chart.labels', ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
+            line.Set('chart.colors', ['black']);
+            line.Set('chart.shadow', true);
+            line.Set('chart.shadow.offsetx', 1);
+            line.Set('chart.shadow.offsety', 1);
+            line.Set('chart.linewidth', 2);
+            line.Set('chart.yaxispos', 'right');
+            line.Set('chart.xaxispos', 'bottom');
+            line.Set('chart.hmargin', 10);
+            $(document).ready(function () {
+
+                $("#showTrace").click(function () {
+                    $("#traceReport").show();
+                    RGraph.Effects.Line.jQuery.Trace(line);
+                });
+            });
+        </script>
+        <div id="__rgraph_trace_animation_4295467__" style="left: 8px; top: 81px; height: 250px;
+            position: absolute; overflow: hidden; width: 600px; display: none;">
+            <canvas width="600" height="250" style="position: absolute; left: 0px; top: 0px;
+                cursor: default;" id="__rgraph_line_reveal_animation_12108314__"></canvas>
+        </div>
+        <div id="__rgraph_trace_animation_2649515__" style="left: 8px; top: 81px; width: 600px;
+            height: 250px; position: absolute; overflow: hidden; background-color: rgba(0, 0, 0, 0);
+            display: none;">
+        </div>
+    </div>
+</div>

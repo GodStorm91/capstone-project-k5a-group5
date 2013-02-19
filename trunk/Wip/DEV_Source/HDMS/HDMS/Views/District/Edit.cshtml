@@ -1,0 +1,32 @@
+@model HDMS.Models.District
+@{
+    Layout = null;
+}
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+        <h3>
+            Edit District</h3>
+    </div>
+@using (Html.BeginForm("ConfirmEdit", "District", FormMethod.Post, new { id = "edit-form" }))
+{
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+        <fieldset>            
+            @Html.HiddenFor(model => model.DistrictId)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.Partial("_CreateOrEdit", Model)
+        </fieldset>
+    </div>
+}
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $('#btnSave').click(function () {
+        $('#edit-form').submit();
+    });
+</script>

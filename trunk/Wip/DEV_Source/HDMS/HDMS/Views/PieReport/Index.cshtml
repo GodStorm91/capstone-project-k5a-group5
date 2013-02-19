@@ -1,0 +1,29 @@
+﻿@model HDMS.Models.PieReport
+@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header">
+    <h2>Orders Per District Report</h2>
+</div>
+<fieldset>
+    @using (Html.BeginForm("DistrictPie", "PieReport", FormMethod.Post, new { id = "create-form" }))
+    {
+        <div class="editor-label">
+            City/Province
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CityProvince", ViewBag.Cities as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+        </div>
+    }
+</fieldset>
+<input id="btnCreate" type="submit" class="btn btn-primary" value="Create Report" />
+<script>
+    $('#btnCreate').click(function () {
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id > 0) {
+            $('#create-form').submit();
+        } else {
+        alert("You must choose a City Province to create report!")
+        }
+    }); 
+</script>

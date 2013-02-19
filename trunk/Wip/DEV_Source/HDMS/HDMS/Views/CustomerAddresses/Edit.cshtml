@@ -1,0 +1,54 @@
+@model HDMS.Models.CustomerAddress
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;</button>
+    <h3>
+        Edit Address</h3>
+</div>
+<div class="modal-body" style="height:400px;">
+    <fieldset>
+        <div>
+            @using (Html.BeginForm("ConfirmEdit", "CustomerAddresses", FormMethod.Post, new { id = "address-edit-form" }))
+            {
+                @Html.ValidationSummary(true)
+        
+                @Html.HiddenFor(model => model.CustomerAddressId)
+                @Html.HiddenFor(model => model.IsActive)
+                @Html.Partial("_CreateOrEdit", Model)       
+            }
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script type="text/javascript">
+    $("#address-edit-form").submit(function () {
+        var success = false;
+        if ($(this).valid()) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
+                success: function (result) {
+                    success = result.success;
+                    if (success) {
+                        $('#editModal').modal('hide');
+                        refreshAddressTable();
+                    }
+                },
+                async: false
+            });
+        }
+        return false;
+    });
+
+    $('#btnSave').click(function () {
+        $('#address-edit-form').submit();
+    });
+</script>

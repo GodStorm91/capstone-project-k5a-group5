@@ -1,0 +1,374 @@
+﻿@{
+    ViewBag.Title = "CollectionPlanning";
+}
+<div class="collectionPlanning">
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />@*
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>*@
+    <!--script cho 2 nút add, remove -->
+    <script type="text/javascript">
+        function add() {
+            //            var n = document.getElementById("id").value;
+            //            for (var i = 0; i < n; i++) {
+            //                if (Boolean(check) = true) {
+            //                    document.getElementById("id").style.display = "none";
+            //                    document.getElementById("id").style.display = "";
+            //                }
+            //            }
+            document.getElementById("1").style.display = "none";
+            document.getElementById("demo").style.display = "";
+        }
+        function remove() {
+            document.getElementById("1").style.display = "";
+            document.getElementById("demo").style.display = "none";
+        }
+    </script>
+    <script type="text/javascript">
+        //         $(document).ready(function () {
+        //             $('#example').dataTable({
+        //                 "bRetrieve": true,
+        //                 
+        //             });
+
+        //             $.extend($.fn.dataTableExt.oStdClasses, {
+        //                 "sWrapper": "dataTables_wrapper form-inline"
+        //             });
+        //         });
+    </script>
+    <div class="row-fluid">
+        <div class="span12 breadcrumb">
+            <h3>
+                Collection Planning</h3>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4 control-group">
+            <label class="control-label" for="Name">
+                City/Province
+            </label>
+            <div class="controls">
+                <select>
+                    <option value="">Thành Phố Hồ Chí Minh</option>
+                    <option value="">Đà Nẵng</option>
+                    <option value="">Hà Nội</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4 control-group">
+            <label class="control-label" for="Name">
+                District
+            </label>
+            <div class="controls">
+                <select>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+        </div>
+        <div class="span4 control-group">
+            <label class="control-label" for="Name">
+                Ward
+            </label>
+            <div class="controls">
+                <select>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+                <!--list CR để add -->
+                <div class="span5">
+                    <ul class="all-request">
+                    <li><div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" alt="Customer" title="Customer" width="15px" />
+                                        </dt>
+                                    <dd>Shopnguoilon.com</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li>
+                    <li><div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" alt="Customer" title="Customer" width="15px" />
+                                        </dt>
+                                    <dd>Shopnguoilon.com</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li>
+                    <li><div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" alt="Customer" title="Customer" width="15px" />
+                                        </dt>
+                                    <dd>Shopnguoilon.com</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li>
+                    <li><div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" alt="Customer" title="Customer" width="15px" />
+                                        </dt>
+                                    <dd>Shopnguoilon.com</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li>
+                    <ul>
+                </div>
+                <!--phần chứa 2 nút add, remove -->
+                <div class="span2">
+                    <div>
+                        <input type="button" value="ADD >>>" onclick="add()" style="width: 100px; position: absolute" />
+                        </br> </br>
+                        <input type="button" value="<<< REMOVE" onclick="remove()" style="width: 100px; position: absolute" />
+                    </div>
+                </div>
+                <!--list những CR đã được add -->
+                <div class="span5 selected-request">  
+                    <ul class="all-request">
+                    <li><div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li>                  
+                    <li><div class="ticket-container span12 ticket request-ticket" id="demo" style="display:none;">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div></li> 
+                    </ul>
+                </div>
+    </div>
+    <!--phần chứa nút Cancel, Create -->
+    <div class="modal-footer">
+        <button class="btn btn-primary">
+            Create Plan</button>
+        <button class="btn" data-dismiss="modal">
+            Cancel</button>
+    </div>

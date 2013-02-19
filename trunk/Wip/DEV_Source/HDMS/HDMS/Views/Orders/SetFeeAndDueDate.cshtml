@@ -1,0 +1,84 @@
+﻿@model HDMS.Models.Order
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Set Fee and Due Date</h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("ConfirmSetFeeAndDueDate", "Orders", FormMethod.Post, new { id = "set-fee-form", Class = "form-horizontal" }))
+    {
+        @Html.HiddenFor(model => model.OrderId)
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Due Date</label>
+            <div class="controls datetimepicker">
+                <div class="input-append pull-left date" data-date-format="dd/mm/yyyy">
+                    <input class="pull-left" name="DueDate_Date" placeholder="Set Date" size="16" type="text" readonly value="@string.Format("{0:dd/MM/yyyy}", Model.DueDate)" data-date-format="dd/mm/yyyy"/>
+                    @*@Html.TextBoxFor(model => model.DueDate, new { Class = "datepicker pull-left", Placeholder = "Set Due Date", Disabled = "disabled" })*@
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>
+                <div class="input-append bootstrap-timepicker-component pull-left">
+                    <input type="text" name="DueDate_Time" placeholder="Set Time" class="timepicker-default input-small" readonly value="@string.Format("{0:t}", Model.DueDate)"/>
+                    <span class="add-on"><i class="icon-time"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Phone">
+                Total Fee</label>
+            <div class="controls">
+                <div class="input-append">
+                    @Html.TextBoxFor(model => model.Fee, new { Placeholder = "Set Total Fee", Style = "float: left;width: 182px;" })
+                    <span class="add-on">VNĐ</span>
+                </div>
+                <br />@Html.ValidationMessageFor(model => model.Fee)
+            </div>
+        </div>
+    }
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" id="btnSaveFeeAndDueDate">
+        Save</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $(".date").datepicker({ format: "dd/mm/yyyy" });
+    $('.timepicker-default').timepicker({
+        defaultTime: 'value',
+        minuteStep: 5
+    });
+
+    $('#btnSaveFeeAndDueDate').click(function () {
+        $('#set-fee-form').submit();
+    });
+
+    $('#set-fee-form').submit(function () {
+        if ($(this).valid()) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        var orderId = result.order.OrderId;
+                        $('#order-' + orderId + ' .dueDate').html('<span class="label label-important">' + result.order.DueDate.Date + ' ' + result.order.DueDate.Time + '</span>');
+                        $('#order-' + orderId + ' .fee').html(result.order.Fee + ' VNĐ');
+                        $.post('/Request/GetTotalFee/'+order.RequestId,function(data){
+                            if(data.success){
+                                $('#totalFee').html(data.totalFee + ' VNĐ');
+                            }
+                        });
+                        $('#mainModal').modal('hide');
+                    }
+                },
+                async: false
+            });
+        }
+        return false;
+    });
+</script>

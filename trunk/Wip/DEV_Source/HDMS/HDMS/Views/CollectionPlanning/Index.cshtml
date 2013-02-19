@@ -1,0 +1,90 @@
+﻿@model IEnumerable<HDMS.Models.Collection>
+@{
+    ViewBag.Title = "Index";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
+}
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="/js/crud.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setupDataTable('Collections');
+        $("div.tblBtnGroup").html('<a href="#createModal" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add</span></a>');
+    });
+</script>
+<div class="row-fluid">
+    <div class="span12 breadcrumb">
+        <h3>
+            Collections</h3>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                CreatedDate
+            </th>
+            <th>
+                CreatedByUserId
+            </th>
+            <th>
+                DeliveryStaffId
+            </th>
+            <th>
+                StartDate
+            </th>
+            <th>
+                EndDate
+            </th>
+            <th>
+                CollectionStatus
+            </th>
+            <th>
+                Note
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CollectionPlanId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CollectionPlanId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CollectionPlanId })
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
+                </td>
+                <td>
+                    @item.CreatedByUserId
+                </td>
+                <td>
+                    @item.DeliveryStaffId
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.StartDate)
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.EndDate)
+                </td>
+                <td>
+                    @item.CollectionStatus
+                </td>
+                <td>
+                    @item.Note
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

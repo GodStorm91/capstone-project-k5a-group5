@@ -1,0 +1,74 @@
+﻿@model HDMS.Models.PieReport
+@{
+    ViewBag.Title = "DistrictPie";
+}
+<script src="/js/RGraph/RGraph.common.core.js"></script>
+<script src="/js/RGraph/RGraph.common.tooltips.js"></script>
+<script src="/js/RGraph/RGraph.common.dynamic.js"></script>
+<script src="/js/RGraph/RGraph.common.effects.js"></script>
+<script src="/js/RGraph/RGraph.pie.js"></script>
+<div class="page-header">
+    <h2>Orders Per District of @Model.Cityname</h2>
+</div>
+
+<div>
+    <canvas id="cvs" width="600" height="400">[No canvas support]</canvas>
+    <script>
+        $(document).ready(function () {
+
+            var data = @Model.Numbers;
+            var labels = @Html.Raw(Model.Labels);
+            
+            var total = 0;
+            for (var i = 0; i < data.length; ++i) {
+                total = total + data[i];
+            }
+            var pie = new RGraph.Pie('cvs', data);
+            pie.Set('chart.linewidth', 3);
+            pie.Set('chart.exploded', [15, ]);
+            pie.Set('chart.shadow', true);
+            pie.Set('chart.shadow.offsetx', 0);
+            pie.Set('chart.shadow.offsety', 0);
+            pie.Set('chart.shadow.blur', 20);
+            //pie.Set('chart.labels.sticks', [true]);
+            //pie.Set('chart.labels.sticks.length', 3);
+            RGraph.Effects.Pie.RoundRobin(pie);
+            pie.Set('chart.tooltips', labels);
+            pie.Set('chart.tooltips.event', 'onmousemove');
+            pie.Set('chart.labels', labels);
+            for (var u = 0; u < data.length; ++u) {
+                pie.Get('chart.labels')[u] = pie.Get('chart.labels')[u] + ': ' + parseFloat((data[u] / total) * 100).toFixed(2) + '%';
+            }
+            pie.Draw();
+        });
+    </script>
+</div>
+
+<table border="2" cellspacing="2" cellpadding="5">
+            <thead>
+            <tr><th colspan="3"><center><h3>Orders Per District of @Model.Cityname</h3></center></th></tr>
+            <tr>
+            <th>District</th>
+            <th>Orders</th>
+            <th>Percent</th>
+            </tr>
+            </thead>
+            <script>
+                var data = @Model.Numbers;
+                var labels = @Html.Raw(Model.Labels);
+                var total = 0;
+                for (var i = 0; i < data.length; ++i) {
+                    total = total + data[i];
+                }
+                var str = "";
+                for (var o = 0; o < data.length; o++) {
+                    str = str + '<tr>';
+                    str = str + '<td>' + labels[o] + '</td>';
+                    str = str + '<td>' + data[o] + '</td>';
+                    str = str + '<td>' + parseFloat((data[o] / total) * 100).toFixed(2) + '</td>';
+                    str = str + '</tr>';
+                }
+                document.write(str);
+            </script>
+            
+            </table>

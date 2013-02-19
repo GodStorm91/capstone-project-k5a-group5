@@ -1,0 +1,168 @@
+﻿@model IEnumerable<HDMS.Models.Order>
+@{
+    ViewBag.Title = "MapsRoute";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.7.2-vsdoc.js" type="text/javascript"></script>
+}
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDtQG_NozpgE0uacggef_wCw-pF10M8bOA&sensor=false">
+</script>
+<script src="/js/gmap3.js" type="text/javascript"></script>
+<div class="row-fluid">
+    <div id="map" style="height: 480px" class="span7">
+    </div>
+    <div id="panel" style="height: 480px" class="span5">
+    </div>
+</div>
+<button id="get-route">
+    Get Route</button>
+<button id="get-route-2">
+    Get Route 2</button>
+<script>
+    var gmap3;
+
+    var orderPoints = new Array();
+
+    @foreach (var order in Model)
+    {
+        <text>
+            orderPoints.push({
+                orderId: @order.OrderId,
+                lat: @order.Latitude,
+                long: @order.Longitude
+            });
+        </text>
+    }
+    
+    var initialize = function(){
+        var markerValues = new Array();
+        $.each(orderPoints,function(index,orderPoint){
+            markerValues.push({
+                latLng: new google.maps.LatLng(orderPoint.lat,orderPoint.long),
+                id: orderPoint.orderId,
+                data: "# " + orderPoint.orderId
+            });
+        });
+        $("#map").gmap3({
+            map: {
+                options: {
+                    center: [10.784574, 106.664788],
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl: false,
+                    navigationControl: false,
+                    scrollwheel: true,
+                    streetViewControl: false
+                }
+            },
+            marker: {
+                values: markerValues,
+                options: {
+                    draggable: false
+                },
+                events:{
+                  mouseover: function(marker, event, context){
+                    var map = $(this).gmap3("get"),
+                      infowindow = $(this).gmap3({get:{name:"infowindow"}});
+                    if (infowindow){
+                      infowindow.open(map, marker);
+                      infowindow.setContent(context.data);
+                    } else {
+                      $(this).gmap3({
+                        infowindow:{
+                          anchor:marker, 
+                          options:{content: context.data}
+                        }
+                      });
+                    }
+                  },
+                  mouseout: function(){
+                    var infowindow = $(this).gmap3({get:{name:"infowindow"}});
+                    if (infowindow){
+                      infowindow.close();
+                    }
+                  }
+                }
+            },
+            autofit:{}
+        });
+        gmap3 = $("#map").gmap3("get");
+    }
+
+    $('#get-route-2').click(function(){
+        setTimeout(function(){alert("Hello")},3000);
+    });
+
+    $('#get-route').click(function(){
+        numberOfPoints = orderPoints.length;
+        if(true/*numberOfPoints > 8*/){
+            $.each(orderPoints,function(index,orderPoint){
+                setTimeout(function(){
+                    $("#map").gmap3({
+                        getroute:{
+                            options:{
+                                origin: new google.maps.LatLng(orderPoints[index % numberOfPoints].lat, orderPoints[index % numberOfPoints].long),
+                                destination: new google.maps.LatLng(orderPoints[(index+1) % numberOfPoints].lat, orderPoints[(index+1) % numberOfPoints].long),
+                                travelMode: google.maps.DirectionsTravelMode.DRIVING          
+                            },
+                            callback: function(results){
+                                if (!results) return;
+                                $(this).gmap3({
+                                directionsrenderer:{
+                                    options:{
+                                    directions:results,
+                                    suppressMarkers: true
+                                    } 
+                                }
+                                });
+                            }
+                        }                  
+                    });
+                },index*500);
+//                if(index % 10 == 9){
+//                    setTimeout(10000);
+//                }
+            }); 
+            setTimeout(function(){    
+                $("#map").gmap3({
+                    autofit:{}   
+                });
+            },(numberOfPoints+1)*500);
+        }else{
+            var wayPoints = new Array();
+            $.each(orderPoints,function(index,orderPoint){
+                wayPoints.push({
+                    location: new google.maps.LatLng(orderPoint.lat,orderPoint.long)
+                });
+            });
+            $("#map").gmap3({ 
+                getroute:{
+                options:{
+                    origin: "107 3 tháng 2, quận 10, hồ chí minh",
+                    destination: "107 3 tháng 2, quận 10, hồ chí minh",
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING,  
+                    waypoints: wayPoints,
+                    optimizeWaypoints: true      
+                },
+                callback: function(results){
+                    if (!results) return;
+                    $(this).gmap3({
+                    directionsrenderer:{
+                        options:{
+                            directions:results,
+                            suppressMarkers: true,
+                            draggable: true
+                        } 
+                    }
+                    });
+                }
+                }
+            });
+        }        
+    });
+
+    $(document).ready(function(){
+        initialize();    
+    });
+</script>

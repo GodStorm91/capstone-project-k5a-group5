@@ -1,0 +1,170 @@
+﻿@model HDMS.Models.aspnet_Users
+@{
+    Layout = null;
+}
+@*<div id="updatedialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">*@
+<script src="@Url.Content("~/js/bootstrap-alert.js")" type="text/javascript"></script>
+<script>
+
+    var cusName = "@ViewBag.CustomerName";
+    if( cusName != null)
+    {
+        $("#customerName").val(cusName);
+    }
+    function validateCheckBox() {
+        if ($("input[type=checkbox]:checked").length == 0) {
+            //$(".alert").alert();
+            alert("Unable to update role! You have to choose at least 1 role");
+            return false;
+        }
+        return true;
+
+
+    }
+</script>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Set Role for @ViewBag.UserName
+    </h3>
+</div>
+@using (Html.BeginForm("UpdateUserRole", "User", FormMethod.Post, new { id = "edit-form", onSubmit = "return validateCheckBox()" }))
+{
+    <div class="modal-body">
+        <fieldset>
+            <input type="hidden" value=@ViewBag.UserName name="username"/>
+            @*<input type="hidden" value=@ViewBag.CustomerName name="customername"/>*@
+            <div class="control-group">
+                <label class="radio" style="float: left">
+                    <input type="radio" name="Type" id="customerRa" value="Customer"  @if (ViewBag.RolesForUser.Contains("Customer"))
+                                                                                      {<text>checked="checked"</text>}>
+                    Customer
+                </label>
+                <label class="radio" style="margin-left: 100px">
+                    <input type="radio" name="Type" id="staff" value="Staff" @if (ViewBag.RolesForUser.Contains("Admin") || ViewBag.RolesForUser.Contains("Office Staff") || ViewBag.RolesForUser.Contains("Delivery Staff"))
+                                                                             {<text>checked="checked"</text>}>
+                    Staff
+                </label>
+            </div>
+            <div id="roleCustomer">
+                <label class="checkbox">
+                    <input type="checkbox" name="checkbox[]" id="customer" value="Customer"  @if (ViewBag.RolesForUser.Contains("Customer"))
+                                                                                             {<text>checked="checked"</text>}>
+                    Customer
+                </label>
+            </div>
+            <div id="listCustomer">
+                    <div class="controls">
+                        <select name="customerName" id="customerName">
+                            @foreach (var item in ViewBag.PossibleCustomers)
+                            {   
+                                <option value="@item.CustomerId">@item.CompanyName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            <div id="role">
+                <label class="checkbox">
+                    <input type="checkbox" name="checkbox[]" id="admin" value="Admin"  @if (ViewBag.RolesForUser.Contains("Admin"))
+                                                                                       {<text>checked="checked"</text>}>
+                    Admin
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="checkbox[]" id="officeStaff" value="Office Staff" @if (ViewBag.RolesForUser.Contains("Office Staff"))
+                                                                                                   {<text>checked="checked"</text>}>
+                    Office Staff
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="checkbox[]" id="deliveryStaff" value="Delivery Staff" @if (ViewBag.RolesForUser.Contains("Delivery Staff"))
+                                                                                                       {<text>checked="checked"</text>}>
+                    Delivery Staff
+                </label>
+            </div>
+        </fieldset>
+        @*        <div class="alert fade out">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+          </div>*@
+    </div>
+}
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Close</button>
+</div>
+<script>
+
+    if (document.getElementById('customerRa').checked) {
+        $('#role').hide();
+        $('#roleCustomer').hide();
+        $('#listCustomer').show();
+    } else if (document.getElementById('staff').checked) {
+        $('#role').show();
+        $('#roleCustomer').hide();
+        $('#listCustomer').hide();
+    }
+
+    $('#customerRa').click(function () {
+        $('#role').hide();
+        $('#roleCustomer').hide();
+        $('#listCustomer').show();
+
+//        $("#admin").prop("checked", false);
+//        $("#officeStaff").prop("checked", false);
+//        $("#deliveryStaff").prop("checked", false);
+        $("#customer").prop("checked", true);
+    });
+
+    $('#staff').click(function () {
+        $('#role').show();
+        $('#roleCustomer').hide();
+        $('#listCustomer').hide();
+        $("#customer").prop("checked", false);
+
+    });
+
+    //    var selectedStatusIds = [];
+    //    //    $("input[type=checkbox]:checked").each(function () {
+    //    //        ///alert($(this).val()); //alert the fucking value
+    //    //        selectedStatusIds.push($(this).val());
+    //    //        alert(selectedStatusIds);
+    //    //    });
+    //    function getSelected(opt) {
+    //        // get status of current button that pressed
+    //        var status = $(this).val();
+    //        //checking if that status is exist in the array or not
+    //        var result = in_array(selectedStatusIds, status);
+    //        if (result == true) {
+    //            var removeItem = status;
+    //            //remove the value of status that was pressed again(mean not checked)
+    //            selectedStatusIds = jQuery.grep(selectedStatusIds, function (value) {
+    //                return value != removeItem;
+    //            });
+    //            //alert(selectedStatusIds);
+    //        }
+    //        else if (result == false) {
+    //            //add it to the array
+    //            selectedStatusIds.push(status);
+    //        }
+    //    }
+
+
+    //    //check values exist in array
+    //    function in_array(array, id) {
+    //        for (var i = 0; i < array.length; i++) {
+    //            if (array[i] == id) {
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
+
+
+    $('#btnSave').click(function () {
+        $('#edit-form').submit();
+    });
+
+
+</script>

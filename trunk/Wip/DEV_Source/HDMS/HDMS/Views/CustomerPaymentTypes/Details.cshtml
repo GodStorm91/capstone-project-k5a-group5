@@ -1,0 +1,26 @@
+@model HDMS.Models.CustomerPaymentType
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Customer Payment Type</legend>
+
+    <div class="display-label">Payment Type</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">@Model.Description</div>
+
+    <div class="display-label">Status</div>
+    <div class="display-field">@Model.IsActive</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CustomerPaymentTypeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

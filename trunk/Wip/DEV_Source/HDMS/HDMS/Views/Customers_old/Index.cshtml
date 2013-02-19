@@ -1,0 +1,89 @@
+@model IEnumerable<HDMS.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>
+            CompanyName
+        </th>
+        <th>
+            DisplayName
+        </th>
+        <th>
+            PhoneNumber
+        </th>
+        <th>
+            CurrentContractNumber
+        </th>
+        <th>
+            IsActive
+        </th>
+        <th>
+            AddtionalInfo
+        </th>
+        <th>
+            CollectionRequests
+        </th>
+        <th>
+            Contacts
+        </th>
+        <th>
+            CustomerAddresses
+        </th>
+        <th>
+            CustomerPayments
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CustomerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CustomerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CustomerId })
+        </td>
+        <td>
+			@item.CompanyName
+        </td>
+        <td>
+			@item.DisplayName
+        </td>
+        <td>
+			@item.PhoneNumber
+        </td>
+        <td>
+			@item.CurrentContractNumber
+        </td>
+        <td>
+			@item.IsActive
+        </td>
+        <td>
+			@item.AddtionalInfo
+        </td>
+        <td>
+			@(item.CollectionRequests == null ? "None" : item.CollectionRequests.Count.ToString())
+        </td>
+        <td>
+			@(item.Contacts == null ? "None" : item.Contacts.Count.ToString())
+        </td>
+        <td>
+			@(item.CustomerAddresses == null ? "None" : item.CustomerAddresses.Count.ToString())
+        </td>
+        <td>
+			@(item.CustomerPayments == null ? "None" : item.CustomerPayments.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+

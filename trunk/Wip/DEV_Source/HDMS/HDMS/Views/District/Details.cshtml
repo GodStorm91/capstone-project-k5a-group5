@@ -1,0 +1,29 @@
+@model HDMS.Models.District
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>District</legend>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">@Model.IsActive</div>
+
+    <div class="display-label">CityProvince</div>
+    <div class="display-field">@(Model.CityProvince == null ? "None" : Model.CityProvince.Name)</div>
+
+    <div class="display-label">Wards</div>
+    <div class="display-field">@(Model.Wards == null ? "None" : Model.Wards.Count.ToString())</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.DistrictId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

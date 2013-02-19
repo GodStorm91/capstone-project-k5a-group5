@@ -1,0 +1,48 @@
+﻿@model HDMS.Models.SetRoleModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;</button>
+    <h3>
+        Set Role to User</h3>
+</div>
+<div class="modal-body" style="height:400px;">
+    <fieldset>
+        <div>
+            @using (Html.BeginForm("ConfirmSetRole", "Account", FormMethod.Post, new { id = "set-role-form" }))
+            {
+            }
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    setRole = function (userName, role) {
+        $('#createModal').html('');
+        $.ajax({
+            url: '/Account/Edit/' + modelId,
+            type: 'POST',
+            dataType: 'html',
+            success: function (data) {
+                $('#editModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#editModal').modal();
+            }
+        });
+    };
+</script>

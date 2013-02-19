@@ -1,0 +1,177 @@
+﻿@model HDMS.Models.Contact
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+@*<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />  *@
+<script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+@*<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>*@
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<h2 class="StepTitle">
+    Add Contacts</h2>
+<div class="form-and-list">
+    <div class="form">
+        @using (Html.BeginForm("ConfirmCreate", "Contacts", FormMethod.Post, new { id = "contact-create-form", Class = "form-horizontal" }))
+        {
+            <div class="control-group">
+                <label class="control-label">
+                    Title
+                </label>
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Title, new { id = "title", Autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Full Name
+                </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Position
+                </label>
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Position, new { id = "position", Autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Position)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Email Address
+                </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.EmailAddress)
+                    @Html.ValidationMessageFor(model => model.EmailAddress)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    PhoneNumber
+                </label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.PhoneNumber)
+                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                </div>
+            </div>
+            <input type="hidden" id="contactCustomerId" name="CustomerId" value="" />
+        }
+        <div class="align-center">
+            <input id="btnAddContact" type="submit" class="btn btn-primary" value="Add >>" />
+        </div>
+    </div>
+    <div class="info-and-list">
+        <div class="customer-info">
+            <div class="row-fluid">
+                <div class="span6 offset1">
+                    <dl class="dl-horizontal">
+                        <dt>Company Name</dt>
+                        <dd id="step3-companyName">
+                        </dd>
+                        <dt>Display Name</dt>
+                        <dd id="step3-displayName">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="span5">
+                    <dl class="dl-horizontal">
+                        <dt>Phone</dt>
+                        <dd id="step3-phone">
+                        </dd>
+                        <dt>Contract Code</dt>
+                        <dd id="step3-contractNumber">
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div id="contact-table-div" class="list">
+        </div>
+    </div>
+</div>
+<script>
+    refreshValidation();
+
+    var refreshContactTable = function () {
+        var customerId = $('#CustomerId').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Customers/GetContactTable',
+            data: { customerId: customerId },
+            success: function (table) {
+                $('#contact-table-div').html(table);
+                $("#contact-create-form input").val("");
+                $('#contactCustomerId').val($('#CustomerId').val());
+            },
+            async: false
+        });
+    };
+
+    var deleteContact = function (contactId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Contact/Delete',
+            data: { id: contactId },
+            success: function () {
+                refreshContactTable();
+            },
+            async: false
+        });
+    };
+
+    $(document).ready(function () {
+        $('#title').typeahead({
+            source: [
+            { id: 1, name: 'Mr' },
+            { id: 2, name: 'Mrs' },
+            { id: 3, name: 'Miss' },
+        ]
+        });
+
+        $('#position').typeahead({
+            source: [
+            { id: 1, name: 'Manager' },
+            { id: 2, name: 'Saler' },
+            { id: 3, name: 'Deliverer' },
+        ]
+        });
+
+        var customerId = $('#CustomerId').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Customers/GetCustomerInfo',
+            data: { customerId: customerId },
+            success: function (customer) {
+                if (customer.success) {
+                    $('#step3-companyName').html(customer.companyName);
+                    $('#step3-displayName').html(customer.displayName);
+                    $('#step3-phone').html(customer.phone);
+                    $('#step3-contractNumber').html(customer.contractNumber);
+                }
+            },
+            async: false
+        });
+
+        $('#btnAddContact').click(function () {
+            var success = false,
+                creatForm = $("#contact-create-form");
+            if (creatForm.valid()) {
+                debugger
+                $.ajax({
+                    type: 'POST',
+                    url: creatForm.attr("action"),
+                    data: creatForm.serialize(),
+                    success: function (result) {
+                        debugger
+                        success = result.success;
+                        if (success) {
+                            refreshContactTable();
+                        }
+                    },
+                    async: false
+                });
+            }
+        });
+    });
+</script>

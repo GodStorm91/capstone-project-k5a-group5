@@ -1,0 +1,30 @@
+﻿@model HDMS.Models.Item
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Edit Item Details</h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("ConfirmEdit", "Items", FormMethod.Post, new { id = "item-edit-form", Class = "form-horizontal" }))
+    {
+        @Html.HiddenFor(model => model.OrderId)
+        @Html.HiddenFor(model => model.ItemId)
+        @Html.Partial("_CreateOrEdit", Model)
+    }
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" id="btnItemEdit">
+        Save</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+    
+</div>
+<script>
+    $('#btnItemEdit').click(function () {
+        $('#item-edit-form').submit();
+    });
+</script>

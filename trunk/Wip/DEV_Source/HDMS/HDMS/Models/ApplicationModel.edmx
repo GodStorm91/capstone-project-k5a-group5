@@ -1,0 +1,1616 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HDMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="HDMSModelStoreContainer">
+          <EntitySet Name="aspnet_Membership" EntityType="HDMSModel.Store.aspnet_Membership" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="aspnet_Roles" EntityType="HDMSModel.Store.aspnet_Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="aspnet_Users" EntityType="HDMSModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="aspnet_UsersInRoles" EntityType="HDMSModel.Store.aspnet_UsersInRoles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CityProvince" EntityType="HDMSModel.Store.CityProvince" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CollectionPlan" EntityType="HDMSModel.Store.CollectionPlan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contact" EntityType="HDMSModel.Store.Contact" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer" EntityType="HDMSModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomerAddress" EntityType="HDMSModel.Store.CustomerAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryOption" EntityType="HDMSModel.Store.DeliveryOption" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryPlan" EntityType="HDMSModel.Store.DeliveryPlan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="District" EntityType="HDMSModel.Store.District" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Hub" EntityType="HDMSModel.Store.Hub" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Item" EntityType="HDMSModel.Store.Item" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Order" EntityType="HDMSModel.Store.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderPaymentType" EntityType="HDMSModel.Store.OrderPaymentType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Request" EntityType="HDMSModel.Store.Request" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserInfo" EntityType="HDMSModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ward" EntityType="HDMSModel.Store.Ward" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__aspnet_Me__UserI__05113BBC" Association="HDMSModel.Store.FK__aspnet_Me__UserI__05113BBC">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Us__RoleI__07EDA867" Association="HDMSModel.Store.FK__aspnet_Us__RoleI__07EDA867">
+            <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+            <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Us__UserI__08E1CCA0" Association="HDMSModel.Store.FK__aspnet_Us__UserI__08E1CCA0">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FKContact407943" Association="HDMSModel.Store.FKContact407943">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd699986" Association="HDMSModel.Store.FKCustomerAd699986">
+            <End Role="Ward" EntitySet="Ward" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd734436" Association="HDMSModel.Store.FKCustomerAd734436">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd999103" Association="HDMSModel.Store.FKCustomerAd999103">
+            <End Role="District" EntitySet="District" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FKDistrict628970" Association="HDMSModel.Store.FKDistrict628970">
+            <End Role="CityProvince" EntitySet="CityProvince" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FKHub419786" Association="HDMSModel.Store.FKHub419786">
+            <End Role="Ward" EntitySet="Ward" />
+            <End Role="Hub" EntitySet="Hub" />
+          </AssociationSet>
+          <AssociationSet Name="FKHub718903" Association="HDMSModel.Store.FKHub718903">
+            <End Role="District" EntitySet="District" />
+            <End Role="Hub" EntitySet="Hub" />
+          </AssociationSet>
+          <AssociationSet Name="FKItem829908" Association="HDMSModel.Store.FKItem829908">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder160108" Association="HDMSModel.Store.FKOrder160108">
+            <End Role="District" EntitySet="District" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder332980" Association="HDMSModel.Store.FKOrder332980">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder344193" Association="HDMSModel.Store.FKOrder344193">
+            <End Role="DeliveryOption" EntitySet="DeliveryOption" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder537128" Association="HDMSModel.Store.FKOrder537128">
+            <End Role="Ward" EntitySet="Ward" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder949808" Association="HDMSModel.Store.FKOrder949808">
+            <End Role="DeliveryPlan" EntitySet="DeliveryPlan" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder996545" Association="HDMSModel.Store.FKOrder996545">
+            <End Role="OrderPaymentType" EntitySet="OrderPaymentType" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest241288" Association="HDMSModel.Store.FKRequest241288">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest470781" Association="HDMSModel.Store.FKRequest470781">
+            <End Role="CollectionPlan" EntitySet="CollectionPlan" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest484183" Association="HDMSModel.Store.FKRequest484183">
+            <End Role="CustomerAddress" EntitySet="CustomerAddress" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FKUserInfo221814" Association="HDMSModel.Store.FKUserInfo221814">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="UserInfo" EntitySet="UserInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FKWard334657" Association="HDMSModel.Store.FKWard334657">
+            <End Role="District" EntitySet="District" />
+            <End Role="Ward" EntitySet="Ward" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aspnet_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordFormat" Type="int" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="MobilePIN" Type="nvarchar" MaxLength="16" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="LoweredEmail" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+          <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLockoutDate" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="ntext" />
+        </EntityType>
+        <EntityType Name="aspnet_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="LoweredRoleName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="LoweredUserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnet_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CityProvince">
+          <Key>
+            <PropertyRef Name="CityProvinceId" />
+          </Key>
+          <Property Name="CityProvinceId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="CollectionPlan">
+          <Key>
+            <PropertyRef Name="CollectionPlanId" />
+          </Key>
+          <Property Name="CollectionPlanId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssignedDeliveryStaffId" Type="uniqueidentifier" />
+          <Property Name="FinishedDate" Type="datetime" />
+          <Property Name="CollectionPlanStatus" Type="int" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+          <Property Name="CollectionOrder" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="EmailAddress" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="PhoneNumber" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="DisplayName" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="PhoneNumber" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="CurrentContractCode" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="CustomerAddressId" />
+          </Key>
+          <Property Name="CustomerAddressId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="WardId" Type="int" />
+          <Property Name="DistrictId" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="DeliveryOption">
+          <Key>
+            <PropertyRef Name="DeliveryOptionId" />
+          </Key>
+          <Property Name="DeliveryOptionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryPlan">
+          <Key>
+            <PropertyRef Name="DeliveryPlanId" />
+          </Key>
+          <Property Name="DeliveryPlanId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssignedDeliveryStaffId" Type="uniqueidentifier" />
+          <Property Name="FinishedDate" Type="datetime" />
+          <Property Name="DeliveryPlanStatus" Type="int" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+          <Property Name="DeliveryOrder" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CityProvinceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="Hub">
+          <Key>
+            <PropertyRef Name="HubId" />
+          </Key>
+          <Property Name="HubId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="WardId" Type="int" />
+          <Property Name="DistrictId" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="IsFragile" Type="bit" Nullable="false" />
+          <Property Name="HasHighValue" Type="bit" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Weight" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="DeliveryOptionId" Type="int" Nullable="false" />
+          <Property Name="OrderPaymentTypeId" Type="int" Nullable="false" />
+          <Property Name="DeliveryPlanId" Type="int" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="CollectedDate" Type="datetime" />
+          <Property Name="DeliveryDate" Type="datetime" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReceiverPhone" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ReceiverAddress" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ReceiverAddressWardId" Type="int" />
+          <Property Name="ReceiverAddressDistrictId" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="decimal" Precision="19" Scale="16" />
+          <Property Name="Fee" Type="int" />
+          <Property Name="AmountToBeCollectedFromReceiver" Type="int" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="OrderPaymentType">
+          <Key>
+            <PropertyRef Name="OrderPaymentTypeId" />
+          </Key>
+          <Property Name="OrderPaymentTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="CollectionAddressId" Type="int" Nullable="false" />
+          <Property Name="RequestedDate" Type="datetime" />
+          <Property Name="CollectionPlanId" Type="int" />
+          <Property Name="RequestStatus" Type="int" Nullable="false" />
+          <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="CustomerId" Type="int" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+        </EntityType>
+        <Association Name="FK__aspnet_Me__UserI__05113BBC">
+          <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_Membership" Type="HDMSModel.Store.aspnet_Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_Membership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Us__RoleI__07EDA867">
+          <End Role="aspnet_Roles" Type="HDMSModel.Store.aspnet_Roles" Multiplicity="1" />
+          <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="aspnet_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Us__UserI__08E1CCA0">
+          <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKContact407943">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="1" />
+          <End Role="Contact" Type="HDMSModel.Store.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd699986">
+          <End Role="Ward" Type="HDMSModel.Store.Ward" Multiplicity="0..1" />
+          <End Role="CustomerAddress" Type="HDMSModel.Store.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd734436">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="HDMSModel.Store.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd999103">
+          <End Role="District" Type="HDMSModel.Store.District" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="HDMSModel.Store.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDistrict628970">
+          <End Role="CityProvince" Type="HDMSModel.Store.CityProvince" Multiplicity="1" />
+          <End Role="District" Type="HDMSModel.Store.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityProvince">
+              <PropertyRef Name="CityProvinceId" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CityProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKHub419786">
+          <End Role="Ward" Type="HDMSModel.Store.Ward" Multiplicity="0..1" />
+          <End Role="Hub" Type="HDMSModel.Store.Hub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="Hub">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKHub718903">
+          <End Role="District" Type="HDMSModel.Store.District" Multiplicity="1" />
+          <End Role="Hub" Type="HDMSModel.Store.Hub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Hub">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKItem829908">
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="1" />
+          <End Role="Item" Type="HDMSModel.Store.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder160108">
+          <End Role="District" Type="HDMSModel.Store.District" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ReceiverAddressDistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder332980">
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder344193">
+          <End Role="DeliveryOption" Type="HDMSModel.Store.DeliveryOption" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOption">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder537128">
+          <End Role="Ward" Type="HDMSModel.Store.Ward" Multiplicity="0..1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ReceiverAddressWardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder949808">
+          <End Role="DeliveryPlan" Type="HDMSModel.Store.DeliveryPlan" Multiplicity="0..1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryPlan">
+              <PropertyRef Name="DeliveryPlanId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder996545">
+          <End Role="OrderPaymentType" Type="HDMSModel.Store.OrderPaymentType" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderPaymentType">
+              <PropertyRef Name="OrderPaymentTypeId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderPaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest241288">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="1" />
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest470781">
+          <End Role="CollectionPlan" Type="HDMSModel.Store.CollectionPlan" Multiplicity="0..1" />
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPlan">
+              <PropertyRef Name="CollectionPlanId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CollectionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest484183">
+          <End Role="CustomerAddress" Type="HDMSModel.Store.CustomerAddress" Multiplicity="1" />
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerAddress">
+              <PropertyRef Name="CustomerAddressId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CollectionAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUserInfo221814">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="0..1" />
+          <End Role="UserInfo" Type="HDMSModel.Store.UserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKWard334657">
+          <End Role="District" Type="HDMSModel.Store.District" Multiplicity="1" />
+          <End Role="Ward" Type="HDMSModel.Store.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HDMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="HDMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aspnet_Membership" EntityType="HDMSModel.aspnet_Membership" />
+          <EntitySet Name="aspnet_Roles" EntityType="HDMSModel.aspnet_Roles" />
+          <EntitySet Name="aspnet_Users" EntityType="HDMSModel.aspnet_Users" />
+          <EntitySet Name="CityProvinces" EntityType="HDMSModel.CityProvince" />
+          <EntitySet Name="CollectionPlans" EntityType="HDMSModel.CollectionPlan" />
+          <EntitySet Name="Contacts" EntityType="HDMSModel.Contact" />
+          <EntitySet Name="Customers" EntityType="HDMSModel.Customer" />
+          <EntitySet Name="CustomerAddresses" EntityType="HDMSModel.CustomerAddress" />
+          <EntitySet Name="DeliveryOptions" EntityType="HDMSModel.DeliveryOption" />
+          <EntitySet Name="DeliveryPlans" EntityType="HDMSModel.DeliveryPlan" />
+          <EntitySet Name="Districts" EntityType="HDMSModel.District" />
+          <EntitySet Name="Hubs" EntityType="HDMSModel.Hub" />
+          <EntitySet Name="Items" EntityType="HDMSModel.Item" />
+          <EntitySet Name="Orders" EntityType="HDMSModel.Order" />
+          <EntitySet Name="OrderPaymentTypes" EntityType="HDMSModel.OrderPaymentType" />
+          <EntitySet Name="Requests" EntityType="HDMSModel.Request" />
+          <EntitySet Name="UserInfoes" EntityType="HDMSModel.UserInfo" />
+          <EntitySet Name="Wards" EntityType="HDMSModel.Ward" />
+          <AssociationSet Name="FK__aspnet_Me__UserI__05113BBC" Association="HDMSModel.FK__aspnet_Me__UserI__05113BBC">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+          </AssociationSet>
+          <AssociationSet Name="FKDistrict628970" Association="HDMSModel.FKDistrict628970">
+            <End Role="CityProvince" EntitySet="CityProvinces" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest470781" Association="HDMSModel.FKRequest470781">
+            <End Role="CollectionPlan" EntitySet="CollectionPlans" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FKContact407943" Association="HDMSModel.FKContact407943">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd734436" Association="HDMSModel.FKCustomerAd734436">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest241288" Association="HDMSModel.FKRequest241288">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FKUserInfo221814" Association="HDMSModel.FKUserInfo221814">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd699986" Association="HDMSModel.FKCustomerAd699986">
+            <End Role="Ward" EntitySet="Wards" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FKCustomerAd999103" Association="HDMSModel.FKCustomerAd999103">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FKRequest484183" Association="HDMSModel.FKRequest484183">
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder344193" Association="HDMSModel.FKOrder344193">
+            <End Role="DeliveryOption" EntitySet="DeliveryOptions" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder949808" Association="HDMSModel.FKOrder949808">
+            <End Role="DeliveryPlan" EntitySet="DeliveryPlans" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FKHub718903" Association="HDMSModel.FKHub718903">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Hub" EntitySet="Hubs" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder160108" Association="HDMSModel.FKOrder160108">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FKWard334657" Association="HDMSModel.FKWard334657">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Ward" EntitySet="Wards" />
+          </AssociationSet>
+          <AssociationSet Name="FKHub419786" Association="HDMSModel.FKHub419786">
+            <End Role="Ward" EntitySet="Wards" />
+            <End Role="Hub" EntitySet="Hubs" />
+          </AssociationSet>
+          <AssociationSet Name="FKItem829908" Association="HDMSModel.FKItem829908">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder332980" Association="HDMSModel.FKOrder332980">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder537128" Association="HDMSModel.FKOrder537128">
+            <End Role="Ward" EntitySet="Wards" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FKOrder996545" Association="HDMSModel.FKOrder996545">
+            <End Role="OrderPaymentType" EntitySet="OrderPaymentTypes" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="aspnet_UsersInRoles" Association="HDMSModel.aspnet_UsersInRoles">
+            <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aspnet_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="MobilePIN" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LoweredEmail" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="DateTime" Nullable="false" />
+          <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" />
+          <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="HDMSModel.FK__aspnet_Me__UserI__05113BBC" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
+        </EntityType>
+        <EntityType Name="aspnet_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="HDMSModel.aspnet_UsersInRoles" FromRole="aspnet_Roles" ToRole="aspnet_Users" />
+        </EntityType>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnet_Membership" Relationship="HDMSModel.FK__aspnet_Me__UserI__05113BBC" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
+          <NavigationProperty Name="aspnet_Roles" Relationship="HDMSModel.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
+        </EntityType>
+        <EntityType Name="CityProvince">
+          <Key>
+            <PropertyRef Name="CityProvinceId" />
+          </Key>
+          <Property Name="CityProvinceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <NavigationProperty Name="Districts" Relationship="HDMSModel.FKDistrict628970" FromRole="CityProvince" ToRole="District" />
+        </EntityType>
+        <EntityType Name="CollectionPlan">
+          <Key>
+            <PropertyRef Name="CollectionPlanId" />
+          </Key>
+          <Property Name="CollectionPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="AssignedDeliveryStaffId" Type="Guid" />
+          <Property Name="FinishedDate" Type="DateTime" />
+          <Property Name="CollectionPlanStatus" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CollectionOrder" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Requests" Relationship="HDMSModel.FKRequest470781" FromRole="CollectionPlan" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Position" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="HDMSModel.FKContact407943" FromRole="Contact" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="CurrentContractCode" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Contacts" Relationship="HDMSModel.FKContact407943" FromRole="Customer" ToRole="Contact" />
+          <NavigationProperty Name="CustomerAddresses" Relationship="HDMSModel.FKCustomerAd734436" FromRole="Customer" ToRole="CustomerAddress" />
+          <NavigationProperty Name="Requests" Relationship="HDMSModel.FKRequest241288" FromRole="Customer" ToRole="Request" />
+          <NavigationProperty Name="UserInfoes" Relationship="HDMSModel.FKUserInfo221814" FromRole="Customer" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="CustomerAddress">
+          <Key>
+            <PropertyRef Name="CustomerAddressId" />
+          </Key>
+          <Property Name="CustomerAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="WardId" Type="Int32" />
+          <Property Name="DistrictId" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Customer" Relationship="HDMSModel.FKCustomerAd734436" FromRole="CustomerAddress" ToRole="Customer" />
+          <NavigationProperty Name="Ward" Relationship="HDMSModel.FKCustomerAd699986" FromRole="CustomerAddress" ToRole="Ward" />
+          <NavigationProperty Name="District" Relationship="HDMSModel.FKCustomerAd999103" FromRole="CustomerAddress" ToRole="District" />
+          <NavigationProperty Name="Requests" Relationship="HDMSModel.FKRequest484183" FromRole="CustomerAddress" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="DeliveryOption">
+          <Key>
+            <PropertyRef Name="DeliveryOptionId" />
+          </Key>
+          <Property Name="DeliveryOptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder344193" FromRole="DeliveryOption" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="DeliveryPlan">
+          <Key>
+            <PropertyRef Name="DeliveryPlanId" />
+          </Key>
+          <Property Name="DeliveryPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="AssignedDeliveryStaffId" Type="Guid" />
+          <Property Name="FinishedDate" Type="DateTime" />
+          <Property Name="DeliveryPlanStatus" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DeliveryOrder" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder949808" FromRole="DeliveryPlan" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <NavigationProperty Name="CityProvince" Relationship="HDMSModel.FKDistrict628970" FromRole="District" ToRole="CityProvince" />
+          <NavigationProperty Name="CustomerAddresses" Relationship="HDMSModel.FKCustomerAd999103" FromRole="District" ToRole="CustomerAddress" />
+          <NavigationProperty Name="Hubs" Relationship="HDMSModel.FKHub718903" FromRole="District" ToRole="Hub" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder160108" FromRole="District" ToRole="Order" />
+          <NavigationProperty Name="Wards" Relationship="HDMSModel.FKWard334657" FromRole="District" ToRole="Ward" />
+        </EntityType>
+        <EntityType Name="Hub">
+          <Key>
+            <PropertyRef Name="HubId" />
+          </Key>
+          <Property Name="HubId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="WardId" Type="Int32" />
+          <Property Name="DistrictId" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="HDMSModel.FKHub718903" FromRole="Hub" ToRole="District" />
+          <NavigationProperty Name="Ward" Relationship="HDMSModel.FKHub419786" FromRole="Hub" ToRole="Ward" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="IsFragile" Type="Boolean" Nullable="false" />
+          <Property Name="HasHighValue" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Weight" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Order" Relationship="HDMSModel.FKItem829908" FromRole="Item" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryOptionId" Type="Int32" Nullable="false" />
+          <Property Name="OrderPaymentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryPlanId" Type="Int32" />
+          <Property Name="DueDate" Type="DateTime" />
+          <Property Name="CollectedDate" Type="DateTime" />
+          <Property Name="DeliveryDate" Type="DateTime" />
+          <Property Name="ReceiverName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ReceiverPhone" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ReceiverAddress" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ReceiverAddressWardId" Type="Int32" />
+          <Property Name="ReceiverAddressDistrictId" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="Longitude" Type="Decimal" Precision="19" Scale="16" />
+          <Property Name="Fee" Type="Int32" />
+          <Property Name="AmountToBeCollectedFromReceiver" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DeliveryOption" Relationship="HDMSModel.FKOrder344193" FromRole="Order" ToRole="DeliveryOption" />
+          <NavigationProperty Name="DeliveryPlan" Relationship="HDMSModel.FKOrder949808" FromRole="Order" ToRole="DeliveryPlan" />
+          <NavigationProperty Name="District" Relationship="HDMSModel.FKOrder160108" FromRole="Order" ToRole="District" />
+          <NavigationProperty Name="Items" Relationship="HDMSModel.FKItem829908" FromRole="Order" ToRole="Item" />
+          <NavigationProperty Name="Request" Relationship="HDMSModel.FKOrder332980" FromRole="Order" ToRole="Request" />
+          <NavigationProperty Name="Ward" Relationship="HDMSModel.FKOrder537128" FromRole="Order" ToRole="Ward" />
+          <NavigationProperty Name="OrderPaymentType" Relationship="HDMSModel.FKOrder996545" FromRole="Order" ToRole="OrderPaymentType" />
+        </EntityType>
+        <EntityType Name="OrderPaymentType">
+          <Key>
+            <PropertyRef Name="OrderPaymentTypeId" />
+          </Key>
+          <Property Name="OrderPaymentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder996545" FromRole="OrderPaymentType" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="CollectionAddressId" Type="Int32" Nullable="false" />
+          <Property Name="RequestedDate" Type="DateTime" />
+          <Property Name="CollectionPlanId" Type="Int32" />
+          <Property Name="RequestStatus" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="CollectionPlan" Relationship="HDMSModel.FKRequest470781" FromRole="Request" ToRole="CollectionPlan" />
+          <NavigationProperty Name="Customer" Relationship="HDMSModel.FKRequest241288" FromRole="Request" ToRole="Customer" />
+          <NavigationProperty Name="CustomerAddress" Relationship="HDMSModel.FKRequest484183" FromRole="Request" ToRole="CustomerAddress" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder332980" FromRole="Request" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="HDMSModel.FKUserInfo221814" FromRole="UserInfo" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <NavigationProperty Name="CustomerAddresses" Relationship="HDMSModel.FKCustomerAd699986" FromRole="Ward" ToRole="CustomerAddress" />
+          <NavigationProperty Name="District" Relationship="HDMSModel.FKWard334657" FromRole="Ward" ToRole="District" />
+          <NavigationProperty Name="Hubs" Relationship="HDMSModel.FKHub419786" FromRole="Ward" ToRole="Hub" />
+          <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder537128" FromRole="Ward" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__aspnet_Me__UserI__05113BBC">
+          <End Role="aspnet_Users" Type="HDMSModel.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_Membership" Type="HDMSModel.aspnet_Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_Membership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDistrict628970">
+          <End Role="CityProvince" Type="HDMSModel.CityProvince" Multiplicity="1" />
+          <End Role="District" Type="HDMSModel.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityProvince">
+              <PropertyRef Name="CityProvinceId" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CityProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest470781">
+          <End Role="CollectionPlan" Type="HDMSModel.CollectionPlan" Multiplicity="0..1" />
+          <End Role="Request" Type="HDMSModel.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPlan">
+              <PropertyRef Name="CollectionPlanId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CollectionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKContact407943">
+          <End Role="Customer" Type="HDMSModel.Customer" Multiplicity="1" />
+          <End Role="Contact" Type="HDMSModel.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd734436">
+          <End Role="Customer" Type="HDMSModel.Customer" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="HDMSModel.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest241288">
+          <End Role="Customer" Type="HDMSModel.Customer" Multiplicity="1" />
+          <End Role="Request" Type="HDMSModel.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUserInfo221814">
+          <End Role="Customer" Type="HDMSModel.Customer" Multiplicity="0..1" />
+          <End Role="UserInfo" Type="HDMSModel.UserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="UserInfo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd699986">
+          <End Role="Ward" Type="HDMSModel.Ward" Multiplicity="0..1" />
+          <End Role="CustomerAddress" Type="HDMSModel.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCustomerAd999103">
+          <End Role="District" Type="HDMSModel.District" Multiplicity="1" />
+          <End Role="CustomerAddress" Type="HDMSModel.CustomerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="CustomerAddress">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKRequest484183">
+          <End Role="CustomerAddress" Type="HDMSModel.CustomerAddress" Multiplicity="1" />
+          <End Role="Request" Type="HDMSModel.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerAddress">
+              <PropertyRef Name="CustomerAddressId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CollectionAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder344193">
+          <End Role="DeliveryOption" Type="HDMSModel.DeliveryOption" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOption">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder949808">
+          <End Role="DeliveryPlan" Type="HDMSModel.DeliveryPlan" Multiplicity="0..1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryPlan">
+              <PropertyRef Name="DeliveryPlanId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKHub718903">
+          <End Role="District" Type="HDMSModel.District" Multiplicity="1" />
+          <End Role="Hub" Type="HDMSModel.Hub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Hub">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder160108">
+          <End Role="District" Type="HDMSModel.District" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ReceiverAddressDistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKWard334657">
+          <End Role="District" Type="HDMSModel.District" Multiplicity="1" />
+          <End Role="Ward" Type="HDMSModel.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKHub419786">
+          <End Role="Ward" Type="HDMSModel.Ward" Multiplicity="0..1" />
+          <End Role="Hub" Type="HDMSModel.Hub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="Hub">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKItem829908">
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="1" />
+          <End Role="Item" Type="HDMSModel.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder332980">
+          <End Role="Request" Type="HDMSModel.Request" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder537128">
+          <End Role="Ward" Type="HDMSModel.Ward" Multiplicity="0..1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ward">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ReceiverAddressWardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOrder996545">
+          <End Role="OrderPaymentType" Type="HDMSModel.OrderPaymentType" Multiplicity="1" />
+          <End Role="Order" Type="HDMSModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderPaymentType">
+              <PropertyRef Name="OrderPaymentTypeId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderPaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="aspnet_UsersInRoles">
+          <End Role="aspnet_Roles" Type="HDMSModel.aspnet_Roles" Multiplicity="*" />
+          <End Role="aspnet_Users" Type="HDMSModel.aspnet_Users" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HDMSModelStoreContainer" CdmEntityContainer="HDMSEntities">
+          <EntitySetMapping Name="aspnet_Membership"><EntityTypeMapping TypeName="HDMSModel.aspnet_Membership"><MappingFragment StoreEntitySet="aspnet_Membership">
+            <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+            <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+            <ScalarProperty Name="MobilePIN" ColumnName="MobilePIN" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="LoweredEmail" ColumnName="LoweredEmail" />
+            <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+            <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+            <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+            <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+            <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+            <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+            <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+            <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+            <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+            <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+            <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+            <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+            <ScalarProperty Name="Comment" ColumnName="Comment" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="aspnet_Roles"><EntityTypeMapping TypeName="HDMSModel.aspnet_Roles"><MappingFragment StoreEntitySet="aspnet_Roles">
+            <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+            <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="aspnet_Users"><EntityTypeMapping TypeName="HDMSModel.aspnet_Users"><MappingFragment StoreEntitySet="aspnet_Users">
+            <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+            <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+            <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+            <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CityProvinces"><EntityTypeMapping TypeName="HDMSModel.CityProvince"><MappingFragment StoreEntitySet="CityProvince">
+            <ScalarProperty Name="CityProvinceId" ColumnName="CityProvinceId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CollectionPlans"><EntityTypeMapping TypeName="HDMSModel.CollectionPlan"><MappingFragment StoreEntitySet="CollectionPlan">
+            <ScalarProperty Name="CollectionPlanId" ColumnName="CollectionPlanId" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+            <ScalarProperty Name="AssignedDeliveryStaffId" ColumnName="AssignedDeliveryStaffId" />
+            <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+            <ScalarProperty Name="CollectionPlanStatus" ColumnName="CollectionPlanStatus" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+            <ScalarProperty Name="CollectionOrder" ColumnName="CollectionOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Contacts"><EntityTypeMapping TypeName="HDMSModel.Contact"><MappingFragment StoreEntitySet="Contact">
+            <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+            <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Position" ColumnName="Position" />
+            <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+            <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Customers"><EntityTypeMapping TypeName="HDMSModel.Customer"><MappingFragment StoreEntitySet="Customer">
+            <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+            <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+            <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+            <ScalarProperty Name="CurrentContractCode" ColumnName="CurrentContractCode" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CustomerAddresses"><EntityTypeMapping TypeName="HDMSModel.CustomerAddress"><MappingFragment StoreEntitySet="CustomerAddress">
+            <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
+            <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+            <ScalarProperty Name="Address" ColumnName="Address" />
+            <ScalarProperty Name="WardId" ColumnName="WardId" />
+            <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+            <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+            <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DeliveryOptions"><EntityTypeMapping TypeName="HDMSModel.DeliveryOption"><MappingFragment StoreEntitySet="DeliveryOption">
+            <ScalarProperty Name="DeliveryOptionId" ColumnName="DeliveryOptionId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DeliveryPlans"><EntityTypeMapping TypeName="HDMSModel.DeliveryPlan"><MappingFragment StoreEntitySet="DeliveryPlan">
+            <ScalarProperty Name="DeliveryPlanId" ColumnName="DeliveryPlanId" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+            <ScalarProperty Name="AssignedDeliveryStaffId" ColumnName="AssignedDeliveryStaffId" />
+            <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+            <ScalarProperty Name="DeliveryPlanStatus" ColumnName="DeliveryPlanStatus" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+            <ScalarProperty Name="DeliveryOrder" ColumnName="DeliveryOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Districts"><EntityTypeMapping TypeName="HDMSModel.District"><MappingFragment StoreEntitySet="District">
+            <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+            <ScalarProperty Name="CityProvinceId" ColumnName="CityProvinceId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Hubs"><EntityTypeMapping TypeName="HDMSModel.Hub"><MappingFragment StoreEntitySet="Hub">
+            <ScalarProperty Name="HubId" ColumnName="HubId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Address" ColumnName="Address" />
+            <ScalarProperty Name="WardId" ColumnName="WardId" />
+            <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+            <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+            <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Items"><EntityTypeMapping TypeName="HDMSModel.Item"><MappingFragment StoreEntitySet="Item">
+            <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+            <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+            <ScalarProperty Name="IsFragile" ColumnName="IsFragile" />
+            <ScalarProperty Name="HasHighValue" ColumnName="HasHighValue" />
+            <ScalarProperty Name="Size" ColumnName="Size" />
+            <ScalarProperty Name="Weight" ColumnName="Weight" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="HDMSModel.Order"><MappingFragment StoreEntitySet="Order">
+            <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+            <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+            <ScalarProperty Name="DeliveryOptionId" ColumnName="DeliveryOptionId" />
+            <ScalarProperty Name="OrderPaymentTypeId" ColumnName="OrderPaymentTypeId" />
+            <ScalarProperty Name="DeliveryPlanId" ColumnName="DeliveryPlanId" />
+            <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+            <ScalarProperty Name="CollectedDate" ColumnName="CollectedDate" />
+            <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+            <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+            <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+            <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+            <ScalarProperty Name="ReceiverAddressWardId" ColumnName="ReceiverAddressWardId" />
+            <ScalarProperty Name="ReceiverAddressDistrictId" ColumnName="ReceiverAddressDistrictId" />
+            <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+            <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+            <ScalarProperty Name="Fee" ColumnName="Fee" />
+            <ScalarProperty Name="AmountToBeCollectedFromReceiver" ColumnName="AmountToBeCollectedFromReceiver" />
+            <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OrderPaymentTypes"><EntityTypeMapping TypeName="HDMSModel.OrderPaymentType"><MappingFragment StoreEntitySet="OrderPaymentType">
+            <ScalarProperty Name="OrderPaymentTypeId" ColumnName="OrderPaymentTypeId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Requests"><EntityTypeMapping TypeName="HDMSModel.Request"><MappingFragment StoreEntitySet="Request">
+            <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+            <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+            <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+            <ScalarProperty Name="CollectionAddressId" ColumnName="CollectionAddressId" />
+            <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+            <ScalarProperty Name="CollectionPlanId" ColumnName="CollectionPlanId" />
+            <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserInfoes"><EntityTypeMapping TypeName="HDMSModel.UserInfo"><MappingFragment StoreEntitySet="UserInfo">
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+            <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Wards"><EntityTypeMapping TypeName="HDMSModel.Ward"><MappingFragment StoreEntitySet="Ward">
+            <ScalarProperty Name="WardId" ColumnName="WardId" />
+            <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="HDMSModel.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
+            <EndProperty Name="aspnet_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="aspnet_Users">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ApplicationModel">
+        <EntityTypeShape EntityType="HDMSModel.aspnet_Membership" Width="1.5" PointX="15.25" PointY="14.25" Height="4.9030362955729192" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.aspnet_Roles" Width="1.5" PointX="10.75" PointY="15.625" Height="2.0478930664062496" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.aspnet_Users" Width="1.5" PointX="13" PointY="15.375" Height="2.5832324218749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.CityProvince" Width="1.5" PointX="1.5" PointY="18.125" Height="1.8694466145833353" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.CollectionPlan" Width="1.5" PointX="6" PointY="5" Height="2.5832324218749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Contact" Width="1.5" PointX="3" PointY="7.75" Height="2.5832324218749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Customer" Width="1.5" PointX="0.75" PointY="8.75" Height="2.9401253255208317" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.CustomerAddress" Width="1.5" PointX="6" PointY="8.625" Height="3.2970182291666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryOption" Width="1.5" PointX="8.25" PointY="5.375" Height="1.8694466145833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryPlan" Width="1.5" PointX="8.25" PointY="13" Height="2.5832324218749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.District" Width="1.5" PointX="1.5" PointY="3.75" Height="2.7616788736979174" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Hub" Width="1.5" PointX="6" PointY="0.75" Height="2.7616788736979174" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Item" Width="1.5" PointX="12.75" PointY="8.875" Height="2.7616788736979174" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Order" Width="1.5" PointX="10.5" PointY="7.375" Height="5.6168221028645817" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.OrderPaymentType" Width="1.5" PointX="8.25" PointY="16.25" Height="1.8694466145833388" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Request" Width="1.5" PointX="8.25" PointY="8.625" Height="3.1185717773437531" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.UserInfo" Width="1.5" PointX="3" PointY="15.125" Height="1.6910001627604174" IsExpanded="true" />
+        <EntityTypeShape EntityType="HDMSModel.Ward" Width="1.5" PointX="3.75" PointY="4" Height="2.5832324218750031" IsExpanded="true" />
+        <AssociationConnector Association="HDMSModel.FK__aspnet_Me__UserI__05113BBC" ManuallyRouted="false">
+          <ConnectorPoint PointX="14.5" PointY="16.666616210937498" />
+          <ConnectorPoint PointX="15.25" PointY="16.666616210937498" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKDistrict628970" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.625" PointY="18.125" />
+          <ConnectorPoint PointX="2.625" PointY="6.5116788736979174" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKRequest470781" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="7.583232421875" />
+          <ConnectorPoint PointX="7.875" PointY="7.958232421875" />
+          <ConnectorPoint PointX="7.875" PointY="10.184285888671877" />
+          <ConnectorPoint PointX="8.25" PointY="10.184285888671877" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKContact407943" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.7604166666666665" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.9270833333333335" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="3" PointY="9.5416162109375" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKCustomerAd734436" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="11.042928873697914" />
+          <ConnectorPoint PointX="2.9270833333333335" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="4.822916666666667" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="4.989583333333333" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="5.0260441666666669" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="5.1927108333333329" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="6" PointY="11.042928873697916" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKRequest241288" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.75" PointY="10.292272542317708" />
+          <ConnectorPoint PointX="2.75" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="2.7604166666666665" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="2.9270833333333335" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="5.0260441666666669" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="5.1927108333333329" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="9" PointY="12.172018229166667" />
+          <ConnectorPoint PointX="9" PointY="11.743571777343753" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKUserInfo221814" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="11.690125325520832" />
+          <ConnectorPoint PointX="1.5" PointY="15.970500081380209" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="15.970500081380209" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="15.970500081380209" />
+          <ConnectorPoint PointX="3" PointY="15.970500081380209" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKCustomerAd699986" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.90625" PointY="6.5832324218750031" />
+          <ConnectorPoint PointX="4.90625" PointY="11.513726051432293" />
+          <ConnectorPoint PointX="5.0260441666666669" PointY="11.513726051432293" />
+          <ConnectorPoint PointX="5.1927108333333329" PointY="11.513726051432293" />
+          <ConnectorPoint PointX="6" PointY="11.513726051432293" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKCustomerAd999103" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.4374975" PointY="6.5116788736979174" />
+          <ConnectorPoint PointX="2.4374975" PointY="11.83732177734375" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="11.837321777343748" />
+          <ConnectorPoint PointX="2.9270833333333335" PointY="11.83732177734375" />
+          <ConnectorPoint PointX="5.0260441666666669" PointY="11.83732177734375" />
+          <ConnectorPoint PointX="5.1927108333333329" PointY="11.83732177734375" />
+          <ConnectorPoint PointX="6" PointY="11.83732177734375" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKRequest484183" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="9.3421429443359383" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="9.3421429443359383" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="9.3421429443359383" />
+          <ConnectorPoint PointX="8.25" PointY="9.3421429443359383" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder344193" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="6.3097233072916659" />
+          <ConnectorPoint PointX="11.25" PointY="6.3097233072916659" />
+          <ConnectorPoint PointX="11.25" PointY="7.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder949808" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="14.2916162109375" />
+          <ConnectorPoint PointX="10.510416666666666" PointY="14.2916162109375" />
+          <ConnectorPoint PointX="10.677083333333334" PointY="14.2916162109375" />
+          <ConnectorPoint PointX="11.25" PointY="14.2916162109375" />
+          <ConnectorPoint PointX="11.25" PointY="12.991822102864582" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKHub718903" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.75" />
+          <ConnectorPoint PointX="2.25" PointY="2.1308394368489587" />
+          <ConnectorPoint PointX="6" PointY="2.1308394368489587" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder160108" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.84375" PointY="6.5116788736979174" />
+          <ConnectorPoint PointX="2.84375" PointY="12.581920166015625" />
+          <ConnectorPoint PointX="10.5" PointY="12.581920166015625" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKWard334657" ManuallyRouted="false">
+          <ConnectorPoint PointX="3" PointY="5.2558394368489587" />
+          <ConnectorPoint PointX="3.75" PointY="5.2558394368489587" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKHub419786" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="4" />
+          <ConnectorPoint PointX="4.5" PointY="2.8525116552734389" />
+          <ConnectorPoint PointX="6" PointY="2.8525116552734389" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKItem829908" ManuallyRouted="false">
+          <ConnectorPoint PointX="12" PointY="10.255839436848959" />
+          <ConnectorPoint PointX="12.75" PointY="10.255839436848959" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder332980" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="10.184285888671877" />
+          <ConnectorPoint PointX="10.5" PointY="10.184285888671877" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder537128" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.1093775" PointY="6.5832324218750031" />
+          <ConnectorPoint PointX="5.1093775" PointY="12.345716697591152" />
+          <ConnectorPoint PointX="10.5" PointY="12.345716697591152" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FKOrder996545" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="17.927419840494792" />
+          <ConnectorPoint PointX="10.59375" PointY="17.927419840494792" />
+          <ConnectorPoint PointX="10.59375" PointY="12.991822102864582" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.aspnet_UsersInRoles" ManuallyRouted="false">
+          <ConnectorPoint PointX="12.25" PointY="16.648946533203123" />
+          <ConnectorPoint PointX="13" PointY="16.648946533203123" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
