@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1131" measuredH="1389" mockupW="1002" mockupH="1379">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1587" measuredH="1389" mockupW="1458" mockupH="1379">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="129" y="10" w="800" h="672" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -73,14 +73,14 @@
         <text>Create%20Plan</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::DataGrid" x="135" y="234" w="263" h="162" measuredW="276" measuredH="113" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::DataGrid" x="135" y="234" w="263" h="162" measuredW="223" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Stt%2C%20Select%2C%20Address%2C%20Customer%0A1%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A2%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A3%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A%7B5L%2C%205L%2C%2035L%2C%200C%7D</text>
+        <text>Stt%2C%20Select%2C%20Address%2C%20Customer%0A%7B5L%2C%205L%2C%2035L%2C%200C%7D</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::DataGrid" x="135" y="436" w="263" h="162" measuredW="276" measuredH="113" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::DataGrid" x="135" y="436" w="263" h="162" measuredW="223" measuredH="53" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Stt%2C%20Select%2C%20Address%2C%20Customer%0A1%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A2%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A3%2C%5Bx%5D%2C%20452/1%20Thanh%20Thai%2C%20Tiki%0A%7B5L%2C%205L%2C%2035L%2C%200C%7D</text>
+        <text>Stt%2C%20Select%2C%20Address%2C%20Customer%0A%20%0A%7B5L%2C%205L%2C%2035L%2C%200C%7D</text>
       </controlProperties>
     </control>
     <control controlID="29" controlTypeID="com.balsamiq.mockups::FieldSet" x="414" y="203" w="310" h="229" measuredW="200" measuredH="170" zOrder="19" locked="false" isInGroup="-1">
@@ -145,9 +145,9 @@
         <text>GetNextHighest%20Point</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="com.balsamiq.mockups::StickyNote" x="777" y="175" w="354" h="188" measuredW="109" measuredH="123" zOrder="33" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::StickyNote" x="777" y="175" w="410" h="248" measuredW="109" measuredH="123" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Moi%20vao%3A%20cua%20so%20popup%20se%20hien%20thi%20len%20cho%20phep%20nguoi%20dung%20chon%20settings.%0ASo%20plans%20%3D%20maximum%20so%20delivery%20men%20available%20trong%20DB%20.%20--%20Default%20bang%20so%20Delivery%20men%20available%20trong%20DB.%0ASo%20Request%20%3D%20So%20Request%20maximum%20trong%20DB%20--%20%20Default%20lay%20so%20maximum%20trong%20DB</text>
+        <text>Moi%20vao%3A%20cua%20so%20popup%20se%20hien%20thi%20len%20cho%20phep%20nguoi%20dung%20chon%20settings.%0ASo%20plans%20%3D%20maximum%20so%20delivery%20men%20available%20trong%20DB%20.%20--%20Default%20bang%20so%20Delivery%20men%20available%20trong%20DB.%0ASo%20Request%20%3D%20So%20Request%20status%20new%20maximum%20trong%20DB%20--%20%20Default%20lay%20so%20maximum%20trong%20DB%0ASave%20Settings%3A%20Open%20popup%20cho%20phep%20nguoi%20dung%20save%20cac%20settings%20thiet%20lap%20hien%20tai%20ve%20file%20dang%20xml%0ALoad%20Settings%3A%20load%20tu%20file%20xml%20khi%20nay%20c%E1c%20settings%20sau%3A%0A%09trong%20so%20cua%20Date%0A%09trong%20so%20cua%20DeliveryType</text>
       </controlProperties>
     </control>
     <control controlID="47" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="129" y="717" w="800" h="672" measuredW="450" measuredH="400" zOrder="34" locked="false" isInGroup="-1">
@@ -238,19 +238,32 @@
         <text>Add%20To%20Plan</text>
       </controlProperties>
     </control>
-    <control controlID="67" controlTypeID="com.balsamiq.mockups::CheckBox" x="129" y="1310" w="-1" h="-1" measuredW="141" measuredH="22" zOrder="54" locked="false" isInGroup="-1">
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Canvas" x="135" y="961" w="256" h="31" measuredW="100" measuredH="70" zOrder="54" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Select%20/DeSelect%20All</text>
+        <backgroundAlpha>0.5</backgroundAlpha>
+        <borderColor>2848996</borderColor>
+        <borderStyle>none</borderStyle>
+        <color>2848996</color>
       </controlProperties>
     </control>
-    <control controlID="68" controlTypeID="com.balsamiq.mockups::Button" x="814" y="1308" w="-1" h="-1" measuredW="93" measuredH="27" zOrder="55" locked="false" isInGroup="-1">
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::StickyNote" x="937" y="717" w="650" h="226" measuredW="109" measuredH="123" zOrder="55" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Create%20Plan</text>
+        <text>Goi%20so%20Request%20ma%20ng%20dung%20muon%20assign%20la%20R%0A%20%0ARequest%20se%20duoc%20load%20va%20tu%20dong%20them%20vao%20table%20sau%20khi%20dung%20set%20cac%20trong%20so%20%0A%09Request%20duoc%20sort%20theo%20trong%20so.tu%20tren%20xuong%20duoi.%20va%20default%20la%20%3A%20Table%20tren%3A%20%28MaxRequest-R%29%20dong%0A%09Table%20ben%20duoi%3A%20R%20dong.%0ASau%20do%20khong%20con%20ap%20dung%20thuat%20toan%20sort%20trong%20so%20nua%20.%0ANeu%20nguoi%20dung%20remove%20/%20add%20mot%20request%20thi%20request%20do%20se%20dc%20chuyen%20ve%20vi%20tri%20cuoi%20cung%20trong%20table%0ACo%20the%20filter%20request%20theo%20customer%20%28filter%20nay%20ap%20dung%20offline%20su%20dung%20xslt%29%0A%20%0A%20%0ARoll%20Over%20thi%20chuyen%20mau%20nhu%20ben%20phai%0AClick%20len%20se%20chon%20hoac%20bo%20chon%20%28o%20cot%20dau%20tien%29</text>
       </controlProperties>
     </control>
-    <control controlID="69" controlTypeID="com.balsamiq.mockups::Button" x="439" y="1308" w="-1" h="-1" measuredW="146" measuredH="27" zOrder="56" locked="false" isInGroup="-1">
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::FieldSet" x="466" y="939" w="310" h="141" measuredW="200" measuredH="170" zOrder="56" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>GetNextHighest%20Point</text>
+        <text>Filter%20by%20Customer%20Name</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Label" x="484" y="966" w="-1" h="-1" measuredW="96" measuredH="21" zOrder="57" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Customer%20name</text>
+      </controlProperties>
+    </control>
+    <control controlID="75" controlTypeID="com.balsamiq.mockups::ComboBox" x="600" y="965" w="-1" h="-1" measuredW="79" measuredH="78" zOrder="58" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Lazadun%0ALazade%0ALazade%0ALazare</text>
       </controlProperties>
     </control>
   </controls>
