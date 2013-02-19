@@ -1,0 +1,60 @@
+@model HDMS.Models.CollectionPlan
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CreatedDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CreatedDate)
+    @Html.ValidationMessageFor(model => model.CreatedDate)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CreatedByUserId)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CreatedByUserId)
+    @Html.ValidationMessageFor(model => model.CreatedByUserId)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.AssignedDeliveryStaffId)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.AssignedDeliveryStaffId)
+    @Html.ValidationMessageFor(model => model.AssignedDeliveryStaffId)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.StartDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.StartDate)
+    @Html.ValidationMessageFor(model => model.StartDate)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.EndDate)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.EndDate)
+    @Html.ValidationMessageFor(model => model.EndDate)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CollectionStatus)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CollectionStatus)
+    @Html.ValidationMessageFor(model => model.CollectionStatus)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Note)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Note)
+    @Html.ValidationMessageFor(model => model.Note)
+</div>
+

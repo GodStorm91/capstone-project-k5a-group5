@@ -1,0 +1,87 @@
+﻿@model HDMS.Models.Order
+@{
+    Layout = null;
+}
+<div class="control-group">
+    <label class="control-label" for="Name">
+        Receiver Name</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.ReceiverName, new { Placeholder = "Receiver Name" })
+        <br />@Html.ValidationMessageFor(model => model.ReceiverName)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Phone">
+        Receiver Phone No. <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.ReceiverPhone, new { Placeholder = "Receiver Phone Number" })
+        <br />@Html.ValidationMessageFor(model => model.ReceiverPhone)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="City/Province">
+        Delivery Address <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+        <br />@Html.ValidationMessageFor(model => model.District.CityProvinceId)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="District">
+        <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.ReceiverAddressDistrictId, ViewBag.PossibleDistricts as SelectList, "-- Choose District --", new { id = "ddlDistrict", Class = "chzn-select" })
+        <br />@Html.ValidationMessageFor(model => model.ReceiverAddressDistrictId)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Ward">
+        </label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.ReceiverAddressWardId, ViewBag.PossibleWards as SelectList, "-- Choose Ward --", new { id = "ddlWard", Class = "chzn-select" })
+        <br />@Html.ValidationMessageFor(model => model.ReceiverAddressWardId)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Address">
+        <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.TextAreaFor(model => model.ReceiverAddress, new { Placeholder = "Address" })
+        <br />@Html.ValidationMessageFor(model => model.ReceiverAddress)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Delivery Option">
+        Delivery Option <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.DeliveryOptionId, ViewBag.PossibleDeliveryOptions as SelectList, "-- Choose Delivery Option --", new { id = "ddlDeliveryOption", Class = "chzn-select" })
+        <br />@Html.ValidationMessageFor(model => model.DeliveryOptionId)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Payment Type">
+        Payment Type <span style="color:Red">*</span></label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.OrderPaymentTypeId, ViewBag.PossiblePaymentTypes as SelectList, "-- Choose Payment Type --", new { id = "ddlPaymentType", Class = "chzn-select" })
+        <br />@Html.ValidationMessageFor(model => model.OrderPaymentTypeId)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Amount to be collected from Receiver">
+        Amount to collected <span style="color:Red">*</span></label>
+    <div class="controls">
+        <div class="input-append">
+            @Html.TextBoxFor(model => model.AmountToBeCollectedFromReceiver, new { Placeholder = "Amount to be collected", Style = "float: left;width: 181px;" })
+            <span class="add-on">VNĐ</span>
+        </div>
+        <br />@Html.ValidationMessageFor(model => model.AmountToBeCollectedFromReceiver)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="Description">
+        Notes</label>
+    <div class="controls">
+        @Html.TextAreaFor(model => model.Note, new { Placeholder = "Notes", Rows = "3" })
+        <br />@Html.ValidationMessageFor(model => model.Note)
+    </div>
+</div>

@@ -1,0 +1,26 @@
+@model HDMS.Models.CustomerPayment
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Edit Customer Payment</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        @using (Html.BeginForm("ConfirmEdit", "CustomerPayments", FormMethod.Post, new { id = "create-form" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.CustomerPaymentId)
+            @Html.Partial("_CreateOrEdit", Model)
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Edit" />
+                <button class="btn" data-dismiss="modal" aria-hidden="true">
+                    Cancel</button>
+            </div>
+        
+        }
+    </fieldset>
+</div>

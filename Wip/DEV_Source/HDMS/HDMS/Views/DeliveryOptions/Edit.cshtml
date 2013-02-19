@@ -1,0 +1,30 @@
+@model HDMS.Models.DeliveryOption
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Edit Delivery Option</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        @using (Html.BeginForm("ConfirmEdit", "DeliveryOptions", FormMethod.Post, new { id = "edit-form" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.DeliveryOptionId)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.Partial("_CreateOrEdit", Model)}
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $('#btnSave').click(function () {
+        $('#edit-form').submit();
+    });
+</script>

@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+<div class="page-header">
+	<h2>Contact</h2>
+    <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+    <div id="Div1" class="dataTables_wrapper form-inline" role="grid">
+        <div class="DTTT btn-group">
+            <a href="#create" role="button" data-toggle="modal" class="btn DTTT_button_text"
+                id="ToolTables_example_0"><span>New</span></a> <a class="btn DTTT_button_text disabled"
+                    id="ToolTables_example_1"><span>Edit</span></a> <a class="btn DTTT_button_text disabled"
+                        id="ToolTables_example_2"><span>Delete</span></a>
+        </div>
+        <div class="dataTables_filter" id="example_filter">
+            <label>
+                Search:
+                <input type="text" aria-controls="example"></label>
+        </div>
+        <!-- Begin Table -->
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable"
+            id="Table1" aria-describedby="example_info">
+            <thead>
+                <tr role="row">
+                <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Title">
+                        Company
+                    </th>
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Title">
+                        Title
+                    </th>
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Name">
+                        Name
+                    </th>
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Position">
+                        Position
+                    </th>
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Email">
+                        Email
+                    </th>
+                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example"
+                        rowspan="1" colspan="1" style="width: 15%;" aria-sort="ascending" aria-label="Phone">
+                        Phone
+                    </th>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1"
+                        colspan="1" style="width: 10%;" aria-label="Status">
+                    </th>
+                </tr>
+            </thead>
+            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                <tr class="gradeA odd">
+                <td class="  sorting_1">
+                        Ben Thanh Company
+                    </td>
+                    <td class=" ">
+                        DR.
+                    </td>
+                    <td class=" ">
+                        Nguyen Ba Linh
+                    </td>
+                    <td class=" ">
+                        CEO
+                    </td>
+                    <td class=" ">
+                        qaz@wsx.edc
+                    </td>
+                    <td class=" ">
+                        01234567890
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">
+                            Activate</button>
+                    </td>
+                </tr>
+                 <tr class="gradeA odd">
+                 <td class="  sorting_1">
+                        Unilever Viet Nam
+                    </td>
+                    <td class=" ">
+                        Mrs
+                    </td>
+                    <td class=" ">
+                        Ho Huu Tai
+                    </td>
+                    <td class=" ">
+                        Sale manager
+                    </td>
+                    <td class=" ">
+                        asjdk@qwuieyiquw.cajs
+                    </td>
+                    <td class=" ">
+                        0987654321
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">
+                            Deactivate</button>
+                    </td>
+                </tr>
+                 <tr class="gradeA odd">
+                 <td class="  sorting_1">
+                        Hoa Moc Lan Stock Company
+                    </td>
+                    <td class="  sorting_1">
+                        Miss
+                    </td>
+                    <td class=" ">
+                        Than Van Thanh
+                    </td>
+                    <td class=" ">
+                        Asst. Contracts Manager
+                    </td>
+                    <td class=" ">
+                        plm@nji.ngr
+                    </td>
+                    <td class=" ">
+                        0123987456
+                    </td>
+                    <td class=" ">
+                        <button class="btn" type="button">
+                            Activate</button>
+                    </td>
+                </tr>
+        </table>
+        <!-- End Table -->
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="dataTables_info" id="Div4">
+                    Showing 1 to 10 of 57 entries</div>
+            </div>
+            <div class="span6">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul>
+                        <li class="prev disabled"><a href="#">← Previous</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="next"><a href="#">Next → </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Begin Modal -->
+<div class="modal hide fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Contact</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="Company">
+                Company</label>
+            <div class="controls">
+                <select id="Company">
+                    <option></option>
+                    <option>Unilever Viet Nam</option>
+                    <option>Ajinomoto</option>
+                    <option>LongTimeNoSee</option>
+                    <option>Phúc Đạt Bích</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Title">
+                Title</label>
+            <div class="controls">
+                <input type="text" id="Title" placeholder="Title">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Name</label>
+            <div class="controls">
+                <input type="text" id="Name" placeholder="Name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Position">
+                Position</label>
+            <div class="controls">
+                <input type="text" id="Position" placeholder="Position">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Email">
+                Email</label>
+            <div class="controls">
+                <input type="text" id="Email" placeholder="Email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Phone">
+                Phone</label>
+            <div class="controls">
+                <input type="text" id="Phone" placeholder="Phone">
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->

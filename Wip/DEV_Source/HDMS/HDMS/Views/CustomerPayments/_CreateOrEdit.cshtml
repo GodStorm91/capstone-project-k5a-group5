@@ -1,0 +1,83 @@
+@model HDMS.Models.CustomerPayment
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    Customer
+</div>
+<div class="editor-field">
+     @Html.DropDownListFor(model => model.CustomerId, ViewBag.PossibleCustomers as SelectList, "-- Choose a Customer --", new { id = "ddlCustomer", Class = "chzn-select" })
+    @Html.ValidationMessageFor(model => model.CustomerId)
+</div>
+
+<div class="editor-label">
+    Colletion Request
+</div>
+<div class="editor-field">
+    @Html.DropDownList("Request", ViewBag.PossibleRequests as MultiSelectList, "-- Choose a Request --", new { id = "ddlCollection", Class = "chzn-select", multiple = "" })
+    @Html.ValidationMessageFor(model => model.Requests)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Amount)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Amount)
+    @Html.ValidationMessageFor(model => model.Amount)
+</div>
+<div class="editor-field">
+    @Html.RadioButtonFor( model => model.IsInbound, true, new { id = "IsInbound_true" }) Inbound
+    @Html.RadioButtonFor(model => model.IsInbound, false, new { id = "IsInbound_false" }) Outbound
+    @Html.ValidationMessageFor(model => model.IsInbound)
+</div>
+
+<div class="editor-label">
+    Payment Type
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.CustomerPaymentTypeId, ViewBag.PossibleCustomerPaymentTypes as SelectList
+    , "-- Choose a Payment Type --", new { Class = "chzn-select" })
+    @Html.ValidationMessageFor(model => model.CustomerPaymentTypeId)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CompletedDate)
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.CompletedDate, new { @class = "datepicker" })      
+    @Html.ValidationMessageFor(model => model.CompletedDate)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Detail)
+</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Detail)  
+    @Html.ValidationMessageFor(model => model.Detail)
+</div>
+
+<script type="text/javascript">
+    $(".datepicker").datepicker({ format: "mm/dd/yyyy" });   
+
+    $("#ddlCustomer").change(function () {        
+        var id = $('#ddlCustomer option:selected').val();
+        if (id == '') id = -1;
+        $('#ddlCollection').html('');
+        $.getJSON('/CustomerPayments/GetRequestsOfCustomer/' + id, function (data) {
+            //var items = '<option value>-- Choose a Request --</option>';
+            var items;
+            $.each(data, function (i, collection) {
+                items += "<option value='" + collection.RequestId + "'>" + collection.RequestId + "</option>";
+                // state.Value cannot contain ' character. We are OK because state.Value = cnt++;
+            });
+            $('#ddlCollection').html(items);
+            $('#ddlCollection').removeAttr('data-val-number');
+            $("form").removeData("validator");
+            $("form").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse("form");
+            $('#ddlCollection').trigger("liszt:updated");
+        });        
+    });
+
+    $(".chzn-select").chosen();
+
+</script>

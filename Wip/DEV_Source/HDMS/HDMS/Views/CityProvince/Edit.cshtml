@@ -1,0 +1,41 @@
+@model HDMS.Models.CityProvince
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;</button>
+    <h3>
+        Edit City/Province</h3>
+</div>
+@using (Html.BeginForm("ConfirmEdit", "CityProvince", FormMethod.Post, new { Id = "edit-form" }))
+{    
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+        <fieldset>
+            @Html.HiddenFor(model => model.CityProvinceId)
+            @Html.HiddenFor(model => model.IsActive)
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">
+                        Name <span style="color:Red">*</span>
+                    </label>
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>    
+}
+<div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save" id="btnSave"/>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    $('#btnSave').click(function () {
+        $('#edit-form').submit();
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿   @Model.PieReport
+    @{
+    ViewBag.Title = "PieChart";
+}
+<h2>Requests per Districts</h2>
+    <script src="/js/RGraph/RGraph.common.core.js" ></script>
+    <script src="/js/RGraph/RGraph.common.tooltips.js" ></script>
+    <script src="/js/RGraph/RGraph.common.dynamic.js" ></script>
+    <script src="/js/RGraph/RGraph.common.effects.js" ></script>
+    <script src="/js/RGraph/RGraph.pie.js" ></script>
+    <div>
+    <canvas id="cvs" width="480" height="350" !style="border:1px solid #ccc">[No canvas support]</canvas>
+    
+    
+    <script>
+        $(document).ready(function () {
+            var data = [4, 8, 4, 6];
+            var total = 0;
+            for (var i = 0; i < data.length; ++i) {
+                total = total + data[i];
+            }
+            var pie = new RGraph.Pie('cvs', data);
+            pie.Set('chart.linewidth', 3);
+            pie.Set('chart.exploded', [15, ]);
+            pie.Set('chart.shadow', true);
+            pie.Set('chart.shadow.offsetx', 0);
+            pie.Set('chart.shadow.offsety', 0);
+            pie.Set('chart.shadow.blur', 20);
+            pie.Set('chart.labels.sticks', [true]);
+            pie.Set('chart.labels.sticks.length', 20);
+            RGraph.Effects.Pie.RoundRobin(pie);
+            pie.Set('chart.tooltips', ['Distric 1', 'Distric 3', 'Distric 5', 'Distric 10']);
+            pie.Set('chart.tooltips.event', 'onmousemove');
+            pie.Set('chart.labels', ['Distric 1', 'Distric 3', 'Distric 5', 'Distric 10']);
+            for (var u = 0; u < data.length; ++u) {
+                pie.Get('chart.labels')[u] = pie.Get('chart.labels')[u] + ': ' + parseFloat((data[u] / total) * 100).toFixed(2) + '%';
+            }
+            pie.Draw();
+        });
+    </script>
+    </div>

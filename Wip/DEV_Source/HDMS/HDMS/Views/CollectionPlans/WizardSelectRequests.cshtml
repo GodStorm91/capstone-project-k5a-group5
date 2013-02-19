@@ -1,0 +1,121 @@
+﻿@model HDMS.Models.Customer
+<h2 class="StepTitle">
+    Enter Customer Information</h2>
+<div class="form-and-list">
+    <div class="form">
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                City/Province
+            </label>
+            <div class="controls">
+                @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                District
+            </label>
+            <div class="controls">
+                @Html.DropDownList("District", ViewBag.PossibleDistricts as SelectList, "-- Choose a District --", new { id = "ddlDistrict", Class = "chzn-select" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Ward
+            </label>
+            <div class="controls">
+                @Html.DropDownList("Ward", ViewBag.PossibleWards as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
+            </div>
+        </div>
+    </div>
+    <div class="info-and-list">        
+        <div id="all-requests" class="list">
+            <ul>
+                <li>
+                    <div class="ticket-container span12 ticket request-ticket" id="1">
+                        <div class="span11 left-column">
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" alt="Customer" title="Customer" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Shopnguoilon.com</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/sharp.png" alt="Request Number" title="Request Number" width="15px" /></dt>
+                                    <dd>
+                                        7777</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/calendar2.png" alt="Requested Date" title="Request Date" width="15px" /></dt>
+                                    <dd>
+                                        10/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons2/calendar.png" alt="Delivery Deadline" title="Delivery Deadline"
+                                            width="15px" /></dt>
+                                    <dd>
+                                        12/10/2012</dd>
+                                </dl>
+                            </div>
+                            <div class="column">
+                                <dl class="dl-horizontal">
+                                    <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                    <dd>
+                                        123 Trường Chinh, Phường Tân Thới Hiệp, Quận 12, TP Hồ Chí Minh</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="span1 right-column">
+                            <input id="check" type="checkbox" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $("#ddlCityProvince").change(function () {
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            var items = '<option value>-- Choose a District --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+                // state.Value cannot contain ' character. We are OK because state.Value = cnt++;
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+    });
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $("#ddlDistrict").change(function () {
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            var items = '<option value>-- Choose a Ward --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+                // state.Value cannot contain ' character. We are OK because state.Value = cnt++;
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("liszt:updated");
+        });
+    });
+    //$("#ddlDistrict").trigger('change');
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+</script>

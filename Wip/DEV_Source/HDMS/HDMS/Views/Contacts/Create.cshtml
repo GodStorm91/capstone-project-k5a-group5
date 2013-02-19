@@ -1,0 +1,54 @@
+@model HDMS.Models.Contact
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create New Contact</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        <div>
+            @using (Html.BeginForm("ConfirmCreate", "Contacts", FormMethod.Post, new { id = "contact-create-form", }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.Partial("_CreateOrEdit", Model)
+            }
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script type="text/javascript">
+    $("#contact-create-form").submit(function () {
+        debugger
+        var success = false;
+        if ($(this).valid()) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
+                success: function (result) {
+                    debugger
+                    success = result.success;
+                    if (success) {
+                        $('#createModal').modal('hide');
+                        refreshContactTable();
+                    }
+                },
+                async: false
+            });
+        }
+        return false;
+    });
+
+    $('#btnCreate').click(function () {
+        debugger
+        $("#contact-create-form").submit();
+    });
+</script>

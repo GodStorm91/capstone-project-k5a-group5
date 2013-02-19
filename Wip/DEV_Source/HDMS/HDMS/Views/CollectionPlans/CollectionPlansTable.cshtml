@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HDMS.Models.CollectionPlan>
+@using HDMS.Models.Utilities
+@using System.Text.RegularExpressions;
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+    <thead>
+        <tr>
+            <th>
+                Plan No.
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Number of Requests
+            </th>
+            <th>
+                Number of Orders
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Assigned To
+            </th>
+            <th>
+                Note
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    #@item.CollectionPlanId
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
+                </td>
+                <td>
+                    @item.CreatedByUserInfo.FullName (@item.CreatedByUser.UserName)
+                </td>
+                <td>
+                    @item.Requests.Count
+                </td>
+                <td>
+                    @item.Requests.Sum(r => r.ValidOrders.Count)
+                </td>
+                <td>
+                    @item.Status
+                </td>
+                <td>
+                    @if (item.AssignedDeliveryStaffId != null)
+                    {
+                        @AccountHelper.GetName(item.AssignedUserInfo.UserId);
+                    }
+                    else
+                    {
+                        <span class="label">Not assigned yet</span>    
+                    }
+                </td>
+                <td>
+                    @item.Note
+                </td>
+                <td class="action-column">
+                    <a class="btn action view" href="/CollectionPlans/Details/@item.CollectionPlanId">
+                        <img src="/img/icons/notepad.png" alt="View" title="View"></a> 
+                    @*<a class="btn action" href="#" onclick="showUpdateStatusModal(@item.CollectionPlanId,@item.CollectionPlanStatus)">
+                            <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status"></a>*@
+                    @*@if (item.Status != HDMS.Models.Statuses.CollectionPlanStatus.Finished)
+                    {
+                        <a class="btn action delete" href="#" onclick="cancelPlan(@item.CollectionPlanId);">
+                            <img src="/img/icons2/cross.png" alt="Remove/Cancel" title="Remove/Cancel" width="18px"/>
+                        </a>
+                    }*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,1318 @@
+﻿@model HDMS.Models.Request
+@{
+    ViewBag.Title = "RequestCreating";
+}
+<div id="createRequest">
+    <div class="row-fluid">
+        <div class="span12 breadcrumb">
+            <h3>
+                Create new Request</h3>
+        </div>
+    </div>
+    <div id="companyInfo" class="modal-body no-padding">
+        <h2>
+            Company Information</h2>
+        <div class="row-fluid">
+            <div class="span4 left-column">
+                <dl class="dl-horizontal">
+                    <dt>Company Name: </dt>
+                    <dd>
+                        Shop Thiên Hà</dd>
+                    <dt>Request Number: </dt>
+                    <dd>
+                        #2346</dd>
+                </dl>
+            </div>
+            <div class="span6">
+                <dl class="dl-horizontal">
+                    <dt>Collection Address: </dt>
+                    <dd>
+                        145 Lê Đức Thọ, Q.Gò Vấp, TP Hồ Chí Minh</dd>
+                    <dt>Description: </dt>
+                    <dd>
+                        Cần giao gấp !!!</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a href="#create" role="button" class="btn btn-primary" data-toggle="modal">Add new
+            Order</a></div>
+    <div class="tabbable tabs-left">
+        <ul class="span7 nav nav-tabs">
+            <li>
+                <div id="order-1" class="ticket-container span12 ticket order-ticket">
+                    <div class="order-ticket-info">
+                        <div class="row-fluid">
+                            <div class="column left-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" title="Receiver Name" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Lê Anh Đảo</dd>
+                                    <dt>
+                                        <img src="/img/icons/phone.png" title="Receiver Phone" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        0909090909</dd>
+                                </dl>
+                            </div>
+                            <div class="column center-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/checkmark.png" title="Delivery Option" width="15px" /></dt>
+                                    <dd>
+                                        <span class="label label-success">Fast</span> <span class="label label-info">COD</span>
+                                    </dd>
+                                    <dt>
+                                        <img src="/img/icons/coin.png" title="Amount to collect from receiver" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        120,000 VNĐ</dd>
+                                </dl>
+                            </div>
+                            <div class="column right-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" /></dt>
+                                    <dd>
+                                        Giao hàng buổi chiều</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <dl class="dl-horizontal">
+                                <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                <dd>
+                                    934 Huỳnh Tấn Phát, phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="ticket-btn-group">
+                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                        </a><a href="#createItem" role="button" class="createItem" data-toggle="modal">
+                            <img src="/img/icons2/add.png" alt="Add New Item" title="Add New Item" width="15" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="active">
+                <div id="order-1" class="ticket-container span12 ticket order-ticket">
+                    <div class="order-ticket-info">
+                        <div class="row-fluid">
+                            <div class="column left-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" title="Receiver Name" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Lê Anh Đảo</dd>
+                                    <dt>
+                                        <img src="/img/icons/phone.png" title="Receiver Phone" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        0909090909</dd>
+                                </dl>
+                            </div>
+                            <div class="column center-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/checkmark.png" title="Delivery Option" width="15px" /></dt>
+                                    <dd>
+                                        <span class="label label-success">Fast</span> <span class="label label-info">COD</span>
+                                    </dd>
+                                    <dt>
+                                        <img src="/img/icons/coin.png" title="Amount to collect from receiver" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        120,000 VNĐ</dd>
+                                </dl>
+                            </div>
+                            <div class="column right-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" /></dt>
+                                    <dd>
+                                        Giao hàng buổi chiều</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <dl class="dl-horizontal">
+                                <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                <dd>
+                                    934 Huỳnh Tấn Phát, phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="ticket-btn-group">
+                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                        </a><a href="#createItem" role="button" class="createItem" data-toggle="modal">
+                            <img src="/img/icons2/add.png" alt="Add New Item" title="Add New Item" width="15" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="order-2" class="ticket-container span12 ticket order-ticket">
+                    <div class="order-ticket-info">
+                        <div class="row-fluid">
+                            <div class="column left-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" title="Receiver Name" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Lê Anh Đảo</dd>
+                                    <dt>
+                                        <img src="/img/icons/phone.png" title="Receiver Phone" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        0909090909</dd>
+                                </dl>
+                            </div>
+                            <div class="column center-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/checkmark.png" title="Delivery Option" width="15px" /></dt>
+                                    <dd>
+                                        <span class="label label-success">Fast</span> <span class="label label-info">COD</span>
+                                    </dd>
+                                    <dt>
+                                        <img src="/img/icons/coin.png" title="Amount to collect from receiver" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        120,000 VNĐ</dd>
+                                </dl>
+                            </div>
+                            <div class="column right-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" /></dt>
+                                    <dd>
+                                        Giao hàng buổi chiều</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <dl class="dl-horizontal">
+                                <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                <dd>
+                                    934 Huỳnh Tấn Phát, phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="ticket-btn-group">
+                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                        </a><a href="#createItem" role="button" class="createItem" data-toggle="modal">
+                            <img src="/img/icons2/add.png" alt="Add New Item" title="Add New Item" width="15" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="order-3" class="ticket-container span12 ticket order-ticket">
+                    <div class="order-ticket-info">
+                        <div class="row-fluid">
+                            <div class="column left-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" title="Receiver Name" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Lê Anh Đảo</dd>
+                                    <dt>
+                                        <img src="/img/icons/phone.png" title="Receiver Phone" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        0909090909</dd>
+                                </dl>
+                            </div>
+                            <div class="column center-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/checkmark.png" title="Delivery Option" width="15px" /></dt>
+                                    <dd>
+                                        <span class="label label-success">Fast</span> <span class="label label-info">COD</span>
+                                    </dd>
+                                    <dt>
+                                        <img src="/img/icons/coin.png" title="Amount to collect from receiver" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        120,000 VNĐ</dd>
+                                </dl>
+                            </div>
+                            <div class="column right-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" /></dt>
+                                    <dd>
+                                        Giao hàng buổi chiều</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <dl class="dl-horizontal">
+                                <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                <dd>
+                                    934 Huỳnh Tấn Phát, phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="ticket-btn-group">
+                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                        </a><a href="#createItem" role="button" class="createItem" data-toggle="modal">
+                            <img src="/img/icons2/add.png" alt="Add New Item" title="Add New Item" width="15" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div id="order-4" class="ticket-container span12 ticket order-ticket">
+                    <div class="order-ticket-info">
+                        <div class="row-fluid">
+                            <div class="column left-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/user.png" title="Receiver Name" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        Lê Anh Đảo</dd>
+                                    <dt>
+                                        <img src="/img/icons/phone.png" title="Receiver Phone" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        0909090909</dd>
+                                </dl>
+                            </div>
+                            <div class="column center-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/checkmark.png" title="Delivery Option" width="15px" /></dt>
+                                    <dd>
+                                        <span class="label label-success">Fast</span> <span class="label label-info">COD</span>
+                                    </dd>
+                                    <dt>
+                                        <img src="/img/icons/coin.png" title="Amount to collect from receiver" width="15px" />
+                                    </dt>
+                                    <dd>
+                                        120,000 VNĐ</dd>
+                                </dl>
+                            </div>
+                            <div class="column right-column">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        <img src="/img/icons/notepencil32.png" title="Description" width="15px" /></dt>
+                                    <dd>
+                                        Giao hàng buổi chiều</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <dl class="dl-horizontal">
+                                <dt><span style="font-size: 15px; color: #969696">@@</span> </dt>
+                                <dd>
+                                    934 Huỳnh Tấn Phát, phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="ticket-btn-group">
+                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                        </a><a href="#createItem" role="button" class="createItem" data-toggle="modal">
+                            <img src="/img/icons2/add.png" alt="Add New Item" title="Add New Item" width="15" />
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="tab-below1">
+                <ul>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Áo thun</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Áo thun</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Áo thun</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane active" id="tab-below1">
+                <ul>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Quần bơi</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Quần bơi</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Quần bơi</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="tab-below1">
+                <ul>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            Sách: Dạy con làm giàu</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="tab-below1">
+                <ul>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            USB Trancend 16GB</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            USB Trancend 16GB</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ticket-container span12 ticket item-ticket">
+                            <div class="row-fluid">
+                                <div class="column left-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/box.png" alt="Product" title="Product" width="15" /></dt>
+                                        <dd>
+                                            USB Trancend 16GB</dd>
+                                        <dt>
+                                            <img src="/img/icons/chart_bar.png" alt="Quantity" title="Quantity" width="15" /></dt>
+                                        <dd>
+                                            5</dd>
+                                    </dl>
+                                </div>
+                                <div class="column center-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/font_size.png" alt="Size" title="Size" width="15" /></dt>
+                                        <dd>
+                                            <span class="label label-info">Small</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/gram_weight.png" alt="Weight" title="Weight" width="15" />
+                                        </dt>
+                                        <dd>
+                                            200g</dd>
+                                    </dl>
+                                </div>
+                                <div class="column right-column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/checkmark.png" title="Properties" width="15px" /></dt>
+                                        <dd>
+                                            <span class="label label-success">Fragile</span></dd>
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
+                                            <dd>
+                                                Màu boọc đô</dd>
+                                    </dl>
+                                    <div class="ticket-btn-group">
+                                        <a href="#" role="button" class="deleteOrder" data-toggle="modal">
+                                            <img src="/img/icons2/cross.png" alt="Cancel Order" title="Cancel Order" width="15">
+                                        </a><a href="#" role="button" class="editOrder" data-toggle="modal">
+                                            <img src="/img/icons2/pencil.png" alt="Edit Order" title="Edit Order" width="15">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Begin Modal creatOrder-->
+<div class="modal hide fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Order</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Name</label>
+            <div class="controls">
+                <input type="text" id="name" placeholder="Name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Phone">
+                Phone</label>
+            <div class="controls">
+                <input type="text" id="phone" placeholder="Phone">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="City/Province">
+                City/Province</label>
+            <div class="controls">
+                <select>
+                    <option value="">-- Choose City/Province --</option>
+                    <option value="">Hồ Chí Minh</option>
+                    <option value="">Hà Nội</option>
+                    <option value="">Đà Nẵng</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="District">
+                District</label>
+            <div class="controls">
+                <select>
+                    <option value="">-- Choose District --</option>
+                    <option value="">Quận Gò Vấp</option>
+                    <option value="">Quận 12</option>
+                    <option value="">Quận 7</option>
+                    <option value="">Quận Hà Đông</option>
+                    <option value="">Quận Hải Châu</option>
+                    <option value="">Quận Thanh Khê</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Ward">
+                Ward</label>
+            <div class="controls">
+                <select>
+                    <option value="">-- Choose Ward --</option>
+                    <option value="">Phường 15</option>
+                    <option value="">Phường 3</option>
+                    <option value="">Phường Thanh Xuân</option>
+                    <option value="">Phường Hòa Cường Bắc</option>
+                    <option value="">Phường Hòa Cường Nam</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Address">
+                Address</label>
+            <div class="controls">
+                <input type="text" id="address" placeholder="Address">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Delivery Option">
+                Delivery Option</label>
+            <div class="controls">
+                <select>
+                    <option value="">--Choose Delivery Option--</option>
+                    <option value="">Normal</option>
+                    <option value="">Fast</option>
+                    <option value="">Time Slot</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Payment Type">
+                Payment Type</label>
+            <div class="controls">
+                <select>
+                    <option value="">--Choose Payment Type--</option>
+                    <option value="">COD</option>
+                    <option value="">Thu trực tiếp khi nhận hàng</option>
+                    <option value="">Thu khi giao hàng</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Amount to be collected from Receiver">
+                Amount to be collected from Receiver</label>
+            <div class="controls">
+                <input type="text" id="amount" placeholder="Amount to be collected from Receiver">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Description">
+                Description</label>
+            <div class="controls">
+                <textarea rows="3"></textarea>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->
+<!-- Begin Modal Create Item-->
+<div class="modal hide fade" id="createItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Item</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Name</label>
+            <div class="controls">
+                <input type="text" id="Name" placeholder="Name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Quantity">
+                Quantity</label>
+            <div class="controls">
+                <input type="text" id="Quantity" placeholder="Quantity">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="isFragile">
+                isFragile</label>
+            <div class="controls">
+                <label class="checkbox inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="true">
+                    True
+                </label>
+                <label class="checkbox inline">
+                    <input type="checkbox" id="inlineCheckbox2" value="false">
+                    False
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Size">
+                Size</label>
+            <div class="controls">
+                <select>
+                    <option value="">--Choose Size--</option>
+                    <option value="">Small</option>
+                    <option value="">Medium</option>
+                    <option value="">Big</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Weight">
+                Weight</label>
+            <div class="controls">
+                <input type="text" id="Weight" placeholder="Weight">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Description">
+                Description</label>
+            <div class="controls">
+                <textarea rows="3"></textarea>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button class="btn btn-primary">
+            Create</button>
+    </div>
+</div>
+<!-- End Modal -->
+<script>
+    $(".order-ticket-info").click(function () {
+        $(this).closest("ul").children("li").removeClass("active");
+        $(this).closest("li").addClass("active");
+        index = $(this).closest("li").index();
+        $(this).closest(".tabbable").children(".tab-content").children(".tab-pane").removeClass("active")
+        $($(this).closest(".tabbable").children(".tab-content").children(".tab-pane")[index]).addClass("active");
+    });
+</script>

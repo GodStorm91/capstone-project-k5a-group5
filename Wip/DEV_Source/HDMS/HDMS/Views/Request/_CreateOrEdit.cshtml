@@ -1,0 +1,63 @@
+@model HDMS.Models.Request
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<div class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">
+            Customer
+        </label>
+        <div class="controls">
+            @Html.DropDownListFor(model => model.CustomerId, ((IEnumerable<HDMS.Models.Customer>)ViewBag.PossibleCustomers).Select(option => new SelectListItem
+       {
+           Text = Html.DisplayTextFor(_ => option.DisplayName).ToString(),
+           Value = option.CustomerId.ToString(),
+           Selected = (Model != null) && (option.CustomerId == Model.CustomerId)
+       }), "-- Choose a Customer --", new { id = "ddlCustomer", Class = "chzn-select" })
+            @Html.ValidationMessageFor(model => model.CustomerId)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Collection Address Id
+        </label>
+        <div class="controls">
+            @*Html.EditorFor(model => model.CollectionAddressId)*@
+            @Html.DropDownListFor(model => model.CollectionAddressId, ViewBag.PossibleCollectionAddresses as SelectList, "-- Choose a Collection Address --", new { id = "ddlCollectionAddress", Class = "chzn-select" })
+            @Html.ValidationMessageFor(model => model.CollectionAddressId)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Note
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Note)
+            @Html.ValidationMessageFor(model => model.Note)
+        </div>
+    </div>
+</div>
+<script>
+    $("#ddlCustomer").change(function () {
+        var id = $('#ddlCustomer option:selected').val();
+        if (id == '') id = -1;
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerAddresses/GetAddressesOfCustomer/' + id,
+            success: function (data) {
+                var items = '';
+                $.each(data, function (i, address) {
+                    items += "<option value='" + address.CustomerAddressId + "'>" + address.FullAddress + "</option>";
+                });
+                $('#ddlCollectionAddress').html(items);
+                $('#ddlCollectionAddress').removeAttr('data-val-number');
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('#ddlCollectionAddress').trigger("liszt:updated");
+            },
+            async: false
+        });
+    });
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+</script>
