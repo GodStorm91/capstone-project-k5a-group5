@@ -145,12 +145,29 @@
             };
             var unblock = function () {
                 $.unblockUI();
-                $('.modal').unblock();
+                $('.modal').unblock();                               
             };
-            $(document).ajaxStart(block).ajaxStop(unblock);
+            //$(document).ajaxStart(block).ajaxStop(unblock);                       
 
             $('.myToolTip').tooltip();
+
+            $("#alert").hide();
         });
+
+        function alert(textToshow, timeToShow) {
+            $("#alertText").html(textToshow);
+            $("#alert").fadeIn(1000, function () {
+                $("#alertText").fadeIn(700);
+            });
+            setTimeout(function () {
+                hideAlert();
+            }, timeToShow);
+        }
+
+        function hideAlert() {
+            $("#alert").fadeOut(700);
+        }
+
     </script>
 
     </head>
@@ -189,6 +206,7 @@
                         <li class=""><a href="/Request"><span class="icon16  icomoon-icon-stack"></span> Requests</a></li>
                         <li class=""><a href="/Orders"><span class="icon16 icomoon-icon-file"></span> Orders</a></li>
                         <li class=""><a href="/Customers"><span class="icon16 icomoon-icon-pacman"></span> Customers</a></li>
+                        <li class=""><a href="/CollectionPlans"><span class="icon16 wpzoom-globe"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="icon16 icomoon-icon-cog"></span> Options Config
@@ -247,6 +265,42 @@
                 </div>
             </div><!-- End contentwrapper -->
         </div><!-- End #content -->
+
+         <script type="text/javascript">
+
+             $(function () {
+                 checkNotifications();
+             });          
+
+             function checkNotifications() {
+
+                 var timerId, delay = 5000;
+                 var a = $("#alert");
+                 
+                 a.onmouseover = function() {
+                    clearTimeout(timerId);
+                 };
+
+                 a.onmouseout = function () {
+                    
+                    timerId = setTimeout(function(){
+                        a.hide();
+                    }, delay);
+                 };
+
+                 $.post("/Notification", null, function (data, s) {
+                     if (data.d) {
+                         alert("You should create new Collection plan now", 5000);
+                         clearTimeout(timerId);
+                     }
+
+                     checkNotifications();
+                 })                 
+             };
+         </script>
+         <div id="alert" class="alert">
+            <div id="alertText" class="alertText"></div>
+         </div>
     
     </div><!-- End #wrapper -->
     

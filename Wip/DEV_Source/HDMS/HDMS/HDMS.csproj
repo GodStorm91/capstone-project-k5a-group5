@@ -155,6 +155,7 @@
     <Compile Include="Controllers\JQueryDataTableParamModel.cs" />
     <Compile Include="Controllers\Mailers\MVCMailMessage.cs" />
     <Compile Include="Controllers\MVCHelper.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\RequestController.cs">
       <SubType>Code</SubType>
@@ -291,6 +292,7 @@
     <Compile Include="proxy.ashx.cs">
       <DependentUpon>proxy.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\AsyncNotificationChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\css\main.css" />
