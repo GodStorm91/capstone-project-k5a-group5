@@ -33,21 +33,48 @@
 			});	
 			wpt[i] = points;
 			geopt[i] = geopoints;
-			i++;	
+			i++;
 		});	
 function initialize() {
 
   // Create the map object
   map = new OpenLayers.Map('map');
   //Create a Google layer
-  var gmap = new OpenLayers.Layer.Google(
-    "Google Streets", // the default
-    {
-      numZoomLevels: 20
-    }
-  ); 
-  // if i use this instead of gmap then everything works.
 
+  // if i use this instead of gmap then everything works.
+	  var gmap = new OpenLayers.Layer.Google(
+							"Google Streets", // the default
+							{
+							  numZoomLevels: 20
+							}
+						  ); 
+  function test(){
+      lineLayer = new OpenLayers.Layer.Vector("Line Layer");
+      style = { strokeColor: '#ee0000',
+         strokeOpacity: 0.1,
+         strokeWidth: 10
+      };
+	  for(i=0;i<wpt.length;i++)
+	  {
+		var points = new Array()
+		points.length = 0;
+		for (j=0;j<wpt[i].length;j++)
+		{
+			points.push(wpt[i][j].location);
+		}
+	  }
+
+      var linear_ring = new OpenLayers.Geometry.LinearRing(points[0]);
+      polygonFeature = new OpenLayers.Feature.Vector(
+         new OpenLayers.Geometry.Polygon([linear_ring]), null, null);
+         lineLayer.addFeatures([polygonFeature]);
+
+      map.addLayer(lineLayer);
+
+ }
+  test();
+  
+  
   
   var style = { 
 		  strokeColor: '#0000ff', 
@@ -65,17 +92,17 @@ function initialize() {
 	lineLayer.addFeatures([lineFeature]);
   map.addLayers([gmap,lineLayer]);
   
-  //---------------------
-    lineLayer1= new OpenLayers.Layer.Vector("Line Layer");
-  var start_point1 = new OpenLayers.Geometry.Point(106.683962,10.808858);
-  var end_point1 = new OpenLayers.Geometry.Point(106.688812,10.809522);
-  var points1 = new Array(start_point1,end_point1);
-  var line1 = new OpenLayers.Geometry.LineString(points1).transform(epsg4326, epsg900913);
+  // //---------------------
+    // lineLayer1= new OpenLayers.Layer.Vector("Line Layer");
+  // var start_point1 = new OpenLayers.Geometry.Point(106.683962,10.808858);
+  // var end_point1 = new OpenLayers.Geometry.Point(106.688812,10.809522);
+  // var points1 = new Array(start_point1,end_point1);
+  // var line1 = new OpenLayers.Geometry.LineString(points1).transform(epsg4326, epsg900913);
 
-	var lineFeature1 = new OpenLayers.Feature.Vector(line1, null, style);
-	lineLayer1.addFeatures([lineFeature1]);
-	map.addLayers([gmap,lineLayer1]);
-  //-------------------------
+	// var lineFeature1 = new OpenLayers.Feature.Vector(line1, null, style);
+	// lineLayer1.addFeatures([lineFeature1]);
+	// map.addLayers([gmap,lineLayer1]);
+  // //-------------------------
   
 
 
@@ -146,24 +173,35 @@ function initialize() {
 							var end_point = new Array();
 							for(var j=0;j<geopt[i].length;j++){
 
-									var points = new Array();
-									var line = new Array();
-									var lineFeature = new Array();
-										//--------------------------------	
-									  lineLayer[j]= new OpenLayers.Layer.Vector("Line Layer");
-									  start_point[j] = geopt[i][j].location;
-									  if((j+1)>=geopt[i].length)
-									  {
+									// var points = new Array();
+									// var line = new Array();
+									// var lineFeature = new Array();
+										// //--------------------------------	
+									  // lineLayer[j]= new OpenLayers.Layer.Vector("Line Layer");
+									  // start_point[j] = geopt[i][j].location;
+									  // if((j+1)>=geopt[i].length)
+									  // {
+										// end_point[j] = geopt[i][j-j].location;
+									  // }
+									  // else {end_point[j] = geopt[i][j+1].location;}
+
+									  // points[j] = new Array(start_point[j],end_point[j]);
+									  // line[j] = new OpenLayers.Geometry.LineString(points[j]).transform(epsg4326, epsg900913);
+
+										// lineFeature[j] = new OpenLayers.Feature.Vector(line[j], null, style);
+										// lineLayer[j].addFeatures([lineFeature[j]]);
+									  // map.addLayers([gmap,lineLayer[j]]);
+									  
+										start_point[j] = geopt[i][j].location;
+										if((j+1)>=geopt[i].length)
+										{
 										end_point[j] = geopt[i][j-j].location;
-									  }
-									  else {end_point[j] = geopt[i][j+1].location;}
+										}
+										else {end_point[j] = geopt[i][j+1].location;}
 
-									  points[j] = new Array(start_point[j],end_point[j]);
-									  line[j] = new OpenLayers.Geometry.LineString(points[j]).transform(epsg4326, epsg900913);
-
-										lineFeature[j] = new OpenLayers.Feature.Vector(line[j], null, style);
-										lineLayer[j].addFeatures([lineFeature[j]]);
-									  map.addLayers([gmap,lineLayer[j]]);
+										lineLayer[j] = new OpenLayers.Layer.Vector();
+										lineLayer[j].addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([start_point[j], end_point[j]]).transform(epsg4326, epsg900913))]);
+										map.addLayers([gmap,lineLayer[j]]);
 							}
 						}
 			}
