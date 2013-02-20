@@ -1,0 +1,190 @@
+<html>
+<head>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="http://openlayers.org/dev/OpenLayers.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
+<script>
+		var map,
+			vectors,
+			epsg900913 = new OpenLayers.Projection('EPSG:900913'),
+			epsg4326 = new OpenLayers.Projection('EPSG:4326');
+		var xml = "<plans><plan id = '1'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80023' lon='106.6673' /><wpt lat='10.80139' lon='106.6683' /><wpt lat='10.80167' lon='106.6657' /><wpt lat='10.8027' lon='106.6668' /><wpt lat='10.80382' lon='106.6658' /><wpt lat='10.80439' lon='106.6661' /><wpt lat='10.80481' lon='106.6663' /><wpt lat='10.80486' lon='106.6646' /><wpt lat='10.80348' lon='106.6626' /><wpt lat='10.80079' lon='106.6613' /></plan><plan id='2'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80079' lon='106.6613'/></plan><plans>";
+		//var xmls= '<plans><plan id = "1"><wpt lat="10.80079" lon="106.6613" /><wpt lat="10.80023" lon="106.6673" /><wpt lat="10.80139" lon="106.6683" /><wpt lat="10.80167" lon="106.6657" /><wpt lat="10.8027" lon="106.6668" /><wpt lat="10.80382" lon="106.6658" /><wpt lat="10.80439" lon="106.6661" /><wpt lat="10.80481" lon="106.6663" /><wpt lat="10.80486" lon="106.6646" /><wpt lat="10.80348" lon="106.6626" /><wpt lat="10.80079" lon="106.6613" /> </plan><plan id="2"><wpt lat="10.80097" lon="106.66" /><wpt lat="10.80137" lon="106.6531" /><wpt lat="10.80118" lon="106.6554" /><wpt lat="10.80147" lon="106.6545" /><wpt lat="10.80432" lon="106.6548" /><wpt lat="10.80618" lon="106.6552" /><wpt lat="10.80531" lon="106.6587" /><wpt lat="10.80458" lon="106.661" /><wpt lat="10.80556" lon="106.6614" /><wpt lat="10.80097" lon="106.66" /></plan><plans>';
+
+		var wpt = new Array();
+		var geopt = new Array();
+		var i = 0;
+		$(xml).find("plan").each(function() {
+			var points= new Array();
+			points.length = 0;
+			var geopoints = new Array();
+			geopoints.length = 0;
+			var lats = new Array();
+			var lons = new Array();
+			j=0;
+			var id = $(this).attr("id");
+			$(this).find("wpt").each(function(){
+				lats[j] = ($(this).attr("lat"));
+				lons[j] = ($(this).attr("lon"));
+				points.push({location: new OpenLayers.LonLat(lons[j],lats[j]).transform(epsg4326, epsg900913)});
+				geopoints.push({location: new OpenLayers.Geometry.Point(lons[j],lats[j])});
+				j++;
+			});	
+			wpt[i] = points;
+			geopt[i] = geopoints;
+			i++;	
+		});	
+function initialize() {
+
+  // Create the map object
+  map = new OpenLayers.Map('map');
+  //Create a Google layer
+  var gmap = new OpenLayers.Layer.Google(
+    "Google Streets", // the default
+    {
+      numZoomLevels: 20
+    }
+  ); 
+  // if i use this instead of gmap then everything works.
+
+  
+  var style = { 
+		  strokeColor: '#0000ff', 
+		  strokeOpacity: 0.5,
+		  strokeWidth: 5
+		};
+	//--------------------------------	
+  lineLayer= new OpenLayers.Layer.Vector("Line Layer");
+  var start_point = new OpenLayers.Geometry.Point(106.680872,10.804389);
+  var end_point = new OpenLayers.Geometry.Point(106.683962,10.808858);
+  var points = new Array(start_point,end_point);
+  var line = new OpenLayers.Geometry.LineString(points).transform(epsg4326, epsg900913);
+
+	var lineFeature = new OpenLayers.Feature.Vector(line, null, style);
+	lineLayer.addFeatures([lineFeature]);
+  map.addLayers([gmap,lineLayer]);
+  
+  //---------------------
+    lineLayer1= new OpenLayers.Layer.Vector("Line Layer");
+  var start_point1 = new OpenLayers.Geometry.Point(106.683962,10.808858);
+  var end_point1 = new OpenLayers.Geometry.Point(106.688812,10.809522);
+  var points1 = new Array(start_point1,end_point1);
+  var line1 = new OpenLayers.Geometry.LineString(points1).transform(epsg4326, epsg900913);
+
+	var lineFeature1 = new OpenLayers.Feature.Vector(line1, null, style);
+	lineLayer1.addFeatures([lineFeature1]);
+	map.addLayers([gmap,lineLayer1]);
+  //-------------------------
+  
+
+
+	
+
+      //var position = new OpenLayers.LonLat(106.680872,10.804389).transform(epsg4326, epsg900913);
+      //var size = new OpenLayers.Size(21,25);
+   //var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+   //var icon = new OpenLayers.Icon('https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=1|FF0000|000000', size, offset);   
+   //var markerslayer = map.getLayer('Markers');
+
+  // markerslayer.addMarker(new OpenLayers.Marker(position,icon));
+  addMarker();
+	addDirection();
+  map.setCenter(new OpenLayers.LonLat(106.6613,10.80079).transform(epsg4326, epsg900913), 15);         
+}
+
+			function addMarker() {
+						  var gmap = new OpenLayers.Layer.Google(
+							"Google Streets", // the default
+							{
+							  numZoomLevels: 20
+							}
+						  ); 
+						markers = new OpenLayers.Layer.Markers( "Markers" );
+						markers.id = "Markers";
+						map.addLayer(markers);
+						for(var i=0;i<wpt.length;i++)
+						{
+							var color = randomColor();
+
+							for(var j=0;j<wpt[i].length;j++){
+								var position = new Array();
+								var icon = new Array();
+								position[j] = wpt[i][j].location;
+								var size = new OpenLayers.Size(21,25);
+								var image = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|"+ color +"|000000";
+								if(j==0 || j== wpt[i].length-1)
+								{
+									image = "http://www.lupusstudios.com/images/iconHome.png";
+								}
+								var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+								icon[j] = new OpenLayers.Icon(image, size, offset);
+								var markerslayer = map.getLayer('Markers');
+								markerslayer.addMarker(new OpenLayers.Marker(position[j],icon[j]));
+
+							}
+						}
+			}
+			
+						function addDirection() {
+						  var gmap = new OpenLayers.Layer.Google(
+							"Google Streets", // the default
+							{
+							  numZoomLevels: 20
+							}
+						  ); 
+						for(var i=0;i<geopt.length;i++)
+						{
+							var color = randomColor();
+							var style = { 
+										strokeColor: '#'+ color, 
+										strokeOpacity: 0.5,
+										strokeWidth: 5
+										};
+							var lineLayer = new Array();
+							var start_point = new Array();
+							var end_point = new Array();
+							for(var j=0;j<geopt[i].length;j++){
+
+									var points = new Array();
+									var line = new Array();
+									var lineFeature = new Array();
+										//--------------------------------	
+									  lineLayer[j]= new OpenLayers.Layer.Vector("Line Layer");
+									  start_point[j] = geopt[i][j].location;
+									  if((j+1)>=geopt[i].length)
+									  {
+										end_point[j] = geopt[i][j-j].location;
+									  }
+									  else {end_point[j] = geopt[i][j+1].location;}
+
+									  points[j] = new Array(start_point[j],end_point[j]);
+									  line[j] = new OpenLayers.Geometry.LineString(points[j]).transform(epsg4326, epsg900913);
+
+										lineFeature[j] = new OpenLayers.Feature.Vector(line[j], null, style);
+										lineLayer[j].addFeatures([lineFeature[j]]);
+									  map.addLayers([gmap,lineLayer[j]]);
+							}
+						}
+			}
+
+			//function random color
+			function randomColor() {
+				var hexno=new String;
+				arr=new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");		 
+				var n1=Math.round(Math.random()*15);
+				var n2=Math.round(Math.random()*15);
+				var n3=Math.round(Math.random()*15);
+				var n4=Math.round(Math.random()*15);
+				var n5=Math.round(Math.random()*15);
+				var n6=Math.round(Math.random()*15); 
+				hexno=arr[n1]+""+arr[n2]+""+arr[n3]+""+arr[n4]+""+arr[n5]+""+arr[n6];			 
+				return hexno;
+			}
+			//end function randomcolor
+</script>
+</head>
+<body onload="initialize()">
+<div id="map"></div> 
+</body>
+</html>
