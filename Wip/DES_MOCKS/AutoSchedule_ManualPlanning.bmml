@@ -120,7 +120,7 @@
         <text>GetNextHighest%20Point</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="com.balsamiq.mockups::StickyNote" x="777" y="175" w="410" h="248" measuredW="109" measuredH="123" zOrder="28" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::StickyNote" x="975" y="228" w="410" h="248" measuredW="109" measuredH="123" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Moi%20vao%3A%20cua%20so%20popup%20se%20hien%20thi%20len%20cho%20phep%20nguoi%20dung%20chon%20settings.%0ASo%20plans%20%3D%20maximum%20so%20delivery%20men%20available%20trong%20DB%20.%20--%20Default%20bang%20so%20Delivery%20men%20available%20trong%20DB.%0ASo%20Request%20%3D%20So%20Request%20status%20new%20maximum%20trong%20DB%20--%20%20Default%20lay%20so%20maximum%20trong%20DB%0ASave%20Settings%3A%20Open%20popup%20cho%20phep%20nguoi%20dung%20save%20cac%20settings%20thiet%20lap%20hien%20tai%20ve%20file%20dang%20xml%0ALoad%20Settings%3A%20load%20tu%20file%20xml%20khi%20nay%20c%E1c%20settings%20sau%3A%0A%09trong%20so%20cua%20Date%0A%09trong%20so%20cua%20DeliveryType</text>
       </controlProperties>
