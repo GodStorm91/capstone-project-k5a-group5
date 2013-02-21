@@ -171,7 +171,7 @@ function initialize() {
 							var lineLayer = new Array();
 							var start_point = new Array();
 							var end_point = new Array();
-							for(var j=0;j<geopt[i].length;j++){
+							for(var j=0;j<1;j++){
 
 									// var points = new Array();
 									// var line = new Array();
@@ -200,7 +200,7 @@ function initialize() {
 										else {end_point[j] = geopt[i][j+1].location;}
 
 										lineLayer[j] = new OpenLayers.Layer.Vector();
-										lineLayer[j].addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([start_point[j], end_point[j]]).transform(epsg4326, epsg900913))]);
+			lineLayer[j].addFeatures([new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString([start_point[j], end_point[j]]).transform(epsg4326, epsg900913),null,style)]);
 										map.addLayers([gmap,lineLayer[j]]);
 							}
 						}
