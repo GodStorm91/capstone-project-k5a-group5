@@ -6,36 +6,48 @@
 		<script src="http://code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
 		<script>
 			var map, vectors, epsg900913 = new OpenLayers.Projection('EPSG:900913'), epsg4326 = new OpenLayers.Projection('EPSG:4326');
-			var xml = "<plans><plan id = '1'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80023' lon='106.6673' /><wpt lat='10.80139' lon='106.6683' /><wpt lat='10.80167' lon='106.6657' /><wpt lat='10.8027' lon='106.6668' /><wpt lat='10.80382' lon='106.6658' /><wpt lat='10.80439' lon='106.6661' /><wpt lat='10.80481' lon='106.6663' /><wpt lat='10.80486' lon='106.6646' /><wpt lat='10.80348' lon='106.6626' /><wpt lat='10.80079' lon='106.6613' /></plan><plan id='2'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80079' lon='106.6613'/></plan><plans>";
+			//var xml = "<plans><plan id = '1'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80023' lon='106.6673' /><wpt lat='10.80139' lon='106.6683' /><wpt lat='10.80167' lon='106.6657' /><wpt lat='10.8027' lon='106.6668' /><wpt lat='10.80382' lon='106.6658' /><wpt lat='10.80439' lon='106.6661' /><wpt lat='10.80481' lon='106.6663' /><wpt lat='10.80486' lon='106.6646' /><wpt lat='10.80348' lon='106.6626' /><wpt lat='10.80079' lon='106.6613' /></plan><plan id='2'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80079' lon='106.6613'/></plan><plans>";
 			//var xmls= '<plans><plan id = "1"><wpt lat="10.80079" lon="106.6613" /><wpt lat="10.80023" lon="106.6673" /><wpt lat="10.80139" lon="106.6683" /><wpt lat="10.80167" lon="106.6657" /><wpt lat="10.8027" lon="106.6668" /><wpt lat="10.80382" lon="106.6658" /><wpt lat="10.80439" lon="106.6661" /><wpt lat="10.80481" lon="106.6663" /><wpt lat="10.80486" lon="106.6646" /><wpt lat="10.80348" lon="106.6626" /><wpt lat="10.80079" lon="106.6613" /> </plan><plan id="2"><wpt lat="10.80097" lon="106.66" /><wpt lat="10.80137" lon="106.6531" /><wpt lat="10.80118" lon="106.6554" /><wpt lat="10.80147" lon="106.6545" /><wpt lat="10.80432" lon="106.6548" /><wpt lat="10.80618" lon="106.6552" /><wpt lat="10.80531" lon="106.6587" /><wpt lat="10.80458" lon="106.661" /><wpt lat="10.80556" lon="106.6614" /><wpt lat="10.80097" lon="106.66" /></plan><plans>';
-
+			var xmls = "<gpx><wpts><wpt lat='10.80097' lon='106.66' /><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80097' lon='106.66' /></wpts><trk><trkseg><trkpt lat='10.80097' lon='106.66' /><trkpt lat='10.80092' lon='106.66' /><trkpt lat='10.80098' lon='106.6591' /><trkpt lat='10.80099' lon='106.659' /><trkpt lat='10.80105' lon='106.6582' /><trkpt lat='10.80109' lon='106.6579' /><trkpt lat='10.80109' lon='106.6578' /><trkpt lat='10.80111' lon='106.6575' /><trkpt lat='10.80116' lon='106.6571' /><trkpt lat='10.80121' lon='106.6564' /><trkpt lat='10.80123' lon='106.6561' /><trkpt lat='10.80127' lon='106.6557' /><trkpt lat='10.80137' lon='106.6545' /><trkpt lat='10.80138' lon='106.6545' /><trkpt lat='10.80142' lon='106.6539' /><trkpt lat='10.80155' lon='106.6526' /><trkpt lat='10.80155' lon='106.6526' /><trkpt lat='10.80163' lon='106.6517' /><trkpt lat='10.80168' lon='106.6511' /><trkpt lat='10.8017' lon='106.6509' /><trkpt lat='10.80178' lon='106.6499' /><trkpt lat='10.8018' lon='106.6497' /><trkpt lat='10.80181' lon='106.6496' /><trkpt lat='10.80187' lon='106.6489' /><trkpt lat='10.80189' lon='106.6487' /><trkpt lat='10.80193' lon='106.6482' /><trkpt lat='10.80198' lon='106.6475' /><trkpt lat='10.80198' lon='106.6475' /><trkpt lat='10.80184' lon='106.6475' /><trkpt lat='10.80179' lon='106.6482' /><trkpt lat='10.80175' lon='106.6487' /><trkpt lat='10.80167' lon='106.6496' /><trkpt lat='10.80167' lon='106.6496' /><trkpt lat='10.80165' lon='106.6498' /><trkpt lat='10.80152' lon='106.6511' /><trkpt lat='10.80141' lon='106.6526' /><trkpt lat='10.80137' lon='106.6531' /><trkpt lat='10.8013' lon='106.6539' /><trkpt lat='10.80125' lon='106.6545' /><trkpt lat='10.80118' lon='106.6554' /><trkpt lat='10.80125' lon='106.6545' /><trkpt lat='10.80137' lon='106.6545' /><trkpt lat='10.80147' lon='106.6545' /><trkpt lat='10.80269' lon='106.6546' /><trkpt lat='10.80432' lon='106.6548' /><trkpt lat='10.80522' lon='106.6549' /><trkpt lat='10.80625' lon='106.655' /><trkpt lat='10.80618' lon='106.6552' /><trkpt lat='10.80573' lon='106.6566' /><trkpt lat='10.80569' lon='106.6567' /><trkpt lat='10.80552' lon='106.6574' /><trkpt lat='10.80545' lon='106.6579' /><trkpt lat='10.80541' lon='106.6582' /><trkpt lat='10.80534' lon='106.6585' /><trkpt lat='10.80531' lon='106.6587' /><trkpt lat='10.80526' lon='106.6589' /><trkpt lat='10.80516' lon='106.6593' /><trkpt lat='10.80509' lon='106.6595' /><trkpt lat='10.80501' lon='106.6597' /><trkpt lat='10.80491' lon='106.66' /><trkpt lat='10.80486' lon='106.6602' /><trkpt lat='10.80471' lon='106.6606' /><trkpt lat='10.80461' lon='106.6608' /><trkpt lat='10.80458' lon='106.661' /><trkpt lat='10.80456' lon='106.6611' /><trkpt lat='10.80485' lon='106.6612' /><trkpt lat='10.805' lon='106.6613' /><trkpt lat='10.80529' lon='106.6613' /><trkpt lat='10.80556' lon='106.6614' /><trkpt lat='10.80529' lon='106.6613' /><trkpt lat='10.805' lon='106.6613' /><trkpt lat='10.80485' lon='106.6612' /><trkpt lat='10.80456' lon='106.6611' /><trkpt lat='10.80441' lon='106.661' /><trkpt lat='10.80394' lon='106.6609' /><trkpt lat='10.80351' lon='106.6608' /><trkpt lat='10.80338' lon='106.6608' /><trkpt lat='10.80311' lon='106.6607' /><trkpt lat='10.80299' lon='106.6607' /><trkpt lat='10.80281' lon='106.6606' /><trkpt lat='10.80276' lon='106.6606' /><trkpt lat='10.80264' lon='106.6606' /><trkpt lat='10.8025' lon='106.6606' /><trkpt lat='10.8024' lon='106.6605' /><trkpt lat='10.80196' lon='106.6606' /><trkpt lat='10.80193' lon='106.6603' /><trkpt lat='10.80192' lon='106.6601' /><trkpt lat='10.80191' lon='106.6601' /><trkpt lat='10.80171' lon='106.6601' /><trkpt lat='10.80149' lon='106.6601' /><trkpt lat='10.80127' lon='106.6601' /><trkpt lat='10.80097' lon='106.66' /></trkseg></trk></gpx>";
 			var wpt = new Array();
 			var geopt = new Array();
 			var i = 0;
-			$(xml).find("plan").each(function() {
-				var points = new Array();
-				points.length = 0;
-				var geopoints = new Array();
-				geopoints.length = 0;
+			$(xmls).find("wpts").each(function() {
+				var waypoints = new Array();
+				waypoints.length = 0;
 				var lats = new Array();
 				var lons = new Array();
 				j = 0;
-				var id = $(this).attr("id");
 				$(this).find("wpt").each(function() {
 					lats[j] = ($(this).attr("lat"));
 					lons[j] = ($(this).attr("lon"));
-					points.push({
+					waypoints.push({
 						location : new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
 					});
-					geopoints.push({
+					j++;
+				});
+				wpt[i] = waypoints;
+				i++;
+			});
+			var k = 0;
+			$(xmls).find("trkseg").each(function() {
+				var routes = new Array();
+				routes.length = 0;
+				var lats = new Array();
+				var lons = new Array();
+				j = 0;
+				$(this).find("trkpt").each(function() {
+					lats[j] = ($(this).attr("lat"));
+					lons[j] = ($(this).attr("lon"));
+					routes.push({
 						location : new OpenLayers.Geometry.Point(lons[j], lats[j])
 					});
 					j++;
 				});
-				wpt[i] = points;
-				geopt[i] = geopoints;
-				i++;
+				geopt[k] = routes;
+				k++;
 			});
+
 			function initialize() {
 
 				// Create the map object
@@ -47,69 +59,10 @@
 				{
 					numZoomLevels : 20
 				});
-				function test() {
-					lineLayer = new OpenLayers.Layer.Vector("Line Layer");
-					style = {
-						strokeColor : '#ee0000',
-						strokeOpacity : 0.1,
-						strokeWidth : 10
-					};
-					for ( i = 0; i < wpt.length; i++) {
-						var points = new Array()
-						points.length = 0;
-						for ( j = 0; j < wpt[i].length; j++) {
-							points.push(wpt[i][j].location);
-						}
-					}
 
-					var linear_ring = new OpenLayers.Geometry.LinearRing(points[0]);
-					polygonFeature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Polygon([linear_ring]), null, null);
-					lineLayer.addFeatures([polygonFeature]);
-
-					map.addLayer(lineLayer);
-
-				}
-
-				test();
-
-				var style = {
-					strokeColor : '#0000ff',
-					strokeOpacity : 0.5,
-					strokeWidth : 5
-				};
-				//--------------------------------
-				lineLayer = new OpenLayers.Layer.Vector("Line Layer");
-				var start_point = new OpenLayers.Geometry.Point(106.680872, 10.804389);
-				var end_point = new OpenLayers.Geometry.Point(106.683962, 10.808858);
-				var points = new Array(start_point, end_point);
-				var line = new OpenLayers.Geometry.LineString(points).transform(epsg4326, epsg900913);
-
-				var lineFeature = new OpenLayers.Feature.Vector(line, null, style);
-				lineLayer.addFeatures([lineFeature]);
-				map.addLayers([gmap, lineLayer]);
-
-				// //---------------------
-				// lineLayer1= new OpenLayers.Layer.Vector("Line Layer");
-				// var start_point1 = new OpenLayers.Geometry.Point(106.683962,10.808858);
-				// var end_point1 = new OpenLayers.Geometry.Point(106.688812,10.809522);
-				// var points1 = new Array(start_point1,end_point1);
-				// var line1 = new OpenLayers.Geometry.LineString(points1).transform(epsg4326, epsg900913);
-
-				// var lineFeature1 = new OpenLayers.Feature.Vector(line1, null, style);
-				// lineLayer1.addFeatures([lineFeature1]);
-				// map.addLayers([gmap,lineLayer1]);
-				// //-------------------------
-
-				//var position = new OpenLayers.LonLat(106.680872,10.804389).transform(epsg4326, epsg900913);
-				//var size = new OpenLayers.Size(21,25);
-				//var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-				//var icon = new OpenLayers.Icon('https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=1|FF0000|000000', size, offset);
-				//var markerslayer = map.getLayer('Markers');
-
-				// markerslayer.addMarker(new OpenLayers.Marker(position,icon));
 				addMarker();
 				addDirection();
-				map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 15);
+				map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
 			}
 
 			function addMarker() {
@@ -156,34 +109,18 @@
 					};
 					var lineString = new Array();
 					var line = new Array();
-					var endLats = 0.5;
-					var endLongs = 0.5;
+					var endLats = 0;
+					var endLongs = 0;
 					for (var j = 0; j < geopt[i].length - 1; j++) {
-
-						// var points = new Array();
-						// var line = new Array();
-						// var lineFeature = new Array();
-						// //--------------------------------
-						// var lineLayer= new OpenLayers.Layer.Vector("Line Layer");
-						// var start = geopt[i][j].location;
-						// var end = geopt[i][j+1].location;
-
-						// var points = new Array(start,end);
-						// var line = new OpenLayers.Geometry.LineString(points).transform(epsg4326, epsg900913);
-
-						// var lineFeature = new OpenLayers.Feature.Vector(line, null, style);
-						// lineLayer.addFeatures([lineFeature]);
-						// map.addLayers([gmap,lineLayer]);
 
 						var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
 						var end = geopt[i][j + 1].location;
-						
+
 						endLats = geopt[i][j + 1].location.x;
 						endLongs = geopt[i][j + 1].location.y;
-						
-						alert(endLats);
-						
-						
+
+						//alert(endLats);
+
 						var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
 						lineString.push(line);
 						//alert(start);
