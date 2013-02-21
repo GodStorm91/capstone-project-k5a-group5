@@ -156,6 +156,8 @@
 					};
 					var lineString = new Array();
 					var line = new Array();
+					var endLats = 0.5;
+					var endLongs = 0.5;
 					for (var j = 0; j < geopt[i].length - 1; j++) {
 
 						// var points = new Array();
@@ -173,8 +175,15 @@
 						// lineLayer.addFeatures([lineFeature]);
 						// map.addLayers([gmap,lineLayer]);
 
-						var start = geopt[i][j].location;
+						var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
 						var end = geopt[i][j + 1].location;
+						
+						endLats = geopt[i][j + 1].location.x;
+						endLongs = geopt[i][j + 1].location.y;
+						
+						alert(endLats);
+						
+						
 						var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
 						lineString.push(line);
 						//alert(start);
