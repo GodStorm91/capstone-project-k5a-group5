@@ -146,6 +146,10 @@
     <Compile Include="Areas\Customer\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\Hub\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Hub\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Hub\Controllers\HubDefaultController.cs" />
+    <Compile Include="Areas\Hub\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Hub\HubAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CityProvinceController.cs" />
     <Compile Include="Controllers\CollectionPlansController.cs" />
@@ -1271,8 +1275,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Areas\Hub\Models\" />
-    <Folder Include="Areas\Hub\Views\Dashboard\" />
-    <Folder Include="Areas\Hub\Views\Shared\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -1328,6 +1330,9 @@
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Hub\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Hub\Views\Web.config" />
+    <Content Include="Areas\Hub\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Hub\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Hub\Views\Shared\_LogOnPartial.cshtml" />
     <None Include="CodeTemplates\AddController\Controller.tt" />
     <None Include="CodeTemplates\AddController\ControllerWithContext.tt" />
     <None Include="CodeTemplates\AddView\CSHTML\Create.tt" />
