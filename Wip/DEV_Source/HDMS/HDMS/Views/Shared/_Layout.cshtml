@@ -154,8 +154,9 @@
             $("#alert").hide();
         });
 
-        function alert(textToshow, timeToShow) {
+        function alert(textToshow,link, timeToShow) {
             $("#alertText").html(textToshow);
+            document.getElementById("alertLink").href = link;
             $("#alert").fadeIn(1000, function () {
                 $("#alertText").fadeIn(700);
             });
@@ -165,7 +166,7 @@
         }
 
         function hideAlert() {
-            $("#alert").fadeOut(700);
+            //$("#alert").fadeOut(700);
         }
 
     </script>
@@ -205,9 +206,15 @@
                         <li class=""><a href="/DeliveryPlans"><span class="icon16 icomoon-icon-screen-2"></span> Delivery Plans</a></li>*@
                         <li class=""><a href="/Request"><span class="icon16  icomoon-icon-stack"></span> Requests</a></li>
                         <li class=""><a href="/Orders"><span class="icon16 icomoon-icon-file"></span> Orders</a></li>
-                        <li class=""><a href="/Customers"><span class="icon16 icomoon-icon-pacman"></span> Customers</a></li>
-                        <li class=""><a href="/CollectionPlans"><span class="icon16 wpzoom-globe"></span></a></li>
-                        <li class="dropdown">
+                        <li class=""><a href="/Customers"><span class="icon16 icomoon-icon-pacman"></span> Customers</a></li>                        
+                        <li class="">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon16 wpzoom-globe"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="menu" id = "notificationBox">
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="icon16 icomoon-icon-cog"></span> Options Config
                                 <b class="caret"></b>
@@ -270,7 +277,17 @@
 
              $(function () {
                  checkNotifications();
-             });          
+             });
+
+             function makeHtml(data) {
+                 var html = "<ul>";
+                 html += '<li><a href="' + data.link + '"/>' + data.content + "</li>";
+                 html += "</ul>";
+
+                 alert(html);
+
+                 return html;
+             }         
 
              function checkNotifications() {
 
@@ -290,16 +307,27 @@
 
                  $.post("/Notification", null, function (data, s) {
                      if (data.d) {
-                         alert("You should create new Collection plan now", 5000);
+                         alert(data.content, data.link, 5000);
+
+                         //create Notifications widget
+                         document.getElementById("notificationBox").innerHTML = makeHtml(data);// "<ul><li>Con mat may</li></ul>"; //makeHtml();//<ul><li>Con mat may</li></ul>
+
                          clearTimeout(timerId);
                      }
 
                      checkNotifications();
-                 })                 
+                 })
              };
+
+             function editGlobeIcon() {
+                
+             }
+
+             
          </script>
          <div id="alert" class="alert">
-            <div id="alertText" class="alertText"></div>
+            
+            <a id="alertLink"><div id="alertText" class="alertText"></div></a>
          </div>
     
     </div><!-- End #wrapper -->
