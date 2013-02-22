@@ -15,9 +15,11 @@ namespace HDMS.Controllers
         public void IndexAsync()
         {
             AsyncManager.OutstandingOperations.Increment();
-            AsyncNotificationChecker.CheckForNotificationAsync(hasNotifications =>
+            AsyncNotificationChecker.CheckForNotificationAsync((hasNotifications, notificationInformation, linkToNotification) =>
                 {
                     AsyncManager.Parameters["hasNotifications"] = hasNotifications;
+                    AsyncManager.Parameters["notificationInformation"] = notificationInformation;
+                    AsyncManager.Parameters["linkToNotification"] = linkToNotification;
                     AsyncManager.OutstandingOperations.Decrement();
                 });
         }
@@ -25,11 +27,13 @@ namespace HDMS.Controllers
         private class IndexResponse
         {
             public bool d { get; set; }
+            public string content { get; set; }
+            public string link { get; set; }
         }
 
-        public JsonResult IndexCompleted(bool hasNotifications)
+        public JsonResult IndexCompleted(bool hasNotifications, string notificationInformation, string linkToNotification)
         {
-            return this.Json(new IndexResponse() { d = hasNotifications });
+            return this.Json(new IndexResponse() { d = hasNotifications, content = notificationInformation, link = linkToNotification });
         }
 
     }

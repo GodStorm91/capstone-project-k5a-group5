@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading;
+using HDMS.Models;
+using HDMS.Models.Configuration;
 
 namespace HDMS.Views.Shared
 {
     public static class AsyncNotificationChecker
     {
 
-        public delegate void CheckForNotificationResponse(bool hasNotification);
+        public delegate void CheckForNotificationResponse(bool hasNotification, string notificationInformation, string linkToNotification);        
 
         public static IAsyncResult CheckForNotificationAsync(CheckForNotificationResponse resp)
         {
@@ -18,18 +20,19 @@ namespace HDMS.Views.Shared
 
         private class MyAsyncResult : IAsyncResult
         {
-            private static int mCount = 0;
-            private readonly CheckForNotificationResponse mCheckForEmailResponse;
+            private HDMSEntities context = new HDMSEntities();            
+            private readonly CheckForNotificationResponse mCheckForNotificationResp;
             private readonly Thread mThread;
             private readonly AutoResetEvent mWait;
+            bool hasNotification = false;
+            string notificationInformation = "";
+            string linkToNotification = "";
 
             public MyAsyncResult(CheckForNotificationResponse checkForNotificationResp)
             {
-                mCheckForEmailResponse = checkForNotificationResp;
+                mCheckForNotificationResp = checkForNotificationResp;
 
-                bool hasNotifications = true;
-
-                //RequestModel.NumRequest = RequestModel.NumRequest > 5 ? 0 : RequestModel.NumRequest;
+                CheckNotification();                
 
                 mWait = new AutoResetEvent(false);
 
@@ -38,12 +41,31 @@ namespace HDMS.Views.Shared
 
                     Thread.Sleep(TimeSpan.FromSeconds(2));
                     // notify that the long operation is complete:
-                    checkForNotificationResp(hasNotifications);
+                    checkForNotificationResp(hasNotification,notificationInformation,linkToNotification);
 
                     mWait.Set();
                 }));
 
                 mThread.Start();
+
+            }
+
+            private void CheckNotification()
+            {
+                var requests = new List<Request>();
+                requests = context.Requests.OrderBy(r => r.RequestId).ToList();
+                requests = requests.Where(r => r.Status == Models.Statuses.RequestStatus.New).ToList();
+
+                if ((requests.Count > ConfigurationModel.MaxRequest) && (requests.Count != ConfigurationModel.CurrentNewRequests))
+                {
+                    ConfigurationModel.CurrentNewRequests = requests.Count;
+                    hasNotification =  true;
+                    linkToNotification = "/CollectionPlans/";
+                    notificationInformation = "You should create new Collection Plan now";
+                }else 
+                {
+                    hasNotification =  false;
+                }
 
             }
 

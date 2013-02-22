@@ -198,6 +198,7 @@
     <Compile Include="Models\CollectionPlan.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configuration\ConfigurationModel.cs" />
     <Compile Include="Models\Contact.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
