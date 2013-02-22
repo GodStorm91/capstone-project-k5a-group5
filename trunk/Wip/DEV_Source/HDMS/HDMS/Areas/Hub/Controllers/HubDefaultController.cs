@@ -6,15 +6,10 @@ using System.Web.Mvc;
 
 namespace HDMS.Areas.Hub.Controllers
 {
+    [Authorize(Roles = "Hub")]
     public class HubDefaultController : Controller
     {
-        //
-        // GET: /Hub/HubDefault/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
+       
 
     }
 }

@@ -5,16 +5,16 @@ using System.Web;
 using System.Web.Mvc;
 using HDMS.Models;
 
-namespace HDMS.Areas.Customer.Controllers
+namespace HDMS.Areas.Hub.Controllers
 {
 
-    public partial class HomeController : CustomerDefaultController
+    public partial class HomeController : HubDefaultController
     {
         HDMSEntities context = new HDMSEntities();
 
         public virtual ActionResult Index()
         {
-            return Redirect("/Customer/Dashboard");
+            return Redirect("/Hub/Dashboard");
         }
     }
 }

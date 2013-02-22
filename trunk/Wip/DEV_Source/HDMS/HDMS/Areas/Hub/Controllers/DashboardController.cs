@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace HDMS.Areas.Hub.Controllers
 {
-    public class DashboardController : Controller
+    public partial class DashboardController : HubDefaultController
     {
         //
         // GET: /Hub/Dashboard/
 
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }

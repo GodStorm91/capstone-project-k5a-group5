@@ -16,6 +16,7 @@ namespace HDMS.Controllers
         public virtual ActionResult Index()
         {
             var roles = Roles.GetRolesForUser(User.Identity.Name).ToList();
+            if (roles.Contains("Hub")) return Redirect("/Hub/");
             if(roles.Contains("Customer")) return Redirect("/Customer/");
             if (roles.Contains("Office Staff")) return RedirectToAction("Index", "Dashboard");
             if (roles.Contains("Admin")) return Redirect("/Admin/User");
