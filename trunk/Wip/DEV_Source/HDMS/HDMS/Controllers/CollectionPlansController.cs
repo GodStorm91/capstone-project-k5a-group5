@@ -430,5 +430,11 @@ namespace HDMS.Controllers
                 return Json(new { success = false });
             }
         }
+
+        //KhanhNHV Start here        
+        public ViewResult AutoSchedulePlan()
+        {
+            return View();
+        }
     }
 }

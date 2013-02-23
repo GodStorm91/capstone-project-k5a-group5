@@ -1494,6 +1494,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.cs</LastGenOutput>
     </None>
+    <Content Include="Views\CollectionPlans\AutoSchedulePlan.cshtml" />
     <None Include="Views\PieReport\Open Notebook.onetoc2" />
     <Content Include="Views\Request\AddOrders.cshtml" />
     <Content Include="Views\Request\ApproveOrders.cshtml" />
