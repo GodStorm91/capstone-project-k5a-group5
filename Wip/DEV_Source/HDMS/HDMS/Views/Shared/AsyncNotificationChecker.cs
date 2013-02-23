@@ -60,7 +60,7 @@ namespace HDMS.Views.Shared
                 {
                     ConfigurationModel.CurrentNewRequests = requests.Count;
                     hasNotification =  true;
-                    linkToNotification = "/CollectionPlans/";
+                    linkToNotification = "/CollectionPlans/AutoSchedulePlan";
                     notificationInformation = "You should create new Collection Plan now";
                 }else 
                 {
