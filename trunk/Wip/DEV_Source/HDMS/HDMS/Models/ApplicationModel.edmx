@@ -4,38 +4,109 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HDMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="HDMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="HDMSModelStoreContainer">
           <EntitySet Name="aspnet_Membership" EntityType="HDMSModel.Store.aspnet_Membership" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Roles" EntityType="HDMSModel.Store.aspnet_Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Users" EntityType="HDMSModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_UsersInRoles" EntityType="HDMSModel.Store.aspnet_UsersInRoles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Cargo" EntityType="HDMSModel.Store.Cargo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CityProvince" EntityType="HDMSModel.Store.CityProvince" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CollectionPlan" EntityType="HDMSModel.Store.CollectionPlan" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Contact" EntityType="HDMSModel.Store.Contact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customer" EntityType="HDMSModel.Store.Customer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CustomerAddress" EntityType="HDMSModel.Store.CustomerAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryCategory" EntityType="HDMSModel.Store.DeliveryCategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryMen" EntityType="HDMSModel.Store.DeliveryMen" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryMenInPlan" EntityType="HDMSModel.Store.DeliveryMenInPlan" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeliveryOption" EntityType="HDMSModel.Store.DeliveryOption" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeliveryPlan" EntityType="HDMSModel.Store.DeliveryPlan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliveryType" EntityType="HDMSModel.Store.DeliveryType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="District" EntityType="HDMSModel.Store.District" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hub" EntityType="HDMSModel.Store.Hub" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HubCategory" EntityType="HDMSModel.Store.HubCategory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Item" EntityType="HDMSModel.Store.Item" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ItemManagement" EntityType="HDMSModel.Store.ItemManagement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order" EntityType="HDMSModel.Store.Order" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderPaymentType" EntityType="HDMSModel.Store.OrderPaymentType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Plan" EntityType="HDMSModel.Store.Plan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PriceCategory" EntityType="HDMSModel.Store.PriceCategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product" EntityType="HDMSModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Request" EntityType="HDMSModel.Store.Request" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TiktakStaff" EntityType="HDMSModel.Store.TiktakStaff" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserInfo" EntityType="HDMSModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ward" EntityType="HDMSModel.Store.Ward" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__aspnet_Me__UserI__05113BBC" Association="HDMSModel.Store.FK__aspnet_Me__UserI__05113BBC">
+          <AssociationSet Name="FK__aspnet_Me__UserI__3493CFA7" Association="HDMSModel.Store.FK__aspnet_Me__UserI__3493CFA7">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__RoleI__07EDA867" Association="HDMSModel.Store.FK__aspnet_Us__RoleI__07EDA867">
+          <AssociationSet Name="FK__aspnet_Me__UserI__6501FCD8" Association="HDMSModel.Store.FK__aspnet_Me__UserI__6501FCD8">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Us__RoleI__37703C52" Association="HDMSModel.Store.FK__aspnet_Us__RoleI__37703C52">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__UserI__08E1CCA0" Association="HDMSModel.Store.FK__aspnet_Us__UserI__08E1CCA0">
+          <AssociationSet Name="FK__aspnet_Us__RoleI__5F492382" Association="HDMSModel.Store.FK__aspnet_Us__RoleI__5F492382">
+            <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+            <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Us__UserI__3864608B" Association="HDMSModel.Store.FK__aspnet_Us__UserI__3864608B">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Us__UserI__603D47BB" Association="HDMSModel.Store.FK__aspnet_Us__UserI__603D47BB">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargo__OrderId__69C6B1F5" Association="HDMSModel.Store.FK__Cargo__OrderId__69C6B1F5">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargo__PlanId__6ABAD62E" Association="HDMSModel.Store.FK__Cargo__PlanId__6ABAD62E">
+            <End Role="Plan" EntitySet="Plan" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargo__RequestId__6BAEFA67" Association="HDMSModel.Store.FK__Cargo__RequestId__6BAEFA67">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DeliveryM__Deliv__5D60DB10" Association="HDMSModel.Store.FK__DeliveryM__Deliv__5D60DB10">
+            <End Role="DeliveryMen" EntitySet="DeliveryMen" />
+            <End Role="DeliveryMenInPlan" EntitySet="DeliveryMenInPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DeliveryM__PlanI__5E54FF49" Association="HDMSModel.Store.FK__DeliveryM__PlanI__5E54FF49">
+            <End Role="Plan" EntitySet="Plan" />
+            <End Role="DeliveryMenInPlan" EntitySet="DeliveryMenInPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plan__StaffId__53D770D6" Association="HDMSModel.Store.FK__Plan__StaffId__53D770D6">
+            <End Role="TiktakStaff" EntitySet="TiktakStaff" />
+            <End Role="Plan" EntitySet="Plan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceCate__Order__4C364F0E" Association="HDMSModel.Store.FK__PriceCate__Order__4C364F0E">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="PriceCategory" EntitySet="PriceCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceCate__Staff__4B422AD5" Association="HDMSModel.Store.FK__PriceCate__Staff__4B422AD5">
+            <End Role="TiktakStaff" EntitySet="TiktakStaff" />
+            <End Role="PriceCategory" EntitySet="PriceCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Custome__51EF2864" Association="HDMSModel.Store.FK__Product__Custome__51EF2864">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__ItemId__52E34C9D" Association="HDMSModel.Store.FK__Product__ItemId__52E34C9D">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__Custome__6CA31EA0" Association="HDMSModel.Store.FK__Request__Custome__6CA31EA0">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order1_Order1" Association="HDMSModel.Store.FK_Order1_Order1">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order1" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FKContact407943" Association="HDMSModel.Store.FKContact407943">
             <End Role="Customer" EntitySet="Customer" />
@@ -170,6 +241,18 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoId" />
+          </Key>
+          <Property Name="CargoId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="CargoColumn" Type="int" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="CargoType" Type="int" />
+          <Property Name="RequestId" Type="int" />
+          <Property Name="OrderId" Type="int" />
+        </EntityType>
         <EntityType Name="CityProvince">
           <Key>
             <PropertyRef Name="CityProvinceId" />
@@ -231,6 +314,31 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Note" Type="ntext" />
         </EntityType>
+        <EntityType Name="DeliveryCategory">
+          <Key>
+            <PropertyRef Name="DeliveryCategoryID" />
+          </Key>
+          <Property Name="DeliveryCategoryID" Type="int" Nullable="false" />
+          <Property Name="DeliveryCategoryName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DeliveryMen">
+          <Key>
+            <PropertyRef Name="DeliveryMenId" />
+          </Key>
+          <Property Name="DeliveryMenId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DeliveryMenInPlan">
+          <Key>
+            <PropertyRef Name="DeliveryMenInPlanId" />
+          </Key>
+          <Property Name="DeliveryMenInPlanId" Type="int" Nullable="false" />
+          <Property Name="DeliveryMenId" Type="int" />
+          <Property Name="PlanId" Type="int" />
+          <Property Name="AssignedDate" Type="date" />
+          <Property Name="EstimateDistance" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="EstimateTime" Type="decimal" Precision="19" Scale="2" />
+        </EntityType>
         <EntityType Name="DeliveryOption">
           <Key>
             <PropertyRef Name="DeliveryOptionId" />
@@ -252,6 +360,13 @@
           <Property Name="DeliveryPlanStatus" Type="int" Nullable="false" />
           <Property Name="Note" Type="ntext" />
           <Property Name="DeliveryOrder" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="DeliveryType">
+          <Key>
+            <PropertyRef Name="DeliveryTypeID" />
+          </Key>
+          <Property Name="DeliveryTypeID" Type="int" Nullable="false" />
+          <Property Name="DeliveryName" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="District">
           <Key>
@@ -276,6 +391,14 @@
           <Property Name="Longitude" Type="decimal" Precision="19" Scale="16" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="HubCategory">
+          <Key>
+            <PropertyRef Name="HubCategoryId" />
+          </Key>
+          <Property Name="HubCategoryId" Type="int" Nullable="false" />
+          <Property Name="HubName" Type="varchar" MaxLength="255" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -289,6 +412,20 @@
           <Property Name="Size" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="Weight" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="ItemManagement">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="VendorID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Price" Type="float" />
+          <Property Name="ImageMime" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="Category" Type="nvarchar" MaxLength="250" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -323,6 +460,45 @@
           <Property Name="Description" Type="ntext" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Plan">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Name="PlanId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="FinishedDate" Type="date" />
+          <Property Name="Note" Type="varchar" MaxLength="100" />
+          <Property Name="StaffId" Type="int" />
+          <Property Name="PlanTypeId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="PriceCategory">
+          <Key>
+            <PropertyRef Name="PriceCategoryId" />
+          </Key>
+          <Property Name="PriceCategoryId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="StaffId" Type="int" />
+          <Property Name="EditDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductCategory" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="ProductWidth" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ProductHeight" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ProductLength" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ProductWeight" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ProductPrice" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Request">
           <Key>
             <PropertyRef Name="RequestId" />
@@ -335,6 +511,13 @@
           <Property Name="CollectionPlanId" Type="int" />
           <Property Name="RequestStatus" Type="int" Nullable="false" />
           <Property Name="Note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="TiktakStaff">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="StaffId" Type="int" Nullable="false" />
+          <Property Name="StaffRole" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -354,7 +537,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__UserI__05113BBC">
+        <Association Name="FK__aspnet_Me__UserI__3493CFA7">
           <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="HDMSModel.Store.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -366,7 +549,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__RoleI__07EDA867">
+        <Association Name="FK__aspnet_Me__UserI__6501FCD8">
+          <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_Membership" Type="HDMSModel.Store.aspnet_Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_Membership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Us__RoleI__37703C52">
           <End Role="aspnet_Roles" Type="HDMSModel.Store.aspnet_Roles" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -378,7 +573,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__UserI__08E1CCA0">
+        <Association Name="FK__aspnet_Us__RoleI__5F492382">
+          <End Role="aspnet_Roles" Type="HDMSModel.Store.aspnet_Roles" Multiplicity="1" />
+          <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="aspnet_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Us__UserI__3864608B">
           <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -387,6 +594,162 @@
             </Principal>
             <Dependent Role="aspnet_UsersInRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Us__UserI__603D47BB">
+          <End Role="aspnet_Users" Type="HDMSModel.Store.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_UsersInRoles" Type="HDMSModel.Store.aspnet_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargo__OrderId__69C6B1F5">
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="0..1" />
+          <End Role="Cargo" Type="HDMSModel.Store.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargo__PlanId__6ABAD62E">
+          <End Role="Plan" Type="HDMSModel.Store.Plan" Multiplicity="1" />
+          <End Role="Cargo" Type="HDMSModel.Store.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargo__RequestId__6BAEFA67">
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="0..1" />
+          <End Role="Cargo" Type="HDMSModel.Store.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DeliveryM__Deliv__5D60DB10">
+          <End Role="DeliveryMen" Type="HDMSModel.Store.DeliveryMen" Multiplicity="0..1" />
+          <End Role="DeliveryMenInPlan" Type="HDMSModel.Store.DeliveryMenInPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryMen">
+              <PropertyRef Name="DeliveryMenId" />
+            </Principal>
+            <Dependent Role="DeliveryMenInPlan">
+              <PropertyRef Name="DeliveryMenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DeliveryM__PlanI__5E54FF49">
+          <End Role="Plan" Type="HDMSModel.Store.Plan" Multiplicity="0..1" />
+          <End Role="DeliveryMenInPlan" Type="HDMSModel.Store.DeliveryMenInPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="DeliveryMenInPlan">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plan__StaffId__53D770D6">
+          <End Role="TiktakStaff" Type="HDMSModel.Store.TiktakStaff" Multiplicity="0..1" />
+          <End Role="Plan" Type="HDMSModel.Store.Plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiktakStaff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Plan">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceCate__Order__4C364F0E">
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="0..1" />
+          <End Role="PriceCategory" Type="HDMSModel.Store.PriceCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="PriceCategory">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceCate__Staff__4B422AD5">
+          <End Role="TiktakStaff" Type="HDMSModel.Store.TiktakStaff" Multiplicity="0..1" />
+          <End Role="PriceCategory" Type="HDMSModel.Store.PriceCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiktakStaff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PriceCategory">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Custome__51EF2864">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="1" />
+          <End Role="Product" Type="HDMSModel.Store.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__ItemId__52E34C9D">
+          <End Role="Item" Type="HDMSModel.Store.Item" Multiplicity="0..1" />
+          <End Role="Product" Type="HDMSModel.Store.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__Custome__6CA31EA0">
+          <End Role="Customer" Type="HDMSModel.Store.Customer" Multiplicity="1" />
+          <End Role="Request" Type="HDMSModel.Store.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order1_Order1">
+          <End Role="Order" Type="HDMSModel.Store.Order" Multiplicity="1" />
+          <End Role="Order1" Type="HDMSModel.Store.Order" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Order1">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -618,8 +981,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HDMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -725,6 +1087,61 @@
           <AssociationSet Name="aspnet_UsersInRoles" Association="HDMSModel.aspnet_UsersInRoles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+          </AssociationSet>
+          <EntitySet Name="Plans" EntityType="HDMSModel.Plan" />
+          <AssociationSet Name="FK_Order1_Order1" Association="HDMSModel.FK_Order1_Order1">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order1" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Cargoes" EntityType="HDMSModel.Cargo" />
+          <EntitySet Name="DeliveryCategories" EntityType="HDMSModel.DeliveryCategory" />
+          <EntitySet Name="DeliveryMen" EntityType="HDMSModel.DeliveryMan" />
+          <EntitySet Name="DeliveryMenInPlans" EntityType="HDMSModel.DeliveryMenInPlan" />
+          <EntitySet Name="DeliveryTypes" EntityType="HDMSModel.DeliveryType" />
+          <EntitySet Name="HubCategories" EntityType="HDMSModel.HubCategory" />
+          <EntitySet Name="ItemManagements" EntityType="HDMSModel.ItemManagement" />
+          <EntitySet Name="PriceCategories" EntityType="HDMSModel.PriceCategory" />
+          <EntitySet Name="Products" EntityType="HDMSModel.Product" />
+          <EntitySet Name="TiktakStaffs" EntityType="HDMSModel.TiktakStaff" />
+          <AssociationSet Name="FK__Cargo__OrderId__69C6B1F5" Association="HDMSModel.FK__Cargo__OrderId__69C6B1F5">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Cargo" EntitySet="Cargoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargo__PlanId__6ABAD62E" Association="HDMSModel.FK__Cargo__PlanId__6ABAD62E">
+            <End Role="Plan" EntitySet="Plans" />
+            <End Role="Cargo" EntitySet="Cargoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cargo__RequestId__6BAEFA67" Association="HDMSModel.FK__Cargo__RequestId__6BAEFA67">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="Cargo" EntitySet="Cargoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Custome__51EF2864" Association="HDMSModel.FK__Product__Custome__51EF2864">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DeliveryM__Deliv__5D60DB10" Association="HDMSModel.FK__DeliveryM__Deliv__5D60DB10">
+            <End Role="DeliveryMan" EntitySet="DeliveryMen" />
+            <End Role="DeliveryMenInPlan" EntitySet="DeliveryMenInPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DeliveryM__PlanI__5E54FF49" Association="HDMSModel.FK__DeliveryM__PlanI__5E54FF49">
+            <End Role="Plan" EntitySet="Plans" />
+            <End Role="DeliveryMenInPlan" EntitySet="DeliveryMenInPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__ItemId__52E34C9D" Association="HDMSModel.FK__Product__ItemId__52E34C9D">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceCate__Order__4C364F0E" Association="HDMSModel.FK__PriceCate__Order__4C364F0E">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="PriceCategory" EntitySet="PriceCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Plan__StaffId__53D770D6" Association="HDMSModel.FK__Plan__StaffId__53D770D6">
+            <End Role="TiktakStaff" EntitySet="TiktakStaffs" />
+            <End Role="Plan" EntitySet="Plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceCate__Staff__4B422AD5" Association="HDMSModel.FK__PriceCate__Staff__4B422AD5">
+            <End Role="TiktakStaff" EntitySet="TiktakStaffs" />
+            <End Role="PriceCategory" EntitySet="PriceCategories" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="aspnet_Membership">
@@ -832,6 +1249,7 @@
           <NavigationProperty Name="CustomerAddresses" Relationship="HDMSModel.FKCustomerAd734436" FromRole="Customer" ToRole="CustomerAddress" />
           <NavigationProperty Name="Requests" Relationship="HDMSModel.FKRequest241288" FromRole="Customer" ToRole="Request" />
           <NavigationProperty Name="UserInfoes" Relationship="HDMSModel.FKUserInfo221814" FromRole="Customer" ToRole="UserInfo" />
+          <NavigationProperty Name="Products" Relationship="HDMSModel.FK__Product__Custome__51EF2864" FromRole="Customer" ToRole="Product" />
         </EntityType>
         <EntityType Name="CustomerAddress">
           <Key>
@@ -919,6 +1337,7 @@
           <Property Name="Weight" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Order" Relationship="HDMSModel.FKItem829908" FromRole="Item" ToRole="Order" />
+          <NavigationProperty Name="Products" Relationship="HDMSModel.FK__Product__ItemId__52E34C9D" FromRole="Item" ToRole="Product" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -950,6 +1369,10 @@
           <NavigationProperty Name="Request" Relationship="HDMSModel.FKOrder332980" FromRole="Order" ToRole="Request" />
           <NavigationProperty Name="Ward" Relationship="HDMSModel.FKOrder537128" FromRole="Order" ToRole="Ward" />
           <NavigationProperty Name="OrderPaymentType" Relationship="HDMSModel.FKOrder996545" FromRole="Order" ToRole="OrderPaymentType" />
+          <NavigationProperty Name="Order1" Relationship="HDMSModel.FK_Order1_Order1" FromRole="Order" ToRole="Order1" />
+          <NavigationProperty Name="Order2" Relationship="HDMSModel.FK_Order1_Order1" FromRole="Order1" ToRole="Order" />
+          <NavigationProperty Name="Cargoes" Relationship="HDMSModel.FK__Cargo__OrderId__69C6B1F5" FromRole="Order" ToRole="Cargo" />
+          <NavigationProperty Name="PriceCategories" Relationship="HDMSModel.FK__PriceCate__Order__4C364F0E" FromRole="Order" ToRole="PriceCategory" />
         </EntityType>
         <EntityType Name="OrderPaymentType">
           <Key>
@@ -977,6 +1400,7 @@
           <NavigationProperty Name="Customer" Relationship="HDMSModel.FKRequest241288" FromRole="Request" ToRole="Customer" />
           <NavigationProperty Name="CustomerAddress" Relationship="HDMSModel.FKRequest484183" FromRole="Request" ToRole="CustomerAddress" />
           <NavigationProperty Name="Orders" Relationship="HDMSModel.FKOrder332980" FromRole="Request" ToRole="Order" />
+          <NavigationProperty Name="Cargoes" Relationship="HDMSModel.FK__Cargo__RequestId__6BAEFA67" FromRole="Request" ToRole="Cargo" />
         </EntityType>
         <EntityType Name="UserInfo">
           <Key>
@@ -1245,6 +1669,265 @@
           <End Role="aspnet_Roles" Type="HDMSModel.aspnet_Roles" Multiplicity="*" />
           <End Role="aspnet_Users" Type="HDMSModel.aspnet_Users" Multiplicity="*" />
         </Association>
+        <EntityType Name="Plan">
+          <Key>
+            <PropertyRef Name="PlanId" />
+          </Key>
+          <Property Type="Int32" Name="PlanId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+          <Property Type="DateTime" Name="FinishedDate" />
+          <Property Type="String" Name="Note" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="StaffId" />
+          <Property Type="Int32" Name="PlanTypeId" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" />
+          <Property Type="Int32" Name="Status" />
+          <NavigationProperty Name="Cargoes" Relationship="HDMSModel.FK__Cargo__PlanId__6ABAD62E" FromRole="Plan" ToRole="Cargo" />
+          <NavigationProperty Name="DeliveryMenInPlans" Relationship="HDMSModel.FK__DeliveryM__PlanI__5E54FF49" FromRole="Plan" ToRole="DeliveryMenInPlan" />
+          <NavigationProperty Name="TiktakStaff" Relationship="HDMSModel.FK__Plan__StaffId__53D770D6" FromRole="Plan" ToRole="TiktakStaff" />
+        </EntityType>
+        <Association Name="FK_Order1_Order1">
+          <End Type="HDMSModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="HDMSModel.Order" Role="Order1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Order1">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoId" />
+          </Key>
+          <Property Type="Int32" Name="CargoId" Nullable="false" />
+          <Property Type="String" Name="Address" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CargoColumn" />
+          <Property Type="Int32" Name="PlanId" Nullable="false" />
+          <Property Type="Int32" Name="CargoType" />
+          <Property Type="Int32" Name="RequestId" />
+          <Property Type="Int32" Name="OrderId" />
+          <NavigationProperty Name="Order" Relationship="HDMSModel.FK__Cargo__OrderId__69C6B1F5" FromRole="Cargo" ToRole="Order" />
+          <NavigationProperty Name="Plan" Relationship="HDMSModel.FK__Cargo__PlanId__6ABAD62E" FromRole="Cargo" ToRole="Plan" />
+          <NavigationProperty Name="Request" Relationship="HDMSModel.FK__Cargo__RequestId__6BAEFA67" FromRole="Cargo" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="DeliveryCategory">
+          <Key>
+            <PropertyRef Name="DeliveryCategoryID" />
+          </Key>
+          <Property Type="Int32" Name="DeliveryCategoryID" Nullable="false" />
+          <Property Type="String" Name="DeliveryCategoryName" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DeliveryMan">
+          <Key>
+            <PropertyRef Name="DeliveryMenId" />
+          </Key>
+          <Property Type="Int32" Name="DeliveryMenId" Nullable="false" />
+          <Property Type="String" Name="Status" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeliveryMenInPlans" Relationship="HDMSModel.FK__DeliveryM__Deliv__5D60DB10" FromRole="DeliveryMan" ToRole="DeliveryMenInPlan" />
+        </EntityType>
+        <EntityType Name="DeliveryMenInPlan">
+          <Key>
+            <PropertyRef Name="DeliveryMenInPlanId" />
+          </Key>
+          <Property Type="Int32" Name="DeliveryMenInPlanId" Nullable="false" />
+          <Property Type="Int32" Name="DeliveryMenId" />
+          <Property Type="Int32" Name="PlanId" />
+          <Property Type="DateTime" Name="AssignedDate" />
+          <Property Type="Decimal" Name="EstimateDistance" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="EstimateTime" Precision="19" Scale="2" />
+          <NavigationProperty Name="DeliveryMan" Relationship="HDMSModel.FK__DeliveryM__Deliv__5D60DB10" FromRole="DeliveryMenInPlan" ToRole="DeliveryMan" />
+          <NavigationProperty Name="Plan" Relationship="HDMSModel.FK__DeliveryM__PlanI__5E54FF49" FromRole="DeliveryMenInPlan" ToRole="Plan" />
+        </EntityType>
+        <EntityType Name="DeliveryType">
+          <Key>
+            <PropertyRef Name="DeliveryTypeID" />
+          </Key>
+          <Property Type="Int32" Name="DeliveryTypeID" Nullable="false" />
+          <Property Type="String" Name="DeliveryName" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HubCategory">
+          <Key>
+            <PropertyRef Name="HubCategoryId" />
+          </Key>
+          <Property Type="Int32" Name="HubCategoryId" Nullable="false" />
+          <Property Type="String" Name="HubName" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="isActive" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemManagement">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Type="Int32" Name="ItemID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="VendorID" />
+          <Property Type="String" Name="Name" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="Price" />
+          <Property Type="String" Name="ImageMime" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="ImageData" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="Description" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Category" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Status" />
+        </EntityType>
+        <EntityType Name="PriceCategory">
+          <Key>
+            <PropertyRef Name="PriceCategoryId" />
+          </Key>
+          <Property Type="Int32" Name="PriceCategoryId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Int32" Name="OrderId" />
+          <Property Type="Int32" Name="StaffId" />
+          <Property Type="DateTime" Name="EditDate" />
+          <NavigationProperty Name="Order" Relationship="HDMSModel.FK__PriceCate__Order__4C364F0E" FromRole="PriceCategory" ToRole="Order" />
+          <NavigationProperty Name="TiktakStaff" Relationship="HDMSModel.FK__PriceCate__Staff__4B422AD5" FromRole="PriceCategory" ToRole="TiktakStaff" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Int32" Name="ProductCategory" />
+          <Property Type="String" Name="Name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ProductWidth" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="ProductHeight" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="ProductLength" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="ProductWeight" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="ProductPrice" Precision="19" Scale="2" />
+          <Property Type="Int32" Name="ItemId" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="HDMSModel.FK__Product__Custome__51EF2864" FromRole="Product" ToRole="Customer" />
+          <NavigationProperty Name="Item" Relationship="HDMSModel.FK__Product__ItemId__52E34C9D" FromRole="Product" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="TiktakStaff">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Type="Int32" Name="StaffId" Nullable="false" />
+          <Property Type="String" Name="StaffRole" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Plans" Relationship="HDMSModel.FK__Plan__StaffId__53D770D6" FromRole="TiktakStaff" ToRole="Plan" />
+          <NavigationProperty Name="PriceCategories" Relationship="HDMSModel.FK__PriceCate__Staff__4B422AD5" FromRole="TiktakStaff" ToRole="PriceCategory" />
+        </EntityType>
+        <Association Name="FK__Cargo__OrderId__69C6B1F5">
+          <End Type="HDMSModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="HDMSModel.Cargo" Role="Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargo__PlanId__6ABAD62E">
+          <End Type="HDMSModel.Plan" Role="Plan" Multiplicity="1" />
+          <End Type="HDMSModel.Cargo" Role="Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cargo__RequestId__6BAEFA67">
+          <End Type="HDMSModel.Request" Role="Request" Multiplicity="0..1" />
+          <End Type="HDMSModel.Cargo" Role="Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Custome__51EF2864">
+          <End Type="HDMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="HDMSModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DeliveryM__Deliv__5D60DB10">
+          <End Type="HDMSModel.DeliveryMan" Role="DeliveryMan" Multiplicity="0..1" />
+          <End Type="HDMSModel.DeliveryMenInPlan" Role="DeliveryMenInPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryMan">
+              <PropertyRef Name="DeliveryMenId" />
+            </Principal>
+            <Dependent Role="DeliveryMenInPlan">
+              <PropertyRef Name="DeliveryMenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DeliveryM__PlanI__5E54FF49">
+          <End Type="HDMSModel.Plan" Role="Plan" Multiplicity="0..1" />
+          <End Type="HDMSModel.DeliveryMenInPlan" Role="DeliveryMenInPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plan">
+              <PropertyRef Name="PlanId" />
+            </Principal>
+            <Dependent Role="DeliveryMenInPlan">
+              <PropertyRef Name="PlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__ItemId__52E34C9D">
+          <End Type="HDMSModel.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="HDMSModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceCate__Order__4C364F0E">
+          <End Type="HDMSModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="HDMSModel.PriceCategory" Role="PriceCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="PriceCategory">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Plan__StaffId__53D770D6">
+          <End Type="HDMSModel.TiktakStaff" Role="TiktakStaff" Multiplicity="0..1" />
+          <End Type="HDMSModel.Plan" Role="Plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiktakStaff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Plan">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceCate__Staff__4B422AD5">
+          <End Type="HDMSModel.TiktakStaff" Role="TiktakStaff" Multiplicity="0..1" />
+          <End Type="HDMSModel.PriceCategory" Role="PriceCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiktakStaff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PriceCategory">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1437,6 +2120,129 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Plans">
+            <EntityTypeMapping TypeName="HDMSModel.Plan">
+              <MappingFragment StoreEntitySet="Plan">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PlanTypeId" ColumnName="PlanTypeId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargoes">
+            <EntityTypeMapping TypeName="HDMSModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="CargoType" ColumnName="CargoType" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="CargoColumn" ColumnName="CargoColumn" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CargoId" ColumnName="CargoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryCategories">
+            <EntityTypeMapping TypeName="HDMSModel.DeliveryCategory">
+              <MappingFragment StoreEntitySet="DeliveryCategory">
+                <ScalarProperty Name="DeliveryCategoryName" ColumnName="DeliveryCategoryName" />
+                <ScalarProperty Name="DeliveryCategoryID" ColumnName="DeliveryCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryMen">
+            <EntityTypeMapping TypeName="HDMSModel.DeliveryMan">
+              <MappingFragment StoreEntitySet="DeliveryMen">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeliveryMenId" ColumnName="DeliveryMenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryMenInPlans">
+            <EntityTypeMapping TypeName="HDMSModel.DeliveryMenInPlan">
+              <MappingFragment StoreEntitySet="DeliveryMenInPlan">
+                <ScalarProperty Name="EstimateTime" ColumnName="EstimateTime" />
+                <ScalarProperty Name="EstimateDistance" ColumnName="EstimateDistance" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="DeliveryMenId" ColumnName="DeliveryMenId" />
+                <ScalarProperty Name="DeliveryMenInPlanId" ColumnName="DeliveryMenInPlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryTypes">
+            <EntityTypeMapping TypeName="HDMSModel.DeliveryType">
+              <MappingFragment StoreEntitySet="DeliveryType">
+                <ScalarProperty Name="DeliveryName" ColumnName="DeliveryName" />
+                <ScalarProperty Name="DeliveryTypeID" ColumnName="DeliveryTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HubCategories">
+            <EntityTypeMapping TypeName="HDMSModel.HubCategory">
+              <MappingFragment StoreEntitySet="HubCategory">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="HubName" ColumnName="HubName" />
+                <ScalarProperty Name="HubCategoryId" ColumnName="HubCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemManagements">
+            <EntityTypeMapping TypeName="HDMSModel.ItemManagement">
+              <MappingFragment StoreEntitySet="ItemManagement">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageMime" ColumnName="ImageMime" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceCategories">
+            <EntityTypeMapping TypeName="HDMSModel.PriceCategory">
+              <MappingFragment StoreEntitySet="PriceCategory">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceCategoryId" ColumnName="PriceCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="HDMSModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductWeight" ColumnName="ProductWeight" />
+                <ScalarProperty Name="ProductLength" ColumnName="ProductLength" />
+                <ScalarProperty Name="ProductHeight" ColumnName="ProductHeight" />
+                <ScalarProperty Name="ProductWidth" ColumnName="ProductWidth" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductCategory" ColumnName="ProductCategory" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiktakStaffs">
+            <EntityTypeMapping TypeName="HDMSModel.TiktakStaff">
+              <MappingFragment StoreEntitySet="TiktakStaff">
+                <ScalarProperty Name="StaffRole" ColumnName="StaffRole" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1483,132 +2289,245 @@
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKDistrict628970" ManuallyRouted="false">
           <ConnectorPoint PointX="2.625" PointY="18.125" />
-          <ConnectorPoint PointX="2.625" PointY="6.5116788736979174" />
+          <ConnectorPoint PointX="2.625" PointY="6.6917936197916656" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKRequest470781" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="7.583232421875" />
-          <ConnectorPoint PointX="7.875" PointY="7.958232421875" />
-          <ConnectorPoint PointX="7.875" PointY="10.184285888671877" />
-          <ConnectorPoint PointX="8.25" PointY="10.184285888671877" />
+          <ConnectorPoint PointX="7.5" PointY="7.7494921875" />
+          <ConnectorPoint PointX="7.875" PointY="8.1244921875" />
+          <ConnectorPoint PointX="7.875" PointY="10.858540761922201" />
+          <ConnectorPoint PointX="8.25" PointY="10.858540761922201" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKContact407943" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.3541641666666666" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.5208308333333336" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.7604166666666665" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="2.9270833333333335" PointY="9.5416162109375" />
-          <ConnectorPoint PointX="3" PointY="9.5416162109375" />
+          <ConnectorPoint PointX="2.25" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.7291691666666664" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="2.8958358333333334" PointY="9.4476415556846973" />
+          <ConnectorPoint PointX="3" PointY="9.4476415556846973" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKCustomerAd734436" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="2.3541641666666666" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="2.5208308333333336" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="11.042928873697914" />
-          <ConnectorPoint PointX="2.9270833333333335" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="4.822916666666667" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="4.989583333333333" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="5.0260441666666669" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="5.1927108333333329" PointY="11.042928873697916" />
-          <ConnectorPoint PointX="6" PointY="11.042928873697916" />
+          <ConnectorPoint PointX="2.25" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="10.997435450090224" />
+          <ConnectorPoint PointX="2.8958358333333334" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="5.197916666666667" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="5.364583333333333" PointY="10.997435450090226" />
+          <ConnectorPoint PointX="6" PointY="10.997435450090226" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKRequest241288" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.3541641666666666" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.5208308333333336" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.75" PointY="10.292272542317708" />
-          <ConnectorPoint PointX="2.75" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="2.7604166666666665" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="2.9270833333333335" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="5.0260441666666669" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="5.1927108333333329" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="9" PointY="12.172018229166667" />
-          <ConnectorPoint PointX="9" PointY="11.743571777343753" />
+          <ConnectorPoint PointX="2.25" PointY="12.014087792067308" />
+          <ConnectorPoint PointX="2.5546860151669684" PointY="12.207894108950374" />
+          <ConnectorPoint PointX="2.6953139848330321" PointY="12.297345503156269" />
+          <ConnectorPoint PointX="2.7421885151669683" PointY="12.327161706156808" />
+          <ConnectorPoint PointX="2.882816484833032" PointY="12.416613100362703" />
+          <ConnectorPoint PointX="2.9375" PointY="12.451396484375" />
+          <ConnectorPoint PointX="2.9375" PointY="12.518697916666667" />
+          <ConnectorPoint PointX="7.875" PointY="12.518697916666667" />
+          <ConnectorPoint PointX="8.25" PointY="12.143697916666667" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKUserInfo221814" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="11.690125325520832" />
-          <ConnectorPoint PointX="1.5" PointY="15.970500081380209" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="15.970500081380209" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="15.970500081380209" />
-          <ConnectorPoint PointX="3" PointY="15.970500081380209" />
+          <ConnectorPoint PointX="1.5" PointY="12.076396484375" />
+          <ConnectorPoint PointX="1.5" PointY="16.018992513020834" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="16.018992513020834" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="16.018992513020834" />
+          <ConnectorPoint PointX="3" PointY="16.018992513020834" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKCustomerAd699986" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.90625" PointY="6.5832324218750031" />
-          <ConnectorPoint PointX="4.90625" PointY="11.513726051432293" />
-          <ConnectorPoint PointX="5.0260441666666669" PointY="11.513726051432293" />
-          <ConnectorPoint PointX="5.1927108333333329" PointY="11.513726051432293" />
-          <ConnectorPoint PointX="6" PointY="11.513726051432293" />
+          <ConnectorPoint PointX="5.28125" PointY="6.9802864583333335" />
+          <ConnectorPoint PointX="5.28125" PointY="11.726177983513775" />
+          <ConnectorPoint PointX="6.375" PointY="11.726177983513775" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKCustomerAd999103" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.4374975" PointY="6.5116788736979174" />
-          <ConnectorPoint PointX="2.4374975" PointY="11.83732177734375" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="11.837321777343748" />
-          <ConnectorPoint PointX="2.9270833333333335" PointY="11.83732177734375" />
-          <ConnectorPoint PointX="5.0260441666666669" PointY="11.83732177734375" />
-          <ConnectorPoint PointX="5.1927108333333329" PointY="11.83732177734375" />
-          <ConnectorPoint PointX="6" PointY="11.83732177734375" />
+          <ConnectorPoint PointX="2.4374975" PointY="6.6917936197916656" />
+          <ConnectorPoint PointX="2.4374975" PointY="12.045146484375" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="12.045146484374998" />
+          <ConnectorPoint PointX="2.8958358333333334" PointY="12.045146484375" />
+          <ConnectorPoint PointX="6" PointY="12.045146484375" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKRequest484183" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="9.3421429443359383" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="9.3421429443359383" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="9.3421429443359383" />
-          <ConnectorPoint PointX="8.25" PointY="9.3421429443359383" />
+          <ConnectorPoint PointX="7.5" PointY="9.6792703809611" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="9.6792703809611" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="9.6792703809611" />
+          <ConnectorPoint PointX="8.25" PointY="9.6792703809611" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder344193" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="6.3097233072916659" />
-          <ConnectorPoint PointX="11.25" PointY="6.3097233072916659" />
+          <ConnectorPoint PointX="9.75" PointY="6.2475967838541742" />
+          <ConnectorPoint PointX="10.760414166666665" PointY="6.2475967838541733" />
+          <ConnectorPoint PointX="10.927080833333333" PointY="6.2475967838541742" />
+          <ConnectorPoint PointX="11.25" PointY="6.2475967838541742" />
           <ConnectorPoint PointX="11.25" PointY="7.375" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder949808" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="14.2916162109375" />
-          <ConnectorPoint PointX="10.510416666666666" PointY="14.2916162109375" />
-          <ConnectorPoint PointX="10.677083333333334" PointY="14.2916162109375" />
-          <ConnectorPoint PointX="11.25" PointY="14.2916162109375" />
-          <ConnectorPoint PointX="11.25" PointY="12.991822102864582" />
+          <ConnectorPoint PointX="9.75" PointY="13.581411132812498" />
+          <ConnectorPoint PointX="10.166666666666666" PointY="13.581411132812498" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="13.581411132812498" />
+          <ConnectorPoint PointX="10.5" PointY="13.581411132812498" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKHub718903" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="3.75" />
-          <ConnectorPoint PointX="2.25" PointY="2.1308394368489587" />
-          <ConnectorPoint PointX="6" PointY="2.1308394368489587" />
+          <ConnectorPoint PointX="2.65625" PointY="3.75" />
+          <ConnectorPoint PointX="2.65625" PointY="3.1461393229166665" />
+          <ConnectorPoint PointX="3.5104166666666665" PointY="3.1461393229166661" />
+          <ConnectorPoint PointX="3.6770833333333335" PointY="3.1461393229166665" />
+          <ConnectorPoint PointX="5.666666666666667" PointY="3.1461393229166661" />
+          <ConnectorPoint PointX="5.833333333333333" PointY="3.1461393229166665" />
+          <ConnectorPoint PointX="6" PointY="3.1461393229166665" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder160108" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.84375" PointY="6.5116788736979174" />
-          <ConnectorPoint PointX="2.84375" PointY="12.581920166015625" />
-          <ConnectorPoint PointX="10.5" PointY="12.581920166015625" />
+          <ConnectorPoint PointX="2.8125025" PointY="6.6917936197916656" />
+          <ConnectorPoint PointX="2.8125025" PointY="12.728098958333334" />
+          <ConnectorPoint PointX="10.166666666666666" PointY="12.728098958333334" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="12.728098958333334" />
+          <ConnectorPoint PointX="10.5" PointY="12.728098958333334" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKWard334657" ManuallyRouted="false">
           <ConnectorPoint PointX="3" PointY="5.2558394368489587" />
           <ConnectorPoint PointX="3.75" PointY="5.2558394368489587" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKHub419786" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="4" />
-          <ConnectorPoint PointX="4.5" PointY="2.8525116552734389" />
-          <ConnectorPoint PointX="6" PointY="2.8525116552734389" />
+          <ConnectorPoint PointX="5.15625" PointY="4" />
+          <ConnectorPoint PointX="5.15625" PointY="3.45021897135416" />
+          <ConnectorPoint PointX="5.666666666666667" PointY="3.4502189713541593" />
+          <ConnectorPoint PointX="5.833333333333333" PointY="3.45021897135416" />
+          <ConnectorPoint PointX="6" PointY="3.45021897135416" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKItem829908" ManuallyRouted="false">
-          <ConnectorPoint PointX="12" PointY="10.255839436848959" />
-          <ConnectorPoint PointX="12.75" PointY="10.255839436848959" />
+          <ConnectorPoint PointX="12" PointY="10.442047526041666" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="10.442047526041666" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="10.442047526041666" />
+          <ConnectorPoint PointX="12.75" PointY="10.442047526041666" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder332980" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="10.184285888671877" />
-          <ConnectorPoint PointX="10.5" PointY="10.184285888671877" />
+          <ConnectorPoint PointX="9.75" PointY="10.384348958333334" />
+          <ConnectorPoint PointX="10.5" PointY="10.384348958333334" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder537128" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.1093775" PointY="6.5832324218750031" />
-          <ConnectorPoint PointX="5.1093775" PointY="12.345716697591152" />
-          <ConnectorPoint PointX="10.5" PointY="12.345716697591152" />
+          <ConnectorPoint PointX="5.25" PointY="4.5381982421875" />
+          <ConnectorPoint PointX="9.7604166666666661" PointY="4.5381982421874989" />
+          <ConnectorPoint PointX="9.9270833333333339" PointY="4.5381982421875" />
+          <ConnectorPoint PointX="10.8437475" PointY="4.5381982421875" />
+          <ConnectorPoint PointX="10.8437475" PointY="7.375" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.FKOrder996545" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="17.927419840494792" />
-          <ConnectorPoint PointX="10.59375" PointY="17.927419840494792" />
-          <ConnectorPoint PointX="10.59375" PointY="12.991822102864582" />
+          <ConnectorPoint PointX="9.75" PointY="18.045187174479171" />
+          <ConnectorPoint PointX="10.59375" PointY="18.045187174479171" />
+          <ConnectorPoint PointX="10.59375" PointY="14.162822265624998" />
         </AssociationConnector>
         <AssociationConnector Association="HDMSModel.aspnet_UsersInRoles" ManuallyRouted="false">
           <ConnectorPoint PointX="12.25" PointY="16.648946533203123" />
           <ConnectorPoint PointX="13" PointY="16.648946533203123" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="HDMSModel.Plan" Width="1.5" PointX="8.375" PointY="0.75" Height="2.7494921875000031" />
+        <AssociationConnector Association="HDMSModel.FK_Order1_Order1" >
+          <ConnectorPoint PointX="11.031923076923077" PointY="14.162822265624998" />
+          <ConnectorPoint PointX="11.031923076923077" PointY="14.412822265624996" />
+          <ConnectorPoint PointX="11.478461538461538" PointY="14.412822265624996" />
+          <ConnectorPoint PointX="11.478461538461538" PointY="14.162822265624998" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="HDMSModel.Cargo" Width="1.5" PointX="13.125" PointY="5.25" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryCategory" Width="1.5" PointX="0.75" PointY="1" Height="1.4033821614583246" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryMan" Width="1.5" PointX="8.75" PointY="19.875" Height="1.595683593749996" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryMenInPlan" Width="1.5" PointX="11" PointY="1.375" Height="2.5571907552083388" />
+        <EntityTypeShape EntityType="HDMSModel.DeliveryType" Width="1.5" PointX="13.75" PointY="1" Height="1.4033821614583246" />
+        <EntityTypeShape EntityType="HDMSModel.HubCategory" Width="1.5" PointX="5.75" PointY="14" Height="1.5956835937500102" />
+        <EntityTypeShape EntityType="HDMSModel.ItemManagement" Width="1.5" PointX="15.75" PointY="1" Height="2.7494921874999818" />
+        <EntityTypeShape EntityType="HDMSModel.PriceCategory" Width="1.5" PointX="16.125" PointY="5.375" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="HDMSModel.Product" Width="1.5" PointX="15.375" PointY="9" Height="3.3263964843749818" />
+        <EntityTypeShape EntityType="HDMSModel.TiktakStaff" Width="1.5" PointX="3.5" PointY="0.75" Height="1.7879850260416674" />
+        <AssociationConnector Association="HDMSModel.FK__Cargo__OrderId__69C6B1F5" >
+          <ConnectorPoint PointX="12" PointY="7.7833968098958337" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="7.7833968098958328" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="7.7833968098958337" />
+          <ConnectorPoint PointX="13.125" PointY="7.7833968098958337" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__Cargo__PlanId__6ABAD62E" >
+          <ConnectorPoint PointX="9.84375" PointY="4.076396484375" />
+          <ConnectorPoint PointX="9.84375" PointY="5.28125" />
+          <ConnectorPoint PointX="10.760414166666665" PointY="5.2812499999999991" />
+          <ConnectorPoint PointX="10.927080833333333" PointY="5.28125" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="5.2812499999999991" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="5.28125" />
+          <ConnectorPoint PointX="13.125" PointY="5.28125" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__Cargo__RequestId__6BAEFA67" >
+          <ConnectorPoint PointX="9" PointY="8.625" />
+          <ConnectorPoint PointX="9" PointY="7.6052864583333335" />
+          <ConnectorPoint PointX="10" PointY="7.6052864583333335" />
+          <ConnectorPoint PointX="10" PointY="6.7800483919270871" />
+          <ConnectorPoint PointX="10.760414166666665" PointY="6.7800483919270862" />
+          <ConnectorPoint PointX="10.927080833333333" PointY="6.7800483919270871" />
+          <ConnectorPoint PointX="11.166666666666666" PointY="6.7800483919270862" />
+          <ConnectorPoint PointX="11.333333333333334" PointY="6.7800483919270871" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="6.7800483919270862" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="6.7800483919270871" />
+          <ConnectorPoint PointX="13.125" PointY="6.7800483919270871" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__Product__Custome__51EF2864" >
+          <ConnectorPoint PointX="2.25" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.3541641666666666" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.5208308333333336" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.75" PointY="10.222538502887462" />
+          <ConnectorPoint PointX="2.75" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="2.7634578241550978" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="2.9301244908217647" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="10.25" PointY="12.393697916666667" />
+          <ConnectorPoint PointX="10.25" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="10.510416666666666" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="10.677083333333334" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="15" PointY="14.662822265624996" />
+          <ConnectorPoint PointX="15" PointY="14" />
+          <ConnectorPoint PointX="16.125" PointY="14" />
+          <ConnectorPoint PointX="16.125" PointY="12.326396484374982" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__DeliveryM__Deliv__5D60DB10" >
+          <ConnectorPoint PointX="10.25" PointY="20.672841796874998" />
+          <ConnectorPoint PointX="12.40625" PointY="20.672841796874998" />
+          <ConnectorPoint PointX="12.40625" PointY="3.9321907552083388" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__DeliveryM__PlanI__5E54FF49" >
+          <ConnectorPoint PointX="9.875" PointY="2.6535953776041694" />
+          <ConnectorPoint PointX="11" PointY="2.6535953776041694" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__Product__ItemId__52E34C9D" >
+          <ConnectorPoint PointX="14.25" PointY="10.504547526041666" />
+          <ConnectorPoint PointX="15.375" PointY="10.504547526041666" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__PriceCate__Order__4C364F0E" >
+          <ConnectorPoint PointX="12" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="16.041666666666668" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="16.208333333333332" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="17.28125" PointY="13.194448242187491" />
+          <ConnectorPoint PointX="17.28125" PointY="7.7398893229166674" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__Plan__StaffId__53D770D6" >
+          <ConnectorPoint PointX="3.59375" PointY="2.5379850260416674" />
+          <ConnectorPoint PointX="3.59375" PointY="3.8458968098958328" />
+          <ConnectorPoint PointX="5.072916666666667" PointY="3.8458968098958324" />
+          <ConnectorPoint PointX="5.239583333333333" PointY="3.8458968098958328" />
+          <ConnectorPoint PointX="5.666666666666667" PointY="3.8458968098958324" />
+          <ConnectorPoint PointX="5.833333333333333" PointY="3.8458968098958328" />
+          <ConnectorPoint PointX="8.375" PointY="3.8458968098958328" />
+        </AssociationConnector>
+        <AssociationConnector Association="HDMSModel.FK__PriceCate__Staff__4B422AD5" >
+          <ConnectorPoint PointX="5" PointY="1.6439925130208337" />
+          <ConnectorPoint PointX="5.75" PointY="1.6439925130208337" />
+          <ConnectorPoint PointX="5.75" PointY="4.326396484375" />
+          <ConnectorPoint PointX="9.7604166666666661" PointY="4.3263964843749987" />
+          <ConnectorPoint PointX="9.9270833333333339" PointY="4.326396484375" />
+          <ConnectorPoint PointX="12.322916666666666" PointY="4.3263964843749987" />
+          <ConnectorPoint PointX="12.489583333333334" PointY="4.326396484375" />
+          <ConnectorPoint PointX="16.875" PointY="4.326396484375" />
+          <ConnectorPoint PointX="16.875" PointY="5.375" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

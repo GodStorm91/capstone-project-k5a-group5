@@ -20,6 +20,7 @@ namespace HDMS.Models
             this.CustomerAddresses = new HashSet<CustomerAddress>();
             this.Requests = new HashSet<Request>();
             this.UserInfoes = new HashSet<UserInfo>();
+            this.Products = new HashSet<Product>();
         }
     
         public int CustomerId { get; set; }
@@ -34,5 +35,6 @@ namespace HDMS.Models
         public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<UserInfo> UserInfoes { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -12,24 +12,18 @@ namespace HDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class Cargo
     {
-        public Item()
-        {
-            this.Products = new HashSet<Product>();
-        }
-    
-        public int ItemId { get; set; }
-        public int OrderId { get; set; }
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public bool IsFragile { get; set; }
-        public bool HasHighValue { get; set; }
-        public string Size { get; set; }
-        public string Weight { get; set; }
-        public string Note { get; set; }
+        public int CargoId { get; set; }
+        public string Address { get; set; }
+        public Nullable<int> CargoColumn { get; set; }
+        public int PlanId { get; set; }
+        public Nullable<int> CargoType { get; set; }
+        public Nullable<int> RequestId { get; set; }
+        public Nullable<int> OrderId { get; set; }
     
         public virtual Order Order { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual Plan Plan { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

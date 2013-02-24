@@ -17,6 +17,8 @@ namespace HDMS.Models
         public Order()
         {
             this.Items = new HashSet<Item>();
+            this.Cargoes = new HashSet<Cargo>();
+            this.PriceCategories = new HashSet<PriceCategory>();
         }
     
         public int OrderId { get; set; }
@@ -46,5 +48,9 @@ namespace HDMS.Models
         public virtual Request Request { get; set; }
         public virtual Ward Ward { get; set; }
         public virtual OrderPaymentType OrderPaymentType { get; set; }
+        public virtual Order Order1 { get; set; }
+        public virtual Order Order2 { get; set; }
+        public virtual ICollection<Cargo> Cargoes { get; set; }
+        public virtual ICollection<PriceCategory> PriceCategories { get; set; }
     }
 }
