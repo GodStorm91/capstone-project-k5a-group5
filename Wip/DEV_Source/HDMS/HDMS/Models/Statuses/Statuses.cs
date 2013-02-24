@@ -46,6 +46,14 @@ namespace HDMS.Models.Statuses
         Finished = 4
     }
 
+    public enum PlanStatus
+    {
+        New = 1,
+        Assigned = 2,
+        Canceled = 3,
+        Finished = 4
+    }
+
     public enum DeliveryPlanStatus
     {
         New = 1,
