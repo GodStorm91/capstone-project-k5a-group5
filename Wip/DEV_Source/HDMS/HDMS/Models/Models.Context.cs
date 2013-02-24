@@ -43,5 +43,16 @@ namespace HDMS.Models
         public DbSet<Request> Requests { get; set; }
         public DbSet<UserInfo> UserInfoes { get; set; }
         public DbSet<Ward> Wards { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Cargo> Cargoes { get; set; }
+        public DbSet<DeliveryCategory> DeliveryCategories { get; set; }
+        public DbSet<DeliveryMan> DeliveryMen { get; set; }
+        public DbSet<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
+        public DbSet<DeliveryType> DeliveryTypes { get; set; }
+        public DbSet<HubCategory> HubCategories { get; set; }
+        public DbSet<ItemManagement> ItemManagements { get; set; }
+        public DbSet<PriceCategory> PriceCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<TiktakStaff> TiktakStaffs { get; set; }
     }
 }

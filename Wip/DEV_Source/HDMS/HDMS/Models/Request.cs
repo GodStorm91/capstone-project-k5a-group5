@@ -17,6 +17,7 @@ namespace HDMS.Models
         public Request()
         {
             this.Orders = new HashSet<Order>();
+            this.Cargoes = new HashSet<Cargo>();
         }
     
         public int RequestId { get; set; }
@@ -32,5 +33,6 @@ namespace HDMS.Models
         public virtual Customer Customer { get; set; }
         public virtual CustomerAddress CustomerAddress { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Cargo> Cargoes { get; set; }
     }
 }
