@@ -139,7 +139,7 @@
     var cancelPlan = function(planId){
         bootbox.confirm('Remove all requests and cancel this plan?', function(confirmed){
                 if(confirmed){
-                    $.post('/CollectionPlans/Cancel/'+planId, function(result){
+                    $.post('/Plans/Cancel/'+planId, function(result){
                         if(result.success){
                             $.blockUI();
                             window.location = '/CollectionPlans';
