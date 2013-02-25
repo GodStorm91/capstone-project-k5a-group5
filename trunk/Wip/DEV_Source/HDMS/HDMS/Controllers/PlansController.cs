@@ -84,7 +84,6 @@ namespace HDMS.Controllers
                 try
                 {
                     var deliveryStaffs = from d in context.DeliveryMen
-                                         where d.Status == 1
                                          select new { d.DeliveryMenId, d.FirstName, d.LastName,d.Status };
                     if (plans.Status == 1)
                     {
@@ -97,16 +96,21 @@ namespace HDMS.Controllers
                     }
                     else
                     {
-                        var assignedStaff = (from m in context.aspnet_Membership
-                                             join u in context.aspnet_Users on m.UserId equals u.UserId
-                                             join ui in context.UserInfoes on m.UserId equals ui.UserId
-                                             //where m.UserId == plans.CreatedByUserId
-                                             select new { m.UserId, ui.FullName, u.UserName }
-                                            ).FirstOrDefault();
-                        ViewBag.PossibleDeliveryStaffs = new SelectList(deliveryStaffs.ToList(), "UserId", "UserName",
-                                                                        assignedStaff);
-                        ViewBag.AssignTo =
-                            AccountHelper.GetName(assignedStaff.UserId);
+                        var assignedStaff = from dm in context.DeliveryMenInPlans
+                                            join d in context.DeliveryMen on dm.DeliveryMenId equals d.DeliveryMenId
+                                            join p in context.Plans on  dm.PlanId equals p.PlanId
+                                            where d.Status > 1
+                                            select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }
+                                            ;
+                        var listDelivery = new List<DeliveryMan>();
+                        foreach (var delivery in deliveryStaffs)
+                        {
+                            listDelivery.Add(new DeliveryMan { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+                        }
+
+                        ViewBag.PossibleDeliveryStaffs = listDelivery;
+                        //ViewBag.AssignTo =
+                        //    AccountHelper.GetName(assignedStaff.UserId);
                     }
                     return View(plans);
                 }
@@ -118,6 +122,39 @@ namespace HDMS.Controllers
             }
 
             throw new HttpException(404, "Not found!");
+        }
+
+        [HttpPost]
+        public ActionResult Assign(int PlanId, List<int> listdeliveryman)
+        {
+            try
+            {
+                    var Plan = context.Plans.Find(PlanId);
+                    var deliverymaninplan = new DeliveryMenInPlan();
+                    
+                    if (Plan != null)
+                    {
+                        foreach (var man in listdeliveryman)
+                        {
+                            var deliveryman = context.DeliveryMen.Find(man);
+                            deliveryman.Status = 2;
+                            deliverymaninplan.DeliveryMenId = man;
+                            deliverymaninplan.PlanId = Plan.PlanId;
+                            context.DeliveryMenInPlans.Add(deliverymaninplan);
+                            context.SaveChanges();
+                        }
+                        Plan.Status = 2;
+
+                        context.SaveChanges();
+                        return Json(new { success = true });
+                    }
+                    return Json(new { success = false });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
         }
 
         //
