@@ -166,7 +166,7 @@
                         <li class="vertical-divider"></li>
                         @{
                             var context = new HDMS.Models.HDMSEntities();
-                            var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);    
+                            var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);                                
                         }
                         <li style="margin:0 5px;line-height:47px;margin-top: -7px;"><span style="color:#8D8D8D;font-size:20px;">@userInfo.Customer.CompanyName</span></li>
                         <li class="vertical-divider"></li>
