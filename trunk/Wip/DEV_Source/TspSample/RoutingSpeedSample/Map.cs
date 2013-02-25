@@ -48,8 +48,7 @@ using OsmSharp.Routing.Core.Graph.Router.Dykstra;
 using OsmSharp.Osm.Routing.Core.TSP.Genetic;
 using OsmSharp.Routing.Core.Route;
 using OsmSharp.Routing.Core.Graph.DynamicGraph.PreProcessed;
-
-
+using System.Resources;
 
 namespace RoutingSpeedSample
 {
@@ -158,51 +157,69 @@ namespace RoutingSpeedSample
             bool ch = false;
 
             // create the interpreter: interprets the OSM data.
-            OsmRoutingInterpreter interpreter = new OsmRoutingInterpreter();
+            interpreter = new OsmRoutingInterpreter();
 
             // create the tags index: keeps tags at one location
-            OsmTagsIndex tags_index = new OsmTagsIndex();            
+            tags_index = new OsmTagsIndex();            
 
-            if (ch)
-            {
-                // do the data processing.
-                MemoryRouterDataSource<CHEdgeData> osm_data =
-                    new MemoryRouterDataSource<CHEdgeData>(tags_index);
-                CHEdgeDataGraphProcessingTarget target_data = new CHEdgeDataGraphProcessingTarget(
-                    osm_data, interpreter, osm_data.TagsIndex);
-                DataProcessorSource data_processor_source = new XmlDataProcessorSource(stream);                
-                data_processor_source = new ProgressDataProcessorSource(data_processor_source);
-                target_data.RegisterSource(data_processor_source);
-                target_data.Pull();
+            //if (ch)
+            //{
+            //    // do the data processing.
+            //    MemoryRouterDataSource<CHEdgeData> osm_data =
+            //        new MemoryRouterDataSource<CHEdgeData>(tags_index);
+            //    CHEdgeDataGraphProcessingTarget target_data = new CHEdgeDataGraphProcessingTarget(
+            //        osm_data, interpreter, osm_data.TagsIndex);
+            //    DataProcessorSource data_processor_source = new XmlDataProcessorSource(stream);                
+            //    data_processor_source = new ProgressDataProcessorSource(data_processor_source);
+            //    target_data.RegisterSource(data_processor_source);
+            //    target_data.Pull();
 
-                // create the contraction hierarchy.
-                INodeWitnessCalculator witness_calculator = new DykstraWitnessCalculator(osm_data);
-                //CHPreProcessor pre_processor = new CHPreProcessor(osm_data,
-                //    new SparseOrdering(osm_data), witness_calculator);
-                CHPreProcessor pre_processor = new CHPreProcessor(osm_data,
-                    new EdgeDifferenceContractedSearchSpace(osm_data, witness_calculator), witness_calculator);
-                pre_processor.Start();
+            //    // create the contraction hierarchy.
+            //    INodeWitnessCalculator witness_calculator = new DykstraWitnessCalculator(osm_data);
+            //    //CHPreProcessor pre_processor = new CHPreProcessor(osm_data,
+            //    //    new SparseOrdering(osm_data), witness_calculator);
+            //    CHPreProcessor pre_processor = new CHPreProcessor(osm_data,
+            //        new EdgeDifferenceContractedSearchSpace(osm_data, witness_calculator), witness_calculator);
+            //    pre_processor.Start();
 
-                // create the router.
-                _router = new Router<CHEdgeData>(osm_data, interpreter,
-                    new CHRouter(osm_data));
-            }
-            else
-            {
-                // do the data processing.
-                MemoryRouterDataSource<SimpleWeighedEdge> osm_data =
-                    new MemoryRouterDataSource<SimpleWeighedEdge>(tags_index);
-                SimpleWeighedDataGraphProcessingTarget target_data = new SimpleWeighedDataGraphProcessingTarget(
-                    osm_data, interpreter, osm_data.TagsIndex);
-                DataProcessorSource data_processor_source = new XmlDataProcessorSource(stream);
-                data_processor_source = new ProgressDataProcessorSource(data_processor_source);
-                target_data.RegisterSource(data_processor_source);
-                target_data.Pull();
+            //    // create the router.
+            //    _router = new Router<CHEdgeData>(osm_data, interpreter,
+            //        new CHRouter(osm_data));
+            //}
+            //else
+            //{
+            //    // do the data processing.
+            //    MemoryRouterDataSource<SimpleWeighedEdge> osm_data =
+            //        new MemoryRouterDataSource<SimpleWeighedEdge>(tags_index);
+            //    SimpleWeighedDataGraphProcessingTarget target_data = new SimpleWeighedDataGraphProcessingTarget(
+            //        osm_data, interpreter, osm_data.TagsIndex);
+            //    DataProcessorSource data_processor_source = new XmlDataProcessorSource(stream);
+            //    data_processor_source = new ProgressDataProcessorSource(data_processor_source);
+            //    target_data.RegisterSource(data_processor_source);
+            //    target_data.Pull();
 
-                // create the router.
-                _router = new Router<SimpleWeighedEdge>(osm_data, interpreter,
-                    new DykstraRoutingLive(osm_data.TagsIndex));
-            }
+            //    // create the router.
+            //    _router = new Router<SimpleWeighedEdge>(osm_data, interpreter,
+            //        new DykstraRoutingLive(osm_data.TagsIndex));
+            //}
+
+            resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
+            Stream data_stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(@"RoutingSpeedSample.HoChiMinh.osm");
+            List<GeoCoordinate> waypointList = new List<GeoCoordinate>();
+
+            //OsmRoutingInterpreter interpreter = new OsmRoutingInterpreter();
+            //OsmTagsIndex tags_index = new OsmTagsIndex();
+
+            //do data processing
+            osm_data = new MemoryRouterDataSource<PreProcessedEdge>(tags_index);
+            PreProcessedDataGraphProcessingTarget targetData = new PreProcessedDataGraphProcessingTarget
+            (osm_data, interpreter, osm_data.TagsIndex);
+
+            XmlDataProcessorSource data_processor_source = new XmlDataProcessorSource(data_stream);
+            DataProcessorFilterSort sorter = new DataProcessorFilterSort();
+            sorter.RegisterSource(data_processor_source);
+            targetData.RegisterSource(sorter);
+            targetData.Pull();
 
             // start the timer.
             timer1.Enabled = true;
@@ -293,6 +310,11 @@ namespace RoutingSpeedSample
 
         private int _numCluster = 0;
 
+        private OsmTagsIndex tags_index = new OsmTagsIndex();
+        private MemoryRouterDataSource<PreProcessedEdge> osm_data;
+        private OsmRoutingInterpreter interpreter ;
+        private List<RouterPoint> resolvedPoints;
+
         /// <summary>
         /// Called when the map is clicked.
         /// </summary>
@@ -315,10 +337,8 @@ namespace RoutingSpeedSample
                     PointCollection collection = allClusters[i];
                     //list
                     List<GeoCoordinate> pointsList = new List<GeoCoordinate>();
-                    if (i > 0)
-                    {
-                        pointsList.Add(_points[0]);
-                    }
+                    pointsList.Add(_points[0]);
+                    
                     for (int j = 0; j < collection.Count; j++)
                     {
                         pointsList.Add(_points[collection[j].Id]);
@@ -336,7 +356,7 @@ namespace RoutingSpeedSample
         {
             //Create the collections of Point
             _pointCollection = new PointCollection();
-            for (int i = 0; i < _points.Count; i++)
+            for (int i = 1; i < _points.Count; i++)
             {
                 Point point = new Point(i, _points[i].Latitude, _points[i].Longitude);
                 _pointCollection.AddPoint(point);
@@ -379,27 +399,32 @@ namespace RoutingSpeedSample
             //}
         }
 
+
+        
+
         private void doTspCalculation(List<GeoCoordinate> points, VehicleEnum vehicle)
         {
+            _waypoints = new List<GeoCoordinate>();
             List<RouterPoint> resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
-            Stream data_stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(@"RoutingSpeedSample.HoChiMinh.osm");
-            List<GeoCoordinate> waypointList = new List<GeoCoordinate>();
+            //Stream data_stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(@"RoutingSpeedSample.HoChiMinh.osm");
+            //List<GeoCoordinate> waypointList = new List<GeoCoordinate>();
             
-            OsmRoutingInterpreter interpreter = new OsmRoutingInterpreter();
-            OsmTagsIndex tags_index = new OsmTagsIndex();
+            //OsmRoutingInterpreter interpreter = new OsmRoutingInterpreter();
+            //OsmTagsIndex tags_index = new OsmTagsIndex();
 
-            //do data processing
-            MemoryRouterDataSource<PreProcessedEdge> osm_data = new MemoryRouterDataSource<PreProcessedEdge>(tags_index);
-            PreProcessedDataGraphProcessingTarget targetData = new PreProcessedDataGraphProcessingTarget
-            (osm_data, interpreter, osm_data.TagsIndex);
+            ////do data processing
+            //MemoryRouterDataSource<PreProcessedEdge> osm_data = new MemoryRouterDataSource<PreProcessedEdge>(tags_index);
+            //PreProcessedDataGraphProcessingTarget targetData = new PreProcessedDataGraphProcessingTarget
+            //(osm_data, interpreter, osm_data.TagsIndex);
 
-            XmlDataProcessorSource data_processor_source = new XmlDataProcessorSource(data_stream);
-            DataProcessorFilterSort sorter = new DataProcessorFilterSort();
-            sorter.RegisterSource(data_processor_source);
-            targetData.RegisterSource(sorter);
-            targetData.Pull();
+            //XmlDataProcessorSource data_processor_source = new XmlDataProcessorSource(data_stream);
+            //DataProcessorFilterSort sorter = new DataProcessorFilterSort();
+            //sorter.RegisterSource(data_processor_source);
+            //targetData.RegisterSource(sorter);
+            //targetData.Pull();
 
             IRouter<RouterPoint> router = new Router<PreProcessedEdge>(osm_data, interpreter, new DykstraRoutingPreProcessed(osm_data.TagsIndex));
+            
 
             //Add point from _points to routerpoints
             for (int i=0; i<points.Count;i++)
@@ -460,8 +485,40 @@ namespace RoutingSpeedSample
                    // }
             }
             ShowRoute(_route_layer, tsp);
+
+            double[] timeAndDistance = GetTimeAndDistance(router, _waypoints);
+
+            if (_flag)
+            {
+                txtLatitude.Text = "Time:" + timeAndDistance[1] + "," + "Distance:" + timeAndDistance[0];
+            }
+            else
+            {
+                txtLongitude.Text = "Time:" + timeAndDistance[1] + "," + "Distance:" + timeAndDistance[0];
+            }
             
             tsp.SaveAsGpx(new FileInfo(@"c:\temp\tsp.gpx"));
+        }
+
+        //Get time and distance
+        private double[] GetTimeAndDistance(IRouter<RouterPoint> _router, List<GeoCoordinate> _waypoints)
+        {
+            double[] result = new double[2];
+            result[0]= 0;
+            result[1] =0;
+            for (int i = 0; i < _waypoints.Count - 1; i++)
+            {
+                RouterPoint rpoint1 = _router.Resolve(VehicleEnum.Pedestrian, _waypoints[i]);
+                RouterPoint rpoint2 = _router.Resolve(VehicleEnum.Pedestrian, _waypoints[i + 1]);
+                OsmSharpRoute route = _router.Calculate(VehicleEnum.Pedestrian, rpoint1, rpoint2);
+                if (route != null)
+                {
+                    result[0] += route.TotalDistance;
+                    result[1] += route.TotalTime;
+                }
+            }
+
+            return result;
         }
 
         public void ShowRoute(CustomLayer layer, OsmSharpRoute route)
@@ -479,10 +536,13 @@ namespace RoutingSpeedSample
                 _flag = !_flag;
             }
             
-            for (int i = 0; i < _waypoints.Count; i++)
+            for (int i = 0; i < _waypoints.Count - 1; i++)
             {
                 //_route_layer.AddDot(_waypoints[i]);
-                _route_layer.AddText(0xff00ff, 8, i.ToString(), _waypoints[i]);                
+                string imageName = "red";
+                imageName += i < 10 ? "0" + i.ToString() : i.ToString() ;
+                Image img = (Image)global::RoutingSpeedSample.Properties.Resources.ResourceManager.GetObject(imageName);
+                _waypoints_layer.AddImage(img, _waypoints[i]);                
             }
             // invoke the cross-thread refresh.
             this.Invoke(new InvokeDelegate(Refresh));
