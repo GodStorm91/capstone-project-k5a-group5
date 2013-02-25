@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>CustomerOrderNewest</title>
+		<meta name="description" content="" />
+		<meta name="author" content="ngocanh" />    
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		 <link href="css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+			#noi_dung{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung1{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung2{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#noi_dung3{
+				position: absolute;
+				background-color: white;
+				visibility: hidden;
+				z-index: 100;
+				border: 1px ridge #0000FF;
+				padding: 10px;
+				width: 500px;
+				text-align: justify;}
+				#wrapper { 
+
+width: 1024px; 
+
+margin: 0 auto; 
+
+text-align: left; 
+
+} 
+		</style>
+			<script type="text/javascript">
+			    function DiChuyen(iamgeUrl, des) {
+			        $('#noi_dung img').attr('src', iamgeUrl);
+			        $('#noi_dung .des').text(des);
+			        e = window.even || event;
+			        s = document.getElementById("noi_dung");
+
+			        s.style.top = e.clientY + 'px';
+			        s.style.visibility = 'visible';
+			        document.title = e.clientX + ':' + e.clientY;
+			    }
+			    function addCart(tag) {
+			        var tem = $(tag).parent().parent();
+			        var textHtml = '<tr align="center"><td>' + tem.children("td").eq(1).text() + '</td><td>' + tem.children("td").eq(2).text() +
+                    '</td><td><input class="input-mini" type="text" value="' + tem.children("td").children("input").val() + '"/>' +
+				'</td><td>' + tem.children("td").eq(2).text() * tem.children("td").children("input").val() +
+                '</td><td><button class="btn btn-danger" type="button">Remove</button></td></tr>';
+			        $('#tblAddCart tbody').append(textHtml);
+			        // alert($(tag).parent().parent().prop("tagName"))
+			    }
+			</script>
+	</head>
+	<body>
+		 
+		<div id="wrapper">
+			
+			<div style=" float:left;margin-top:20px;">
+				<img src="images/adidas.jpg" width="100px" height="150px"/>
+				<p style="margin-left: 150px;margin-top:-65px;"><b>ADIDAS Viet Nam</b> </br>Chuyen Ban Dung Cu The Thao</br>Tel:088888888</p>
+			</div>
+			
+		<p>
+		<div id="noi_dung" style="margin-left: 60px;margin-top: -10px;"> 
+			<img src="" width="200px" height="200px"/><br/><div class="des"></div>
+</div>
+		</p>
+		
+		
+		<div  class="bs-docs-example" style="float:left;width: 500px;margin-left: -350px;margin-top: 120px;">
+			<legend style="font-weight:bold;color:blue;">Menu</legend>
+            <table class="table table-striped" cellpadding="5px">
+            	<thead>
+            	<tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th></th>
+                </tr>
+                </thead>
+		<tbody>
+        @foreach(var item in Model){
+            <tr align="center">
+				<td>                    @if (item.ImageData == null)
+                    {
+                        @:None
+                    }
+                    else
+                    {
+                        <img width ="70" height="70" src="@Url.Action("GetImage", "ItemManagement", new { item.ItemID })" onmouseover="DiChuyen('@Url.Action("GetImage", "ItemManagement", new { item.ItemID })','@item.Description')"/>                
+                    }</td>
+				<td>@item.Name</td><td>@item.Price</td>
+				<td>
+					<input class="input-mini" type="text"/>
+				</td>
+				<td><button class="btn btn-info" type="button" onclick="addCart(this)">Add</button></td>
+			</tr>
+        }
+			</tbody>
+		</table>
+		</div><br/>
+		<div style="float:right;width: 510px;margin-top: 50px;">
+		<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label" for="totalPrice">Total Price :</label>
+    <div class="controls">
+      <input class="input-medium" type="text" id="totalPrice" value="1000000">
+  </div>
+  
+  
+		</form>
+		</div><div style="float:right;width: 510px;">
+		<legend style="font-weight:bold;color:blue;">Cart Add</legend>
+		<table class="table table-striped" id="tblAddCart" cellpadding="0px">
+			<thead>
+			<tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                  <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+		</table>
+		
+		</div>
+		
+
+		
+		</div>
+	</body>
+</html>
+
