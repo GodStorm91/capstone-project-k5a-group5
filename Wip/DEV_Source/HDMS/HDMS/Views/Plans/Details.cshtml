@@ -45,9 +45,9 @@
                             @ViewBag.AssignTo
                             if (Model.Status != (int)HDMS.Models.Statuses.PlanStatus.Finished)
                             {
-                                <a href="#assignModal" data-toggle="modal" class="myToolTip" rel="tooltip" title="Assign to another staff">
-                                    <img src="/img/icons/arrow_right2.png" />
-                                </a>
+                            <a href="#assignModal" data-toggle="modal" class="myToolTip" rel="tooltip" title="Assign to another staff">
+                                <img src="/img/icons/arrow_right2.png" />
+                            </a>
                             }
                         }
                     </dd>
@@ -77,7 +77,10 @@
     <div class="modal-body">
         <p>
             Assign to</p>
-
+        @foreach (var d in ViewBag.PossibleDeliveryStaffs)
+        {
+            <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" />@d.FirstName
+        }
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" id="btnAssign">
@@ -86,12 +89,21 @@
             Close</button>
     </div>
 </div>
-<script>
-    var collectionPlanId = @Model.PlanId;
-
+<script type="text/javascript">
+    var PlanId = @Model.PlanId;
+    
     $('#btnAssign').click(function () {
-        var staffUserId = $('#ddlAssignedStaff option:selected').val();
-        $.post('/Plans/Assign/', { collectionPlanId: collectionPlanId, staffUserId : staffUserId}, function (result) {
+        var listdeliveryman = new Array();
+    var checkBoxs = $("input[name=deliveryman]");
+    var i = 0;
+    $.each(checkBoxs, function() {
+        if ($(this).is(":checked")){
+            listdeliveryman[i] = $(this).val();
+            i++;
+        }
+    });
+    $.ajaxSettings.traditional = true;
+        $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman}, function (result) {
             if(result.success){
                 $.blockUI();
                 window.location.reload();
@@ -104,6 +116,7 @@
     var removeFromPlan = function(requestId){
         bootbox.confirm('Remove this request from plan?', function(confirmed){
             if(confirmed){
+                
                 $.post('/Request/RemoveFromCollectionPlan/'+requestId, function (result) {
                     if(result.success){
                         $.blockUI();
