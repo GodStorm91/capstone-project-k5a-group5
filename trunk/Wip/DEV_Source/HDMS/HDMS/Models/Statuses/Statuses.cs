@@ -62,6 +62,14 @@ namespace HDMS.Models.Statuses
         Finished = 4
     }
 
+    public enum DeliveryMenStatus
+    {
+        Available = 1,
+        Busy = 2,
+        Offwork = 3,
+        InActive = 4
+    }
+
     //public enum ItemStatus
     //{
     //    New = 1,

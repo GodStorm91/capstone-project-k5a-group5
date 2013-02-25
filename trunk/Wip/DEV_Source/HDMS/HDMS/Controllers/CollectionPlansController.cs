@@ -434,7 +434,41 @@ namespace HDMS.Controllers
         //KhanhNHV Start here        
         public ViewResult AutoSchedulePlan()
         {
+            ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetSelectedRequests(int numberOfRequests, int numberOfPlans, float weightedDateScore, float weightedDeliveryTypeScore)
+        {
+            try
+            {
+                var requests = context.Requests.Where(c => c.RequestStatus == (int)Models.Statuses.RequestStatus.Approved);
+                var requestViewModel = new List<RequestViewModel>();
+                var unselectedViewModel = new List<RequestViewModel>();
+                foreach(var request in requests)
+                {
+                    requestViewModel.Add(new RequestViewModel(request ,weightedDeliveryTypeScore, weightedDateScore));
+                }
+
+                requestViewModel.Sort(CompareRequestByWeightedScore);
+                for (int i = numberOfRequests; i < requestViewModel.Count; i++)
+                {
+                    unselectedViewModel.Add(requestViewModel.ElementAt(i));
+                }
+                requestViewModel.RemoveRange(numberOfRequests, requestViewModel.Count - numberOfRequests);
+                return Json(new { success = true, requests = requestViewModel, notSelected = unselectedViewModel });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        private static int CompareRequestByWeightedScore(RequestViewModel model1, RequestViewModel model2)
+        {
+            return model1.WeightedScore.CompareTo(model2.WeightedScore);
         }
     }
 }

@@ -12,18 +12,13 @@ namespace HDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DeliveryMan
+    public partial class aspnet_PersonalizationAllUsers
     {
-        public DeliveryMan()
-        {
-            this.DeliveryMenInPlans = new HashSet<DeliveryMenInPlan>();
-        }
+        public System.Guid PathId { get; set; }
+        public byte[] PageSettings { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public int DeliveryMenId { get; set; }
-        public Nullable<short> Status { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    
-        public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
+        public virtual aspnet_Paths aspnet_Paths { get; set; }
+        public virtual aspnet_Paths aspnet_Paths1 { get; set; }
     }
 }

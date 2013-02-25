@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HDMS.Models;
+using HDMS.Models.Statuses;
 
 namespace HDMS.Controllers
 {
@@ -172,6 +173,24 @@ namespace HDMS.Controllers
             catch (Exception)
             {
                 return Json(new { success = false });
+            }
+        }
+
+        public int GetMaximumRequestsOfCity(int id)
+        {
+            try
+            {
+                var requests = new List<Request>();
+                var statuses = new List<int>();
+                statuses.Add((int)RequestStatus.New);
+                requests = db.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
+                return requests.ToArray().Length;
+
+            }
+            catch (Exception)
+            {
+
+                return -1;
             }
         }
     }
