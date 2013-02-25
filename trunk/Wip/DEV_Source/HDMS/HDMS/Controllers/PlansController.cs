@@ -83,15 +83,17 @@ namespace HDMS.Controllers
             {
                 try
                 {
-                    var deliveryStaffUsers = Roles.GetUsersInRole("Delivery Staff");
-                    var deliveryStaffs = from m in context.aspnet_Membership
-                                         join u in context.aspnet_Users on m.UserId equals u.UserId
-                                         join ui in context.UserInfoes on m.UserId equals ui.UserId
-                                         where m.IsApproved && deliveryStaffUsers.Contains(u.UserName)
-                                         select new { m.UserId, ui.FullName, u.UserName };
-                    if (plans.Status <= 1)
+                    var deliveryStaffs = from d in context.DeliveryMen
+                                         where d.Status == 1
+                                         select new { d.DeliveryMenId, d.FirstName, d.LastName,d.Status };
+                    if (plans.Status == 1)
                     {
-                        ViewBag.PossibleDeliveryStaffs = new SelectList(deliveryStaffs.ToList(), "UserId", "UserName");
+                        var listDelivery = new List<DeliveryMan>();
+                        foreach (var delivery in deliveryStaffs)
+                        {
+                            listDelivery.Add(new DeliveryMan {DeliveryMenId= delivery.DeliveryMenId,FirstName = delivery.FirstName,LastName = delivery.LastName });
+                        }
+                        ViewBag.PossibleDeliveryStaffs = listDelivery;
                     }
                     else
                     {
