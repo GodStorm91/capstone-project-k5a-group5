@@ -51,88 +51,161 @@
         $('#modals').modal('show');
     });
 
+    function parseXml(xml) {
+        var dom = null;
+        if (window.DOMParser) {
+            try {
+                dom = (new DOMParser()).parseFromString(xml, "text/xml");
+            }
+            catch (e) {
+                dom = null;
+            }
+        } else if (window.ActiveXObject) {
+            try {
+                dom = new ActiveXObject('Microsoft.XMLDOM');
+                dom.async = false;
+                if (!dom.loadXML(xml)) // parse error ..
+                    window.alert(dom.parseError.reason + dom.parseError.srcText);
+            }
+            catch (e) {
+                dom = null;
+            }
+        } else alert("cannot parse xml string!");
+        return dom;
+    }
+
+    function getListOfPlannedRequest() {
+        var xmlHttp = new XMLHttpRequest();
+        var requestsNum = $("#requestsNum").val();
+        var plansNum = $("#plansNum").val();
+        alert(plansNum + " " + requestsNum);
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            }
+        }
+        xmlHttp.open("GET", "CollectionPlans/AutoSchedulePlan");
+    }
+
 </script>
 <script src="/js/collection-plan-request-ticket.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
 <script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/date.format.js" type="text/javascript"></script>
 <div class="collection-planning">
-    <div style="float: left; margin-top: -30px;">
+   @* <div style="float: left; margin-top: -10px;">
         <button class="btn btn btn-link" type="button">
             Settings</button>
-    </div>
-    <div style="height: 500px; width: 500px; margin-top: 20px;" align="center">
-        <p>
-            <b>Planned Requests</b></p>
-        <div style="height: 220px; width: 500px; background-color: #900000;">
+    </div>*@
+    <div class="request-selector row-fluid">
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Unplanned Requests</h4>
+            </div>
+            <div id="unplanned-requests">
+                <ul>
+                </ul>
+            </div>
         </div>
-        <div class="modal-footer" style="height: 30px;" align="left">
-            <form class="form-inline" align="left">
-            <label class="checkbox" align="left">
-                <input type="checkbox" align="left"> Select/DeSelect All </input>
-            </label>
-            <button type="button" class="btn btn-primary" style="margin-top: -0px; margin-left: 170px;">
-                Remove From Plan</button>
-            </form>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Selected Requests</h4>
+            </div>
+            <div id="selected-requests">
+                <ul>
+                </ul>
+            </div>
         </div>
-        <p>
-            <b>Selected Requests</b></p>
-        <div style="height: 220px; width: 500px; background-color: blue;">
-        </div>
-        <div class="modal-footer" style="height: 30px;" align="left">
-            <form class="form-inline" align="left">
-            <label class="checkbox" align="left">
-                <input type="checkbox" align="left"> Select/DeSelect All </input>
-            </label>
-            <button type="button" class="btn btn-primary" style="margin-top: -0px; margin-left: 170px;">
-                Remove From Plan</button>
-            </form>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-    </div>
-    <h3>
-        AutoSchedule Settings</h3>
-    <div style="top: 199.5px; left: 551.5px; display: inherit;" id="modals" class="window">
+    </div>    
+    
+    <div id="modals" class="modal fade">
         <div class="modal-header">
             <h3>
                 AutoSchedule Settings</h3>
         </div>
         </br>
         <div class="modal-body">
-            <form class="form-horizontal">
-            <div style="margin-left: 40px;">
-                Maximum Requests:<select class="span1"><option>12</option>
-                </select>
-            </div>
-            </br>
-            <div style="margin-left: 148px;">
-                Plans:<select class="span1"><option>12</option>
-                </select>
-            </div>
-            </br>
-            <p style="margin-left: 40px;">
-                Priority Setting:</p>
-            <div style="margin-left: 40px;">
-                </br> By Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="controls pull-left">
+                City/Province : @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
             </div>
             <br />
-            <div style="margin-left: 40px;">
-                By Delivery Type:
+            <div class="controls pull-left">
+                Maximum Requests:<select class="requestsNum" id = "ddlRequestNumber"><option>Please select city first</option>
+                </select>
             </div>
             <br />
-            </form>
+            <div class="controls pull-left">
+                Plans:<select class="plansNum" id="ddlPlansNumber"><option>Please select City first</option>
+                </select>
+            </div>
+            
         </div>
         <div class="modal-footer" style="padding-right: 55px; margin-top: -15px;">
             <button class="btn  btn-primary" type="button">
                 Save Settings</button>
             <button class="btn  btn-primary" type="button">
                 Load Settings</button>
-            <button class="btn btn-success" type="button">
+            <button class="btn btn-success" type="button" id = "btnOK">
                 Ok</button>
         </div>
     </div>
+
+    <script>
+        var selectedRequestIds = new Array();
+        var numRequests;
+        var numPlans;
+        var dateScore = 0.5;
+        var deliveryTypeScore = 0.5;
+
+        $("#ddlCityProvince").change(function () {
+            var items = '';
+            var deliveryMenItems = '';
+            var id = $("#ddlCityProvince option:selected").val();
+            if (id == '') id = -1;
+            $.get('/CityProvince/GetMaximumRequestsOfCity/' + id, function (data) {
+                numRequests = data >= 0 ? data : 0;
+                for (var i = 0; i < data; i++) {
+                    items += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                }
+                $('#ddlRequestNumber').html(items);
+            });
+
+            $.get("/DeliveryMen/GetAvailableDeliveryMen", function (data) {
+                numPlans = data >= 0 ? data : 0;
+                for (var i = 0; i < data; i++){
+                    deliveryMenItems += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                }
+                $("#ddlPlansNumber").html(deliveryMenItems);
+                               
+            });
+        });
+
+        $("#btnOK").click(function () {
+            numRequests = $("#ddlRequestNumber option:selected").val();
+            numPlans = $("#ddlPlansNumber option:selected").val();
+            if (numPlans > numRequests) {
+                bootbox.alert('Please enter number of request > 0');
+            } else {
+                $.post('/CollectionPlans/GetSelectedRequests/', { numberOfRequests: numRequests, numberOfPlans: numPlans, weightedDateScore: dateScore, weightedDeliveryTypeScore:
+                deliveryTypeScore
+                }, function (result) {
+                    alert(result);
+                    if (result.success) {
+                        updateRequestsView(result.requests, result.notSelected);
+                    }
+                });
+            }
+        });
+
+        var updateRequestsView = function (requests, notSelectedRequests) {
+            var requestTickets = createRequestTickets(requests);
+            var notSelectedRequestsTicket = createRequestTickets(notSelectedRequests);
+            $("#selected-requests > ul").html(requestTickets);
+            $("#unplanned-requests > ul").html(notSelectedRequestsTicket);
+            $('.myToolTip').tooltip();
+        };
+    </script>
+    
 </div>
 </br> 

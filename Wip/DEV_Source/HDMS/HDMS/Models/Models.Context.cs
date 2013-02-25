@@ -54,5 +54,12 @@ namespace HDMS.Models
         public DbSet<PriceCategory> PriceCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<TiktakStaff> TiktakStaffs { get; set; }
+        public DbSet<aspnet_Applications> aspnet_Applications { get; set; }
+        public DbSet<aspnet_Paths> aspnet_Paths { get; set; }
+        public DbSet<aspnet_PersonalizationAllUsers> aspnet_PersonalizationAllUsers { get; set; }
+        public DbSet<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
+        public DbSet<aspnet_Profile> aspnet_Profile { get; set; }
+        public DbSet<aspnet_SchemaVersions> aspnet_SchemaVersions { get; set; }
+        public DbSet<aspnet_WebEvent_Events> aspnet_WebEvent_Events { get; set; }
     }
 }

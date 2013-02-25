@@ -26,5 +26,7 @@ namespace HDMS.Models
         public string Description { get; set; }
     
         public virtual ICollection<aspnet_Users> aspnet_Users { get; set; }
+        public virtual aspnet_Applications aspnet_Applications { get; set; }
+        public virtual aspnet_Applications aspnet_Applications1 { get; set; }
     }
 }

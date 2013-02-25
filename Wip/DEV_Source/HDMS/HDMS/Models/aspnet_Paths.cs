@@ -12,30 +12,24 @@ namespace HDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class aspnet_Users
+    public partial class aspnet_Paths
     {
-        public aspnet_Users()
+        public aspnet_Paths()
         {
-            this.aspnet_Roles = new HashSet<aspnet_Roles>();
             this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
             this.aspnet_PersonalizationPerUser1 = new HashSet<aspnet_PersonalizationPerUser>();
         }
     
         public System.Guid ApplicationId { get; set; }
-        public System.Guid UserId { get; set; }
-        public string UserName { get; set; }
-        public string LoweredUserName { get; set; }
-        public string MobileAlias { get; set; }
-        public bool IsAnonymous { get; set; }
-        public System.DateTime LastActivityDate { get; set; }
+        public System.Guid PathId { get; set; }
+        public string Path { get; set; }
+        public string LoweredPath { get; set; }
     
-        public virtual aspnet_Membership aspnet_Membership { get; set; }
-        public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual aspnet_Applications aspnet_Applications { get; set; }
         public virtual aspnet_Applications aspnet_Applications1 { get; set; }
+        public virtual aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers { get; set; }
+        public virtual aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers1 { get; set; }
         public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
         public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser1 { get; set; }
-        public virtual aspnet_Profile aspnet_Profile { get; set; }
-        public virtual aspnet_Profile aspnet_Profile1 { get; set; }
     }
 }

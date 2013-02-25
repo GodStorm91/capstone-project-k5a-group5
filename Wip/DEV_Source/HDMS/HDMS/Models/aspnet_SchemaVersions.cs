@@ -12,18 +12,10 @@ namespace HDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DeliveryMan
+    public partial class aspnet_SchemaVersions
     {
-        public DeliveryMan()
-        {
-            this.DeliveryMenInPlans = new HashSet<DeliveryMenInPlan>();
-        }
-    
-        public int DeliveryMenId { get; set; }
-        public Nullable<short> Status { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    
-        public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
+        public string Feature { get; set; }
+        public string CompatibleSchemaVersion { get; set; }
+        public bool IsCurrentVersion { get; set; }
     }
 }

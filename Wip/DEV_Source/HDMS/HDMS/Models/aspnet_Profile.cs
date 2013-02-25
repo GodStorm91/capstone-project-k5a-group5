@@ -12,18 +12,15 @@ namespace HDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DeliveryMan
+    public partial class aspnet_Profile
     {
-        public DeliveryMan()
-        {
-            this.DeliveryMenInPlans = new HashSet<DeliveryMenInPlan>();
-        }
+        public System.Guid UserId { get; set; }
+        public string PropertyNames { get; set; }
+        public string PropertyValuesString { get; set; }
+        public byte[] PropertyValuesBinary { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public int DeliveryMenId { get; set; }
-        public Nullable<short> Status { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    
-        public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
+        public virtual aspnet_Users aspnet_Users { get; set; }
+        public virtual aspnet_Users aspnet_Users1 { get; set; }
     }
 }
