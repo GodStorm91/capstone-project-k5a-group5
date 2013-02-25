@@ -20,9 +20,9 @@ namespace HDMS.Models
         }
     
         public int DeliveryMenId { get; set; }
-        public Nullable<short> Status { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Nullable<int> Status { get; set; }
     
         public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
     }
