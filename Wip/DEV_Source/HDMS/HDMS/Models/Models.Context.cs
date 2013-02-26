@@ -46,7 +46,6 @@ namespace HDMS.Models
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Cargo> Cargoes { get; set; }
         public DbSet<DeliveryCategory> DeliveryCategories { get; set; }
-        public DbSet<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
         public DbSet<DeliveryType> DeliveryTypes { get; set; }
         public DbSet<HubCategory> HubCategories { get; set; }
         public DbSet<ItemManagement> ItemManagements { get; set; }
@@ -54,5 +53,6 @@ namespace HDMS.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<TiktakStaff> TiktakStaffs { get; set; }
         public DbSet<DeliveryMan> DeliveryMen { get; set; }
+        public DbSet<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
     }
 }
