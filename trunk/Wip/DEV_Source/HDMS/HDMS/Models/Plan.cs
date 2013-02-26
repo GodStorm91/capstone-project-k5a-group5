@@ -31,7 +31,7 @@ namespace HDMS.Models
         public Nullable<int> Status { get; set; }
     
         public virtual ICollection<Cargo> Cargoes { get; set; }
-        public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
         public virtual TiktakStaff TiktakStaff { get; set; }
+        public virtual ICollection<DeliveryMenInPlan> DeliveryMenInPlans { get; set; }
     }
 }

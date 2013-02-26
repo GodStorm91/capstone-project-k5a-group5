@@ -21,7 +21,7 @@ namespace HDMS.Models
         public Nullable<decimal> EstimateDistance { get; set; }
         public Nullable<decimal> EstimateTime { get; set; }
     
-        public virtual Plan Plan { get; set; }
         public virtual DeliveryMan DeliveryMan { get; set; }
+        public virtual Plan Plan { get; set; }
     }
 }

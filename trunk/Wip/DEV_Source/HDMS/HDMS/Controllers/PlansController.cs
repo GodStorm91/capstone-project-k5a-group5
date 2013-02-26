@@ -84,6 +84,7 @@ namespace HDMS.Controllers
                 try
                 {
                     var deliveryStaffs = from d in context.DeliveryMen
+                                         where d.Status == 1
                                          select new { d.DeliveryMenId, d.FirstName, d.LastName,d.Status };
                     if (plans.Status == 1)
                     {
@@ -96,18 +97,22 @@ namespace HDMS.Controllers
                     }
                     else
                     {
-                        var assignedStaff = from dm in context.DeliveryMenInPlans
-                                            join d in context.DeliveryMen on dm.DeliveryMenId equals d.DeliveryMenId
+                        var assignedStaff = (from d in context.DeliveryMen
+                                            join dm in context.DeliveryMenInPlans on d.DeliveryMenId equals dm.DeliveryMenId
                                             join p in context.Plans on  dm.PlanId equals p.PlanId
-                                            where d.Status > 1
-                                            select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }
-                                            ;
+                                            where d.Status > 1 && p.PlanId == id
+                                            select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
                         var listDelivery = new List<DeliveryMan>();
+                        var assignDelivery = new List<DeliveryMan>();
                         foreach (var delivery in deliveryStaffs)
                         {
                             listDelivery.Add(new DeliveryMan { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
                         }
-
+                        foreach (var delivery in assignedStaff)
+                        {
+                            assignDelivery.Add(new DeliveryMan { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+                        }
+                        ViewBag.Assignto = assignDelivery;
                         ViewBag.PossibleDeliveryStaffs = listDelivery;
                         //ViewBag.AssignTo =
                         //    AccountHelper.GetName(assignedStaff.UserId);
@@ -140,11 +145,11 @@ namespace HDMS.Controllers
                             deliveryman.Status = 2;
                             deliverymaninplan.DeliveryMenId = man;
                             deliverymaninplan.PlanId = Plan.PlanId;
+                            deliverymaninplan.AssignedDate = DateTime.Now;
                             context.DeliveryMenInPlans.Add(deliverymaninplan);
                             context.SaveChanges();
                         }
                         Plan.Status = 2;
-
                         context.SaveChanges();
                         return Json(new { success = true });
                     }

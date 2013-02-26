@@ -42,7 +42,10 @@
                         }
                         else
                         {
-                            @ViewBag.AssignTo
+                            foreach (var i in ViewBag.AssignTo)
+                            {
+                                <label>@i.FirstName @i.LastName</label>
+                            }
                             if (Model.Status != (int)HDMS.Models.Statuses.PlanStatus.Finished)
                             {
                             <a href="#assignModal" data-toggle="modal" class="myToolTip" rel="tooltip" title="Assign to another staff">
@@ -90,11 +93,23 @@
     </div>
 </div>
 <script type="text/javascript">
+    var assignman = new Array();
+    var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
     var PlanId = @Model.PlanId;
-    
+    var checkBoxs = $("input[name=deliveryman]");
+    var j = 0;
+    $.each(checkBoxs, function() {
+        for(var k=0;k<Assign.length;k++)
+        {
+            if(Assign[k].DeliveryMenId == $(this).val()){
+                 $(this).prop('checked',true);
+            }
+        }
+        j++;
+    });
     $('#btnAssign').click(function () {
         var listdeliveryman = new Array();
-    var checkBoxs = $("input[name=deliveryman]");
+
     var i = 0;
     $.each(checkBoxs, function() {
         if ($(this).is(":checked")){
