@@ -71,7 +71,7 @@ namespace HDMS.Areas.Hub.Controllers
             var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             orders = context.Orders.Where(o => o.HubId == userInfo.HubId
                                             && statuses.Contains(o.OrderStatus)).ToList();
-            
+            return View();
 
         }
 
