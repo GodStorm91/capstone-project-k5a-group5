@@ -57,6 +57,10 @@
     <Reference Include="NotFoundMvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NotFoundMvc.1.0.0\lib\net40\NotFoundMvc.dll</HintPath>
     </Reference>
+    <Reference Include="OsmSharp, Version=3.1.4722.18513, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\OsmSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity">
       <Private>True</Private>
     </Reference>
@@ -157,7 +161,9 @@
     <Compile Include="Controllers\DeliveryMenController.cs" />
     <Compile Include="Controllers\HubsController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\ItemsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\JQueryDataTableParamModel.cs" />
     <Compile Include="Controllers\Mailers\MVCMailMessage.cs" />
     <Compile Include="Controllers\MVCHelper.cs" />
@@ -284,6 +290,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\mTsp\MTspHelper.cs" />
+    <Compile Include="Models\mTsp\PointCollection.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
@@ -1550,6 +1558,7 @@
       <LastGenOutput>Models.cs</LastGenOutput>
     </None>
     <Content Include="Views\CollectionPlans\AutoSchedulePlan.cshtml" />
+    <EmbeddedResource Include="Models\mTsp\HoChiMinh.osm" />
     <None Include="Views\PieReport\Open Notebook.onetoc2" />
     <Content Include="Views\Request\AddOrders.cshtml" />
     <Content Include="Views\Request\ApproveOrders.cshtml" />

@@ -10,6 +10,48 @@ using HDMS.Models;
 using HDMS.Models.Statuses;
 using HDMS.Models.Utilities;
 using System.Transactions;
+using OsmSharp;
+using OsmSharp.Osm.Routing.Interpreter;
+using OsmSharp.Routing.Core.Graph.Memory;
+using OsmSharp.Osm.Routing.Data.Processing;
+using OsmSharp.Osm.Routing.Data;
+using OsmSharp.Osm.Data.Core.Processor;
+using OsmSharp.Osm.Core;
+using OsmSharp.Osm.Data.XML.Raw.Processor;
+using OsmSharp.Routing.Core;
+using OsmSharp.Routing.Core.Graph.Router.Dykstra;
+using OsmSharp.Osm.Map.Layers.Tiles;
+using OsmSharp.Osm.Map.Layers.Custom;
+using OsmSharp.Tools.Math.Geo;
+using OsmSharp.Tools.Math.Shapes;
+using OsmSharp.Osm.Map.Elements;
+using OsmSharp.Osm.Data.Core.Processor.Progress;
+using OsmSharp.Osm.Renderer.Gdi.Targets.UserControlTarget;
+using OsmSharp.Routing.Core.Route;
+using OsmSharp.Osm.Map.Layers.Routing;
+using OsmSharp.Routing.CH.PreProcessing;
+using OsmSharp.Routing.CH.Routing;
+using OsmSharp.Routing.CH.PreProcessing.Witnesses;
+using OsmSharp.Routing.CH.PreProcessing.Ordering;
+using System.Threading;
+using OsmSharp.Routing.Core.Graph.DynamicGraph.SimpleWeighed;
+using OsmSharp.Osm.Data.PostgreSQL.Raw;
+using OsmSharp.Osm.Routing.Core.TSP;
+using OsmSharp.Osm.Data.Raw.XML.OsmSource;
+using System.Reflection;
+using OsmSharp.Routing.Core;
+using OsmSharp.Osm.Routing.Interpreter;
+using OsmSharp.Osm.Core;
+using OsmSharp.Routing.Core.Graph.Memory;
+using OsmSharp.Osm.Routing.Data;
+using OsmSharp.Osm.Routing.Data.Processing;
+using OsmSharp.Osm.Data.Core.Processor.Filter.Sort;
+using OsmSharp.Osm.Data.XML.Raw.Processor;
+using OsmSharp.Routing.Core.Graph.Router.Dykstra;
+using OsmSharp.Osm.Routing.Core.TSP.Genetic;
+using OsmSharp.Routing.Core.Route;
+using OsmSharp.Routing.Core.Graph.DynamicGraph.PreProcessed;
+using HDMS.Models.mTsp;
 
 namespace HDMS.Controllers
 {
@@ -446,6 +488,7 @@ namespace HDMS.Controllers
                 var requests = context.Requests.Where(c => c.RequestStatus == (int)Models.Statuses.RequestStatus.Approved);
                 var requestViewModel = new List<RequestViewModel>();
                 var unselectedViewModel = new List<RequestViewModel>();
+                var pointList = new List<GeoCoordinate>();
                 foreach(var request in requests)
                 {
                     requestViewModel.Add(new RequestViewModel(request ,weightedDeliveryTypeScore, weightedDateScore));
@@ -457,14 +500,25 @@ namespace HDMS.Controllers
                     unselectedViewModel.Add(requestViewModel.ElementAt(i));
                 }
                 requestViewModel.RemoveRange(numberOfRequests, requestViewModel.Count - numberOfRequests);
-                return Json(new { success = true, requests = requestViewModel, notSelected = unselectedViewModel });
+                
+                //Create geopointlist
+                for (int i = 0; i < requestViewModel.Count; i++)
+                {
+                    pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                }
+
+                MTspHelper.initialize();
+                MTspHelper.solveTsp(pointList, numberOfPlans);
+
+                return Json(new { success = true, requests = requestViewModel, notSelected = unselectedViewModel, waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string str = ex.Message;
                 return Json(new { success = false });
                 throw;
             }
-        }
+        }       
 
         private static int CompareRequestByWeightedScore(RequestViewModel model1, RequestViewModel model2)
         {
