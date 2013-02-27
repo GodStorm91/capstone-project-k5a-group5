@@ -142,8 +142,7 @@ namespace HDMS.Models.mTsp
 
             for (int i = 0; i < _numCluster; i++)
             {
-                segmentsLists.Add(new List<GeoCoordinate>());
-                waypointLists.Add(new List<GeoCoordinate>());
+                segmentsLists.Add(new List<GeoCoordinate>());                
             }
 
             List<PointCollection> allClusters = PerformKMeans();
@@ -154,7 +153,7 @@ namespace HDMS.Models.mTsp
                 PointCollection collection = allClusters[i];
                 //list
                 List<GeoCoordinate> pointsList = new List<GeoCoordinate>();
-                
+                waypointLists.Add(pointsList);
                 //Add Tiktak Headquarters to Route
                 var headquarter = context.Hubs.Find(1);
                 pointsList.Add(new GeoCoordinate((double)headquarter.Latitude, (double)headquarter.Longitude));
@@ -204,7 +203,7 @@ namespace HDMS.Models.mTsp
                     for (int p_idx = 0; p_idx < entry.Points.Length; p_idx++)
                     {
                         RoutePoint point = entry.Points[p_idx];
-                        waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
+                        //waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
                     }
                 }
 

@@ -22,41 +22,41 @@
     var wpt = new Array();
     var geopt = new Array();
     var i = 0;
-    $(xmls).find("wpts").each(function () {
-        var waypoints = new Array();
-        waypoints.length = 0;
-        var lats = new Array();
-        var lons = new Array();
-        j = 0;
-        $(this).find("wpt").each(function () {
-            lats[j] = ($(this).attr("lat"));
-            lons[j] = ($(this).attr("lon"));
-            waypoints.push({
-                location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
-            });
-            j++;
-        });
-        wpt[i] = waypoints;
-        i++;
-    });
-    var k = 0;
-    $(xmls).find("trkseg").each(function () {
-        var routes = new Array();
-        routes.length = 0;
-        var lats = new Array();
-        var lons = new Array();
-        j = 0;
-        $(this).find("trkpt").each(function () {
-            lats[j] = ($(this).attr("lat"));
-            lons[j] = ($(this).attr("lon"));
-            routes.push({
-                location: new OpenLayers.Geometry.Point(lons[j], lats[j])
-            });
-            j++;
-        });
-        geopt[k] = routes;
-        k++;
-    });
+    //    $(xmls).find("wpts").each(function () {
+    //        var waypoints = new Array();
+    //        waypoints.length = 0;
+    //        var lats = new Array();
+    //        var lons = new Array();
+    //        j = 0;
+    //        $(this).find("wpt").each(function () {
+    //            lats[j] = ($(this).attr("lat"));
+    //            lons[j] = ($(this).attr("lon"));
+    //            waypoints.push({
+    //                location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
+    //            });
+    //            j++;
+    //        });
+    //        wpt[i] = waypoints;
+    //        i++;
+    //    });
+    //    var k = 0;
+    //    $(xmls).find("trkseg").each(function () {
+    //        var routes = new Array();
+    //        routes.length = 0;
+    //        var lats = new Array();
+    //        var lons = new Array();
+    //        j = 0;
+    //        $(this).find("trkpt").each(function () {
+    //            lats[j] = ($(this).attr("lat"));
+    //            lons[j] = ($(this).attr("lon"));
+    //            routes.push({
+    //                location: new OpenLayers.Geometry.Point(lons[j], lats[j])
+    //            });
+    //            j++;
+    //        });
+    //        geopt[k] = routes;
+    //        k++;
+    //    });
 
     function initialize() {
 
@@ -68,98 +68,15 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-    });
-
-        addMarker();
-        addDirection();
-        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
-    }
-
-    function addMarker() {
-        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
-				{
-				numZoomLevels: 20
                 });
-        markers = new OpenLayers.Layer.Markers("Markers");
-        markers.id = "Markers";
-        map.addLayer(markers);
-        for (var i = 0; i < wpt.length; i++) {
-            var color = randomColor();
-
-            for (var j = 0; j < wpt[i].length; j++) {
-                var position = new Array();
-                var icon = new Array();
-                position[j] = wpt[i][j].location;
-                var size = new OpenLayers.Size(21, 25);
-                var image = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|" + color + "|000000";
-                if (j == 0 || j == wpt[i].length - 1) {
-                    image = "http://www.lupusstudios.com/images/iconHome.png";
-                }
-                var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-                icon[j] = new OpenLayers.Icon(image, size, offset);
-                var markerslayer = map.getLayer('Markers');
-                markerslayer.addMarker(new OpenLayers.Marker(position[j], icon[j]));
-
-            }
-        }
+        map.addLayer(gmap);
+        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+        
     }
 
-    function addDirection() {
-        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
-				{
-				numZoomLevels: 20
-    });
-        var lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
-        for (var i = 0; i < geopt.length; i++) {
-            var color = randomColor();
-            var style = {
-                strokeColor: '#' + color,
-                strokeOpacity: 0.5,
-                strokeWidth: 5
-            };
-            var lineString = new Array();
-            var line = new Array();
-            var endLats = 0;
-            var endLongs = 0;
-            for (var j = 0; j < geopt[i].length - 1; j++) {
-
-                var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
-                var end = geopt[i][j + 1].location;
-
-                endLats = geopt[i][j + 1].location.x;
-                endLongs = geopt[i][j + 1].location.y;
-
-                //alert(endLats);
-
-                var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
-                lineString.push(line);
-                //alert(start);
-
-            }
-            for (var k = 0; k < lineString.length; k++) {
-                lineLayer.addFeatures([new OpenLayers.Feature.Vector(lineString[k], null, style)]);
-                //alert(start + '  ' + end);
-                map.addLayers([gmap, lineLayer]);
-            };
-
-        }
-    }
-
-    //function random color
-    function randomColor() {
-        var hexno = new String;
-        arr = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
-        var n1 = Math.round(Math.random() * 15);
-        var n2 = Math.round(Math.random() * 15);
-        var n3 = Math.round(Math.random() * 15);
-        var n4 = Math.round(Math.random() * 15);
-        var n5 = Math.round(Math.random() * 15);
-        var n6 = Math.round(Math.random() * 15);
-        hexno = arr[n1] + "" + arr[n2] + "" + arr[n3] + "" + arr[n4] + "" + arr[n5] + "" + arr[n6];
-        return hexno;
-    }
-
+    
     $(document).ready(function () {
+        // Create the map object
         initialize();
         //        var id = '#dialog';
 
@@ -249,7 +166,8 @@
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <div class="collection-planning">
-    @* <div style="float: left; margin-top: -10px;">
+    @*
+    <div style="float: left; margin-top: -10px;">
         <button class="btn btn btn-link" type="button">
             Settings</button>
     </div>*@
@@ -363,6 +281,9 @@
                     if (result.success) {
                         updateRequestsView(result.requests, result.notSelected);
                         createLatsLons(result.waypoints, result.segments);
+                        addMarker();
+                        addDirection();
+                        map.setCenter(wpt[0][0].location, 16);
                     }
                 });
             }
@@ -379,48 +300,133 @@
                 $.each(waypoints, function (index, waypoint) {
                     lats[j] = waypoint.Latitude;
                     lons[j] = waypoint.Longitude;
-                    waypoints.push({
+                    waypointsArr.push({
                         location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
                     });
                     j++;
                 });
-                wpt[i] = waypoints;
+                wpt[i] = waypointsArr;
                 i++;
             });
 
-            alert("Waypoint:" + wpt.length);
+            
 
             i = 0;
 
-            $.each(segmentsList, function (index, segments) {
+            $.each(segmentsLists, function (index, segments) {
                 var j = 0;
                 var segmentsArr = new Array();
                 segmentsArr.length = 0;
                 var lats = new Array();
                 var lons = new Array();
-                $.each(waypoints, function (index, segment) {
+                $.each(segments, function (index, segment) {
                     lats[j] = segment.Latitude;
                     lons[j] = segment.Longitude;
-                    segments.push({
+                    segmentsArr.push({
                         location: new OpenLayers.Geometry.Point(lons[j], lats[j])
                     });
 
                     j++;
                 });
 
-                geopt[i] = segments
-            });
-
-            alert("Segments:" + geopt.length);
+                geopt[i] = segmentsArr;
+                i++;
+            });            
+            //alert("Segments:" + geopt[0].length + " " + geopt[0][0].location);
         }
 
         var updateRequestsView = function (requests, notSelectedRequests) {
             var requestTickets = createRequestTickets(requests);
             var notSelectedRequestsTicket = createRequestTickets(notSelectedRequests);
             $("#selected-requests > ul").html(requestTickets);
-            $("#unplanned-requests > ul").html(notSelecte$dRequestsTicket);
+            $("#unplanned-requests > ul").html(notSelectedRequestsTicket);
             $('.myToolTip').tooltip();
         };
+
+        function addMarker() {
+            var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+                 });
+            markers = new OpenLayers.Layer.Markers("Markers");
+            markers.id = "Markers";
+            map.addLayer(markers);
+            for (var i = 0; i < wpt.length; i++) {
+                var color = randomColor();
+
+                for (var j = 0; j < wpt[i].length; j++) {
+                    var position = new Array();
+                    var icon = new Array();
+                    position[j] = wpt[i][j].location;
+                    var size = new OpenLayers.Size(21, 25);
+                    var image = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|" + color + "|000000";
+                    if (j == 0) {
+                        image = "http://www.lupusstudios.com/images/iconHome.png";
+                    }
+                    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+                    icon[j] = new OpenLayers.Icon(image, size, offset);
+                    var markerslayer = map.getLayer('Markers');
+                    markerslayer.addMarker(new OpenLayers.Marker(position[j], icon[j]));
+
+                }
+            }
+        }
+
+        function addDirection() {
+            var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+                });
+            var lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
+            for (var i = 0; i < geopt.length; i++) {
+                var color = randomColor();
+                var style = {
+                    strokeColor: '#' + color,
+                    strokeOpacity: 0.5,
+                    strokeWidth: 5
+                };
+                var lineString = new Array();
+                var line = new Array();
+                var endLats = 0;
+                var endLongs = 0;
+                for (var j = 0; j < geopt[i].length - 1; j++) {
+
+                    var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
+                    var end = geopt[i][j + 1].location;
+
+                    endLats = geopt[i][j + 1].location.x;
+                    endLongs = geopt[i][j + 1].location.y;
+
+                    alert(endLats);
+
+                    var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
+                    lineString.push(line);
+                    alert(start);
+
+                }
+                for (var k = 0; k < lineString.length; k++) {
+                    lineLayer.addFeatures([new OpenLayers.Feature.Vector(lineString[k], null, style)]);
+                    //alert(start + '  ' + end);
+                    map.addLayers([gmap, lineLayer]);
+                };
+
+            }
+        }
+
+        //function random color
+        function randomColor() {
+            var hexno = new String;
+            arr = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+            var n1 = Math.round(Math.random() * 15);
+            var n2 = Math.round(Math.random() * 15);
+            var n3 = Math.round(Math.random() * 15);
+            var n4 = Math.round(Math.random() * 15);
+            var n5 = Math.round(Math.random() * 15);
+            var n6 = Math.round(Math.random() * 15);
+            hexno = arr[n1] + "" + arr[n2] + "" + arr[n3] + "" + arr[n4] + "" + arr[n5] + "" + arr[n6];
+            return hexno;
+        }
+
     </script>
 </div>
 </br> 
