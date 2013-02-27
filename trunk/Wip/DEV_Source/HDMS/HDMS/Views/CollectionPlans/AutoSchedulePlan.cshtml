@@ -146,7 +146,7 @@
         var xmlHttp = new XMLHttpRequest();
         var requestsNum = $("#requestsNum").val();
         var plansNum = $("#plansNum").val();
-        alert(plansNum + " " + requestsNum);
+        //alert(plansNum + " " + requestsNum);
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             }
@@ -234,7 +234,7 @@
                 Save Settings</button>
             <button class="btn  btn-primary" type="button">
                 Load Settings</button>
-            <button class="btn btn-success" type="button" id="btnOK">
+            <button class="btn btn-success" type="button" id="btnOK" data-dismiss="modal" aria-hidden="true">
                 Ok</button>
         </div>
     </div>
@@ -269,6 +269,7 @@
         });
 
         $("#btnOK").click(function () {
+            $.blockUI();
             numRequests = $("#ddlRequestNumber option:selected").val();
             numPlans = $("#ddlPlansNumber option:selected").val();
             if (numPlans > numRequests) {
@@ -277,17 +278,24 @@
                 $.post('/CollectionPlans/GetSelectedRequests/', { numberOfRequests: numRequests, numberOfPlans: numPlans, weightedDateScore: dateScore, weightedDeliveryTypeScore:
                 deliveryTypeScore
                 }, function (result) {
-                    alert(result);
+                    //alert(result);
+
                     if (result.success) {
                         updateRequestsView(result.requests, result.notSelected);
                         createLatsLons(result.waypoints, result.segments);
                         addMarker();
                         addDirection();
                         map.setCenter(wpt[0][0].location, 16);
+                        $.unblockUI();
                     }
                 });
             }
         });
+
+        $("#btnSetting").click(function () {
+            $('#modals').modal('show');
+        });
+
 
         function createLatsLons(waypointsLists, segmentsLists) {
             var i = 0;
@@ -340,6 +348,33 @@
             var notSelectedRequestsTicket = createRequestTickets(notSelectedRequests);
             $("#selected-requests > ul").html(requestTickets);
             $("#unplanned-requests > ul").html(notSelectedRequestsTicket);
+            $('.myToolTip').tooltip();
+        };
+
+        var addToPlan = function (requestId) {
+            $("#request-" + requestId + " a.addToPlan").tooltip('hide');
+            $("#selected-requests > ul").append($("#request-" + requestId));
+            selectedRequestIds[selectedRequestIds.length] = requestId;
+            $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan btn action myToolTip" rel="tooltip" onclick="remove(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
+            $('.myToolTip').tooltip();
+        };
+
+        var remove = function (requestId) {
+//            for (var i = 0; i < selectedRequestIds.length; i++) {
+//                if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
+//            }
+//            $("#request-" + requestId).remove();
+            //            if ($('#ddlWard option:selected').val() != '-1') {
+            //                $('#ddlWard').trigger("change");
+            //            } else if ($('#ddlDistrict option:selected').val() != '-1') {
+            //                $('#ddlDistrict').trigger("change");
+            //            } else {remove
+            //                $('#ddlCityProvince').trigger("change");
+            //            }
+            $("#request-" + requestId + " a.removeToPlan").tooltip('hide');
+            $("#unplanned-requests > ul").append($("#request-" + requestId));
+            selectedRequestIds[selectedRequestIds.length] = requestId;
+            $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan btn action myToolTip" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan"><img src="/img/icons2/arrow_right2.png" alt="Add" width="18px"/></a>');
             $('.myToolTip').tooltip();
         };
 
@@ -397,11 +432,11 @@
                     endLats = geopt[i][j + 1].location.x;
                     endLongs = geopt[i][j + 1].location.y;
 
-                    alert(endLats);
+                    //alert(endLats);
 
                     var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
                     lineString.push(line);
-                    alert(start);
+                    //alert(start);
 
                 }
                 for (var k = 0; k < lineString.length; k++) {
