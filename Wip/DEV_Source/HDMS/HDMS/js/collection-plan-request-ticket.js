@@ -41,9 +41,7 @@
                 <a href="javascript:void(0)" class="addToPlan btn action myToolTip" rel="tooltip" title="Add to plan">\
                     <img src="/img/icons/arrow_right2.png" alt="Add" width="18px" />\
                 </a>\
-                <a href="javascript:void(0)" title="Set Location" class="myToolTip setLocation btn action" rel="tooltip">\
-                    <img alt="Set Location" width="18px" />\
-                </a>\
+                <input type="checkbox" name="plan"/>\
                 <a href="javascript:void(0)" class="myToolTip hide confirmSetLocation btn action" rel="tooltip"  title="Confirm Set Location">\
                     <img src="/img/icons2/checkmark2.png"width="18">\
                 </a>\
@@ -58,14 +56,15 @@
         ticket.find('dd.requestedDate').html(request.RequestedDate);
         ticket.find('dd.collectionAddress').html(request.CollectionAddress);
         ticket.find('a.addToPlan').attr('onclick', 'addToPlan(' + request.RequestId + ')');
+        ticket.find('a.removeToPlan').attr('onclick', 'remove(' + request.RequestId + ')');
         
-        if (request.Latitude == null) {
-            ticket.find('a.setLocation img').attr('src', '/img/icons2/blue-dot.png');
-            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ',\'' + request.AddressFromWard + '\')');
-        } else {
-            ticket.find('a.setLocation img').attr('src', '/img/icons2/red-dot.png');
-            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ')');
-        }
+//        if (request.Latitude == null) {
+//            ticket.find('a.setLocation img').attr('src', '/img/icons2/blue-dot.png');
+//            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ',\'' + request.AddressFromWard + '\')');
+//        } else {
+//            ticket.find('a.setLocation img').attr('src', '/img/icons2/red-dot.png');
+//            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ')');
+//        }
 
         ticket.find('a.confirmSetLocation').attr('onclick', 'confirmSetLocation(' + request.RequestId + ')');
         ticket.find('a.cancelSetLocation').attr('onclick', 'cancelSetLocation(' + request.RequestId + ')');
