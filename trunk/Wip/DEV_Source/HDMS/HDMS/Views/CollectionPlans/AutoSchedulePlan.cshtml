@@ -206,6 +206,7 @@
     <div style="float: left; width: 800px; margin-left: 5px;">
         <div id="map">
         </div>
+        <a class="btn btn-primary" id = "btnCreatePlan" onclick="createPlan()">Create Plan</a>
     </div>
     <div id="modals" class="modal fade">
         <div class="modal-header">
@@ -296,6 +297,9 @@
             $('#modals').modal('show');
         });
 
+        function createPlan() {
+            alert(selectedRequestIds[0]);
+        }
 
         function createLatsLons(waypointsLists, segmentsLists) {
             var i = 0;
@@ -352,26 +356,28 @@
         };
 
         var addToPlan = function (requestId) {
+            //alert("Added to plan");
             $("#request-" + requestId + " a.addToPlan").tooltip('hide');
             $("#selected-requests > ul").append($("#request-" + requestId));
             selectedRequestIds[selectedRequestIds.length] = requestId;
-            $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan btn action myToolTip" rel="tooltip" onclick="remove(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
+            $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan btn action myToolTip" rel="tooltip" onclick="removeFromPlan(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
             $('.myToolTip').tooltip();
         };
-
-        var remove = function (requestId) {
-//            for (var i = 0; i < selectedRequestIds.length; i++) {
-//                if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
-//            }
-//            $("#request-" + requestId).remove();
+        
+        var removeFromPlan = function (requestId) {
+            //            for (var i = 0; i < selectedRequestIds.length; i++) {
+            //                if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
+            //            }
+            //            $("#request-" + requestId).remove();
             //            if ($('#ddlWard option:selected').val() != '-1') {
-            //                $('#ddlWard').trigger("change");
-            //            } else if ($('#ddlDistrict option:selected').val() != '-1') {
+            //                $('#ddlWard').trigger("change");!= '-1') {
             //                $('#ddlDistrict').trigger("change");
+            //            } else if ($('#ddlDistrict option:selected').val() 
             //            } else {remove
             //                $('#ddlCityProvince').trigger("change");
             //            }
-            $("#request-" + requestId + " a.removeToPlan").tooltip('hide');
+            //alert("remove " + requestId);
+            $("#request-" + requestId + " a.removeToPlan").hide();
             $("#unplanned-requests > ul").append($("#request-" + requestId));
             selectedRequestIds[selectedRequestIds.length] = requestId;
             $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan btn action myToolTip" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan"><img src="/img/icons2/arrow_right2.png" alt="Add" width="18px"/></a>');
