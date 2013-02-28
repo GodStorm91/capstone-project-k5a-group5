@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HDMS" Class="SMDHDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=THINHNTY60269\SQLEXPRESS;Initial Catalog=HDMS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HDMSConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DELLUSER-PC\SQLEXPRESS;Initial Catalog=HDMS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HDMSConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cargo" Member="Cargos">
     <Type Name="Cargo">
       <Column Name="CargoId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -9,7 +9,7 @@
       <Column Name="CargoType" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="RequestId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Order1_Cargo" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="Order_Cargo" Member="Order" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
       <Association Name="Plan_Cargo" Member="Plan" ThisKey="PlanId" OtherKey="PlanId" Type="Plan" IsForeignKey="true" />
       <Association Name="Request_Cargo" Member="Request" ThisKey="RequestId" OtherKey="RequestId" Type="Request" IsForeignKey="true" />
     </Type>
@@ -23,7 +23,7 @@
       <Column Name="DisplayOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Ward_CustomerAddress" Member="CustomerAddresses" ThisKey="WardId" OtherKey="WardId" Type="CustomerAddress" />
       <Association Name="Ward_Hub" Member="Hubs" ThisKey="WardId" OtherKey="WardId" Type="Hub" />
-      <Association Name="Ward_Order1" Member="Order1s" ThisKey="WardId" OtherKey="ReceiverAddressWardId" Type="Order1" />
+      <Association Name="Ward_Order" Member="Orders" ThisKey="WardId" OtherKey="ReceiverAddressWardId" Type="Order" />
       <Association Name="District_Ward" Member="District" ThisKey="DistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
     </Type>
   </Table>
@@ -110,7 +110,7 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="DeliveryOption_Order1" Member="Order1s" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="Order1" />
+      <Association Name="DeliveryOption_Order" Member="Orders" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="Order" />
     </Type>
   </Table>
   <Table Name="dbo.DeliveryType" Member="DeliveryTypes">
@@ -129,7 +129,7 @@
       <Association Name="District_Ward" Member="Wards" ThisKey="DistrictId" OtherKey="DistrictId" Type="Ward" />
       <Association Name="District_CustomerAddress" Member="CustomerAddresses" ThisKey="DistrictId" OtherKey="DistrictId" Type="CustomerAddress" />
       <Association Name="District_Hub" Member="Hubs" ThisKey="DistrictId" OtherKey="DistrictId" Type="Hub" />
-      <Association Name="District_Order1" Member="Order1s" ThisKey="DistrictId" OtherKey="ReceiverAddressDistrictId" Type="Order1" />
+      <Association Name="District_Order" Member="Orders" ThisKey="DistrictId" OtherKey="ReceiverAddressDistrictId" Type="Order" />
       <Association Name="CityProvince_District" Member="CityProvince" ThisKey="CityProvinceId" OtherKey="CityProvinceId" Type="CityProvince" IsForeignKey="true" />
     </Type>
   </Table>
@@ -143,8 +143,8 @@
       <Column Name="Latitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
       <Column Name="Longitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
       <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Hub_Order1" Member="Order1s" ThisKey="HubId" OtherKey="HubId" Type="Order1" />
-      <Association Name="Hub_Order11" Member="Order1s1" ThisKey="HubId" OtherKey="HubId" Type="Order1" />
+      <Association Name="Hub_Order" Member="Orders" ThisKey="HubId" OtherKey="HubId" Type="Order" />
+      <Association Name="Hub_Order1" Member="Orders1" ThisKey="HubId" OtherKey="HubId" Type="Order" />
       <Association Name="Hub_UserInfo" Member="UserInfos" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
       <Association Name="Hub_UserInfo1" Member="UserInfos1" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
       <Association Name="Hub_UserInfo2" Member="UserInfos2" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
@@ -169,12 +169,12 @@
       <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Price" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Order1_Item" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="Order_Item" Member="Order" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
       <Association Name="Product_Item" Member="Product" ThisKey="ProductId" OtherKey="ProductId" Type="Product" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Order1" Member="Order1s">
-    <Type Name="Order1">
+  <Table Name="dbo.[Order]" Member="Orders">
+    <Type Name="Order">
       <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RequestId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DeliveryOptionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -196,18 +196,18 @@
       <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="HubId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Passcode" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Order1_Cargo" Member="Cargos" ThisKey="OrderId" OtherKey="OrderId" Type="Cargo" />
-      <Association Name="Order1_Item" Member="Items" ThisKey="OrderId" OtherKey="OrderId" Type="Item" />
-      <Association Name="Order1_Order1" Member="Order12" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" Cardinality="One" />
-      <Association Name="Order1_PriceCategory" Member="PriceCategories" ThisKey="OrderId" OtherKey="OrderId" Type="PriceCategory" />
-      <Association Name="Hub_Order1" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
-      <Association Name="Hub_Order11" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
-      <Association Name="Order1_Order1" Member="Order11" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
-      <Association Name="District_Order1" Member="District" ThisKey="ReceiverAddressDistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
-      <Association Name="DeliveryOption_Order1" Member="DeliveryOption" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="DeliveryOption" IsForeignKey="true" />
-      <Association Name="Ward_Order1" Member="Ward" ThisKey="ReceiverAddressWardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
-      <Association Name="OrderPaymentType_Order1" Member="OrderPaymentType" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="OrderPaymentType" IsForeignKey="true" />
-      <Association Name="Request_Order1" Member="Request" ThisKey="RequestId" OtherKey="RequestId" Type="Request" IsForeignKey="true" />
+      <Association Name="Order_Cargo" Member="Cargos" ThisKey="OrderId" OtherKey="OrderId" Type="Cargo" />
+      <Association Name="Order_Item" Member="Items" ThisKey="OrderId" OtherKey="OrderId" Type="Item" />
+      <Association Name="Order_Order" Member="Order2" ThisKey="OrderId" OtherKey="OrderId" Type="Order" Cardinality="One" />
+      <Association Name="Order_PriceCategory" Member="PriceCategories" ThisKey="OrderId" OtherKey="OrderId" Type="PriceCategory" />
+      <Association Name="Hub_Order" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Hub_Order1" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Order_Order" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
+      <Association Name="District_Order" Member="District" ThisKey="ReceiverAddressDistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
+      <Association Name="DeliveryOption_Order" Member="DeliveryOption" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="DeliveryOption" IsForeignKey="true" />
+      <Association Name="Ward_Order" Member="Ward" ThisKey="ReceiverAddressWardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
+      <Association Name="OrderPaymentType_Order" Member="OrderPaymentType" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="OrderPaymentType" IsForeignKey="true" />
+      <Association Name="Request_Order" Member="Request" ThisKey="RequestId" OtherKey="RequestId" Type="Request" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.OrderPaymentType" Member="OrderPaymentTypes">
@@ -216,7 +216,7 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="OrderPaymentType_Order1" Member="Order1s" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="Order1" />
+      <Association Name="OrderPaymentType_Order" Member="Orders" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="Order" />
     </Type>
   </Table>
   <Table Name="dbo.[Plan]" Member="Plans">
@@ -242,7 +242,7 @@
       <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="StaffId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="Order1_PriceCategory" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="Order_PriceCategory" Member="Order" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
       <Association Name="TiktakStaff_PriceCategory" Member="TiktakStaff" ThisKey="StaffId" OtherKey="StaffId" Type="TiktakStaff" IsForeignKey="true" />
     </Type>
   </Table>
@@ -273,7 +273,7 @@
       <Column Name="RequestStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Request_Cargo" Member="Cargos" ThisKey="RequestId" OtherKey="RequestId" Type="Cargo" />
-      <Association Name="Request_Order1" Member="Order1s" ThisKey="RequestId" OtherKey="RequestId" Type="Order1" />
+      <Association Name="Request_Order" Member="Orders" ThisKey="RequestId" OtherKey="RequestId" Type="Order" />
       <Association Name="Customer_Request" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
       <Association Name="Customer_Request1" Member="Customer1" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
       <Association Name="CustomerAddress_Request" Member="CustomerAddress" ThisKey="CollectionAddressId" OtherKey="CustomerAddressId" Type="CustomerAddress" IsForeignKey="true" />
