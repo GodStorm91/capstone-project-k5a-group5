@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HDMS" Class="SMDHDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=THINHNTY60269\SQLEXPRESS;Initial Catalog=HDMS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HDMSConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Cargo" Member="Cargos">
+    <Type Name="Cargo">
+      <Column Name="CargoId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CargoColumn" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PlanId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CargoType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RequestId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Order1_Cargo" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="Plan_Cargo" Member="Plan" ThisKey="PlanId" OtherKey="PlanId" Type="Plan" IsForeignKey="true" />
+      <Association Name="Request_Cargo" Member="Request" ThisKey="RequestId" OtherKey="RequestId" Type="Request" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ward" Member="Wards">
+    <Type Name="Ward">
+      <Column Name="WardId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DistrictId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Ward_CustomerAddress" Member="CustomerAddresses" ThisKey="WardId" OtherKey="WardId" Type="CustomerAddress" />
+      <Association Name="Ward_Hub" Member="Hubs" ThisKey="WardId" OtherKey="WardId" Type="Hub" />
+      <Association Name="Ward_Order1" Member="Order1s" ThisKey="WardId" OtherKey="ReceiverAddressWardId" Type="Order1" />
+      <Association Name="District_Ward" Member="District" ThisKey="DistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CityProvince" Member="CityProvinces">
+    <Type Name="CityProvince">
+      <Column Name="CityProvinceId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CityProvince_District" Member="Districts" ThisKey="CityProvinceId" OtherKey="CityProvinceId" Type="District" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contact" Member="Contacts">
+    <Type Name="Contact">
+      <Column Name="ContactId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Customer_Contact" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyName" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentContractCode" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Customer_Contact" Member="Contacts" ThisKey="CustomerId" OtherKey="CustomerId" Type="Contact" />
+      <Association Name="Customer_CustomerAddress" Member="CustomerAddresses" ThisKey="CustomerId" OtherKey="CustomerId" Type="CustomerAddress" />
+      <Association Name="Customer_Product" Member="Products" ThisKey="CustomerId" OtherKey="CustomerId" Type="Product" />
+      <Association Name="Customer_Request" Member="Requests" ThisKey="CustomerId" OtherKey="CustomerId" Type="Request" />
+      <Association Name="Customer_Request1" Member="Requests1" ThisKey="CustomerId" OtherKey="CustomerId" Type="Request" />
+      <Association Name="Customer_UserInfo" Member="UserInfos" ThisKey="CustomerId" OtherKey="CustomerId" Type="UserInfo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerAddress" Member="CustomerAddresses">
+    <Type Name="CustomerAddress">
+      <Column Name="CustomerAddressId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="WardId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DistrictId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="CustomerAddress_Request" Member="Requests" ThisKey="CustomerAddressId" OtherKey="CollectionAddressId" Type="Request" />
+      <Association Name="Ward_CustomerAddress" Member="Ward" ThisKey="WardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
+      <Association Name="Customer_CustomerAddress" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+      <Association Name="District_CustomerAddress" Member="District" ThisKey="DistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryMen" Member="DeliveryMens">
+    <Type Name="DeliveryMen">
+      <Column Name="DeliveryMenId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="DeliveryMen_DeliveryMenInPlan" Member="DeliveryMenInPlans" ThisKey="DeliveryMenId" OtherKey="DeliveryMenId" Type="DeliveryMenInPlan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryMenInPlan" Member="DeliveryMenInPlans">
+    <Type Name="DeliveryMenInPlan">
+      <Column Name="DeliveryMenInPlanId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DeliveryMenId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AssignedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EstimateDistance" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Association Name="DeliveryMen_DeliveryMenInPlan" Member="DeliveryMen" ThisKey="DeliveryMenId" OtherKey="DeliveryMenId" Type="DeliveryMen" IsForeignKey="true" />
+      <Association Name="Plan_DeliveryMenInPlan" Member="Plan" ThisKey="PlanId" OtherKey="PlanId" Type="Plan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryOption" Member="DeliveryOptions">
+    <Type Name="DeliveryOption">
+      <Column Name="DeliveryOptionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="DeliveryOption_Order1" Member="Order1s" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="Order1" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryType" Member="DeliveryTypes">
+    <Type Name="DeliveryType">
+      <Column Name="DeliveryTypeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DeliveryName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.District" Member="Districts">
+    <Type Name="District">
+      <Column Name="DistrictId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CityProvinceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="District_Ward" Member="Wards" ThisKey="DistrictId" OtherKey="DistrictId" Type="Ward" />
+      <Association Name="District_CustomerAddress" Member="CustomerAddresses" ThisKey="DistrictId" OtherKey="DistrictId" Type="CustomerAddress" />
+      <Association Name="District_Hub" Member="Hubs" ThisKey="DistrictId" OtherKey="DistrictId" Type="Hub" />
+      <Association Name="District_Order1" Member="Order1s" ThisKey="DistrictId" OtherKey="ReceiverAddressDistrictId" Type="Order1" />
+      <Association Name="CityProvince_District" Member="CityProvince" ThisKey="CityProvinceId" OtherKey="CityProvinceId" Type="CityProvince" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hub" Member="Hubs">
+    <Type Name="Hub">
+      <Column Name="HubId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="WardId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DistrictId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Hub_Order1" Member="Order1s" ThisKey="HubId" OtherKey="HubId" Type="Order1" />
+      <Association Name="Hub_Order11" Member="Order1s1" ThisKey="HubId" OtherKey="HubId" Type="Order1" />
+      <Association Name="Hub_UserInfo" Member="UserInfos" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
+      <Association Name="Hub_UserInfo1" Member="UserInfos1" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
+      <Association Name="Hub_UserInfo2" Member="UserInfos2" ThisKey="HubId" OtherKey="HubId" Type="UserInfo" />
+      <Association Name="Ward_Hub" Member="Ward" ThisKey="WardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
+      <Association Name="District_Hub" Member="District" ThisKey="DistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HubCategory" Member="HubCategories">
+    <Type Name="HubCategory">
+      <Column Name="HubCategoryId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HubName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="isActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Item" Member="Items">
+    <Type Name="Item">
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsFragile" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HasHighValue" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Order1_Item" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="Product_Item" Member="Product" ThisKey="ProductId" OtherKey="ProductId" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Order1" Member="Order1s">
+    <Type Name="Order1">
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RequestId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryOptionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderPaymentTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryPlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CollectedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReceiverName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ReceiverPhone" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ReceiverAddress" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ReceiverAddressWardId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReceiverAddressDistrictId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Decimal" DbType="Decimal(19,16)" CanBeNull="true" />
+      <Column Name="Fee" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AmountToBeCollectedFromReceiver" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="HubId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Passcode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Order1_Cargo" Member="Cargos" ThisKey="OrderId" OtherKey="OrderId" Type="Cargo" />
+      <Association Name="Order1_Item" Member="Items" ThisKey="OrderId" OtherKey="OrderId" Type="Item" />
+      <Association Name="Order1_Order1" Member="Order12" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" Cardinality="One" />
+      <Association Name="Order1_PriceCategory" Member="PriceCategories" ThisKey="OrderId" OtherKey="OrderId" Type="PriceCategory" />
+      <Association Name="Hub_Order1" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Hub_Order11" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Order1_Order1" Member="Order11" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="District_Order1" Member="District" ThisKey="ReceiverAddressDistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
+      <Association Name="DeliveryOption_Order1" Member="DeliveryOption" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="DeliveryOption" IsForeignKey="true" />
+      <Association Name="Ward_Order1" Member="Ward" ThisKey="ReceiverAddressWardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
+      <Association Name="OrderPaymentType_Order1" Member="OrderPaymentType" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="OrderPaymentType" IsForeignKey="true" />
+      <Association Name="Request_Order1" Member="Request" ThisKey="RequestId" OtherKey="RequestId" Type="Request" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderPaymentType" Member="OrderPaymentTypes">
+    <Type Name="OrderPaymentType">
+      <Column Name="OrderPaymentTypeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="OrderPaymentType_Order1" Member="Order1s" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="Order1" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Plan]" Member="Plans">
+    <Type Name="Plan">
+      <Column Name="PlanId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreatedByUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FinishedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StaffId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PlanTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Plan_Cargo" Member="Cargos" ThisKey="PlanId" OtherKey="PlanId" Type="Cargo" />
+      <Association Name="Plan_DeliveryMenInPlan" Member="DeliveryMenInPlans" ThisKey="PlanId" OtherKey="PlanId" Type="DeliveryMenInPlan" />
+      <Association Name="TiktakStaff_Plan" Member="TiktakStaff" ThisKey="StaffId" OtherKey="StaffId" Type="TiktakStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PriceCategory" Member="PriceCategories">
+    <Type Name="PriceCategory">
+      <Column Name="PriceCategoryId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(19,2) NOT NULL" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StaffId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Order1_PriceCategory" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order1" IsForeignKey="true" />
+      <Association Name="TiktakStaff_PriceCategory" Member="TiktakStaff" ThisKey="StaffId" OtherKey="StaffId" Type="TiktakStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProductCategory" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ProductWidth" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="ProductHeight" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="ProductLength" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="ProductWeight" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="ProductPrice" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsPermanent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Product_Item" Member="Items" ThisKey="ProductId" OtherKey="ProductId" Type="Item" />
+      <Association Name="Customer_Product" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Request" Member="Requests">
+    <Type Name="Request">
+      <Column Name="RequestId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CollectionAddressId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RequestedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CollectionPlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RequestStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Note" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Request_Cargo" Member="Cargos" ThisKey="RequestId" OtherKey="RequestId" Type="Cargo" />
+      <Association Name="Request_Order1" Member="Order1s" ThisKey="RequestId" OtherKey="RequestId" Type="Order1" />
+      <Association Name="Customer_Request" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+      <Association Name="Customer_Request1" Member="Customer1" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+      <Association Name="CustomerAddress_Request" Member="CustomerAddress" ThisKey="CollectionAddressId" OtherKey="CustomerAddressId" Type="CustomerAddress" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TiktakStaff" Member="TiktakStaffs">
+    <Type Name="TiktakStaff">
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StaffRole" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="TiktakStaff_Plan" Member="Plans" ThisKey="StaffId" OtherKey="StaffId" Type="Plan" />
+      <Association Name="TiktakStaff_PriceCategory" Member="PriceCategories" ThisKey="StaffId" OtherKey="StaffId" Type="PriceCategory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserInfo" Member="UserInfos">
+    <Type Name="UserInfo">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HubId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Hub_UserInfo" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Hub_UserInfo1" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Hub_UserInfo2" Member="Hub2" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
+      <Association Name="Customer_UserInfo" Member="Customer" ThisKey="CustomerId" OtherKey="CustomerId" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
