@@ -28,9 +28,8 @@ namespace SMDH.Controllers
         public ViewResult Details(int id)
         {
             
-            var order = _repository.Orders.Where(o => o.OrderId == id).ToList();
+            var order = _repository.Orders.Where(o => o.OrderId == id).ToList();            
             
-            ViewBag.Items =
             return View();
         }
 

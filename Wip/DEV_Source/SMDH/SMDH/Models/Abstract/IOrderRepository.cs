@@ -8,8 +8,8 @@ namespace SMDH.Models.Abstract
 {
     public interface IOrderRepository
     {
-        public IQueryable<Order> Orders { get; set; }
-        public Order Find(int orderId);
+        IQueryable<Order> Orders { get; set; }
+        Order Find(int orderId);
     }
    
 }

@@ -34,6 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
@@ -59,14 +66,30 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
+    <Compile Include="Areas\Hub\HubAreaRegistration.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ExcelController.cs" />
+    <Compile Include="Controllers\HubsController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PlansController.cs" />
+    <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\Abstract\IOrderRepository.cs" />
+    <Compile Include="Models\Concrete\EFDBbContext.cs" />
+    <Compile Include="Models\Concrete\EFOrdersRepository.cs" />
     <Compile Include="Models\SMDH.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SMDH.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\DateViewModel.cs" />
+    <Compile Include="Models\ViewModels\ItemViewModel.cs" />
+    <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,9 +319,16 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Areas\Customer\Controllers\" />
+    <Folder Include="Areas\Customer\Models\" />
+    <Folder Include="Areas\Customer\Views\Shared\" />
+    <Folder Include="Areas\Hub\Controllers\" />
+    <Folder Include="Areas\Hub\Models\" />
+    <Folder Include="Areas\Hub\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Customer\Views\Web.config" />
+    <Content Include="Areas\Hub\Views\Web.config" />
     <None Include="js\supr-theme\Open Notebook.onetoc2" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Models\SMDH.dbml">
@@ -306,6 +336,7 @@
       <LastGenOutput>SMDH.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
