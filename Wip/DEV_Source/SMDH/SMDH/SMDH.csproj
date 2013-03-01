@@ -70,6 +70,7 @@
     <Compile Include="Areas\Hub\HubAreaRegistration.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HubsController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -79,14 +80,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\Abstract\IItemRepository.cs" />
     <Compile Include="Models\Abstract\IOrderRepository.cs" />
+    <Compile Include="Models\Abstract\IRequestRepository.cs" />
     <Compile Include="Models\Concrete\EFDBbContext.cs" />
+    <Compile Include="Models\Concrete\EFItemsRepository.cs" />
     <Compile Include="Models\Concrete\EFOrdersRepository.cs" />
+    <Compile Include="Models\Concrete\EFRequestsRepository.cs" />
     <Compile Include="Models\SMDH.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SMDH.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Statuses\Statuses.cs" />
     <Compile Include="Models\ViewModels\DateViewModel.cs" />
     <Compile Include="Models\ViewModels\ItemViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
@@ -325,6 +331,7 @@
     <Folder Include="Areas\Hub\Controllers\" />
     <Folder Include="Areas\Hub\Models\" />
     <Folder Include="Areas\Hub\Views\Shared\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\Views\Web.config" />
