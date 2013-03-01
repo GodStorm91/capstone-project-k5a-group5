@@ -198,11 +198,9 @@
       <Column Name="Passcode" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Order_Cargo" Member="Cargos" ThisKey="OrderId" OtherKey="OrderId" Type="Cargo" />
       <Association Name="Order_Item" Member="Items" ThisKey="OrderId" OtherKey="OrderId" Type="Item" />
-      <Association Name="Order_Order" Member="Order2" ThisKey="OrderId" OtherKey="OrderId" Type="Order" Cardinality="One" />
       <Association Name="Order_PriceCategory" Member="PriceCategories" ThisKey="OrderId" OtherKey="OrderId" Type="PriceCategory" />
       <Association Name="Hub_Order" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
       <Association Name="Hub_Order1" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
-      <Association Name="Order_Order" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
       <Association Name="District_Order" Member="District" ThisKey="ReceiverAddressDistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />
       <Association Name="DeliveryOption_Order" Member="DeliveryOption" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="DeliveryOption" IsForeignKey="true" />
       <Association Name="Ward_Order" Member="Ward" ThisKey="ReceiverAddressWardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />

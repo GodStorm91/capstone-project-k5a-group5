@@ -6,8 +6,10 @@ using SMDH.Models;
 
 namespace SMDH.Models.Abstract
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
-        IQueryable<Order> Orders { get; set; }
+        public IQueryable<Order> Orders { get; set; }
+        public Order Find(int orderId);
     }
+   
 }

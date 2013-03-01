@@ -4040,15 +4040,11 @@ namespace SMDH.Models
 		
 		private EntitySet<Item> _Items;
 		
-		private EntityRef<Order> _Order2;
-		
 		private EntitySet<PriceCategory> _PriceCategories;
 		
 		private EntityRef<Hub> _Hub;
 		
 		private EntityRef<Hub> _Hub1;
-		
-		private EntityRef<Order> _Order1;
 		
 		private EntityRef<District> _District;
 		
@@ -4112,11 +4108,9 @@ namespace SMDH.Models
 		{
 			this._Cargos = new EntitySet<Cargo>(new Action<Cargo>(this.attach_Cargos), new Action<Cargo>(this.detach_Cargos));
 			this._Items = new EntitySet<Item>(new Action<Item>(this.attach_Items), new Action<Item>(this.detach_Items));
-			this._Order2 = default(EntityRef<Order>);
 			this._PriceCategories = new EntitySet<PriceCategory>(new Action<PriceCategory>(this.attach_PriceCategories), new Action<PriceCategory>(this.detach_PriceCategories));
 			this._Hub = default(EntityRef<Hub>);
 			this._Hub1 = default(EntityRef<Hub>);
-			this._Order1 = default(EntityRef<Order>);
 			this._District = default(EntityRef<District>);
 			this._DeliveryOption = default(EntityRef<DeliveryOption>);
 			this._Ward = default(EntityRef<Ward>);
@@ -4136,10 +4130,6 @@ namespace SMDH.Models
 			{
 				if ((this._OrderId != value))
 				{
-					if (this._Order1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnOrderIdChanging(value);
 					this.SendPropertyChanging();
 					this._OrderId = value;
@@ -4599,35 +4589,6 @@ namespace SMDH.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Order", Storage="_Order2", ThisKey="OrderId", OtherKey="OrderId", IsUnique=true, IsForeignKey=false)]
-		public Order Order2
-		{
-			get
-			{
-				return this._Order2.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order2.Entity;
-				if (((previousValue != value) 
-							|| (this._Order2.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order2.Entity = null;
-						previousValue.Order1 = null;
-					}
-					this._Order2.Entity = value;
-					if ((value != null))
-					{
-						value.Order1 = this;
-					}
-					this.SendPropertyChanged("Order2");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_PriceCategory", Storage="_PriceCategories", ThisKey="OrderId", OtherKey="OrderId")]
 		public EntitySet<PriceCategory> PriceCategories
 		{
@@ -4705,40 +4666,6 @@ namespace SMDH.Models
 						this._HubId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Hub1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Order", Storage="_Order1", ThisKey="OrderId", OtherKey="OrderId", IsForeignKey=true)]
-		public Order Order1
-		{
-			get
-			{
-				return this._Order1.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order1.Entity;
-				if (((previousValue != value) 
-							|| (this._Order1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order1.Entity = null;
-						previousValue.Order2 = null;
-					}
-					this._Order1.Entity = value;
-					if ((value != null))
-					{
-						value.Order2 = this;
-						this._OrderId = value.OrderId;
-					}
-					else
-					{
-						this._OrderId = default(int);
-					}
-					this.SendPropertyChanged("Order1");
 				}
 			}
 		}
