@@ -9,7 +9,7 @@ namespace SMDH.Controllers
 {
     public class OrdersController : Controller
     {
-        private IOrderRepository _repository;
+        private IOrderRepository _repository;        
 
         public OrdersController(IOrderRepository orderRepository)
         {
@@ -30,6 +30,7 @@ namespace SMDH.Controllers
             
             var order = _repository.Orders.Where(o => o.OrderId == id).ToList();
             
+            ViewBag.Items =
             return View();
         }
 
