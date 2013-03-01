@@ -31,5 +31,25 @@ namespace SMDH.Models.ViewModels
 
         public List<ItemViewModel> Items { get; set; }
 
+        public OrderViewModel(Order order)
+        {
+            OrderId = order.OrderId;
+            RequestId = order.RequestId;
+            DeliveryOption = order.DeliveryOption.Name;
+            OrderPaymentType = order.OrderPaymentType.Name;
+            DueDate = new DateViewModel(order.DueDate);
+            CollectedDate = new DateViewModel(order.CollectedDate);
+            DeliveryDate = new DateViewModel(order.DeliveryDate);
+            ReceiverName = order.ReceiverName;
+            ReceiverPhone = order.ReceiverPhone;
+            //ReceiverAddress = AddressHelper.GetFullAddress(order);
+            Latitude = order.Latitude;
+            Longitude = order.Longitude;
+            Fee = order.Fee;
+            //Status = Regex.Replace(order.Status.ToString(), "(\\B[A-Z])", " $1");
+            AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
+            Note = order.Note;
+            //AddressFromWard = AddressHelper.GetAddressFromWard(order);
+        }
     }
 }

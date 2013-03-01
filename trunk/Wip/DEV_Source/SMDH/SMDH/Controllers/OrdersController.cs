@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SMDH.Models.Abstract;
+using SMDH.Models;
+using SMDH.Models.ViewModels;
+using SMDH.Models.Statuses;
 
 namespace SMDH.Controllers
 {
@@ -26,17 +29,24 @@ namespace SMDH.Controllers
         //
         // GET: /Orders/Details/5
         public ViewResult Details(int id)
-        {
-            
-            var order = _repository.Orders.Where(o => o.OrderId == id).ToList();            
-            
-            return View();
+        {            
+            var order = _repository.Find(id);
+
+            ViewBag.Items = _repository.GetItemsInOrder(id);
+
+            return View(order);           
         }
 
         //
         // GET: /Ordres/Create
         public ActionResult Create(int requestId)
         {
+            ViewBag.PossibleCityProvinces = new SelectList(_repository.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
+            ViewBag.PossibleDistricts = new SelectList(new List<District>());
+            ViewBag.PossibleWards = new SelectList(new List<Ward>());
+            ViewBag.PossibleDeliveryOptions = new SelectList(_repository.DeliveryOptions.Where(d => d.IsActive).ToList(), "DeliveryOptionId", "Name");
+            ViewBag.PossiblePaymentTypes = new SelectList(_repository.OrderPaymentTypes.Where(opt => opt.IsActive).ToList(), "OrderPaymentTypeId", "Name");
+            ViewBag.RequestId = requestId;
             return View();
         }
 
@@ -45,11 +55,19 @@ namespace SMDH.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ConfirmCreate()
+        public ActionResult ConfirmCreate(Order order)
         { 
             try
             {
-                return Json(new { success = true });
+                var request = _repository.FindRequestById(order.RequestId);
+                if (_repository.AddToRequest(request, order))
+                {
+                    order = _repository.Find(order.OrderId);
+                    var orderDetails = new OrderViewModel(order);
+                    return Json(new { success = true, order = orderDetails });
+                }
+
+                return Json(new { success = false });
             }
             catch (Exception)
             {
@@ -61,15 +79,32 @@ namespace SMDH.Controllers
         [HttpPost]
         public ActionResult Edit(int id)
         {
-            return View();
+            Order order = _repository.Orders.Single(x => x.OrderId == id);
+            ViewBag.PossibleCityProvinces = new SelectList(_repository.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
+            ViewBag.PossibleDistricts = new SelectList(new List<District>());
+            ViewBag.PossibleWards = new SelectList(new List<Ward>());
+            ViewBag.PossibleDeliveryOptions = new SelectList(_repository.DeliveryOptions.Where(d => d.IsActive).ToList(), "DeliveryOptionId", "Name");
+            ViewBag.PossiblePaymentTypes = new SelectList(_repository.OrderPaymentTypes.Where(opt => opt.IsActive).ToList(), "OrderPaymentTypeId", "Name");
+            return View(order);
         }
 
         [HttpPost]
-        public ActionResult ConfirmEdit()
+        public ActionResult ConfirmEdit(Order order)
         {
             try
             {
-                return Json(new { success = true });
+                if (ModelState.IsValid)
+                {
+                    order.OrderStatus = (int)OrderStatus.Draft;
+                    order = _repository.ConfirmEdit(order);
+                    var orderDetails = new OrderViewModel(order);
+                    return Json(new { success = true, order = orderDetails });
+                }
+                else
+                {
+                    return Json(new { success = true });
+                }
+                
             }
             catch (Exception)
             {
