@@ -118,7 +118,12 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                var order = _repository.Find(id);
+                if (_repository.Cancel(order))
+                {
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
             }
             catch (Exception)
             {
@@ -132,7 +137,23 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                if (string.IsNullOrWhiteSpace(Request["OrderId"]) ||
+                    string.IsNullOrWhiteSpace(Request["Fee"]) ||
+                    string.IsNullOrWhiteSpace(Request["DueDate"]))
+                {
+                    return Json(new { success = false });
+                }
+                var order = _repository.Find(int.Parse(Request["OrderId"]));
+                var dueDate = DateTime.ParseExact(Request["DueDate"], "dd/MM/yyyy", null);
+                var fee = int.Parse(Request["Fee"]);
+                if (_repository.Approve(order, dueDate, fee))
+                {
+                    var orderDetails = new OrderViewModel(order);
+                    return Json(new { success = true, order = orderDetails});
+
+                }
+              
+                return Json(new { success = false });              
             }
             catch (Exception)
             {
@@ -146,7 +167,13 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                var order = _repository.Find(id);
+                if (_repository.Reject(order))
+                {
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
+                
             }
             catch (Exception)
             {
@@ -160,7 +187,12 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                var order = _repository.Find(id);
+                if (_repository.DisApprove(order))
+                {
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
             }
             catch (Exception)
             {
@@ -188,7 +220,13 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                var order = _repository.Find(id);
+                var plan = _repository.FindPlan(order);
+                if (_repository.RemoveFromPlan(plan, order))
+                {
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
             }
             catch (Exception)
             {

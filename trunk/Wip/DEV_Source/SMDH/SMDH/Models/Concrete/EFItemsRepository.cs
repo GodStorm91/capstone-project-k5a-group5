@@ -8,7 +8,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFItemsRepository : IItemRepository
     {
-        private EFDBbContext context = new EFDBbContext();
+        private EFDBbContext context = new EFDBbContext();        
 
         public IQueryable<Item> Items
         {
@@ -43,6 +43,7 @@ namespace SMDH.Models.Concrete
         {
             try
             {
+                
                 context.Items.Remove(item);
                 if (commit) context.SaveChanges();
                 return true;

@@ -30,6 +30,7 @@ namespace SMDH.Infrastructure
         {
             //put additionla bindings here
             ninjectKernel.Bind<IOrderRepository>().To<EFOrdersRepository>();
+            ninjectKernel.Bind<IRequestRepository>().To<EFRequestsRepository>();
         }
     }
 }
