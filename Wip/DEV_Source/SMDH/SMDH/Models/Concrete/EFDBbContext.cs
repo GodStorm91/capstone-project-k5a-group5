@@ -26,7 +26,8 @@ namespace SMDH.Models.Concrete
 
         public DbSet<DeliveryOption> DeliveryOptions { get; set; }
 
+        public DbSet<Cargo> Cargoes { get; set; }
 
-        
+        public DbSet<Plan> Plans { get; set; }        
     }
 }

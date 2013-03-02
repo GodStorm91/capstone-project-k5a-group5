@@ -24,6 +24,27 @@ namespace SMDH.Models.Abstract
         Order ConfirmEdit(Order order);
          bool Cancel(Order order);
          bool Cancel(Order order, bool commit);
+         bool Approve(Order order, DateTime dueDate, int fee);
+         bool Reject(Order order);
+         bool CustomerCancel(Order order);
+         bool CustomerCancel(Order order, bool commit);
+         bool MarkAsCollected(Order order);
+         bool MarkAsCollected(Order order, bool commit);
+         bool MarkAsReturned(Order order);
+         bool MarkAsDelivered(Order order);
+         bool MarkAsDelivered(Order order, bool commit);
+         bool AddToPlan(Plan plan, Order order, bool commit);
+         bool AddToPlan(Plan plan, Order order);
+         bool RemoveFromPlan(Plan plan, Order order);
+         bool RemoveFromPlan(Plan plan, Order order, bool commit);
+         bool UpdateLocation(Order order, decimal latitude, decimal longitude);
+         bool BackToDraft(Order order);
+         bool BackToDraft(Order order, bool commit);
+         bool DisApprove(Order order);
+
+        //Plan
+         Plan FindPlan(Order order);
+
 
     }
    
