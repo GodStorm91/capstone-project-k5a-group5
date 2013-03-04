@@ -235,6 +235,21 @@ namespace SMDH.Controllers
             }
         }
 
+        public int GetAgreedOrders()
+        {
+            return 0;
+        }
+
+        public int GetCollectedOrders()
+        {
+            return 0;
+        }
+
+        public int GetRejectedAndExpiredOrders()
+        {
+            return 0;
+        }
+
 
 
         

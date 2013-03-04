@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SMDH.Models.Concrete;
+using SMDH.Models;
 
 namespace SMDH.Controllers
 {
     public class DashboardController : Controller
-    {
+    {   
+        
         //
         // GET: /Dashboard/
 
         public ActionResult Index()
         {
-            return View();
+             int  numberOfNewRequests;
+             return View();
         }
 
     }
