@@ -48,30 +48,31 @@
         <a href="#" class="visible-phone"><i class="icon icon-home"></i>Dashboard</a>
         <ul>
             <li class="active"><a href="index.html"><i class="icon icon-home"></i><span>Dashboard</span></a></li>
-            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i><span>Form elements</span>
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i><span>Plans</span>
                 <span class="label">3</span></a>
                 <ul>
-                    <li><a href="">Common elements</a></li>
-                    <li><a href="">Validation</a></li>
-                    <li><a href="">Wizard</a></li>
+                    <li><a href="">Collection Plans</a></li>
+                    <li><a href="">Delivery Plans</a></li>
+                    <li><a href="">Returned Plans</a></li>
                 </ul>
             </li>
-            <li><a href=""><i class="icon icon-tint"></i><span>Buttons &amp; icons</span></a></li>
-            <li><a href=""><i class="icon icon-pencil"></i><span>Interface elements</span></a></li>
-            <li><a href=""><i class="icon icon-th"></i><span>Tables</span></a></li>
-            <li><a href=""><i class="icon icon-th-list"></i><span>Grid Layout</span></a></li>
-            <li class="submenu"><a href="#"><i class="icon icon-file"></i><span>Sample pages</span>
-                <span class="label">4</span></a>
+            <li><a href=""><i class="icon icon-tint"></i><span>Requests</span></a></li>
+            <li><a href=""><i class="icon icon-pencil"></i><span>Orders</span></a></li>
+            <li><a href=""><i class="icon icon-th"></i><span>Customers</span></a></li>           
+            <li class="submenu"><a href="#"><i class="icon icon-file"></i><span>Options Config</span>
+                <span class="label">6</span></a>
                 <ul>
-                    <li><a href="">Invoice</a></li>
-                    <li><a href="">Support chat</a></li>
-                    <li><a href="">Calendar</a></li>
-                    <li><a href="">Gallery</a></li>
+                    <li><a href="">Hubs</a></li>
+                    <li><a href="">Order Payment Types</a></li>
+                    <li><a href="">Delivery Options</a></li>
+                    <li><a href="">Cities/Provinces</a></li>
+                    <li><a href="">Districts</a></li>
+                    <li><a href="">Wards</a></li>
+
                 </ul>
             </li>
-            <li><a href=""><i class="icon icon-signal"></i><span>Charts &amp; graphs</span></a>
-            </li>
-            <li><a href=""><i class="icon icon-inbox"></i><span>Widgets</span></a> </li>
+            <li><a href=""><i class="icon icon-signal"></i><span>Charts &amp; Reports</span></a>
+            </li>            
         </ul>
     </div>
     <div id="style-switcher">
@@ -80,63 +81,7 @@
         </a><a href="#red" style="background-color: #673232;"></a>
     </div>
     <div id="content">
-        <div id="content-header">
-            <h1>
-                Dashboard</h1>
-            <div class="btn-group">
-                <a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i>
-                </a><a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i>
-                </a><a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment">
-                </i><span class="label label-important">5</span></a> <a class="btn btn-large tip-bottom"
-                    title="Manage Orders"><i class="icon-shopping-cart"></i></a>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span12 center" style="text-align: center;">
-                    <ul class="stat-boxes">
-                        <li>
-                            <div class="left peity_bar_good">
-                                <span>2,4,9,7,12,10,12</span>+20%</div>
-                            <div class="right">
-                                <strong>36094</strong> Visits
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left peity_bar_neutral">
-                                <span>20,15,18,14,10,9,9,9</span>0%</div>
-                            <div class="right">
-                                <strong>1433</strong> Users
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left peity_bar_bad">
-                                <span>3,5,9,7,12,20,10</span>-50%</div>
-                            <div class="right">
-                                <strong>8650</strong> Orders
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left peity_line_good">
-                                <span>12,6,9,23,14,10,17</span>+70%</div>
-                            <div class="right">
-                                <strong>8650</strong> Orders
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left peity_line_good">
-                                <span>12,6,9,23,14,10,17</span>+70%</div>
-                            <div class="right">
-                                <strong>8650</strong> Orders
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row-fluid">
-                @RenderBody()
-            </div>
-        </div>
+        @RenderBody()     
     </div>
     <script src="http://wbpreview.com/previews/WB0F35928/js/excanvas.min.js"></script>
     <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.min.js"></script>

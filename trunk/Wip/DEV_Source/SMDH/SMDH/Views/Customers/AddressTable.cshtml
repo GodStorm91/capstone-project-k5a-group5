@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SMDH.Models.CustomerAddress>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="address-table">
+    <thead>
+        <tr>
+            <th>
+                Address
+            </th>@*
+            <th class="tbl-status-col">
+                Status
+            </th>*@
+            <th class="tbl-action-col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Address
+                </td>@*
+                <td class="">
+                    <a class="toggleActivate" href="javascript:toggleActivate('CustomerAddresses',@item.CustomerAddressId)">
+                        @if (item.IsActive)
+                        {
+                            <img id="address-@item.CustomerAddressId-status" src="/img/icons2/checkmark2.png" width="18px" height="18px" alt="Active - Click to Deactivate"
+                                title="Active - Click to Deactivate" />
+                        }
+                        else
+                        {
+                            <img id="address-@item.CustomerAddressId-status" src="/img/icons2/delete.png" width="18px" height="18px" alt="Inactive - Click to Activate"
+                                title="Deactive - Click to Activate" />
+                        }
+                    </a>
+                </td>*@
+                <td class="action-column">
+                    <a class="btn action edit" href="javascript:editCustomerAddress(@item.CustomerAddressId);">
+                        <img src="/img/icons/pencil.png" alt="Edit" title="Edit" width="18px"/></a>
+                    <a class="btn action delete" href="javascript:deleteCustomerAddress(@item.CustomerAddressId);">
+                        <img src="/img/icons2/cross.png" alt="Delete" title="Delete" width="18px"/></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

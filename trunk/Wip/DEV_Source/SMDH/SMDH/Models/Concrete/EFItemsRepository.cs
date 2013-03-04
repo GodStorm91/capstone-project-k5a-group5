@@ -8,7 +8,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFItemsRepository : IItemRepository
     {
-        private EFDBbContext context = new EFDBbContext();        
+        private EFDbContext context = new EFDbContext();        
 
         public IQueryable<Item> Items
         {

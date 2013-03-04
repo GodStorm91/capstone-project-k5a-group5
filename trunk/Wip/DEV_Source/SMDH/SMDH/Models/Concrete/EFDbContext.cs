@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace SMDH.Models.Concrete
 {
-    public class EFDBbContext : DbContext
+    public class EFDbContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 
@@ -28,6 +28,18 @@ namespace SMDH.Models.Concrete
 
         public DbSet<Cargo> Cargoes { get; set; }
 
-        public DbSet<Plan> Plans { get; set; }        
+        public DbSet<Plan> Plans { get; set; }
+
+        public DbSet<Customer> Customers {get;set;}
+
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+
+        //public DbSet<TiktakStaff> TiktakStaffs { get; set; }
+
+        //public DbSet<UserInfo> UserInfoes { get; set; }
+
+
     }
 }
