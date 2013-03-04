@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SMDH.Models.Product>
+@using System.Text.RegularExpressions;
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                ProductWidth
+            </th>
+            <th>
+                ProductHeight
+            </th>
+            <th>
+                ProductLength
+            </th>
+            <th>
+                ProductWeight
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Category
+            </th>
+            <th class="tbl-action-col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.ProductWidth
+                </td>
+                <td>
+                    @item.ProductHeight
+                </td>
+                <td>@item.ProductLength
+                </td>
+                <td>@item.ProductWeight
+                </td>
+                <td>
+                    @item.ProductPrice
+                </td>
+                <td>
+                    @item.ImageURL
+                </td>
+                <td>
+                    @item.ProductCategory
+                </td>
+                <td class="action-column">
+                    <a class="btn btn-primary" href="javascript:void(0)" onclick="edit(@item.ProductId)">
+                        <i class="icon-pencil icon-white"></i>Edit</a> <a class="btn btn-danger" href="#" onclick="deleteItemManagement(@item.ProductId);">
+                            <i class="icon-remove icon-white"></i>Delete </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    var deleteItemManagement = function (productID) {
+        bootbox.confirm("Are you sure to cancel this request?", function (result) {
+            if (result) {
+                $.post('/Customer/Products/Remove/' + productID, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Failed to cancel this request.');
+                    }
+                });
+            }
+        });
+    };
+</script>

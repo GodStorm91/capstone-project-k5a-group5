@@ -1,0 +1,57 @@
+﻿@model SMDH.Models.Product
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create new Item</h3>
+</div>
+<div class="modal-body" style="height: 400px;">
+    @using (Html.BeginForm("ConfirmCreate", "Products", FormMethod.Post, new { id = "create-form", Class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            @Html.Partial("_CreateOrEdit", Model)
+        </fieldset>        
+    }
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    //        $("#create-form").submit(function () {
+    //            if ($(this).valid()) {
+    //                $.ajax({
+    //                    type: 'POST',
+    //                    url: $(this).attr("action"),
+    //                    data: $(this).serialize(),
+    //                    success: function (result) {
+    //                        if (result.success) {
+    //                            window.location = '/ItemManagement/AddOrders/' + result.requestId;
+    //                        }
+    //                    },
+    //                    async: false
+    //                });
+    //            }
+    //            return false;
+    //        });
+
+    $('#btnCreate').click(function () {
+        $('#create-form').submit();
+    });
+
+</script>
+<script>
+    //    $('#uploadExcelForm').submit(function () {
+    //        if (document.getElementById('imageFile').value.match(/png$/) || document.getElementById('imageFile').value.match(/jpg$/) || document.getElementById('imageFile').value.match(/gif$/)) {
+    //            return true;
+    //        } else {
+    //            alert('Must be a images file !!!!!');
+    //            return false;
+    //        }
+    //    });
+</script>
