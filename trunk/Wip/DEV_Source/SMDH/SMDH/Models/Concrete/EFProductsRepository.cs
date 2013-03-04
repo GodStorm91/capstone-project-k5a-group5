@@ -41,5 +41,12 @@ namespace SMDH.Models.Concrete
             context.SubmitChanges();
             return true;
         }
+
+        public bool Create(Product product)
+        {
+            context.Products.InsertOnSubmit(product);
+            context.SubmitChanges();
+            return true;
+        }
     }
 }
