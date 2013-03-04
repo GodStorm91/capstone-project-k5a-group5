@@ -45,7 +45,7 @@
                 <a href="javascript:void(0)" class="myToolTip hide confirmSetLocation btn action" rel="tooltip"  title="Confirm Set Location">\
                     <img src="/img/icons2/checkmark2.png"width="18">\
                 </a>\
-                <a href="javascript:void(0)" class="myToolTip hide cancelSetLocation btn action" rel="tooltip"  title="Cancel Set Location">\
+                <a href="javascript:void(0)" class="removeToPlan hide removeFromPlan btn action" rel="tooltip"  title="Cancel Set Location">\
                     <span class="icomoon-icon-cancel"></span>\
                 </a>\
             </div>\
@@ -56,7 +56,7 @@
         ticket.find('dd.requestedDate').html(request.RequestedDate);
         ticket.find('dd.collectionAddress').html(request.CollectionAddress);
         ticket.find('a.addToPlan').attr('onclick', 'addToPlan(' + request.RequestId + ')');
-        ticket.find('a.removeToPlan').attr('onclick', 'remove(' + request.RequestId + ')');
+        ticket.find('a.removeToPlan').attr('onclick', 'removeFromPlan(' + request.RequestId + ')');
         
 //        if (request.Latitude == null) {
 //            ticket.find('a.setLocation img').attr('src', '/img/icons2/blue-dot.png');

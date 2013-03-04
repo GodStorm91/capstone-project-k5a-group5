@@ -10,7 +10,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFRequestsRepository: IRequestRepository
     {
-        private EFDBbContext context = new EFDBbContext();        
+        private EFDbContext context = new EFDbContext();        
 
         public IQueryable<Request> Requests
         {

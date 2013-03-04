@@ -1,0 +1,48 @@
+﻿@model SMDH.Models.Customer
+<div class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">
+            Company Name <span style="color:Red">*</span>
+        </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.CompanyName)
+            @Html.ValidationMessageFor(model => model.CompanyName)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Display Name <span style="color:Red">*</span>
+        </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.DisplayName)
+            @Html.ValidationMessageFor(model => model.DisplayName)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Phone Number <span style="color:Red">*</span>
+        </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.PhoneNumber)
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Current Contract Code <span style="color:Red">*</span>
+        </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.CurrentContractCode)
+            @Html.ValidationMessageFor(model => model.CurrentContractCode)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Note
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Note)
+            @Html.ValidationMessageFor(model => model.Note)
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HDMS" Class="SMDHDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=THINHNTY60269\SQLEXPRESS;Initial Catalog=HDMS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EFDbContext" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DELLUSER-PC\SQLEXPRESS;Initial Catalog=HDMS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EFDbContext" Provider="System.Data.SqlClient" />
   <Table Name="dbo.aspnet_Applications" Member="aspnet_Applications">
     <Type Name="aspnet_Application">
       <Column Name="ApplicationName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
@@ -390,8 +390,8 @@
       <Association Name="Order_Item" Member="Items" ThisKey="OrderId" OtherKey="OrderId" Type="Item" />
       <Association Name="Order_Order" Member="Order2" ThisKey="OrderId" OtherKey="OrderId" Type="Order" Cardinality="One" />
       <Association Name="Order_PriceCategory" Member="PriceCategories" ThisKey="OrderId" OtherKey="OrderId" Type="PriceCategory" />
-      <Association Name="Hub_Order" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
       <Association Name="DeliveryType_Order" Member="DeliveryType" ThisKey="DeliveryTypeId" OtherKey="DeliveryTypeID" Type="DeliveryType" IsForeignKey="true" />
+      <Association Name="Hub_Order" Member="Hub" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
       <Association Name="Hub_Order1" Member="Hub1" ThisKey="HubId" OtherKey="HubId" Type="Hub" IsForeignKey="true" />
       <Association Name="Order_Order" Member="Order1" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
       <Association Name="District_Order" Member="District" ThisKey="ReceiverAddressDistrictId" OtherKey="DistrictId" Type="District" IsForeignKey="true" />

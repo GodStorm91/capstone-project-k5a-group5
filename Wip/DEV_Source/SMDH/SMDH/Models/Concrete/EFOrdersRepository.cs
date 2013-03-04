@@ -10,7 +10,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFOrdersRepository : IOrderRepository
     {
-        private EFDBbContext context = new EFDBbContext();
+        private EFDbContext context = new EFDbContext();
 
         public IQueryable<Order> Orders
         {
@@ -98,7 +98,7 @@ namespace SMDH.Models.Concrete
             order.OrderStatus = (int)OrderStatus.Draft;
             context.Entry(order).State = System.Data.EntityState.Modified;
             context.SaveChanges();
-            var myContext = new EFDBbContext();
+            var myContext = new EFDbContext();
             order = myContext.Orders.Find(order.OrderId);
 
             return order;
