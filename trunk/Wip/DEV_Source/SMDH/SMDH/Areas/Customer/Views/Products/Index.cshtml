@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SMDH.Models.Product>
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Products";
+    ViewBag.Heading = "Products Management";
+}
+<script src="/js/crud.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/uniform.css" />
+<link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/select2.css" />
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.uniform.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/select2.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.dataTables.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/unicorn.tables.js"></script>
+<script>
+    $(document).ready(function () {
+        setupCrud('Customer/Products');
+    });
+</script>
+<!-- Begin "Create" Modal -->
+<div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<!-- End "Create" Modal -->
+<!-- Begin "Edit" Modal -->
+<div class="modal hide fade" id="editModal">
+</div>
+<div id="divTable">
+    @Html.Partial("ProductTable", Model)
+</div>

@@ -1,0 +1,75 @@
+﻿@model SMDH.Models.Product
+<div class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">
+            Name
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            ProductWidth
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductWidth)
+            @Html.ValidationMessageFor(model => model.ProductWidth)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            ProductHeight
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductHeight)
+            @Html.ValidationMessageFor(model => model.ProductHeight)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            ProductLength
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductLength)
+            @Html.ValidationMessageFor(model => model.ProductLength)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            ProductWeight
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductWeight)
+            @Html.ValidationMessageFor(model => model.ProductWeight)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Price
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductPrice)
+            @Html.ValidationMessageFor(model => model.ProductPrice)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Image
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ImageURL)
+            @Html.ValidationMessageFor(model => model.ImageURL)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Category
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.ProductCategory)
+            @Html.ValidationMessageFor(model => model.ProductCategory)
+        </div>
+    </div>
+</div>
