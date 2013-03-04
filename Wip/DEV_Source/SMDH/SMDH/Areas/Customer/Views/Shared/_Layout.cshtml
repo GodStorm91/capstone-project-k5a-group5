@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from wbpreview.com/previews/WB0F35928/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 01 Mar 2013 09:21:45 GMT -->
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/fullcalendar.css" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/unicorn.main.css" />
+    <link rel="stylesheet" href="http://wbpreview.com/previews/WB0F35928/css/unicorn.grey.css"
+        class="skin-color" />
+</head>
+<body>
+    <div id="header">
+        <h1>
+            <a href="">Home</a></h1>
+    </div>
+    <div id="search">
+        <input type="text" placeholder="Search here..." />
+        <button type="submit" class="tip-right" title="Search">
+            <i class="icon-search icon-white"></i>
+        </button>
+    </div>
+    <div id="user-nav" class="navbar navbar-inverse">
+        <ul class="nav btn-group">
+            <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i><span
+                class="text">Profile</span></a></li>
+            <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown"
+                data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope">
+                </i><span class="text">Messages</span> <span class="label label-important">5</span>
+                <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="sAdd" title="" href="#">new message</a></li>
+                    <li><a class="sInbox" title="" href="#">inbox</a></li>
+                    <li><a class="sOutbox" title="" href="#">outbox</a></li>
+                    <li><a class="sTrash" title="" href="#">trash</a></li>
+                </ul>
+            </li>
+            <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-cog"></i><span
+                class="text">Settings</span></a></li>
+            <li class="btn btn-inverse"><a title="" href="http://wbpreview.com/previews/WB0F35928/login.html">
+                <i class="icon icon-share-alt"></i><span class="text">Logout</span></a></li>
+        </ul>
+    </div>
+    <div id="sidebar">
+        <a href="#" class="visible-phone"><i class="icon icon-home"></i>Dashboard</a>
+        <ul>
+            <li class="active"><a href="index.html"><i class="icon icon-home"></i><span>Dashboard</span></a></li>
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i><span>Form elements</span>
+                <span class="label">3</span></a>
+                <ul>
+                    <li><a href="">Common elements</a></li>
+                    <li><a href="">Validation</a></li>
+                    <li><a href="">Wizard</a></li>
+                </ul>
+            </li>
+            <li><a href=""><i class="icon icon-tint"></i><span>Buttons &amp; icons</span></a></li>
+            <li><a href=""><i class="icon icon-pencil"></i><span>Interface elements</span></a></li>
+            <li><a href=""><i class="icon icon-th"></i><span>Tables</span></a></li>
+            <li><a href=""><i class="icon icon-th-list"></i><span>Grid Layout</span></a></li>
+            <li class="submenu"><a href="#"><i class="icon icon-file"></i><span>Sample pages</span>
+                <span class="label">4</span></a>
+                <ul>
+                    <li><a href="">Invoice</a></li>
+                    <li><a href="">Support chat</a></li>
+                    <li><a href="">Calendar</a></li>
+                    <li><a href="">Gallery</a></li>
+                </ul>
+            </li>
+            <li><a href=""><i class="icon icon-signal"></i><span>Charts &amp; graphs</span></a>
+            </li>
+            <li><a href=""><i class="icon icon-inbox"></i><span>Widgets</span></a> </li>
+        </ul>
+    </div>
+    <div id="content">
+        <div id="content-header">
+            <h1>
+                Dashboard</h1>
+            <div class="btn-group">
+                <a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i>
+                </a><a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i>
+                </a><a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment">
+                </i><span class="label label-important">5</span></a> <a class="btn btn-large tip-bottom"
+                    title="Manage Orders"><i class="icon-shopping-cart"></i></a>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12 center" style="text-align: center;">
+                    <ul class="quick-actions">
+                        <li><a href="#"><i class="icon-book"></i>Manage Requests </a></li>
+                        <li><a href="#"><i class="icon-shopping-bag"></i>Manage Orders </a></li>
+                        <li><a href="#"><i class="icon-database"></i>Manage Plans </a></li>
+                        <li><a href="#"><i class="icon-people"></i>Manage Users </a></li>
+                        <li><a href="#"><i class="icon-lock"></i>Security </a></li>
+                        <li><a href="#"><i class="icon-piechart"></i>Statistics </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/excanvas.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.ui.custom.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/bootstrap.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.flot.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.flot.resize.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.gritter.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/jquery.peity.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/fullcalendar.min.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/unicorn.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/unicorn.dashboard.js"></script>
+    <script src="http://wbpreview.com/previews/WB0F35928/js/unicorn.interface.js"></script>
+
+</body>
+</html>
