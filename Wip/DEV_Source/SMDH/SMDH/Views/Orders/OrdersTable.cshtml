@@ -1,0 +1,126 @@
+﻿@model IEnumerable<SMDH.Models.Order>
+@using System.Text.RegularExpressions; 
+@using SMDH.Models.Statuses;
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+    <thead>
+        <tr>
+            <th>
+                Order No.
+            </th>
+            <th>
+                Requested Date
+            </th>
+            <th>
+                Customer
+            </th>
+            <th>
+                Receiver Address
+            </th>
+            <th>
+                Amount To Collect
+            </th>
+            <th>
+                Delivery Option
+            </th>
+            <th>
+                Payment Type
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Due Date
+            </th>
+            <th>
+            </th>
+            <th>
+                Fee
+            </th>
+            <th class="tbl-action-col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    #@item.OrderId
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.Request.RequestedDate)
+                </td>
+                <td>
+                    @item.Request.Customer.DisplayName
+                </td>
+                <td>
+                    @*@item.FullAddress*@
+                </td>
+                <td>
+                    @item.AmountToBeCollectedFromReceiver
+                </td>
+                <td>
+                    @(item.DeliveryOption == null ? "None" : item.DeliveryOption.Name)
+                </td>
+                <td>
+                    @(item.OrderPaymentType == null ? "None" : item.OrderPaymentType.Name)
+                </td>
+                <td>
+                    @Regex.Replace(item.OrderStatus.ToString(), "(\\B[A-Z])", " $1")
+                    @if (item.OrderStatus == (int)OrderStatus.ToBeReturned)
+                    {
+                        <a class="btn btn-success btn-mini" href="#" onclick="markAsReturned(@item.OrderId)">
+                            Mark As Returned
+                        </a>
+                    }
+                </td>
+                <td>
+                    @if (item.DueDate != null)
+                    {
+                        @String.Format("{0:dd/MM/yyyy}", item.DueDate)
+                    }
+                    else
+                    {
+                        <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                    }
+                </td>
+                <td>
+                        @if (item.DueDate != null)
+                        {
+                            @String.Format("{0:yyyyMMdd}", item.DueDate)
+                        }
+                        else
+                        {
+                            <text>000</text>
+                        }
+                    </td>
+                <td>
+                    @if (item.Fee != null)
+                    {
+                        @item.Fee
+                    }
+                    else
+                    {
+                        <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                    }
+                </td>
+                <td class=" action-column">
+                    <a class="btn action view" href="Orders/Details/@item.OrderId">
+                        <img src="/img/icons/notepad.png" alt="View" title="View" width="12px"></a> 
+                    @*<a class="btn action update" href="#" onclick="showUpdateStatusModal(@item.OrderId,@item.OrderStatus)">
+                        <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" width="12px" /></a>*@
+                    @if (item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Delivered && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Returned && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.ToBeReturned)
+                    {
+                        <a class="btn action delete" href="#" onclick="cancelOrder(@item.OrderId);">
+                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Order" width="12px"/>
+                        </a>        
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

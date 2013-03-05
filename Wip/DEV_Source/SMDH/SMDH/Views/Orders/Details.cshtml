@@ -1,0 +1,135 @@
+﻿@model SMDH.Models.Order
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Order Details";
+    ViewBag.Heading = "Order Details";
+}
+<div class="order-details">
+    <div class="green-bordered order-info">
+        <div class="row-fluid">
+            <div class="col-left" style="width: 30%; min-width: 275px; float: left">
+                <dl class="dl-horizontal">
+                    <dt>Customer: </dt>
+                    <dd>
+                        @Model.Request.Customer.DisplayName</dd>
+                    <dt>Requested Date: </dt>
+                    <dd>
+                        @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.Request.RequestedDate)
+                    </dd>
+                    <dt>Amount To Collect: </dt>
+                    <dd>
+                        @Model.AmountToBeCollectedFromReceiver VNĐ</dd>
+                    <dt>Fee: </dt>
+                    <dd>
+                        @if (Model.Fee != null)
+                        {
+                            @Model.Fee <text>VNĐ</text>
+                        }
+                        else
+                        {
+                            <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-center" style="width: 27%; min-width: 260px; float: left">
+                <dl class="dl-horizontal">
+                    <dt>Properties: </dt>
+                    <dd>
+                        <span class="label label-success">@Model.DeliveryOption.Name</span> <span class="label label-info">@Model.OrderPaymentType.Name</span>&nbsp;
+                    </dd>
+                    <dt>Receiver Name: </dt>
+                    <dd>
+                        @Model.ReceiverName</dd>
+                    <dt>Receiver Phone: </dt>
+                    <dd>
+                        @Model.ReceiverPhone</dd>
+                    <dt>Status: </dt>
+                    <dd>
+                        <span class="label label-warning">@Regex.Replace(Model.OrderStatus.ToString(), "(\\B[A-Z])", " $1")</span>&nbsp;
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-right" style="width: 42%; min-width: 400px; float: left">
+                <dl class="dl-horizontal">
+                    <dt>Due Date: </dt>
+                    <dd>
+                        @if (Model.DueDate != null)
+                        {
+                            <span class="label label-important">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.DueDate)</span><text>&nbsp;</text>
+                        }
+                        else
+                        {
+                            <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                        }
+                    </dd>
+                    <dt>Note: </dt>
+                    <dd>
+                        @if (string.IsNullOrWhiteSpace(Model.Note))
+                        {
+                            <text>None</text>
+                        }
+                        else
+                        {
+                            <text>@Model.Note</text>
+                        }
+                    </dd>
+                    <dt>Receiver Address: </dt>
+                    <dd>
+                        @*@Model.FullAddress*@
+                        </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <h3>
+        Items</h3>
+    <table class="table table-striped table-bordered" id="main-table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Properties
+                </th>
+                <th>
+                    Size
+                </th>
+                <th>
+                    Weight
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Items)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @if (item.IsFragile)
+                        { 
+                            <span class="label label-info">Fragile</span><text>&nbsp;</text> }
+                        @if (item.HasHighValue)
+                        { 
+                            <span class="label label-success">High Value</span><text>&nbsp;</text> }
+                    </td>
+                    <td>
+                        @*@item.Size*@
+                    </td>
+                    <td>
+                        @*@item.Weight*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

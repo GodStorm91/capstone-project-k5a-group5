@@ -10,7 +10,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFOrdersRepository : IOrderRepository
     {
-        private EFDbContext context = new EFDbContext();
+        private SMDHDataContext context = new SMDHDataContext();
 
         public IQueryable<Order> Orders
         {
@@ -44,7 +44,7 @@ namespace SMDH.Models.Concrete
 
         public Order Find(int id)
         {
-            return context.Orders.Find(id);
+            return context.Orders.Single(o=> o.OrderId == id);
         }        
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace SMDH.Models.Concrete
                 {
                     ItemId = item.ItemId,
                     OrderId = item.OrderId,
-                    Name = context.Products.Find(item.ProductId).Name,
+                    Name = context.Products.Single(o=>o.ProductId == item.ProductId).Name,
                     Quantity = item.Quantity,
                     IsFragile = item.IsFragile,
                     HasHighValue = item.HasHighValue,
@@ -80,10 +80,10 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                context.Orders.Add(order);
+                context.Orders.InsertOnSubmit(order);
                 request.Orders.Add(order);
                 order.OrderStatus = (int)RequestStatus.Draft;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -95,9 +95,8 @@ namespace SMDH.Models.Concrete
 
         public Order ConfirmEdit(Order order)
         {            
-            order.OrderStatus = (int)OrderStatus.Draft;
-            context.Entry(order).State = System.Data.EntityState.Modified;
-            context.SaveChanges();
+            order.OrderStatus = (int)OrderStatus.Draft;            
+            context.SubmitChanges();
             var myContext = new EFDbContext();
             order = myContext.Orders.Find(order.OrderId);
 
@@ -138,7 +137,7 @@ namespace SMDH.Models.Concrete
 
                 if (commit)
                 {
-                    context.SaveChanges();
+                    context.SubmitChanges();
                 }
 
                 return true;
@@ -164,10 +163,10 @@ namespace SMDH.Models.Concrete
                 var itemsArray = order.Items.ToArray();
                 for (var i = 0; i < itemsArray.Length; i++)
                 {
-                    context.Items.Remove(itemsArray[i]);
+                    context.Items.DeleteOnSubmit(itemsArray[i]);
                 }
-                context.Orders.Remove(order);
-                if (commit) context.SaveChanges();
+                context.Orders.DeleteOnSubmit(order);
+                if (commit) context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -184,7 +183,7 @@ namespace SMDH.Models.Concrete
 
         public Request FindRequestById(int requestId)
         {
-            return context.Requests.Find(requestId);
+            return context.Requests.Single(o => o.RequestId == requestId);
         }
 
 
@@ -196,7 +195,7 @@ namespace SMDH.Models.Concrete
                 order.DueDate = dueDate;
                 order.Fee = fee;
                 order.OrderStatus = (int)OrderStatus.Approved;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -212,7 +211,7 @@ namespace SMDH.Models.Concrete
             {
                 if (order.OrderStatus != (int)OrderStatus.New) return false;
                 order.OrderStatus = (int)OrderStatus.Rejected;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -230,7 +229,7 @@ namespace SMDH.Models.Concrete
                 order.DueDate = null;
                 order.DueDate = null;
                 order.OrderStatus = (int)OrderStatus.New;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -292,8 +291,8 @@ namespace SMDH.Models.Concrete
                 cargo.Plan = plan;
                 cargo.PlanId = plan.PlanId;
                 cargo.OrderId = order.OrderId;
-                context.Cargoes.Add(cargo);
-                context.SaveChanges();
+                context.Cargos.InsertOnSubmit(cargo);
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -332,11 +331,11 @@ namespace SMDH.Models.Concrete
 
         public Plan FindPlan(Order order)
         {
-            var cargoes = context.Cargoes.Where(o => o.OrderId == order.OrderId);
+            var cargoes = context.Cargos.Where(o => o.OrderId == order.OrderId);
             Plan plan = null;
             foreach (Cargo cargo in cargoes)
             {
-                plan = context.Plans.Find(cargo.PlanId);
+                plan = context.Plans.Single( o=> o.PlanId == cargo.PlanId);
 
                 //Only return when plan status is New
                 if (plan.Status == (int)PlanStatus.New)
@@ -363,13 +362,13 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                var cargoes = context.Cargoes.Where(p => p.PlanId == plan.PlanId &&
+                var cargoes = context.Cargos.Where(p => p.PlanId == plan.PlanId &&
                 p.OrderId == order.OrderId);
                 foreach (Cargo cargo in cargoes)
                 {
                     plan.Cargos.Remove(cargo);
                 }
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
 
                 return true;
             }
@@ -378,6 +377,12 @@ namespace SMDH.Models.Concrete
                 return false;
                 throw;
             }
+        }
+
+
+        public List<Order> GetOrdersByStatuses(List<int> statuses)
+        {
+            return context.Orders.Where(o => statuses.Contains(o.OrderStatus)).ToList();
         }
     }
 

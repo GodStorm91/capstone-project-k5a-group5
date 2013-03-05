@@ -38,5 +38,6 @@ namespace SMDH.Models.Abstract
          bool BackToDraft(Request request);
          bool AddToPlan(Plan plan, Request request);
          bool AddToPlan(Plan plan, Request request, bool commit);
+         List<Request> GetRequestsByStatuses(List<int> statuses);
     }
 }

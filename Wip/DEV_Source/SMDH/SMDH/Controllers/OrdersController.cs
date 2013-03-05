@@ -23,7 +23,77 @@ namespace SMDH.Controllers
 
         public ActionResult Index()
         {
-            return View(_repository.Orders);
+            var orders = new List<Order>();
+            var statuses = new List<int>();
+            statuses.Add((int)OrderStatus.New);
+            statuses.Add((int)OrderStatus.Approved);
+            statuses.Add((int)OrderStatus.PlannedForCollecting);
+            statuses.Add((int)OrderStatus.Collected);
+            statuses.Add((int)OrderStatus.ToBeReturned);
+            statuses.Add((int)OrderStatus.PlannedForDelivering);
+
+            try
+            {
+                if (!string.IsNullOrEmpty(Request["status"]))
+                {
+                    var statusStrs = Request["status"].Split(',');
+                    if (statusStrs.Count() > 0)
+                    {
+                        statuses = new List<int>();
+                        foreach (var statusStr in statusStrs)
+                        {
+                            switch (statusStr.ToLower())
+                            {
+                                case "draft": statuses.Add((int)OrderStatus.Draft);
+                                    break;
+                                case "new": statuses.Add((int)OrderStatus.New);
+                                    break;
+                                case "approved": statuses.Add((int)OrderStatus.Approved);
+                                    break;
+                                case "plannedforcollecting": statuses.Add((int)OrderStatus.PlannedForCollecting);
+                                    break;
+                                case "collected": statuses.Add((int)OrderStatus.Collected);
+                                    break;
+                                case "tobereturned": statuses.Add((int)OrderStatus.ToBeReturned);
+                                    break;
+                                case "plannedfordelivering": statuses.Add((int)OrderStatus.PlannedForDelivering);
+                                    break;
+                                case "delivered": statuses.Add((int)OrderStatus.Delivered);
+                                    break;
+                                case "returned": statuses.Add((int)OrderStatus.Returned);
+                                    break;
+                                case "canceled": statuses.Add((int)OrderStatus.Canceled);
+                                    break;
+                                case "rejected": statuses.Add((int)OrderStatus.Rejected);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            //orders = context.Orders.Where(o => statuses.Contains(o.OrderStatus)).ToList();
+            orders = _repository.GetOrdersByStatuses(statuses);
+
+            if (!string.IsNullOrWhiteSpace(Request["startDate"]))
+            {
+                var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
+                orders = orders.Where(o => o.Request.RequestedDate >= startDate).ToList();
+                ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
+            }
+            if (!string.IsNullOrWhiteSpace(Request["endDate"]))
+            {
+                var endDate = DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null).AddDays(1);
+                orders = orders.Where(o => o.Request.RequestedDate <= endDate).ToList();
+                ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null));
+            }
+
+            ViewBag.SelectedStatuses = statuses;
+
+            return View(orders);
         }
 
         //

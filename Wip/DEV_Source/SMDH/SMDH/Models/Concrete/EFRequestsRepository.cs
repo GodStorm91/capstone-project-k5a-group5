@@ -10,7 +10,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFRequestsRepository: IRequestRepository
     {
-        private EFDbContext context = new EFDbContext();        
+        private SMDHDataContext context = new SMDHDataContext();        
 
         public IQueryable<Request> Requests
         {
@@ -80,7 +80,7 @@ namespace SMDH.Models.Concrete
                     if (!AddToPlan(plan, request, false)) return false;
                 }
 
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -106,8 +106,8 @@ namespace SMDH.Models.Concrete
             {
                 request.RequestStatus = (int)RequestStatus.Draft;
                 //request.CreatedByUserId =
-                context.Requests.Add(request);
-                context.SaveChanges();
+                context.Requests.InsertOnSubmit(request);
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -130,7 +130,7 @@ namespace SMDH.Models.Concrete
 
                 request.RequestStatus = (int)RequestStatus.New;
                 request.RequestedDate = DateTime.Now;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
 
             }
@@ -149,7 +149,7 @@ namespace SMDH.Models.Concrete
                 var validOrders = ValidOrders(request);
                 if (validOrders.Where(o => o.OrderStatus != (int)OrderStatus.Approved).Count() > 0) return false;
                 request.RequestStatus = (int)RequestStatus.Approved;
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -165,7 +165,7 @@ namespace SMDH.Models.Concrete
             {
                 if (request.RequestStatus != (int)RequestStatus.New) return false;
                 BackToDraft(request);
-                context.SaveChanges();
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -193,7 +193,7 @@ namespace SMDH.Models.Concrete
                     orderRepo.Cancel(validOrder,false);   
                 }
                 request.RequestStatus = (int)RequestStatus.Canceled;
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
                 return true;
 
             }
@@ -250,8 +250,8 @@ namespace SMDH.Models.Concrete
                     if (!orderRepo.Delete(ordersArray[i], false)) return false;
                 }
 
-                context.Requests.Remove(request);
-                if (commit) context.SaveChanges();
+                context.Requests.DeleteOnSubmit(request);
+                if (commit) context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -273,7 +273,7 @@ namespace SMDH.Models.Concrete
                 }
                 request.RequestedDate = null;
                 request.RequestStatus = (int)RequestStatus.Draft;
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
                 return true;
             }
             catch (Exception)
@@ -303,7 +303,7 @@ namespace SMDH.Models.Concrete
                 cargo.RequestId = request.RequestId;
                 cargo.PlanId = plan.PlanId;
                 cargo.CargoType = (int)CargoTypes.CollectionPlan;
-                context.Cargoes.Add(cargo);
+                context.Cargos.InsertOnSubmit(cargo);
 
                 foreach (var validOrder in ValidOrders(request))
                 {
@@ -312,7 +312,7 @@ namespace SMDH.Models.Concrete
 
                 request.RequestStatus = (int)RequestStatus.PlannedForCollecting;
 
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
 
                 return true;
             }
@@ -334,14 +334,14 @@ namespace SMDH.Models.Concrete
                     order.OrderStatus = (int)OrderStatus.Approved;
                 }
                 request.RequestStatus = (int)RequestStatus.Approved;
-                var cargoes = context.Cargoes.Where(p => p.RequestId == request.RequestId
+                var cargoes = context.Cargos.Where(p => p.RequestId == request.RequestId
                     && p.PlanId == plan.PlanId);
                 foreach (var cargo in cargoes)
                 {
-                    context.Cargoes.Remove(cargo);
+                    context.Cargos.DeleteOnSubmit(cargo);
                 }
 
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
 
                 return true;
             }
@@ -360,7 +360,7 @@ namespace SMDH.Models.Concrete
 
         public Request Find(int id)
         {
-            return context.Requests.Find(id);
+            return context.Requests.Single(o=> o.RequestId == id);
         }
 
         public bool RemoveFromPlan(Request request, bool commit)
@@ -374,13 +374,13 @@ namespace SMDH.Models.Concrete
                 }
                 request.RequestStatus = (int)RequestStatus.Approved;
  
-                var cargoes = context.Cargoes.Where(p => p.RequestId == request.RequestId);
+                var cargoes = context.Cargos.Where(p => p.RequestId == request.RequestId);
                 foreach (var cargo in cargoes)
                 {
-                    context.Cargoes.Remove(cargo);
+                    context.Cargos.DeleteOnSubmit(cargo);
                 }
 
-                if (commit) context.SaveChanges();
+                if (commit) context.SubmitChanges();
 
                 return true;
             }
@@ -410,6 +410,11 @@ namespace SMDH.Models.Concrete
         public bool MarkAsCollected(List<Request> request)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Request> GetRequestsByStatuses(List<int> statuses)
+        {
+            return context.Requests.Where(o => statuses.Contains(o.RequestStatus)).ToList();
         }
     }
 }

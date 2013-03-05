@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Heading = "Dashboard";
+}
+<div class="row-fluid">
+    <div class="span4 offset1">
+        <div class="reminder">
+            <h3 style="text-align: center;">.....
+            </h3>
+            <ul>
+                <li class="clearfix">
+                    <a href="#" class="btn btn-info">@Html.ActionLink(
+    "Test Pass Code",
+    "CreateOrderAndPasscode",
+    "Orders")</a> </li>
+                <li class="clearfix">
+                    <a href="#" class="btn btn-info">@Html.ActionLink(
+    "Enter a passcode.....",
+    "EnterPasscode",
+    "Orders")</a> </li>
+
+            </ul>
+        </div>
+        <!-- End .reminder -->
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span4 offset1">
+        <div class="reminder">
+            <h3 style="text-align: center;">Orders
+            </h3>
+            <ul>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[0]</span> <span class="txt">DeliveringToHub</span> <a href="/Hub/Orders?&status=deliveringToHub" class="btn btn-info">view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[1]</span> <span class="txt">Delivering</span> <a href="/Hub/Orders?&status=delivering" class="btn btn-info">view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[2]</span> <span class="txt">Delivered</span><a href="/Hub/Orders?&status=delivered" class="btn btn-info">
+                        view</a> </li>
+                <li class="clearfix">
+                    <span class="number">@ViewBag.NumberOfOrders[3]</span> <span class="txt">WaitingForReturn</span><a href="/Hub/Orders?status=WaitingForReturn" class="btn btn-info">
+                        view</a> </li>
+            </ul>
+        </div>
+        <!-- End .reminder -->
+    </div>
+    <!-- End .span4 -->
+</div>
