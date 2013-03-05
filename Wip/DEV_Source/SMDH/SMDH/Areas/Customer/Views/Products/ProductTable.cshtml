@@ -56,15 +56,16 @@
                     @item.ProductPrice
                 </td>
                 <td>
-                    @item.ImageURL
+                    <img src="@item.ImageURL" style="height:30px;width:30px;" alt=""/>
                 </td>
                 <td>
                     @item.ProductCategory
                 </td>
                 <td class="action-column">
-                    <a class="btn btn-primary" href="javascript:void(0)" onclick="edit(@item.ProductId)">
-                        <i class="icon-pencil icon-white"></i>Edit</a> <a class="btn btn-danger" href="#" onclick="deleteItemManagement(@item.ProductId);">
-                            <i class="icon-remove icon-white"></i>Delete </a>
+                    <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.ProductId)">
+                        <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a> <a class="btn action delete" href="#" onclick="deleteItemManagement(@item.ProductId);">
+                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Request" width="15px" />
+                        </a>
                 </td>
             </tr>
         }
