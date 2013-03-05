@@ -22,36 +22,10 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">
         Cancel</button>
 </div>
-<script>
-    //        $("#create-form").submit(function () {
-    //            if ($(this).valid()) {
-    //                $.ajax({
-    //                    type: 'POST',
-    //                    url: $(this).attr("action"),
-    //                    data: $(this).serialize(),
-    //                    success: function (result) {
-    //                        if (result.success) {
-    //                            window.location = '/ItemManagement/AddOrders/' + result.requestId;
-    //                        }
-    //                    },
-    //                    async: false
-    //                });
-    //            }
-    //            return false;
-    //        });
 
+<script>
     $('#btnCreate').click(function () {
         $('#create-form').submit();
     });
+</script>
 
-</script>
-<script>
-    //    $('#uploadExcelForm').submit(function () {
-    //        if (document.getElementById('imageFile').value.match(/png$/) || document.getElementById('imageFile').value.match(/jpg$/) || document.getElementById('imageFile').value.match(/gif$/)) {
-    //            return true;
-    //        } else {
-    //            alert('Must be a images file !!!!!');
-    //            return false;
-    //        }
-    //    });
-</script>
