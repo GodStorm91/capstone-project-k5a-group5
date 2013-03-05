@@ -44,7 +44,24 @@ namespace SMDH.Models.Concrete
 
         public bool Create(Product product)
         {
+            product.CustomerId = 1;
+            product.IsPermanent = true;
             context.Products.InsertOnSubmit(product);
+            context.SubmitChanges();
+            return true;
+        }
+
+        public bool Edit(Product product)
+        {
+            Product pro = Find(product.ProductId);
+            pro.Name = product.Name;
+            pro.ProductWidth = product.ProductWidth;
+            pro.ProductHeight = product.ProductHeight;
+            pro.ProductLength = product.ProductLength;
+            pro.ProductWeight = product.ProductWeight;
+            pro.ProductHeight = product.ProductHeight;
+            pro.ProductPrice = product.ProductPrice;
+            pro.ImageURL = product.ImageURL;
             context.SubmitChanges();
             return true;
         }
