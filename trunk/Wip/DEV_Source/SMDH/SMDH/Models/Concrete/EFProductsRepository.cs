@@ -65,5 +65,13 @@ namespace SMDH.Models.Concrete
             context.SubmitChanges();
             return true;
         }
+
+
+
+
+        public List<Product> GetProductsByCustomerId(int customerId)
+        {
+            return context.Products.Where(o => o.CustomerId == customerId).ToList();
+        }
     }
 }
