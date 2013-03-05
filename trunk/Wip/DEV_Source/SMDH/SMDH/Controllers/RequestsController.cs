@@ -24,7 +24,64 @@ namespace SMDH.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var requests = new List<Request>();
+            var statuses = new List<int>();
+            statuses.Add((int)RequestStatus.New);
+            statuses.Add((int)RequestStatus.Approved);
+            statuses.Add((int)RequestStatus.PlannedForCollecting);
+            statuses.Add((int)RequestStatus.Collected);
+            try
+            {
+                if (!string.IsNullOrEmpty(Request["status"]))
+                {
+                    var statusStrs = Request["status"].Split(',');
+                    if (statusStrs.Count() > 0)
+                    {
+                        statuses = new List<int>();
+                        foreach (var statusStr in statusStrs)
+                        {
+                            switch (statusStr.ToLower())
+                            {
+                                case "draft": statuses.Add((int)RequestStatus.Draft);
+                                    break;
+                                case "new": statuses.Add((int)RequestStatus.New);
+                                    break;
+                                case "approved": statuses.Add((int)RequestStatus.Approved);
+                                    break;
+                                case "planned": statuses.Add((int)RequestStatus.PlannedForCollecting);
+                                    break;
+                                case "collected": statuses.Add((int)RequestStatus.Collected);
+                                    break;
+                                case "finished": statuses.Add((int)RequestStatus.Finished);
+                                    break;
+                                case "canceled": statuses.Add((int)RequestStatus.Canceled);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            requests = _repository.GetRequestsByStatuses(statuses);
+
+            if (!string.IsNullOrWhiteSpace(Request["startDate"]))
+            {
+                var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
+                requests = requests.Where(r => r.RequestedDate >= startDate).ToList();
+                ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
+            }
+            if (!string.IsNullOrWhiteSpace(Request["endDate"]))
+            {
+                var endDate = DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null).AddDays(1);
+                requests = requests.Where(r => r.RequestedDate <= endDate).ToList();
+                ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null));
+            }
+
+            ViewBag.SelectedStatuses = statuses;
+            return View(requests);
         }
 
         //
@@ -204,6 +261,15 @@ namespace SMDH.Controllers
             {
                 return Json(new { success = false });
             }
+        }
+
+        public ActionResult ApproveOrders(int id)
+        {
+            var request = _repository.Find(id);
+            if (request.RequestStatus != (int)RequestStatus.New) return RedirectToAction("Index");
+            var unapprovedOrders = _repository.ValidOrders(request).Where(o => o.OrderStatus != (int)OrderStatus.Approved).ToList();
+            ViewBag.RequestApprovable = unapprovedOrders.Count == 0 ? true : false;
+            return View(request);
         }
     }
 }

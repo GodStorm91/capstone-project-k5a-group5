@@ -1,0 +1,505 @@
+﻿@model SMDH.Models.Request
+@using SMDH.Models.Statuses
+@using SMDH.Models
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Approve Request";
+    ViewBag.Heading = "Approve Request";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
+}
+<script src="/js/form-action.js" type="text/javascript"></script>
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+@*<link href="/css/timepicker.css" rel="stylesheet" type="text/css" />*@
+@*<script src="/js/bootstrap-timepicker.js" type="text/javascript"></script>*@
+@*<script src="/js/supr-theme/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
+<link href="/css/supr-theme/jquery-ui-timepicker-addon.css" rel="stylesheet"
+    type="text/css" />*@
+<link href="/css/supr-theme/jquery.ui.datepicker.css" rel="stylesheet" type="text/css" />
+<div class="approveOrders requestDetails">
+    <div id="companyInfo" class="green-bordered">
+        <div style="clear: both;">
+        </div>
+        <div class="row-fluid" id="request-summary">
+            <div class="col-left" style="width:30%;min-width:250px;float:left">
+                <dl class="dl-horizontal">
+                    <dt>Request Number:</dt>
+                    <dd>
+                        #@Model.RequestId</dd>
+                    <dt>Customer:</dt>
+                    <dd>@Model.Customer.DisplayName</dd>
+                    <dt>Requested Date:</dt>
+                    <dd>@string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</dd>
+                    <dt>Status:</dt>
+                    <dd>
+                        <span class="label label-warning">@Regex.Replace(Model.RequestStatus.ToString(), "(\\B[A-Z])", " $1")</span><text>&nbsp;</text>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-center" style="width:25%;min-width:200px;float:left">
+                <dl class="dl-horizontal">
+                    <dt>Number of orders:</dt>
+                    <dd>
+                    @*@Model.ValidOrders.Count*@
+                    </dd>
+                    <dt>Number of items:</dt>
+                    <dd>
+                    @*@Model.NumberOfItems*@
+                    </dd>
+                    <dt>Total fee:</dt>
+                    <dd id="totalFee">
+                    @*@Model.TotalFee*@ VNĐ
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-right" style="width:44%;min-width:400px;float:left">
+                <dl class="dl-horizontal">
+                    <dt>Total amount to collect:</dt>
+                    <dd>@*@Model.TotalAmountToBeCollected*@ VNĐ
+                    </dd>
+                    <dt>Note:</dt>
+                    <dd>
+                        @if (string.IsNullOrWhiteSpace(Model.Note))
+                        {
+                            <text>None</text>
+                        }
+                        else
+                        {
+                            <text>@Model.Note</text>
+                        }
+                    </dd>                    
+                    <dt>Collection Address:</dt>
+                    <dd>
+                    @*@Model.CustomerAddress.FullAddress*@
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="tabbable tabs-left" id="orders-items">
+        <ul class="span7 nav nav-tabs" id="order-list">
+            @foreach (var order in Model.Orders.Where(o => o.OrderStatus != (int)OrderStatus.Canceled))
+            {
+                <li id="order-@order.OrderId">
+                    <div class="ticket-container span12 ticket order-ticket @if(order.OrderStatus == (int)OrderStatus.Rejected){<text>rejected</text>}">
+                        @if(order.OrderStatus == (int)OrderStatus.Rejected)
+                        {
+                            <div class="row-fluid" style="background:#000;color:#fff;text-align:center;">
+                                Rejected
+                            </div>
+                        }
+                        <div class="order-ticket-info">
+                            <div class="row-fluid">
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <span class="myToolTip" rel="tooltip" title="Order Number"style="font-size: 15px;
+                                            color: #969696">#</span>
+                                        </dt>
+                                        <dd class="order-number">
+                                            @order.OrderId</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/user.png" class="myTooltip" title="Receiver Name" width="15px" />
+                                        </dt>
+                                        <dd class="receiver-name">
+                                            @order.ReceiverName</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/phone.png" class="myTooltip" title="Receiver Phone" width="15px" />
+                                        </dt>
+                                        <dd class="receiver-phone">
+                                            @order.ReceiverPhone</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/info.png" class="myTooltip" title="Properties" width="15px" /></dt>
+                                        <dd class="properties">
+                                            <span class="label label-success">@order.DeliveryOption.Name</span> <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/bill.png" class="myTooltip" title="Amount to collect" width="15px" />
+                                        </dt>
+                                        <dd class="amount-to-be-collected">
+                                            @order.AmountToBeCollectedFromReceiver VNĐ</dd>
+                                    </dl>
+                                </div>
+                                @using (Html.BeginForm("Approve", "Orders", FormMethod.Post, new { id = "approve-form" }))
+                                {
+                                    <div class="column">
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                <img src="/img/icons2/calendar.png" class="myTooltip" title="Due Date" width="15px" /></dt>
+                                            <dd class="dueDate">
+                                                @if (order.DueDate != null)
+                                                {
+                                                    <span class="label label-important">@String.Format("{0:dd/MM/yyyy}", order.DueDate)</span><span>&nbsp;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-important">Not set yet</span><span>&nbsp;</span>
+                                                    <input type="hidden" name="OrderId" value="@order.OrderId" />
+                                                    <div class="control-group hide">
+                                                        <div class="controls">
+                                                            <input type="text" id="dueDate-picker" value="" style="float: left; width: 102px;height:22px;margin:0px;" placeholder="Set Due Date" name="DueDate" class="datepicker">
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="column">
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                <img src="/img/icons/coin.png" class="myTooltip" title="Fee" width="15px" /></dt>
+                                            <dd class="fee">
+                                                @if (order.Fee != null)
+                                                {
+                                                    @order.Fee <text>VNĐ</text>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-important">Not set yet</span><span>&nbsp;</span>
+                                                    <div class="control-group hide">
+                                                        <div class="controls">
+                                                            <div class="input-append">
+                                                                <input placeholder="Set Fee" name="Fee" style="float: left; width: 92px;height:22px;" />
+                                                                <span class="add-on" style="padding: 0px 3px;">VNĐ</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                }
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" class="myTooltip" title="Note" width="15px" /></dt>
+                                        <dd class="note">
+                                            @if (string.IsNullOrWhiteSpace(order.Note))
+                                            {
+                                                <text>None</text>        
+                                            }
+                                            else
+                                            {
+                                                @order.Note
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt><span style="font-size: 15px; color: #969696" class="myTooltip" title="Delivery Address">@@</span> </dt>
+                                        <dd class="full-address">
+                                            @*@order.FullAddress*@
+                                            </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                        {
+                            if (order.Fee == null)
+                            {
+                            <div class="ticket-btn-group">
+                                <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn action myTooltip" title="Approve Order" data-toggle="modal">
+                                    <span aria-hidden="true" class="icomoon-icon-thumbs-up-2"></span>
+                                </a>
+                                <a href="#" onclick="rejectOrder(@order.OrderId)" role="button" class="btn action deleteOrder myTooltip" title="Reject Order" data-toggle="modal">
+                                    <span aria-hidden="true" class="icomoon-icon-thumbs-down"></span>
+                                </a>
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="ticket-btn-group">
+                                <img src="/img/icons2/checkmark2.png" alt="Approved" title="Approved" class="myTooltip" width="14" style="margin-top:5px;">
+                                <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
+                                    <img src="/img/icons2/delete.png" alt="Cancel Order" class="myTooltip" title="Disapprove Order" width="15">
+                                </a>
+                            </div>
+                            }
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="tab-content" id="tab-items">
+            @foreach (var order in Model.Orders.Where(o => o.OrderStatus != (int)OrderStatus.Canceled))
+            {            
+                <div class="tab-pane" id="tab-order-@order.OrderId">
+                    <ul>
+                        @if (order.Items.Count == 0)
+                        {
+                            <li class="no-item">There is no item in this order.</li>
+                        }
+                        else
+                        {
+                            foreach (var item in order.Items)
+                            {
+                            <li id="item-@item.ItemId">
+                                <div class="ticket-container span12 ticket item-ticket">
+                                    <div class="row-fluid">
+                                        <div class="column left-column">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    <img src="/img/icons/box.png" alt="Product" class="myTooltip" title="Product" width="15" /></dt>
+                                                <dd class="item-name">
+                                                    @*@item.Name*@
+                                                    </dd>
+                                                <dt>
+                                                    <img src="/img/icons/font_size.png" alt="Size" class="myTooltip" title="Size" width="15" /></dt>
+                                                <dd class="size">
+                                                    @*@item.Product.ProductWeight*@
+                                                    </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="column center-column">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    <img src="/img/icons/chart_bar.png" alt="Quantity" class="myTooltip" title="Quantity" width="15" /></dt>
+                                                <dd class="quantity">
+                                                    @item.Quantity</dd>
+                                                <dt>
+                                                    <img src="/img/icons/gram_weight.png" alt="Weight" class="myTooltip" title="Weight" width="15" />
+                                                </dt>
+                                                <dd class="weight">
+                                                    @*@item.Product.ProductWeight*@
+                                                    </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="column right-column">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    <img src="/img/icons/info.png" class="myTooltip" title="Properties" width="15px" /></dt>
+                                                <dd class="properties">
+                                                    @if (!item.IsFragile && !item.HasHighValue)
+                                                    { <text>None</text> }
+                                                    @if (item.IsFragile)
+                                                    {<span class="label label-success">Fragile</span><text>&nbsp;</text>}
+                                                    @if (item.HasHighValue)
+                                                    {<span class="label label-info">High Value</span><text>&nbsp;</text>}
+                                                </dd>
+                                                <dt>
+                                                    <img src="/img/icons/notepencil32.png" class="myTooltip" title="Note" width="15px" />
+                                                    <dd class="note">
+                                                        @if (string.IsNullOrWhiteSpace(item.Note))
+                                                        {
+                                                            <text>None</text>        
+                                                        }
+                                                        else
+                                                        {
+                                                            @item.Note
+                                                        }
+                                                    </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@if (ViewBag.RequestApprovable)
+{
+    <a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(@Model.RequestId)">
+        Approve Request
+    </a>
+}
+else
+{
+    <a href="#" role="button" class="btn btn-inverse pull-right" data-toggle="modal" onclick="rejectRequest(@Model.RequestId)">
+        Reject Request
+    </a>
+}
+
+<!-- Begin Modal-->
+<div class="modal hide fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<!-- End Modal -->
+<script>
+    var setupOrderTicket = function () {
+        $(".order-ticket-info").click(function () {
+            $(this).closest("ul").children("li").removeClass("active");
+            $(this).closest("ul").find(".order-ticket-info").css('cursor', 'pointer');
+            $(this).closest("ul").find('.order-ticket-info .dueDate span').removeClass('hide');
+            $(this).closest("ul").find('.order-ticket-info .dueDate .control-group').addClass('hide');
+            $(this).closest("ul").find('.order-ticket-info .fee span').removeClass('hide');
+            $(this).closest("ul").find('.order-ticket-info .fee .control-group').addClass('hide');
+            $(this).css('cursor', 'initial');
+            if (!$(this).closest('.order-ticket').hasClass("rejected")) {
+                $(this).closest("li").addClass("active");
+                if ($(this).find('.dueDate .control-group').length == 1) {
+                    $(this).find('.dueDate span').addClass('hide');
+                    $(this).find('.dueDate .control-group').removeClass('hide');
+                }
+                if ($(this).find('.fee .control-group').length == 1) {
+                    $(this).find('.fee span').addClass('hide');
+                    $(this).find('.fee .control-group').removeClass('hide');
+                }
+            }
+            index = $(this).closest("li").index();
+            $(this).closest(".tabbable").children(".tab-content").children(".tab-pane").removeClass("active")
+            $($(this).closest(".tabbable").children(".tab-content").children(".tab-pane")[index]).addClass("active");
+        });
+    };
+
+    setupOrderTicket();
+
+    //    $(".date").datepicker({ format: "dd/mm/yyyy" });
+    //    $('.timepicker-default').timepicker({
+    //        defaultTime: 'value',
+    //        minuteStep: 5
+    //    });
+    //    $('#combined-picker').datetimepicker({
+    //        timeFormat: 'hh:mm TT'
+    //    });
+
+    $('.datepicker').datepicker({ format: "dd/mm/yyyy" });
+
+    var approveOrder = function (orderId) {
+        form = $('#order-' + orderId + ' form');
+        $.ajax({
+            type: 'POST',
+            url: form.attr("action"),
+            data: form.serialize(),
+            success: function (result) {
+                if (result.success) {
+                    $.blockUI();
+                    window.location.reload();
+                } else {
+                    bootbox.alert('Please check the due date and fee again.');
+                }
+            },
+            async: false
+        });
+    };
+
+    var rejectOrder = function (orderId) {
+        bootbox.confirm("Reject this order?", function (confirmed) {
+            if (confirmed) {
+                $.post('/Orders/Reject/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    };
+
+    var approveRequest = function (requestId) {
+        $.post('/Request/Approve/' + requestId, function (result) {
+            if (result.success) {
+                $.blockUI();
+                window.location = '/Request/';
+            } else {
+                bootbox.alert('Please approve all orders in this request first!');
+            }
+        });
+    };
+
+    var rejectRequest = function (requestId) {
+        bootbox.confirm("Reject this request?", function (confirmed) {
+            if (confirmed) {
+                $.post('/Request/Reject/' + requestId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location = '/Request/';
+                    }
+                });
+            }
+        });
+    };
+
+    var cancelOrder = function (orderId) {
+        bootbox.confirm("Are you sure to cancel/delete this order?", function (confirmed) {
+            if (confirmed) {
+                $.post('/Orders/Cancel/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Unable to cancel/delete this order');
+                    }
+                });
+            }
+        });
+    };
+
+    var disapproveOrder = function (orderId) {
+        bootbox.confirm("Disapprove this order?", function (result) {
+            if (result) {
+                $.post('/Orders/Disapprove/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Unable to disapprove this order');
+                    }
+                });
+            }
+        });
+    };
+
+    //    var calculateFeeAndDueDate = function (orderId) {
+    //        $.post('/Orders/SetFeeAndDueDate/' + orderId, function (result) {
+    //            $('#mainModal').html(result);
+    //            refreshValidation();
+    //            $('.editor-field').keypress(function (e) {
+    //                if (e.which == 13) {
+    //                    $(this).parents('form').submit();
+    //                    e.preventDefault();
+    //                    return false;
+    //                }
+    //            });
+    //            $('#mainModal').modal();
+    //        });
+    //    };
+
+    //    var done = function (id) {
+    //        if ($('#order-list > li').length == 0) {
+    //            bootbox.alert('No order added yet');
+    //            return;
+    //        }
+    //        if ($('#tab-items .tab-pane .no-item').length) {
+    //            bootbox.alert('One or more orders contain no item.');
+    //            return;
+    //        }
+    //        $.post('/Request/DoneCreating/' + id, function (result) {
+    //            if (result.success) window.location = '/Request';
+    //            else bootbox.alert('There was error processing this request. Please try refresh and try again.');
+    //        });
+    //    };
+
+    $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
+    $(window).resize(function () {
+        $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
+    });
+</script>

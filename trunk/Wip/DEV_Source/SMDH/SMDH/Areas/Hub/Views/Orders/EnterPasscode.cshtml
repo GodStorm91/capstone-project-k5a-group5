@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "EnterPasscode";
+}
+
+<div class="page-header">
+    <h2>EnterPasscode</h2>
+    
+    @using (Html.BeginForm("SubmitPasscode", "Orders"))
+    {
+        @Html.TextBox("passcode")
+        <input type="submit" value="OK"/>
+    }
+</div>

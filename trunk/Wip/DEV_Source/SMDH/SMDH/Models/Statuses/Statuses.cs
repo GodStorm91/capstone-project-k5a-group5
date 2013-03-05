@@ -31,11 +31,12 @@ namespace SMDH.Models.Statuses
         Collected = 6,
         ToBeReturned = 7,
         PlannedForDelivering = 8,
-        //Delivering = 9,
+        Delivering = 9, // at hub
         //Postponed = 10,
-        Delivered = 11,
+        Delivered = 11, //at hub
         Returned = 12,
-        //Finished = 13
+        WaitingForReturn = 13, //at hub
+        DeliveringToHub = 14 // at hub
     }
 
     public enum CollectionPlanStatus

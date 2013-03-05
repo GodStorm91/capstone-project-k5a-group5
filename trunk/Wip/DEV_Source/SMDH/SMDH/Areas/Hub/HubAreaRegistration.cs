@@ -2,7 +2,7 @@
 
 namespace SMDH.Areas.Hub
 {
-    public class HubAreaRegistration : AreaRegistration
+    public class CustomerAreaRegistration : AreaRegistration
     {
         public override string AreaName
         {
@@ -15,9 +15,10 @@ namespace SMDH.Areas.Hub
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Hub_default",
+                "Hub_Default",
                 "Hub/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                new[] { "SMDH.Areas.Hub.Controllers" } 
             );
         }
     }

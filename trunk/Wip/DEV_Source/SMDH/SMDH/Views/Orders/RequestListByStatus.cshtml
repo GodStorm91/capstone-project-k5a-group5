@@ -1,0 +1,124 @@
+﻿@model IEnumerable<SMDH.Models.Order>
+@{ 
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+        <thead>
+            <tr>
+                <th>
+                    Requested Date
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Receiver Address
+                </th>
+                <th>
+                    Aamount To Collect
+                </th>
+                <th>
+                    Delivery Option
+                </th>
+                <th>
+                    Payment Type
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Due Date
+                </th>
+                <th>
+                    Total Fee
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.Request.RequestedDate)
+                    </td>
+                    <td>
+                        @item.Request.Customer.DisplayName
+                    </td>
+                    <td>
+                        @item.FullAddress
+                    </td>
+                    <td>
+                        @item.AmountToBeCollectedFromReceiver
+                    </td>
+                    <td>
+                        @(item.DeliveryOption == null ? "None" : item.DeliveryOption.Name)
+                    </td>
+                    <td>
+                        @(item.OrderPaymentType == null ? "None" : item.OrderPaymentType.Name)
+                    </td>
+                    <td>
+                        @*@Regex.Replace(item.Status.ToString(), "(\\B[A-Z])", " $1")*@
+                        @item.OrderStatus
+                    </td>
+                    <td>
+                        @if (item.DueDate != null)
+                        {
+                            @String.Format("{0:d}", item.DueDate)
+                        }
+                        else
+                        {
+                            <span class="label label-important">Not set yet</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Fee != null)
+                        {
+                            @item.Fee
+                        }
+                        else
+                        {
+                            <span class="label label-important">Not set yet</span>
+                        }
+                    </td>
+                    <td class="">
+                        <a class="view" href="Orders/Details/@item.OrderId">
+                            <img src="/img/icons/notepad.png" alt="View" title="View"></a> <a class="update" href="#" onclick="showUpdateStatusModal(@item.OrderId,@item.OrderStatus)">
+                                <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" /></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<div class="modal hide fade" id="updateStatusModal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Update Delivery Plan Status</h3>
+    </div>
+    <div class="modal-body">
+        <select id="ddlStatus">
+            <option value="1">New</option>
+            <option value="2">Verified</option>
+            <option value="3">Canceled Before Collected</option>
+            <option value="4">Planned For Collecting</option>
+            <option value="5">Collecting</option>
+            <option value="6">Collected</option>
+            <option value="7">Canceled After Collected</option>
+            <option value="8">Planned For Delivering</option>
+            <option value="9">Delivering</option>
+            <option value="10">Postponed</option>
+            <option value="11">Delivered</option>
+            <option value="12">Returned</option>
+            <option value="13">Finished</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Update" id="btnUpdateStatus" />
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Cancel</button>
+    </div>
+</div>

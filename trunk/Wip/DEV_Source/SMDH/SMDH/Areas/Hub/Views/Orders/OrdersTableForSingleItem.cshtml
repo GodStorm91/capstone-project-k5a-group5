@@ -1,0 +1,111 @@
+﻿@model SMDH.Models.Order
+@using System.Text.RegularExpressions;
+@using SMDH.Models.Statuses;
+@{
+    Layout = null;
+}
+
+
+
+<table class="table table-striped table-bordered" id="main-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>OrderID
+            </th>
+            <th>Item No.
+            </th>
+            <th>Price
+            </th>
+            <th>Delivery Date
+            </th>
+            <th>Expired Date
+            </th>
+            <th>Status
+            </th>
+
+            <th class="tbl-action-col">Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@if (@Model.Status.ToString() == @OrderStatus.DeliveringToHub.ToString() || @Model.Status.ToString() == OrderStatus.WaitingForReturn.ToString())
+                {
+                <input type="checkbox" id="@Model.OrderId" value="@Model.OrderId" name="selectedObjects"/>
+                }</td>
+            <td>
+                @Model.OrderId
+            </td>
+            <td>
+                @Model.Items.Count
+            </td>
+            <td>
+                @if (@Model.Fee != null)
+                {
+                    @Model.Fee
+                }
+                else
+                {
+                    <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                }
+            </td>
+            <td>
+                @if (@Model.DeliveryDate != null)
+                {
+                    @string.Format("{0:dd/MM/yyyy hh:mm tt}", @Model.DeliveryDate)
+                }
+                else
+                {
+                    <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                }
+            </td>
+            <td>
+                @if (@Model.DeliveryDate != null)
+                {
+                        
+                    @string.Format("{0:dd/MM/yyyy hh:mm tt}", @Model.DeliveryDate.Value.AddDays(3))
+                        
+                }
+                else
+                {
+                    <span class="label label-important">Not set yet</span><text>&nbsp;</text>
+                }
+            </td>
+            <td>
+                @Model.Status
+            </td>
+            <td class=" action-column">
+                <a class="btn action view" href="Orders/Details/@Model.OrderId">
+                    <img src="/img/icons/notepad.png" alt="Detail" title="View" width="12px"></a>
+                @if (@Model.Status.ToString() == @OrderStatus.Delivering.ToString())
+                {
+                    <a class="btn action view" href="Orders/Edit/@Model.OrderId">
+                        <img src="/img/icons/notepencil32.png" alt="Edit" title="Update" width="12px"></a>
+                }
+            </td>
+        </tr>
+        }
+        <br />
+
+    </tbody>
+</table>
+@if (@Model.Status.ToString() != OrderStatus.Delivered.ToString())
+{
+    <a href="/Hub/" onclick="SubmitValue(@Model.OrderId)">Delivered</a>
+}
+
+
+<script>
+    function SubmitValue(id) {
+        if (confirm("Bạn có muốn giao hàng?")) {
+            var url = '@Url.Action("ChangeStatusByPasscode", "Orders")';
+            var data = { selectedId: id };
+            $.post(url, data, function () {
+                return true;
+            });
+        }
+        else
+            return false;
+    }
+</script>
