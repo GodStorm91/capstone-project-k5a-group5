@@ -130,7 +130,7 @@ namespace SMDH.Areas.Hub.Controllers
                          }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] {r.OrderId.ToString(),r.Count.ToString(),r.Fee.ToString(),r.DeliveryDate.ToString(),"<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>"});
+                orders.Add(new String[] {"<input type=\"checkbox\" />",r.OrderId.ToString(),r.Count.ToString(),r.Fee.ToString(),r.DeliveryDate.ToString(),"<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>"});
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -150,7 +150,7 @@ namespace SMDH.Areas.Hub.Controllers
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -170,7 +170,7 @@ namespace SMDH.Areas.Hub.Controllers
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -190,7 +190,7 @@ namespace SMDH.Areas.Hub.Controllers
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
