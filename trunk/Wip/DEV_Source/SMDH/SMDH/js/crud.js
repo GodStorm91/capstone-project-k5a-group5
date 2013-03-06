@@ -27,7 +27,6 @@ setupDataTable = function (model) {
                     }
                 });
             });
-
             edit = function (modelId) {
                 $('#createModal').html('');
                 $.ajax({
@@ -50,6 +49,7 @@ setupDataTable = function (model) {
                     }
                 });
             };
+
 
             Delete = function (modelId) {
                 var currentNode = $(this);

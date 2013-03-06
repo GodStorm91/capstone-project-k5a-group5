@@ -119,7 +119,7 @@ namespace SMDH.Areas.Hub.Controllers
                     ReceiverAddressDistrictId = 1,
                     AmountToBeCollectedFromReceiver = 10000,
                     OrderStatus = 14,
-                    Passcode = newPass
+                    Passcode = Int32.Parse(newPass)
                 };
             context.Orders.InsertOnSubmit(testOrder);
             context.SubmitChanges();
@@ -202,7 +202,7 @@ namespace SMDH.Areas.Hub.Controllers
 
         public ViewResult SubmitPasscode(string passCode)
         {
-            var result = context.Orders.FirstOrDefault(x => x.Passcode == passCode);
+            var result = context.Orders.FirstOrDefault(x => x.Passcode.ToString() == passCode);
             if (result == null)
             {
                 return null;
