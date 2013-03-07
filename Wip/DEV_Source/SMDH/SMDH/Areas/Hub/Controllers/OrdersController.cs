@@ -119,7 +119,7 @@ namespace SMDH.Areas.Hub.Controllers
                     ReceiverAddressDistrictId = 1,
                     AmountToBeCollectedFromReceiver = 10000,
                     OrderStatus = 14,
-                    Passcode = Int32.Parse(newPass)
+                    Passcode = newPass
                 };
             context.Orders.InsertOnSubmit(testOrder);
             context.SubmitChanges();

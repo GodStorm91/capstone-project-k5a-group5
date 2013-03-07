@@ -9,6 +9,13 @@ namespace SMDH.Models.Statuses
     {
         CollectionPlan = 0,
         DeliveryPlan = 1,
-        ReturnedPlan = 1
+        ReturnedPlan = 2
+    }
+
+    public enum PlanTypes
+    {
+        CollectionPlan = 0,
+        DeliveryPlan = 1,
+        ReturnedPlan = 2
     }
 }

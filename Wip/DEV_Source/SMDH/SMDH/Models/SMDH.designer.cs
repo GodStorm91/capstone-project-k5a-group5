@@ -84,9 +84,6 @@ namespace SMDH.Models
     partial void InsertDeliveryMen(DeliveryMen instance);
     partial void UpdateDeliveryMen(DeliveryMen instance);
     partial void DeleteDeliveryMen(DeliveryMen instance);
-    partial void InsertDeliveryMenInPlan(DeliveryMenInPlan instance);
-    partial void UpdateDeliveryMenInPlan(DeliveryMenInPlan instance);
-    partial void DeleteDeliveryMenInPlan(DeliveryMenInPlan instance);
     partial void InsertDeliveryOption(DeliveryOption instance);
     partial void UpdateDeliveryOption(DeliveryOption instance);
     partial void DeleteDeliveryOption(DeliveryOption instance);
@@ -129,6 +126,9 @@ namespace SMDH.Models
     partial void InsertOrder(Order instance);
     partial void UpdateOrder(Order instance);
     partial void DeleteOrder(Order instance);
+    partial void InsertDeliveryMenInPlan(DeliveryMenInPlan instance);
+    partial void UpdateDeliveryMenInPlan(DeliveryMenInPlan instance);
+    partial void DeleteDeliveryMenInPlan(DeliveryMenInPlan instance);
     #endregion
 		
 		public SMDHDataContext() : 
@@ -305,14 +305,6 @@ namespace SMDH.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<DeliveryMenInPlan> DeliveryMenInPlans
-		{
-			get
-			{
-				return this.GetTable<DeliveryMenInPlan>();
-			}
-		}
-		
 		public System.Data.Linq.Table<DeliveryOption> DeliveryOptions
 		{
 			get
@@ -422,6 +414,14 @@ namespace SMDH.Models
 			get
 			{
 				return this.GetTable<Order>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DeliveryMenInPlan> DeliveryMenInPlans
+		{
+			get
+			{
+				return this.GetTable<DeliveryMenInPlan>();
 			}
 		}
 	}
@@ -6842,270 +6842,6 @@ namespace SMDH.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DeliveryMenInPlan")]
-	public partial class DeliveryMenInPlan : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _DeliveryMenInPlanId;
-		
-		private System.Nullable<int> _DeliveryMenId;
-		
-		private System.Nullable<int> _PlanId;
-		
-		private System.Nullable<System.DateTime> _AssignedDate;
-		
-		private System.Nullable<decimal> _EstimateDistance;
-		
-		private System.Nullable<decimal> _EstimateTime;
-		
-		private EntityRef<DeliveryMen> _DeliveryMen;
-		
-		private EntityRef<Plan> _Plan;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnDeliveryMenInPlanIdChanging(int value);
-    partial void OnDeliveryMenInPlanIdChanged();
-    partial void OnDeliveryMenIdChanging(System.Nullable<int> value);
-    partial void OnDeliveryMenIdChanged();
-    partial void OnPlanIdChanging(System.Nullable<int> value);
-    partial void OnPlanIdChanged();
-    partial void OnAssignedDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnAssignedDateChanged();
-    partial void OnEstimateDistanceChanging(System.Nullable<decimal> value);
-    partial void OnEstimateDistanceChanged();
-    partial void OnEstimateTimeChanging(System.Nullable<decimal> value);
-    partial void OnEstimateTimeChanged();
-    #endregion
-		
-		public DeliveryMenInPlan()
-		{
-			this._DeliveryMen = default(EntityRef<DeliveryMen>);
-			this._Plan = default(EntityRef<Plan>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryMenInPlanId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int DeliveryMenInPlanId
-		{
-			get
-			{
-				return this._DeliveryMenInPlanId;
-			}
-			set
-			{
-				if ((this._DeliveryMenInPlanId != value))
-				{
-					this.OnDeliveryMenInPlanIdChanging(value);
-					this.SendPropertyChanging();
-					this._DeliveryMenInPlanId = value;
-					this.SendPropertyChanged("DeliveryMenInPlanId");
-					this.OnDeliveryMenInPlanIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryMenId", DbType="Int")]
-		public System.Nullable<int> DeliveryMenId
-		{
-			get
-			{
-				return this._DeliveryMenId;
-			}
-			set
-			{
-				if ((this._DeliveryMenId != value))
-				{
-					if (this._DeliveryMen.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDeliveryMenIdChanging(value);
-					this.SendPropertyChanging();
-					this._DeliveryMenId = value;
-					this.SendPropertyChanged("DeliveryMenId");
-					this.OnDeliveryMenIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanId", DbType="Int")]
-		public System.Nullable<int> PlanId
-		{
-			get
-			{
-				return this._PlanId;
-			}
-			set
-			{
-				if ((this._PlanId != value))
-				{
-					if (this._Plan.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPlanIdChanging(value);
-					this.SendPropertyChanging();
-					this._PlanId = value;
-					this.SendPropertyChanged("PlanId");
-					this.OnPlanIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedDate", DbType="Date")]
-		public System.Nullable<System.DateTime> AssignedDate
-		{
-			get
-			{
-				return this._AssignedDate;
-			}
-			set
-			{
-				if ((this._AssignedDate != value))
-				{
-					this.OnAssignedDateChanging(value);
-					this.SendPropertyChanging();
-					this._AssignedDate = value;
-					this.SendPropertyChanged("AssignedDate");
-					this.OnAssignedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimateDistance", DbType="Decimal(19,2)")]
-		public System.Nullable<decimal> EstimateDistance
-		{
-			get
-			{
-				return this._EstimateDistance;
-			}
-			set
-			{
-				if ((this._EstimateDistance != value))
-				{
-					this.OnEstimateDistanceChanging(value);
-					this.SendPropertyChanging();
-					this._EstimateDistance = value;
-					this.SendPropertyChanged("EstimateDistance");
-					this.OnEstimateDistanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimateTime", DbType="Decimal(19,2)")]
-		public System.Nullable<decimal> EstimateTime
-		{
-			get
-			{
-				return this._EstimateTime;
-			}
-			set
-			{
-				if ((this._EstimateTime != value))
-				{
-					this.OnEstimateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._EstimateTime = value;
-					this.SendPropertyChanged("EstimateTime");
-					this.OnEstimateTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DeliveryMen_DeliveryMenInPlan", Storage="_DeliveryMen", ThisKey="DeliveryMenId", OtherKey="DeliveryMenId", IsForeignKey=true)]
-		public DeliveryMen DeliveryMen
-		{
-			get
-			{
-				return this._DeliveryMen.Entity;
-			}
-			set
-			{
-				DeliveryMen previousValue = this._DeliveryMen.Entity;
-				if (((previousValue != value) 
-							|| (this._DeliveryMen.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DeliveryMen.Entity = null;
-						previousValue.DeliveryMenInPlans.Remove(this);
-					}
-					this._DeliveryMen.Entity = value;
-					if ((value != null))
-					{
-						value.DeliveryMenInPlans.Add(this);
-						this._DeliveryMenId = value.DeliveryMenId;
-					}
-					else
-					{
-						this._DeliveryMenId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("DeliveryMen");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Plan_DeliveryMenInPlan", Storage="_Plan", ThisKey="PlanId", OtherKey="PlanId", IsForeignKey=true)]
-		public Plan Plan
-		{
-			get
-			{
-				return this._Plan.Entity;
-			}
-			set
-			{
-				Plan previousValue = this._Plan.Entity;
-				if (((previousValue != value) 
-							|| (this._Plan.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Plan.Entity = null;
-						previousValue.DeliveryMenInPlans.Remove(this);
-					}
-					this._Plan.Entity = value;
-					if ((value != null))
-					{
-						value.DeliveryMenInPlans.Add(this);
-						this._PlanId = value.PlanId;
-					}
-					else
-					{
-						this._PlanId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Plan");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DeliveryOption")]
 	public partial class DeliveryOption : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -11690,6 +11426,270 @@ namespace SMDH.Models
 		{
 			this.SendPropertyChanging();
 			entity.Order = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DeliveryMenInPlan")]
+	public partial class DeliveryMenInPlan : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _DeliveryMenInPlanId;
+		
+		private System.Nullable<int> _DeliveryMenId;
+		
+		private System.Nullable<int> _PlanId;
+		
+		private System.Nullable<System.DateTime> _AssignedDate;
+		
+		private System.Nullable<decimal> _EstimateDistance;
+		
+		private System.Nullable<decimal> _EstimateTime;
+		
+		private EntityRef<DeliveryMen> _DeliveryMen;
+		
+		private EntityRef<Plan> _Plan;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDeliveryMenInPlanIdChanging(int value);
+    partial void OnDeliveryMenInPlanIdChanged();
+    partial void OnDeliveryMenIdChanging(System.Nullable<int> value);
+    partial void OnDeliveryMenIdChanged();
+    partial void OnPlanIdChanging(System.Nullable<int> value);
+    partial void OnPlanIdChanged();
+    partial void OnAssignedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnAssignedDateChanged();
+    partial void OnEstimateDistanceChanging(System.Nullable<decimal> value);
+    partial void OnEstimateDistanceChanged();
+    partial void OnEstimateTimeChanging(System.Nullable<decimal> value);
+    partial void OnEstimateTimeChanged();
+    #endregion
+		
+		public DeliveryMenInPlan()
+		{
+			this._DeliveryMen = default(EntityRef<DeliveryMen>);
+			this._Plan = default(EntityRef<Plan>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryMenInPlanId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int DeliveryMenInPlanId
+		{
+			get
+			{
+				return this._DeliveryMenInPlanId;
+			}
+			set
+			{
+				if ((this._DeliveryMenInPlanId != value))
+				{
+					this.OnDeliveryMenInPlanIdChanging(value);
+					this.SendPropertyChanging();
+					this._DeliveryMenInPlanId = value;
+					this.SendPropertyChanged("DeliveryMenInPlanId");
+					this.OnDeliveryMenInPlanIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryMenId", DbType="Int")]
+		public System.Nullable<int> DeliveryMenId
+		{
+			get
+			{
+				return this._DeliveryMenId;
+			}
+			set
+			{
+				if ((this._DeliveryMenId != value))
+				{
+					if (this._DeliveryMen.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDeliveryMenIdChanging(value);
+					this.SendPropertyChanging();
+					this._DeliveryMenId = value;
+					this.SendPropertyChanged("DeliveryMenId");
+					this.OnDeliveryMenIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanId", DbType="Int")]
+		public System.Nullable<int> PlanId
+		{
+			get
+			{
+				return this._PlanId;
+			}
+			set
+			{
+				if ((this._PlanId != value))
+				{
+					if (this._Plan.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPlanIdChanging(value);
+					this.SendPropertyChanging();
+					this._PlanId = value;
+					this.SendPropertyChanged("PlanId");
+					this.OnPlanIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedDate", DbType="Date")]
+		public System.Nullable<System.DateTime> AssignedDate
+		{
+			get
+			{
+				return this._AssignedDate;
+			}
+			set
+			{
+				if ((this._AssignedDate != value))
+				{
+					this.OnAssignedDateChanging(value);
+					this.SendPropertyChanging();
+					this._AssignedDate = value;
+					this.SendPropertyChanged("AssignedDate");
+					this.OnAssignedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimateDistance", DbType="Decimal(19,2)")]
+		public System.Nullable<decimal> EstimateDistance
+		{
+			get
+			{
+				return this._EstimateDistance;
+			}
+			set
+			{
+				if ((this._EstimateDistance != value))
+				{
+					this.OnEstimateDistanceChanging(value);
+					this.SendPropertyChanging();
+					this._EstimateDistance = value;
+					this.SendPropertyChanged("EstimateDistance");
+					this.OnEstimateDistanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimateTime", DbType="Decimal(19,2)")]
+		public System.Nullable<decimal> EstimateTime
+		{
+			get
+			{
+				return this._EstimateTime;
+			}
+			set
+			{
+				if ((this._EstimateTime != value))
+				{
+					this.OnEstimateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EstimateTime = value;
+					this.SendPropertyChanged("EstimateTime");
+					this.OnEstimateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DeliveryMen_DeliveryMenInPlan", Storage="_DeliveryMen", ThisKey="DeliveryMenId", OtherKey="DeliveryMenId", IsForeignKey=true)]
+		public DeliveryMen DeliveryMen
+		{
+			get
+			{
+				return this._DeliveryMen.Entity;
+			}
+			set
+			{
+				DeliveryMen previousValue = this._DeliveryMen.Entity;
+				if (((previousValue != value) 
+							|| (this._DeliveryMen.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DeliveryMen.Entity = null;
+						previousValue.DeliveryMenInPlans.Remove(this);
+					}
+					this._DeliveryMen.Entity = value;
+					if ((value != null))
+					{
+						value.DeliveryMenInPlans.Add(this);
+						this._DeliveryMenId = value.DeliveryMenId;
+					}
+					else
+					{
+						this._DeliveryMenId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("DeliveryMen");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Plan_DeliveryMenInPlan", Storage="_Plan", ThisKey="PlanId", OtherKey="PlanId", IsForeignKey=true)]
+		public Plan Plan
+		{
+			get
+			{
+				return this._Plan.Entity;
+			}
+			set
+			{
+				Plan previousValue = this._Plan.Entity;
+				if (((previousValue != value) 
+							|| (this._Plan.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Plan.Entity = null;
+						previousValue.DeliveryMenInPlans.Remove(this);
+					}
+					this._Plan.Entity = value;
+					if ((value != null))
+					{
+						value.DeliveryMenInPlans.Add(this);
+						this._PlanId = value.PlanId;
+					}
+					else
+					{
+						this._PlanId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Plan");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

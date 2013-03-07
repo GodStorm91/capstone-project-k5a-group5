@@ -10,6 +10,8 @@ namespace SMDH.Models.Abstract
         void UpdateStatus(Plan plan, int status);    
 
         bool Create(int[] orderIds);
+
+        bool CreateCollectionPlan(Plan plan, int[] requestIds);
         
         void CalculateRoute(Plan plan);      
 
@@ -17,7 +19,11 @@ namespace SMDH.Models.Abstract
 
         bool Cancel(Plan plan);        
 
-        bool MarkAsFinished(Plan plan, bool removeUnfinishedOrders);        
+        bool MarkAsFinished(Plan plan, bool removeUnfinishedOrders);
+
+        List<Plan> GetDeliveryPlansByStatuses(List<int> statuses);
+
+        List<Plan> GetCollectionPlansByStatuses(List<int> statuses);
       
     }
 }

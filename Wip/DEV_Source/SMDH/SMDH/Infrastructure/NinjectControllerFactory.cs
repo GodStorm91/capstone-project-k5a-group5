@@ -34,6 +34,8 @@ namespace SMDH.Infrastructure
             ninjectKernel.Bind<ICustomerRepository>().To<EFCustomersRepository>();
             ninjectKernel.Bind<ICityProvinceRepository>().To<EFCityProvincesRepository>();
             ninjectKernel.Bind<IProductRepository>().To<EFProductsRepository>();
+            ninjectKernel.Bind<IPlanRepository>().To<EFPlansRepository>();
+            ninjectKernel.Bind<IDeliveryMenRepository>().To<EFDeliveryMenRepository>();
         }
     }
 }

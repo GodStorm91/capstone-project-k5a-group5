@@ -13,6 +13,8 @@ namespace SMDH.Areas.Buyer.Controllers
     {
         private IProductRepository _repository;
 
+        private SMDHDataContext context = new SMDHDataContext();
+
         public HomeController(IProductRepository repository)
         {
             _repository = repository;
@@ -28,6 +30,8 @@ namespace SMDH.Areas.Buyer.Controllers
         public ActionResult ViewProductsByCustomerId(int customerId)
         {
             var products = _repository.GetProductsByCustomerId(customerId);
+            ViewBag.HubCategories = new SelectList(context.HubCategories.Where(o => o.isActive).ToArray(), "HubCategoryId", "HubName");
+            ViewBag.Hub = new SelectList( new List<SMDH.Models.Hub>());
             return View(products);
         }
 
