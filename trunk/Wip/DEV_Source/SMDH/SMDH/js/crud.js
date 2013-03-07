@@ -104,7 +104,7 @@ setupCrud = function (model) {
 
     oTable = setupDataTable(model);
 
-    $("div.tblBtnGroup").html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add</span></a>');
+    $("div.tblBtnGroup").html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add new</span></a>');
 
 
     setupButtonNew(model);
