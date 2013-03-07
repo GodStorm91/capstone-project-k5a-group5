@@ -324,15 +324,15 @@
         e.preventDefault();
         $(this).tab('show');
         $('#Return').dataTable({
-            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row'<'span6'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "5%" },
         { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "5%" },
-        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "15%" },
-        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "15%" },
-        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "15%" }
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "8%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "8%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "8%" }
         ],
-            "bProcessing": true,
+            "bProcessing": false,
             "bServerSide": true,
             "bSort": false,
             "sAjaxSource": '/Hub/Dashboard/getalldataReturn/',
