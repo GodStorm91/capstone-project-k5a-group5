@@ -71,6 +71,16 @@ namespace SMDH.Models.Statuses
         InActive = 4
     }
 
+    public enum HubStatus
+    {
+        SendingToHub = 1,
+        InHub = 2,
+        Delivered =3,
+        Expired = 4,
+        WaitingForReturn = 5,
+        Return = 6
+    }
+
     //public enum ItemStatus
     //{
     //    New = 1,
