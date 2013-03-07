@@ -2,69 +2,39 @@
     var html = '';
     $.each(requests, function (index, request) {
         var ticket = $('<li>\
-        <div class="ticket-container span12 ticket request-ticket">\
-            <div class="request-ticket-info span11 left-column">\
-                <div class="column">\
-                    <dl class="dl-horizontal">\
-                        <dt>\
-                            <img src="/img/icons/sharp.png" alt="Request Number" class="myToolTip"  rel="tooltip" title="Request Number" width="15px" /></dt>\
-                        <dd class="requestId">\
-                            </dd>\
-                    </dl>\
-                </div>\
-                <div class="column">\
-                    <dl class="dl-horizontal">\
-                        <dt>\
-                                <img src="/img/icons/user.png" alt="Customer" width="15px" class="myToolTip"  rel="tooltip" title="Customer"/>\
-                        </dt>\
-                        <dd class="customer">\
-                            </dd>\
-                    </dl>\
-                </div>\
-                <div class="column">\
-                    <dl class="dl-horizontal">\
-                        <dt>\
-                            <img src="/img/icons/calendar2.png" alt="Requested Date" class="myToolTip"  rel="tooltip" title="Request Date" width="15px" /></dt>\
-                        <dd class="requestedDate">\
-                        </dd>\
-                    </dl>\
-                </div>\
-                <div class="column">\
-                    <dl class="dl-horizontal">\
-                        <dt><span style="font-size: 15px; color: #969696" class="myToolTip" rel="tooltip" title="Collection Address">@</span> </dt>\
-                        <dd class="collectionAddress">\
-                            </dd>\
-                    </dl>\
-                </div>\
-            </div>\
-            <div class="span1 right-column">\
-                <a href="javascript:void(0)" class="addToPlan btn action myToolTip" rel="tooltip" title="Add to plan">\
-                    <img src="/img/icons/arrow_right2.png" alt="Add" width="18px" />\
-                </a>\
-                <input type="checkbox" name="plan"/>\
-                <a href="javascript:void(0)" class="myToolTip hide confirmSetLocation btn action" rel="tooltip"  title="Confirm Set Location">\
-                    <img src="/img/icons2/checkmark2.png"width="18">\
-                </a>\
-                <a href="javascript:void(0)" class="removeToPlan hide removeFromPlan btn action" rel="tooltip"  title="Cancel Set Location">\
-                    <span class="icomoon-icon-cancel"></span>\
-                </a>\
-            </div>\
-        </div>\
-    </li>');
-        ticket.find('dd.customer').html(request.Customer);
-        ticket.find('dd.requestId').html(request.RequestId);
-        ticket.find('dd.requestedDate').html(request.RequestedDate);
-        ticket.find('dd.collectionAddress').html(request.CollectionAddress);
+                        <div class="request-ticket-info">\
+                            <i class="icon-book"></i><small class="requestId"></small><i class="icon-user"></i>\
+                            <small class="customer"></small><i class="icon-calendar"></i><small class="requestedDate">\
+                            </small>\
+                            <div>\
+                                <i class="icon-globe"></i><small class="collectionAddress"></small>\
+                            </div>\
+                        </div>\
+                        <div class="right-column">\
+                            <span><a href="javascript:void(0)" class="addToPlan label label-success">Add</a></span>\
+                            <input type="checkbox" name="plan" />\
+                            <span><a href="javascript:void(0)" class="myToolTip hide confirmSetLocation btn action"\
+                                rel="tooltip" title="Confirm Set Location">\
+                                <img src="/img/icons2/checkmark2.png" width="18">\ </a></span><span><a href="javascript:void(0)"\
+                                    class="removeToPlan hide removeFromPlan btn action" rel="tooltip" title="Cancel Set Location">\
+                                    <span class="icomoon-icon-cancel"></span>\ </a></span>\
+                        </div>\
+                    </li>');
+
+        ticket.find('small.customer').html(request.Customer);
+        ticket.find('small.requestId').html(request.RequestId);
+        ticket.find('small.requestedDate').html(request.RequestedDate);
+        ticket.find('small.collectionAddress').html(request.CollectionAddress);
         ticket.find('a.addToPlan').attr('onclick', 'addToPlan(' + request.RequestId + ')');
         ticket.find('a.removeToPlan').attr('onclick', 'removeFromPlan(' + request.RequestId + ')');
-        
-//        if (request.Latitude == null) {
-//            ticket.find('a.setLocation img').attr('src', '/img/icons2/blue-dot.png');
-//            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ',\'' + request.AddressFromWard + '\')');
-//        } else {
-//            ticket.find('a.setLocation img').attr('src', '/img/icons2/red-dot.png');
-//            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ')');
-//        }
+
+        //        if (request.Latitude == null) {
+        //            ticket.find('a.setLocation img').attr('src', '/img/icons2/blue-dot.png');
+        //            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ',\'' + request.AddressFromWard + '\')');
+        //        } else {
+        //            ticket.find('a.setLocation img').attr('src', '/img/icons2/red-dot.png');
+        //            ticket.find('a.setLocation').attr('onclick', 'setLocation(' + request.RequestId + ')');
+        //        }
 
         ticket.find('a.confirmSetLocation').attr('onclick', 'confirmSetLocation(' + request.RequestId + ')');
         ticket.find('a.cancelSetLocation').attr('onclick', 'cancelSetLocation(' + request.RequestId + ')');
