@@ -1,0 +1,193 @@
+﻿@model SMDH.Models.Plan
+@{
+    ViewBag.Title = "Create New Collection Plan";
+    ViewBag.Heading = "Create New Collection Plan";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
+}
+<script src="/js/collection-plan-request-ticket.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<script src="/js/date.format.js" type="text/javascript"></script>
+<div class="collection-planning">
+    <div class="region-selector row-fluid">
+        <div class="control-group span10" style="height: 25px;">
+            @*<label class="control-label" for="Name">
+                City/Province
+            </label>*@
+            <div class="controls pull-left">
+                @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("District", ViewBag.PossibleDistricts as SelectList, "-- Choose a District --", new { id = "ddlDistrict", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("Ward", ViewBag.PossibleWards as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
+            </div>
+        </div>               
+        <div class="span2">
+            <a class="btn btn-inverse" href="/Plans/CreateCollectionPlanUsingMap" style="float:right">Use Map</a>
+        </div>
+    </div>
+    <div class="request-selector row-fluid">
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Unplanned Requests</h4>
+            </div>
+            <div id="unplanned-requests">
+                <ul>
+                </ul>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Selected Requests</h4>
+            </div>
+            <div id="selected-requests">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">        
+        <div class="control-group">
+            <button class="btn btn-primary pull-right" style="margin-left: 20px;" id="btnCreatePlan">
+                Create Plan</button>
+            <a href="/Plans" role="button" class="btn DTTT_button_text pull-right"><span>
+                Cancel</span> </a>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="usingMap" value="false" />
+<script>
+    var selectedRequestIds = new Array();
+
+    $("#ddlCityProvince").change(function () {
+        var items = '<option value="-1">-- All Districts --</option>';
+        $('#ddlDistrict').html(items);
+        $('#ddlDistrict').trigger("change");
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            items = '<option value="-1">-- All Districts --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+        $.ajaxSettings.traditional = true;
+        if ($(this).find('option').length > 1) {
+            $.post('/Plans/GetUnplannedRequestsByCityProvince/' + id, { selectedRequestIds: selectedRequestIds }, function (result) {
+                if (result.success) {
+                    updateRequestsView(result.requests);
+                }
+            });
+        }
+    });
+
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $("#ddlDistrict").change(function () {
+        var items = '<option value="-1">-- All Wards --</option>';
+        $('#ddlWard').html(items);
+        $('#ddlWard').trigger("change");
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            items = '<option value="-1">-- All Wards --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("liszt:updated");
+        });
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedRequestsByCityProvince/' + $('#ddlCityProvince option:selected').val(), { selectedRequestIds: selectedRequestIds }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedRequestsByDistrict/' + id, { selectedRequestIds: selectedRequestIds }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            }
+        }
+    });
+
+    $('#ddlWard').change(function () {
+        var id = $('#ddlWard option:selected').val();
+        if (id == '') id = -1;
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedRequestsByDistrict/' + $('#ddlDistrict option:selected').val(), { selectedRequestIds: selectedRequestIds }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedRequestsByWard/' + id, { selectedRequestIds: selectedRequestIds }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            }
+        }
+    });
+
+    var addToPlan = function (requestId) {
+        $("#request-" + requestId + " a.addToPlan").tooltip('hide');
+        $("#selected-requests > ul").append($("#request-" + requestId));
+        selectedRequestIds[selectedRequestIds.length] = requestId;
+        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="btn action myToolTip" rel="tooltip" onclick="remove(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
+        $('.myToolTip').tooltip();
+    };
+
+    var remove = function (requestId) {
+        for (var i = 0; i < selectedRequestIds.length; i++) {
+            if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
+        }
+        $("#request-" + requestId).remove();
+        if ($('#ddlWard option:selected').val() != '-1') {
+            $('#ddlWard').trigger("change");
+        } else if ($('#ddlDistrict option:selected').val() != '-1') {
+            $('#ddlDistrict').trigger("change");
+        } else {
+            $('#ddlCityProvince').trigger("change");
+        }
+    };
+
+    $('#btnCreatePlan').click(function () {
+        if (selectedRequestIds.length == 0) {
+            bootbox.alert('Please select at least 1 request to create plan.');
+        } else {
+            $.post('/Plans/ConfirmCreateCollectionPlan', { selectedRequestIds: selectedRequestIds }, function (result) {
+                if (result.success) {
+                    $.blockUI();
+                    window.location = '/Plans/Details?&id=' + result.planId;
+                }
+            });
+        }
+    });
+
+
+    $(document).ready(function () {
+        $(".chzn-slect").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });
+
+    var updateRequestsView = function (requests) {
+        var requestTickets = createRequestTickets(requests);
+        $("#unplanned-requests > ul").html(requestTickets);
+        $('.myToolTip').tooltip();
+    };
+</script>
