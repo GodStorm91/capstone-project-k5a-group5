@@ -18,31 +18,8 @@ namespace SMDH.Areas.Hub.Controllers
         {
             //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             ////var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
-            int status = 0;
-
-            try
-            {
-                if (!string.IsNullOrEmpty(Request["status"]))
-                {
-                    var statusStr = Request["status"];
-                    switch (statusStr.ToLower())
-                            {
-                                case "deliveringtohub": status = (int)OrderStatus.DeliveringToHub;
-                                    break;
-                                case "delivering": status= (int)OrderStatus.Delivering;
-                                    break;
-                                case "delivered": status= (int)OrderStatus.Delivered;
-                                    break;
-                                case "waitingforreturn": status = (int)OrderStatus.WaitingForReturn;
-                                    break;
-                            }
-                }
-            }
-            catch (Exception e)
-            {
-            }
             //----------------------------------------
-            List<Order> orders = context.Orders.Where(o => o.OrderStatus == status && o.HubId== 1).ToList();
+            List<Order> orders = context.Orders.Where(o => o.HubId== 1).ToList();
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -68,10 +45,12 @@ namespace SMDH.Areas.Hub.Controllers
             List<Order> listorders = context.Orders.Where(o => o.HubId == 1).ToList();
             var numberOfOrdersList = new List<int>
                 {
-                    listorders.Count(o => o.OrderStatus == (int) OrderStatus.DeliveringToHub),
-                    listorders.Count(o => o.OrderStatus == (int) OrderStatus.Delivering),
-                    listorders.Count(o => o.OrderStatus == (int) OrderStatus.Delivered),
-                    listorders.Count(o => o.OrderStatus == (int) OrderStatus.WaitingForReturn)
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.SendingToHub),
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.InHub),
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.Delivered),
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.Expired),
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.WaitingForReturn),
+                    listorders.Count(o => o.OrderStatus == (int) HubStatus.Return)
                 };
 
             ViewBag.NumberOfOrders = numberOfOrdersList;
@@ -116,41 +95,43 @@ namespace SMDH.Areas.Hub.Controllers
         }
 
 
-        public ActionResult getalldataDeliveringToHub()
+        public ActionResult getalldatasendingToHub()
         {
             var orders = new List<Array>();
             var result = (from o in context.Orders
-                          where o.OrderStatus == (int)OrderStatus.DeliveringToHub && o.HubId == 1
+                          where o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == 1
                          select new
                          {
-                            o.OrderId,
-                            o.Items.Count,
-                            o.Fee,
-                            o.DeliveryDate
+                            orderid = o.OrderId,
+                            item = o.Items.Count,
+                            fee = o.Fee,
+                            deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                            expireddate = (o.DeliveryDate.Value.Day+3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
                          }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] {"<input type=\"checkbox\" />",r.OrderId.ToString(),r.Count.ToString(),r.Fee.ToString(),r.DeliveryDate.ToString(),"<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>"});
+                orders.Add(new String[] { "<input type=\"checkbox\" />", r.orderid.ToString(), r.item.ToString(), r.fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString(), "<a class=\"btn btn-mini btn-success\" href=\"Dashboard/changestatustoInhub?&orderid=" + r.orderid + "\">ChangeStatus</a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
-        public ActionResult getalldataDelivering()
+        public ActionResult getalldatainhub()
         {
             var orders = new List<Array>();
             var result = (from o in context.Orders
-                          where o.OrderStatus == (int)OrderStatus.Delivering && o.HubId == 1
+                          where o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1
                           select new
                           {
                               o.OrderId,
                               o.Items.Count,
                               o.Fee,
-                              o.DeliveryDate
+                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -160,40 +141,108 @@ namespace SMDH.Areas.Hub.Controllers
         {
             var orders = new List<Array>();
             var result = (from o in context.Orders
-                          where o.OrderStatus == (int)OrderStatus.Delivered && o.HubId == 1
+                          where o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1
                           select new
                           {
                               o.OrderId,
                               o.Items.Count,
                               o.Fee,
-                              o.DeliveryDate
+                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+        }
+
+        public ActionResult getalldataExpired()
+        {
+            var orders = new List<Array>();
+            var result = (from o in context.Orders
+                          where o.OrderStatus == (int)HubStatus.Expired && o.HubId == 1
+                          select new
+                          {
+                              o.OrderId,
+                              o.Items.Count,
+                              o.Fee,
+                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                          }).Distinct().ToList();
+            foreach (var r in result)
+            {
+                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
+            }
+
+            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult getalldataWaitingForReturn()
         {
             var orders = new List<Array>();
             var result = (from o in context.Orders
-                          where o.OrderStatus == (int)OrderStatus.WaitingForReturn && o.HubId == 1
+                          where o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1
                           select new
                           {
                               o.OrderId,
                               o.Items.Count,
                               o.Fee,
-                              o.DeliveryDate
+                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.DeliveryDate.ToString(), "<a class=\"btn action view\" href=\"Orders/Details/@Model.ElementAt(@i).OrderId\"><img src=\"/img/icons/notepad.png\" alt=\"Detail\" title=\"View\" width=\"12px\"></a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString(), "<a class=\"btn btn-mini btn-success\" href=\"Dashboard/changestatustoReturn?&orderid=" + r.OrderId + "\">ChangeStatus</a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+        }
+
+        public ActionResult getalldataReturn()
+        {
+            var orders = new List<Array>();
+            var result = (from o in context.Orders
+                          where o.OrderStatus == (int)HubStatus.Return && o.HubId == 1
+                          select new
+                          {
+                              o.OrderId,
+                              o.Items.Count,
+                              o.Fee,
+                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                          }).Distinct().ToList();
+            foreach (var r in result)
+            {
+                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
+            }
+
+            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult changestatustoInhub(int orderid)
+        {
+            var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
+            if (order == null)
+            {
+                return Redirect("/Hubs/Dashboard");
+            }
+            order.OrderStatus = (int)HubStatus.InHub;
+            context.SubmitChanges();
+            return Redirect("/Hub/Dashboard");
+        }
+
+        public ActionResult changestatustoReturn(int orderid)
+        {
+            var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
+            if (order == null)
+            {
+                return Redirect("/Hubs/Dashboard");
+            }
+            order.OrderStatus = (int)HubStatus.Return;
+            context.SubmitChanges();
+            return Redirect("/Hub/Dashboard");
         }
     }
 }

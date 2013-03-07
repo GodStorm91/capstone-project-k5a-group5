@@ -47,16 +47,18 @@
     </div>
     <div class="widget-content">
         <ul class="nav nav-tabs" id="myTab">
-            <li><a href="#1"><i class="icon icon-th-list"></i><span>DeliveringToHub</span> <span
+            <li><a href="#1"><i class="icon icon-th-list"></i><span>Sending To Hub</span> <span
                 class="label">@ViewBag.NumberOfOrders[0]</span></a></li>
-            <li><a href="#2"><i class="icon icon-th-list"></i><span>Delivering</span> <span class="label">@ViewBag.NumberOfOrders[1]</span></a></li>
+            <li><a href="#2"><i class="icon icon-th-list"></i><span>In Hub</span> <span class="label">@ViewBag.NumberOfOrders[1]</span></a></li>
             <li><a href="#3"><i class="icon icon-th-list"></i><span>Delivered</span> <span class="label">@ViewBag.NumberOfOrders[2]</span></a></li>
-            <li><a href="#4"><i class="icon icon-th-list"></i><span>WaitingForReturn</span> <span
-                class="label">@ViewBag.NumberOfOrders[3]</span></a></li>
+            <li><a href="#4"><i class="icon icon-th-list"></i><span>Expired</span> <span class="label">@ViewBag.NumberOfOrders[3]</span></a></li>
+            <li><a href="#5"><i class="icon icon-th-list"></i><span>Waiting For Return</span> <span
+                class="label">@ViewBag.NumberOfOrders[4]</span></a></li>
+            <li><a href="#6"><i class="icon icon-th-list"></i><span>Returned</span> <span class="label">@ViewBag.NumberOfOrders[5]</span></a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="1">
-                <table id="DeliveringToHub" class="table table-striped table-bordered with-check">
+                <table id="sendingtohub" class="table table-striped table-bordered with-check">
                     <thead>
                         <tr>
                             <th>
@@ -73,6 +75,9 @@
                             </th>
                             <th>
                                 Delivery Date
+                            </th>
+                            <th>
+                                Expired Date
                             </th>
                             <th>
                                 Action
@@ -82,12 +87,9 @@
                 </table>
             </div>
             <div class="tab-pane" id="2">
-                <table id="Delivering" class="table table-striped table-bordered with-check">
+                <table id="InHub" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>
-                                <input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" />
-                            </th>
                             <th>
                                 OrderID
                             </th>
@@ -99,18 +101,18 @@
                             </th>
                             <th>
                                 Delivery Date
+                            </th>
+                            <th>
+                                Expired Date
                             </th>
                         </tr>
                     </thead>
                 </table>
             </div>
             <div class="tab-pane" id="3">
-                <table id="Delivered" class="table table-striped table-bordered with-check">
+                <table id="Delivered" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>
-                                <input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" />
-                            </th>
                             <th>
                                 OrderID
                             </th>
@@ -123,11 +125,37 @@
                             <th>
                                 Delivery Date
                             </th>
+                            <th>
+                                Expired Date
+                            </th>
                         </tr>
                     </thead>
                 </table>
             </div>
             <div class="tab-pane" id="4">
+                <table id="Expired" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                OrderID
+                            </th>
+                            <th>
+                                Item No.
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Delivery Date
+                            </th>
+                            <th>
+                                Expired Date
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane" id="5">
                 <table id="WaitingForReturn" class="table table-striped table-bordered with-check">
                     <thead>
                         <tr>
@@ -146,6 +174,35 @@
                             <th>
                                 Delivery Date
                             </th>
+                            <th>
+                                Expired Date
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane" id="6">
+                <table id="Return" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                OrderID
+                            </th>
+                            <th>
+                                Item No.
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Delivery Date
+                            </th>
+                            <th>
+                                Expired Date
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -157,20 +214,21 @@
     $('#myTab a:first').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
-        $('#DeliveringToHub').dataTable({
+        $('#sendingtohub').dataTable({
             "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
             "aoColumns": [
-        { "mDataProp": [0], sDefaultContent: "n/a","sWidth": "5%" },
-        { "mDataProp": [1], sDefaultContent: "n/a","sWidth": "10%" },
-        { "mDataProp": [2], sDefaultContent: "n/a" },
-        { "mDataProp": [3], sDefaultContent: "n/a" },
-        { "mDataProp": [4], sDefaultContent: "n/a" },
-        { "mDataProp": [5], sDefaultContent: "n/a","sWidth": "10%" }
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "1%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "10%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "10%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [5], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [6], sDefaultContent: "n/a", "sWidth": "10%" }
         ],
             "bProcessing": false,
             "bServerSide": true,
             "bSort": false,
-            "sAjaxSource": '/Hub/Dashboard/getalldataDeliveringToHub/',
+            "sAjaxSource": '/Hub/Dashboard/getalldatasendingToHub/',
             "sServerMethod": "POST",
             "bDestroy": true
         });
@@ -179,19 +237,19 @@
     $('#myTab li:eq(1) a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
-        $('#Delivering').dataTable({
-        "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+        $('#InHub').dataTable({
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
             "aoColumns": [
-             { "mData": "checkbox", sDefaultContent: "n/a","sWidth": "5%" },
-        { "mData": "OrderId", sDefaultContent: "n/a","sWidth": "10%" },
-        { "mData": "Count", sDefaultContent: "n/a" },
-        { "mData": "Fee", sDefaultContent: "n/a" },
-        { "mData": "DeliveryDate", sDefaultContent: "n/a" }
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "20%" }
         ],
             "bProcessing": false,
             "bServerSide": true,
             "bSort": false,
-            "sAjaxSource": '/Hub/Dashboard/getalldataDelivering/',
+            "sAjaxSource": '/Hub/Dashboard/getalldatainhub/',
             "sServerMethod": "POST",
             "bDestroy": true
         });
@@ -201,13 +259,13 @@
         e.preventDefault();
         $(this).tab('show');
         $('#Delivered').dataTable({
-        "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
             "aoColumns": [
-             { "mData": "checkbox", sDefaultContent: "n/a","sWidth": "5%" },
-        { "mData": "OrderId", sDefaultContent: "n/a","sWidth": "10%" },
-        { "mData": "Count", sDefaultContent: "n/a" },
-        { "mData": "Fee", sDefaultContent: "n/a" },
-        { "mData": "DeliveryDate", sDefaultContent: "n/a" }
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "20%" }
         ],
             "bProcessing": true,
             "bServerSide": true,
@@ -218,22 +276,66 @@
         });
     })
 
-   $('#myTab a:last').click(function (e) {
+    $('#myTab li:eq(3) a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
-        $('#WaitingForReturn').dataTable({
-        "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+        $('#Expired').dataTable({
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
             "aoColumns": [
-             { "mData": "checkbox", sDefaultContent: "n/a","sWidth": "5%" },
-        { "mData": "OrderId", sDefaultContent: "n/a","sWidth": "10%" },
-        { "mData": "Count", sDefaultContent: "n/a" },
-        { "mData": "Fee", sDefaultContent: "n/a" },
-        { "mData": "DeliveryDate", sDefaultContent: "n/a" }
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "20%" }
         ],
             "bProcessing": true,
             "bServerSide": true,
             "bSort": false,
+            "sAjaxSource": '/Hub/Dashboard/getalldataExpired/',
+            "sServerMethod": "POST",
+            "bDestroy": true
+        });
+    })
+
+    $('#myTab li:eq(4) a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        $('#WaitingForReturn').dataTable({
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "aoColumns": [
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "1%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "10%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "10%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [5], sDefaultContent: "n/a", "sWidth": "15%" },
+        { "mDataProp": [6], sDefaultContent: "n/a", "sWidth": "10%" }
+        ],
+            "bProcessing": false,
+            "bServerSide": true,
+            "bSort": false,
             "sAjaxSource": '/Hub/Dashboard/getalldataWaitingForReturn/',
+            "sServerMethod": "POST",
+            "bDestroy": true
+        });
+    })
+
+    $('#myTab a:last').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        $('#Return').dataTable({
+            "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "aoColumns": [
+        { "mDataProp": [0], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [1], sDefaultContent: "n/a", "sWidth": "5%" },
+        { "mDataProp": [2], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "20%" },
+        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "20%" }
+        ],
+            "bProcessing": true,
+            "bServerSide": true,
+            "bSort": false,
+            "sAjaxSource": '/Hub/Dashboard/getalldataReturn/',
             "sServerMethod": "POST",
             "bDestroy": true
         });
