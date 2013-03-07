@@ -305,12 +305,15 @@ namespace SMDH.Models.Concrete
                 cargo.CargoType = (int)CargoTypes.CollectionPlan;
                 context.Cargos.InsertOnSubmit(cargo);
 
-                foreach (var validOrder in ValidOrders(request))
+                foreach (var validOrder in request.ValidOrders)
                 {
-                    validOrder.OrderStatus = (int)OrderStatus.PlannedForCollecting;
+                    Order orderInDb = new Order();
+                    orderInDb = context.Orders.Single(o => o.OrderId == validOrder.OrderId);
+                    orderInDb.OrderStatus = (int)OrderStatus.PlannedForCollecting;
                 }
 
-                request.RequestStatus = (int)RequestStatus.PlannedForCollecting;
+                Request requestInDb = context.Requests.Single(r => r.RequestId == request.RequestId);
+                requestInDb.RequestStatus = (int)RequestStatus.PlannedForCollecting;
 
                 if (commit) context.SubmitChanges();
 

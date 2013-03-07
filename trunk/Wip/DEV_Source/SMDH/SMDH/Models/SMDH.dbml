@@ -276,18 +276,6 @@
       <Association Name="DeliveryMen_DeliveryMenInPlan" Member="DeliveryMenInPlans" ThisKey="DeliveryMenId" OtherKey="DeliveryMenId" Type="DeliveryMenInPlan" />
     </Type>
   </Table>
-  <Table Name="dbo.DeliveryMenInPlan" Member="DeliveryMenInPlans">
-    <Type Name="DeliveryMenInPlan">
-      <Column Name="DeliveryMenInPlanId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="DeliveryMenId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AssignedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="EstimateDistance" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
-      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
-      <Association Name="DeliveryMen_DeliveryMenInPlan" Member="DeliveryMen" ThisKey="DeliveryMenId" OtherKey="DeliveryMenId" Type="DeliveryMen" IsForeignKey="true" />
-      <Association Name="Plan_DeliveryMenInPlan" Member="Plan" ThisKey="PlanId" OtherKey="PlanId" Type="Plan" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.DeliveryOption" Member="DeliveryOptions">
     <Type Name="DeliveryOption">
       <Column Name="DeliveryOptionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -489,6 +477,18 @@
       <Association Name="DeliveryOption_Order" Member="DeliveryOption" ThisKey="DeliveryOptionId" OtherKey="DeliveryOptionId" Type="DeliveryOption" IsForeignKey="true" />
       <Association Name="Ward_Order" Member="Ward" ThisKey="ReceiverAddressWardId" OtherKey="WardId" Type="Ward" IsForeignKey="true" />
       <Association Name="OrderPaymentType_Order" Member="OrderPaymentType" ThisKey="OrderPaymentTypeId" OtherKey="OrderPaymentTypeId" Type="OrderPaymentType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryMenInPlan" Member="DeliveryMenInPlans">
+    <Type Name="DeliveryMenInPlan">
+      <Column Name="DeliveryMenInPlanId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DeliveryMenId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AssignedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EstimateDistance" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Association Name="DeliveryMen_DeliveryMenInPlan" Member="DeliveryMen" ThisKey="DeliveryMenId" OtherKey="DeliveryMenId" Type="DeliveryMen" IsForeignKey="true" />
+      <Association Name="Plan_DeliveryMenInPlan" Member="Plan" ThisKey="PlanId" OtherKey="PlanId" Type="Plan" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
