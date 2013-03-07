@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SMDH.Models.Plan>
+@using SMDH.Models.Utilities
+@using System.Text.RegularExpressions;
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered" id="main-table">
+    <thead>
+        <tr>
+            <th>
+                Plan No.
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Assigned To
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Note
+            </th>
+            <th class="tbl-action-col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    #@item.PlanId
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
+                </td>
+                <td>
+                   @* @item.CreatedByUserInfo.FullName (@item.CreatedByUser.UserName)*@
+                </td>
+                <td>
+                  @*  @if (item.AssignedDeliveryStaffId != null)
+                    {
+                        @AccountHelper.GetName(item.AssignedUserInfo.UserId);
+                    }
+                    else*@
+                    {
+                        <span class="label">Not assigned yet</span>    
+                    }
+                </td>
+                <td>
+                    @item.Status
+                </td>
+                <td>
+                    @item.Note
+                </td>
+                <td class="action-column">
+                    @*<a class="edit" href="javascript:void(0)" onclick="edit(@item.PlanId)" >
+                                <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a>*@ <a class="btn action view" href="/DeliveryPlans/Details/@item.PlanId">
+                                    <img src="/img/icons/notepad.png" alt="View" title="View" /></a>
+                    @*<a class="btn action update" href="#" onclick="showUpdateStatusModal(@item.PlanId,@item.Status)">
+                        <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" /></a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

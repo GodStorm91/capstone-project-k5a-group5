@@ -1,0 +1,501 @@
+﻿@model SMDH.Models.Plan
+@{
+    ViewBag.Title = "Create New Collection Plan";
+    ViewBag.Heading = "Create New Collection Plan";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
+}
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDtQG_NozpgE0uacggef_wCw-pF10M8bOA&sensor=false">
+</script>
+
+<script src="/js/jquery.gomap-1.3.2-edited.js" type="text/javascript"></script>
+<script src="/js/map-helper.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<script src="/js/collection-plan-request-ticket.js" type="text/javascript"></script>
+<script src="/js/date.format.js" type="text/javascript"></script>
+<div class="collection-planning">
+    <div class="region-selector row-fluid">
+        <div class="control-group span10" style="height: 25px;">
+            @*<label class="control-label" for="Name">
+                City/Province
+            </label>*@
+            <div class="controls pull-left">
+                @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("District", ViewBag.PossibleDistricts as SelectList, "-- Choose a District --", new { id = "ddlDistrict", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("Ward", ViewBag.PossibleWards as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
+            </div>
+        </div>                  
+        <div class="span2">
+            <a class="btn btn-inverse" href="/Plans/CreateCollectionPlan?usingMap=no" style="float:right">Not Use Map</a>
+        </div>
+    </div>
+    <div class="request-selector row-fluid">
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Unplanned Requests</h4>
+            </div>
+            <div id="unplanned-requests">
+                <ul>
+                </ul>
+            </div>
+        </div>
+        <div class="span6">
+            @*<div class="title">
+                <h4>
+                    Selected Requests</h4>
+            </div>*@
+            <div id="selected-requests" class="hide">
+                <ul>
+                </ul>
+            </div>
+            <div id="map_canvas" style="height: 434px; margin-bottom: 10px; border: 3px solid">
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">        
+        <div class="control-group">
+            <button class="btn btn-primary pull-right" style="margin-left: 20px;" id="btnCreatePlan">
+                Create Plan</button>
+            <a href="/Plans" role="button" class="btn DTTT_button_text pull-right"><span>
+                Cancel</span> </a>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="usingMap" value="true" />
+<script>
+    var selectedRequestIds = new Array();
+    
+    $("#ddlCityProvince").change(function () {
+        var items = '<option value="-1">-- All Districts --</option>';
+        $('#ddlDistrict').html(items);
+        $('#ddlDistrict').trigger("change");
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            items = '<option value="-1">-- All Districts --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+        $.ajaxSettings.traditional = true;
+        if ($(this).find('option').length > 1) {
+            $.post('/Plans/GetUnplannedRequestsByCityProvince/' + id, { selectedRequestIds : selectedRequestIds  }, function (result) {
+                if (result.success) {
+                    updateRequestsView(result.requests);
+                }
+            });
+        }
+    });
+
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $("#ddlDistrict").change(function () {
+        var items = '<option value="-1">-- All Wards --</option>';
+        $('#ddlWard').html(items);
+        $('#ddlWard').trigger("change");
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            items = '<option value="-1">-- All Wards --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("liszt:updated");
+        });
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedRequestsByCityProvince/' + $('#ddlCityProvince option:selected').val(), { selectedRequestIds : selectedRequestIds  }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedRequestsByDistrict/' + id, { selectedRequestIds : selectedRequestIds  }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            }
+        }
+    });
+
+    $('#ddlWard').change(function () {
+        var id = $('#ddlWard option:selected').val();
+        if (id == '') id = -1;
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedRequestsByDistrict/' + $('#ddlDistrict option:selected').val(), { selectedRequestIds : selectedRequestIds  }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedRequestsByWard/' + id, { selectedRequestIds : selectedRequestIds  }, function (result) {
+                    if (result.success) {
+                        updateRequestsView(result.requests);
+                    }
+                });
+            }
+        }
+    });
+
+    var addToPlan = function (requestId) {
+        $("#request-" + requestId + " a.addToPlan").tooltip('hide');
+        cancelOthers();
+        goMap.getMarker(requestId).setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
+
+        //        menu = new Gmap3Menu($("#map_canvas"));        
+        //        menu.add("Remove from plan", "itemB",
+        //            function () {
+        //                menu.close();
+        //                addMarker(false);
+        //            }
+        //        );
+
+        $("#selected-requests > ul").append($("#request-" + requestId));
+        selectedRequestIds[selectedRequestIds.length] = requestId;
+        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="btn action myToolTip" rel="tooltip" onclick="remove(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
+        $('.myToolTip').tooltip();
+
+        google.maps.event.addListener(goMap.getMarker(requestId + ''), 'dblclick', function () {
+            remove(requestId);
+        });
+    };
+
+    var remove = function (requestId) {
+        for (var i = 0; i < selectedRequestIds.length; i++) {
+            if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
+        }
+        $("#request-" + requestId).remove();
+        if ($('#ddlWard option:selected').val() != '-1') {
+            $('#ddlWard').trigger("change");
+        } else if ($('#ddlDistrict option:selected').val() != '-1') {
+            $('#ddlDistrict').trigger("change");
+        } else {
+            $('#ddlCityProvince').trigger("change");
+        }
+    };
+
+    $('#btnCreatePlan').click(function () {
+        if (selectedRequestIds.length == 0) {
+            bootbox.alert('Please select at least 1 request to create plan.');
+        } else {
+            $.post('/CollectionPlans/ConfirmCreate', { selectedRequestIds: selectedRequestIds }, function (result) {
+                if (result.success) {
+                    $.blockUI();
+                    window.location = '/Plans/Details/' + result.collectionPlanId;
+                } else {
+                    bootbox.alert('Cannot create plan. Please refresh the browser and try again.');
+                }
+            });
+        }
+    });
+
+
+    $(document).ready(function () {
+        initializeMap();
+        $(".chzn-select").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });
+
+    var goMap;
+    var initializeMap = function () {
+        try {
+            $("#map_canvas").goMap({
+                latitude: 10.784574,
+                longitude: 106.664788,
+                zoom: 12,
+                mapTypeControl: false,
+                maptype: 'ROADMAP',
+                navigationControl: true,
+                navigationControlOptions: {
+                    style: 'SMALL'
+                },
+                disableDoubleClickZoom: true
+            });
+            $.goMap.createMarker({
+                latitude: @ViewBag.Hub.Latitude,
+                longitude: @ViewBag.Hub.Longitude,
+                icon: "/img/Markers/home.png",
+                id: "hub"
+            });
+            goMap = $.goMap;
+        } catch (error) {
+            bootbox.alert('Cannot load map', function () {
+                window.location = '/Plans/Create?usingMap=no';
+            });
+        }
+    };
+
+    $.fn.scrollTo = function (target, options, callback) {
+        if (typeof options == 'function' && arguments.length == 2) { callback = options; options = target; }
+        var settings = $.extend({
+            scrollTarget: target,
+            offsetTop: 250,
+            duration: 500,
+            easing: 'swing'
+        }, options);
+        return this.each(function () {
+            var scrollPane = $(this);
+            var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+            var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+            scrollPane.animate({ scrollTop: scrollY }, parseInt(settings.duration), settings.easing, function () {
+                if (typeof callback == 'function') { callback.call(this); }
+            });
+        });
+    }
+
+    var addMarkers = function (requests) {
+        if (requests) {
+            $.each(requests, function (index, request) {
+                if (request.Latitude) {
+                    position = new google.maps.LatLng(request.Latitude, request.Longitude);
+                    var options = {
+                        position: position,
+                        id: request.RequestId + '',
+                        draggable: false,
+                        animation: google.maps.Animation.DROP,
+                        html: {
+                            content: '<div class="request-ticket-info left-column" id="infoWindow-' + request.RequestId + '" style="max-width: 300px;">\
+                                            <div class="row-fluid">\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt style="width: 25px;text-align: left;">\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Reqeust Number">\
+                                                                <span style="font-size: 15px; color: #969696">#</span>\
+                                                            </a>\
+                                                        </dt>\
+                                                        <dd class="requestId" style="margin-left: 25px;">\
+                                                            ' + request.RequestId + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt style="width: 25px;text-align: left;">\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Collection Address">\
+                                                                <span style="font-size: 15px; color: #969696">@@</span>\
+                                                            </a>\
+                                                        </dt\
+                                                        <dd class="collectionAddress" style="margin-left: 25px;">\
+                                                           ' + request.CollectionAddress + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                            </div>\
+                                        </div>',
+                            disableAutoPan: true
+                        }
+                    };
+
+                    var marker = goMap.createMarker(options);
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        cancelOthers();
+                        $('#request-' + request.RequestId).closest("ul").children("li").removeClass("active");
+                        $('#request-' + request.RequestId).closest("ul").find(".request-ticket-info").css('cursor', 'pointer');
+                        $('#request-' + request.RequestId).addClass("active");
+                        $('#request-' + request.RequestId + ' .request-ticket-info').css('cursor', 'initial');
+                        markers = goMap.getMarkers('markers');
+                        for (index in markers) {
+                            markers[index].setAnimation(null);
+                        }
+
+                        $('#request-' + request.RequestId).addClass("active");
+                        $('#request-' + request.RequestId + ' .request-ticket-info').css('cursor', 'initial');
+
+                        requestId = $('#request-' + request.RequestId).data('requestId');
+                        marker = goMap.getMarker(requestId);
+                        marker.setIcon('/img/icons2/yellow-dot.png');
+                        goMap.map.panTo(marker.position);
+                        //$('#request-' + request.RequestId + ' .request-ticket-info').trigger('click');
+                        $('#unplanned-requests').scrollTo('#request-' + request.RequestId + ' .request-ticket');
+                    });
+                }
+
+            });
+        }
+    };
+
+    var clearMarkers = function () {
+        goMap.clearMarkers();
+    };
+
+    var setLocation = function (requestId, addressFromWard) {
+        $("#unplanned-requests ul li").removeClass("active");
+        $("#unplanned-requests .request-ticket-info").css('cursor', 'pointer');
+        $("#unplanned-requests ul li#request-" + requestId).addClass("active");
+        $(this).css('cursor', 'initial');
+        markers = goMap.getMarkers('markers');
+        for (index in markers) {
+            markers[index].setAnimation(null);
+        }
+        cancelOthers();
+        if (goMap.getMarker(requestId)) goMap.getMarker(requestId).setVisible(false);
+
+        $('#cancelSetLocation-' + requestId).removeClass('hide');
+        noty({ text: 'Please select a location on the map!', type: 'information', layout: 'topRight', timeout: 2000 });
+
+        var options = {};
+        if (goMap.getMarker(requestId)) {
+            options = {
+                position: goMap.getMarker(requestId).position,
+                id: 'temp-' + requestId,
+                draggable: true,
+                icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"
+            };
+        } else {
+            options = {
+                //position: tempPosition,
+                address: addressFromWard,
+                id: 'temp-' + requestId,
+                draggable: true,
+                icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"
+            };
+        }
+
+        goMap.createMarker(options, true);
+        goMap.singleMarker = true;
+
+        $('#setLocation-' + requestId).addClass('hide');
+        $('#confirmSetLocation-' + requestId).removeClass('hide');
+
+
+    };
+
+    var confirmSetLocation = function (requestId) {
+        tempMarker = goMap.getMarker('temp-' + requestId);
+        $.post('/Request/UpdateLocation/' + requestId, { latitude: tempMarker.position.lat(), longitude: tempMarker.position.lng() },
+            function (result) {
+                if (result.success) {
+                    position = new google.maps.LatLng(tempMarker.position.lat(), tempMarker.position.lng());
+                    var options = {};
+                    options = {
+                        position: position,
+                        id: '' + requestId,
+                        html: {
+                            content: '<div class="request-ticket-info left-column" id="infoWindow-' + requestId + '" style="max-width: 300px;">\
+                                            <div class="row-fluid">\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt style="width: 25px;text-align: left;">\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Reqeust Number">\
+                                                                <span style="font-size: 15px; color: #969696">#</span>\
+                                                            </a>\
+                                                        </dt>\
+                                                        <dd class="requestId" style="margin-left: 25px;">\
+                                                            ' + requestId + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt style="width: 25px;text-align: left;">\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Collection Address">\
+                                                                <span style="font-size: 15px; color: #969696">@@</span>\
+                                                            </a>\
+                                                        </dt\
+                                                        <dd class="collectionAddress" style="margin-left: 25px;">\
+                                                           ' + $('#request-' + requestId + ' .collectionAddress').html() + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                            </div>\
+                                        </div>',
+                            disableAutoPan: true
+                        }
+                    };
+
+                    marker = goMap.createMarker(options);
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        cancelOthers();
+                        $('#request-' + requestId).closest("ul").children("li").removeClass("active");
+                        $('#request-' + requestId).closest("ul").find(".request-ticket-info").css('cursor', 'pointer');
+                        $('#request-' + requestId).addClass("active");
+                        $('#request-' + requestId + ' .request-ticket-info').css('cursor', 'initial');
+                        markers = goMap.getMarkers('markers');
+                        for (index in markers) {
+                            markers[index].setAnimation(null);
+                        }
+
+                        $('#request-' + requestId).addClass("active");
+                        $('#request-' + requestId + ' .request-ticket-info').css('cursor', 'initial');
+
+                        //requestId = $('#request-' + request.RequestId).data('requestId');
+                        marker = goMap.getMarker(requestId);
+                        marker.setIcon('/img/icons2/yellow-dot.png');
+                        goMap.map.panTo(marker.position);
+                        //$('#request-' + request.RequestId + ' .request-ticket-info').trigger('click');
+                        $('#unplanned-requests').scrollTo('#request-' + requestId + ' .request-ticket');
+                    });
+
+
+                    goMap.removeMarker('temp-' + requestId);
+
+                    $('#setLocation-' + requestId).removeClass('hide');
+                    $('#setLocation-' + requestId + ' img').attr('src', '/img/icons2/red-dot.png');
+                    $('#confirmSetLocation-' + requestId).addClass('hide');
+                    $('#cancelSetLocation-' + requestId).addClass('hide');
+                }
+                else bootbox.alert('Failed to set location.');
+            }
+        );
+    };
+
+        var cancelSetLocation = function (requestId) {
+        goMap.singleMarker = false;
+        if (goMap.getMarker(requestId)) goMap.getMarker(requestId).setVisible(true);
+        if (goMap.getMarker('temp-' + requestId)) {
+            goMap.getMarker('temp-' + requestId).setMap(null);
+            goMap.removeMarker('temp-' + requestId);
+        }
+        $('#setLocation-' + requestId).removeClass('hide');
+        $('#confirmSetLocation-' + requestId).addClass('hide');
+        $('#cancelSetLocation-' + requestId).addClass('hide');
+    };
+
+    var removeOtherMarkers = function () {
+        var markersToRemove = new Array();
+        $.each(goMap.getMarkers('ids'), function (i, id) {
+            if (id != 'hub' && $.inArray(parseInt(id), selectedRequestIds) < 0) {
+                markersToRemove.push(id);
+            }
+        });
+        $.each(markersToRemove, function (i, id) {
+            goMap.removeMarker(id);
+        });
+    };
+
+    var cancelOthers = function () {
+        for (var i = 0; i < goMap.getMarkers('ids').length; i++) {
+            if(goMap.getMarkers('ids')[i] != 'hub'){
+                requestId = goMap.getMarkers('ids')[i].indexOf('temp') >= 0 ? goMap.getMarkers('ids')[i].substring(5) : goMap.getMarkers('ids')[i];
+                cancelSetLocation(requestId);
+                //goMap.getMarker(requestId).setAnimation(null);
+                if ($.inArray(parseInt(requestId), selectedRequestIds) < 0) {
+                    goMap.getMarker(requestId).setIcon('/img/icons2/red-dot.png');
+                } else {
+                    goMap.getMarker(requestId).setIcon('/img/icons2/green-dot.png');
+                }
+            }
+        }
+    };
+
+    var updateRequestsView = function (requests) {
+        var requestTickets = createRequestTickets(requests);
+        $("#unplanned-requests > ul").html(requestTickets);
+        removeOtherMarkers();
+        addMarkers(requests);
+        setupRequestTicket();
+        $('.myToolTip').tooltip();
+    };
+</script>

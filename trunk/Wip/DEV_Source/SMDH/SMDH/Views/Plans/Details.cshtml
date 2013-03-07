@@ -1,0 +1,203 @@
+﻿@model SMDH.Models.Plan
+@using SMDH.Models.Utilities
+@using SMDH.Models.Statuses
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Plan Details";
+    ViewBag.Heading = "Plan Details";
+}
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="/js/form-action.js" type="text/javascript"></script>
+<div class="plan-details">
+    <div id="plan-details-box" class="green-bordered" style="margin-bottom: 5px;">
+        <div style="clear: both;">
+        </div>
+        <div class="row-fluid" id="collection-plan-details">
+            <div class="col-left" style="width: 30%; min-width: 250px; float: left">
+                <dl class="dl-horizontal">
+                    <dt>Collection Plan No.:</dt>
+                    <dd id="PlanNumber">
+                        #@Model.PlanId</dd>
+                    <dt>Created Date:</dt>
+                    <dd id="CreatedDate">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate)</dd>
+                    <dt>Created By:</dt>
+                    <dd id="CreatedBy">@Model.CreatedByUserId</dd>
+                </dl>
+            </div>
+            <div class="col-right" style="width: 30%; min-width: 300px; float: left">
+                <dl class="dl-horizontal">
+                    <dt>Assigned To:</dt>
+                    <dd id="AssignedTo">
+                        @if (Model.Status <= 1)
+                        {
+                            <a href="#assignModal" data-toggle="modal" class="myToolTip" rel="tooltip" title="Assign">
+                                <img src="/img/icons/arrow_right2.png" />
+                            </a>
+                        }
+                        else
+                        {
+                            foreach (var i in ViewBag.AssignTo)
+                            {
+                                <label>@i.FirstName @i.LastName</label>
+                            }
+                            if (Model.Status != (int)SMDH.Models.Statuses.PlanStatus.Finished)
+                            {
+                            <a href="#assignModal" data-toggle="modal" class="myToolTip" rel="tooltip" title="Assign to another staff">
+                                <img src="/img/icons/arrow_right2.png" />
+                            </a>
+                            }
+                        }
+                    </dd>
+                    <dt>Notes:</dt>
+                    <dd id="Note">
+                        None</dd>
+                </dl>
+            </div>
+            <div style="width: 6%; min-width: 80px; float: right">
+                @if (Model.Status == (int)SMDH.Models.Statuses.CollectionPlanStatus.Assigned)
+                {
+                    <button class="btn btn-success" id="markAsFinishedBtn" style="width: 100%;">
+                        Mark as Finished</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Assign plan to delivery staff</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Assign to</p>
+            @if (ViewBag.PossibleDeliveryStaffs != null)
+            {
+                  foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                  {
+                    <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" />@d.FirstName
+                  }
+            }
+            
+            @if (ViewBag.Assignto != null)
+            {
+                foreach (var e in ViewBag.Assignto)
+                {
+                    <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName
+                }
+            }        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="btnAssign">
+            Save</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var assignman = new Array();
+    var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
+    var PlanId = @Model.PlanId;
+    var checkBoxs = $("input[name=deliveryman]");
+    var j = 0;
+    $.each(checkBoxs, function() {
+        
+        if (Assign == null) return;
+        for(var k=0;k<Assign.length;k++)
+            {
+            if(Assign[k].DeliveryMenId == $(this).val()){
+                 $(this).prop('checked',true);
+                }
+            }
+            j++;                
+    });
+    $('#btnAssign').click(function () {
+        var listdeliveryman = new Array();
+        var listNotChooseDeliveryMan = new Array();
+        var i = 0;
+        var j = 0;
+        $.each(checkBoxs, function() {
+            if ($(this).is(":checked")){
+                listdeliveryman[i] = $(this).val();
+                i++;
+            } else
+            {
+                listNotChooseDeliveryMan[j] = $(this).val();
+                j++
+            }
+        });
+        $.ajaxSettings.traditional = true;
+        $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
+            if(result.success){
+                $.blockUI();
+                window.location.reload();
+            }else{
+                bootbox.alert('Unable to assign. Please refresh and try again.');
+            }
+        });
+    });
+
+    var removeFromPlan = function(requestId){
+        bootbox.confirm('Remove this request from plan?', function(confirmed){
+            if(confirmed){
+                
+                $.post('/Request/RemoveFromCollectionPlan/'+requestId, function (result) {
+                    if(result.success){
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Failed to remove this request from the collection plan.');
+                    }
+                });
+            }
+        });        
+    };
+
+    var selectAll = function(){
+        $('#mark-collected-form input[type="checkbox"]').attr('checked','checked');
+    };
+
+    var selectNone = function(){
+        $('#mark-collected-form input[type="checkbox"]').removeAttr('checked');
+    };
+
+    $('#mark-collected-form').submit(function(){
+        $.post($(this).attr("action"), $(this).serialize(), function(result){
+            if(result.success){
+                $.blockUI();
+                window.location.reload();
+            } else {
+                bootbox.alert('Failed to mark as collected.');
+            }
+        });
+        return false;
+    });
+
+    $('#markAsCollectedBtn').click(function(){
+        $('#mark-collected-form').submit();
+    });
+    
+    
+    var cancelPlan = function(planId){
+        bootbox.confirm('Remove all requests and cancel this plan?', function(confirmed){
+                if(confirmed){
+                    $.post('/Plans/Cancel/'+planId, function(result){
+                        if(result.success){
+                            $.blockUI();
+                            window.location = '/Plans/';
+                        }
+                    });
+                }                
+            });
+        
+    };
+</script>

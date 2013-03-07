@@ -1,0 +1,503 @@
+﻿@model SMDH.Models.Plan
+@{
+    ViewBag.Title = "Create New Delivery Plan";
+    ViewBag.Heading = "Create New Delivery Plan";
+}
+@if (false)
+{ 
+    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
+}
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDtQG_NozpgE0uacggef_wCw-pF10M8bOA&sensor=false">
+</script>
+<script src="/js/jquery.gomap-1.3.2-edited.js" type="text/javascript"></script>
+<script src="/js/map-helper.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<script src="/js/date.format.js" type="text/javascript"></script>
+<script src="/js/delivery-plan-order-ticket.js" type="text/javascript"></script>
+<div class="delivery-planning">
+    <div class="region-selector row-fluid">
+        <div class="span10 control-group">
+            <div class="controls pull-left">
+                @Html.DropDownList("CityProvince", ViewBag.PossibleCityProvinces as SelectList, "-- Choose a City/Province --", new { id = "ddlCityProvince", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("District", ViewBag.PossibleDistricts as SelectList, "-- Choose a District --", new { id = "ddlDistrict", Class = "chzn-select" })
+            </div>
+            <div class="controls pull-left">
+                @Html.DropDownList("Ward", ViewBag.PossibleWards as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
+            </div>
+        </div>
+        <div class="span2">
+            <a class="btn btn-inverse" href="/Plans/Create?usingMap=no" style="float: right">Not Use
+                Map</a>
+        </div>
+    </div>
+    <div class="order-selector row-fluid">
+        <div class="span6">
+            <div class="title">
+                <h4>
+                    Unplanned Orders</h4>
+            </div>
+            <div id="unplanned-orders">
+                <ul>
+                </ul>
+            </div>
+        </div>
+        <div class="span6">
+            @*<div class="title">
+                <h4>
+                    Selected Orders</h4>
+            </div>*@
+            <div id="selected-orders" class="hide">
+                <ul>
+                </ul>
+            </div>
+            <div id="map_canvas" style="height: 434px; margin-bottom: 10px; border: 3px solid">
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="control-group">
+                <button class="btn btn-primary pull-right" style="margin-left: 20px;" id="btnCreatePlan">
+                    Create Plan</button>
+                <a href="/Plans" role="button" class="btn DTTT_button_text pull-right"><span>
+                    Cancel</span> </a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="usingMap" value="true" />
+<script>
+    var selectedOrderIds = new Array();
+
+    $("#ddlCityProvince").change(function () {
+        var items = '<option value="-1">-- All Districts --</option>';
+        $('#ddlDistrict').html(items);
+        $('#ddlDistrict').trigger("change");
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            items = '<option value="-1">-- All Districts --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+        $.ajaxSettings.traditional = true;
+        if ($(this).find('option').length > 1) {
+            $.post('/Plans/GetUnplannedOrdersByCityProvince/' + id, { selectedOrderIds: selectedOrderIds }, function (result) {
+                if (result.success) {
+                    updateOrdersView(result.orders);
+                }
+            });
+        }
+    });
+
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $("#ddlDistrict").change(function () {
+        var items = '<option value="-1">-- All Wards --</option>';
+        $('#ddlWard').html(items);
+        $('#ddlWard').trigger("change");
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            items = '<option value="-1">-- All Wards --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("liszt:updated");
+        });
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedOrdersByCityProvince/' + $('#ddlCityProvince option:selected').val(), { selectedOrderIds: selectedOrderIds }, function (result) {
+                    if (result.success) {
+                        updateOrdersView(result.orders);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedOrdersByDistrict/' + id, { selectedOrderIds: selectedOrderIds }, function (result) {
+                    if (result.success) {
+                        updateOrdersView(result.orders);
+                    }
+                });
+            }
+        }
+    });
+
+    $('#ddlWard').change(function () {
+        var id = $('#ddlWard option:selected').val();
+        if (id == '') id = -1;
+        if ($(this).find('option').length > 1) {
+            if (id == '-1') {
+                $.post('/Plans/GetUnplannedOrdersByDistrict/' + $('#ddlDistrict option:selected').val(), { selectedOrderIds: selectedOrderIds }, function (result) {
+                    if (result.success) {
+                        updateOrdersView(result.orders);
+                    }
+                });
+            } else {
+                $.post('/Plans/GetUnplannedOrdersByWard/' + id, { selectedOrderIds: selectedOrderIds }, function (result) {
+                    if (result.success) {
+                        updateOrdersView(result.orders);
+                    }
+                });
+            }
+        }
+    });
+
+    var addToPlan = function (orderId) {
+        $("#order-" + orderId + " .right-column a.addToPlan").tooltip('hide');
+        cancelOthers();
+        goMap.getMarker(orderId).setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
+        $("#selected-orders > ul").append($("#order-" + orderId));
+        selectedOrderIds[selectedOrderIds.length] = orderId;
+        $("#order-" + orderId + " .right-column").html('<a href="javascript:void(0)" onclick="remove(' + orderId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px" style="margin-top: 12px;" /></a>');
+
+        google.maps.event.addListener(goMap.getMarker(orderId + ''), 'dblclick', function () {
+            remove(orderId);
+        });
+    };
+
+    var remove = function (orderId) {
+        for (var i = 0; i < selectedOrderIds.length; i++) {
+            if (selectedOrderIds[i] == orderId) selectedOrderIds.splice(i, 1);
+        }
+        $("#order-" + orderId).remove();
+        if ($('#ddlWard option:selected').val() != '-1') {
+            $('#ddlWard').trigger("change");
+        } else if ($('#ddlDistrict option:selected').val() != '-1') {
+            $('#ddlDistrict').trigger("change");
+        } else {
+            $('#ddlCityProvince').trigger("change");
+        }
+    };
+
+    $('#btnCreatePlan').click(function () {
+        if (selectedOrderIds.length == 0) {
+            bootbox.alert('Please select at least 1 order to create plan.');
+        } else {
+            $.post('/Plans/ConfirmCreate', { selectedOrderIds: selectedOrderIds }, function (result) {
+                if (result.success) {
+                    window.location = '/Plans/Details/' + result.deliveryPlanId;
+                } else {
+                    bootbox.alert('Cannot create plan. Please refresh the browser and try again.');
+                }
+            });
+        }
+    });
+
+
+    $(document).ready(function () {
+        initializeMap();
+        $(".chzn-select").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });        
+
+    var goMap;
+    var initializeMap = function () {
+        try{
+            $("#map_canvas").goMap({
+                latitude: 10.784574,
+                longitude: 106.664788,
+                zoom: 12,
+                mapTypeControl: false,
+                maptype: 'ROADMAP',
+                navigationControl: true, 
+                navigationControlOptions: { 
+                    style: 'SMALL' 
+                },
+                disableDoubleClickZoom: true
+            });
+            $.goMap.createMarker({
+                latitude: @ViewBag.Hub.Latitude,
+                longitude: @ViewBag.Hub.Longitude,
+                icon: "/img/Markers/home.png",
+                id: "hub"
+            });
+            goMap = $.goMap;
+        } catch (error) {
+            bootbox.alert('Cannot load map', function () {
+                window.location = '/Plans/Create?usingMap=no';
+            });
+        }
+    };
+
+    $.fn.scrollTo = function (target, options, callback) {
+        if (typeof options == 'function' && arguments.length == 2) { callback = options; options = target; }
+        var settings = $.extend({
+            scrollTarget: target,
+            offsetTop: 250,
+            duration: 500,
+            easing: 'swing'
+        }, options);
+        return this.each(function () {
+            var scrollPane = $(this);
+            var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+            var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+            scrollPane.animate({ scrollTop: scrollY }, parseInt(settings.duration), settings.easing, function () {
+                if (typeof callback == 'function') { callback.call(this); }
+            });
+        });
+    }
+
+    var addMarkers = function (orders) {
+        if (orders) {
+            $.each(orders, function (index, order) {
+                if (order.Latitude) {
+                    position = new google.maps.LatLng(order.Latitude, order.Longitude);
+                    var options = {
+                        position: position,
+                        id: order.OrderId + '',
+                        draggable: false,
+                        animation: google.maps.Animation.DROP,
+                        html: {
+                            content: '<div class="order-ticket-info left-column" id="infoWindow-' + order.OrderId + '" style="max-width: 300px;">\
+                                            <div class="row-fluid">\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt>\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Order Number">\
+                                                                <span style="font-size: 15px; color: #969696">#</span>\
+                                                            </a>\
+                                                        </dt>\
+                                                        <dd class="orderId">\
+                                                            ' + order.OrderId + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt>\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Receiver Address">\
+                                                                <span style="font-size: 15px; color: #969696">@@</span>\
+                                                            </a>\
+                                                        </dt\
+                                                        <dd class="full-address">\
+                                                           ' + order.ReceiverAddress + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                            </div>\
+                                        </div>',
+                            disableAutoPan: true
+                        }
+                    };
+
+                    var marker = goMap.createMarker(options);
+//                    google.maps.event.addListener(marker, 'mouseover', function () {
+//                        //infowindow.open(goMap.getMap(), this);
+//                        //google.maps.event.trigger($($.goMap.mapId).data(order.OrderId+''), 'click'); 
+//                        $(goMap.mapId).data(order.OrderId + 'info').open(goMap.map, goMap.getMarker(order.OrderId));
+//                    });
+
+//                    // assuming you also want to hide the infowindow when user mouses-out
+//                    google.maps.event.addListener(marker, 'mouseout', function () {
+//                        //google.maps.event.trigger($($.goMap.mapId).data(order.OrderId + ''), 'click'); 
+//                        $(goMap.mapId).data(order.OrderId + 'info').close();
+//                    });
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        cancelOthers();
+                        $('#order-'+order.OrderId).closest("ul").children("li").removeClass("active");
+                        $('#order-'+order.OrderId).closest("ul").find(".order-ticket-info").css('cursor', 'pointer');
+                        $('#order-'+order.OrderId).addClass("active");
+                        $('#order-'+order.OrderId+' .order-ticket-info').css('cursor', 'initial');
+                        markers = goMap.getMarkers('markers');
+                        for (index in markers) {
+                            markers[index].setAnimation(null);
+                        }
+
+                        $('#order-'+order.OrderId).addClass("active");
+                        $('#order-'+order.OrderId+' .order-ticket-info').css('cursor', 'initial');
+        
+                        
+                        marker.setIcon('/img/icons2/yellow-dot.png');
+                        goMap.map.panTo(marker.position);
+                        //$('#order-' + order.OrderId + ' .order-ticket-info').trigger('click');
+                        $('#unplanned-orders').scrollTo('#order-' + order.OrderId + ' .order-ticket');
+                    });
+                }
+
+            });
+        }
+    };
+
+    var clearMarkers = function (){
+        goMap.clearMarkers();
+    };
+
+    var setLocation = function (orderId, addressFromWard) {
+        $("#unplanned-orders ul li").removeClass("active");
+        $("#unplanned-orders .order-ticket-info").css('cursor', 'pointer');
+        $("#unplanned-orders ul li#order-" + orderId).addClass("active");
+        $(this).css('cursor', 'initial');
+        markers = goMap.getMarkers('markers');
+        for (index in markers) {
+            markers[index].setAnimation(null);
+        }
+        cancelOthers();
+        if (goMap.getMarker(orderId)) goMap.getMarker(orderId).setVisible(false);
+
+        $('#cancelSetLocation-' + orderId).removeClass('hide');
+        noty({ text: 'Please select a location on the map!', type: 'information', layout: 'topRight', timeout: 2000 });
+
+        var options = {};
+        if (goMap.getMarker(orderId)) {
+            options = {
+                position: goMap.getMarker(orderId).position,
+                id: 'temp-' + orderId,
+                draggable: true,
+                icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"
+            };
+        } else {
+            options = {
+                //position: tempPosition,
+                address: addressFromWard,
+                id: 'temp-' + orderId,
+                draggable: true,
+                icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"
+            };
+        }        
+
+        goMap.createMarker(options,true);
+        goMap.singleMarker = true;
+
+        $('#setLocation-' + orderId).addClass('hide');
+        $('#confirmSetLocation-' + orderId).removeClass('hide');
+
+        
+    };
+
+    var confirmSetLocation = function (orderId) {
+        tempMarker = goMap.getMarker('temp-' + orderId);
+        $.post('/Orders/UpdateLocation/' + orderId, { latitude: tempMarker.position.lat(), longitude: tempMarker.position.lng() },
+            function (result) {
+                if (result.success) {
+                    position = new google.maps.LatLng(tempMarker.position.lat(), tempMarker.position.lng());
+                    var options = {};
+                    options = {
+                        position: position,
+                        id: '' + orderId,
+                        html: {
+                            content: '<div class="order-ticket-info left-column" id="infoWindow-' + orderId + '">\
+                                            <div class="row-fluid">\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt>\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Order Number">\
+                                                                <span style="font-size: 15px; color: #969696">#</span>\
+                                                            </a>\
+                                                        </dt>\
+                                                        <dd class="orderId">\
+                                                            ' + orderId + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                                <div class="column">\
+                                                    <dl class="dl-horizontal" style="margin:0">\
+                                                        <dt>\
+                                                            <a href="#" class="myTooltip"  rel="tooltip" title="Receiver Address">\
+                                                                <span style="font-size: 15px; color: #969696">@@</span>\
+                                                            </a>\
+                                                        </dt\
+                                                        <dd class="full-address">\
+                                                           ' + $('#order-' + orderId + ' .full-address').html() + '</dd>\
+                                                    </dl>\
+                                                </div>\
+                                            </div>\
+                                        </div>',
+                            disableAutoPan: true
+                        }
+                    };
+
+                    marker = goMap.createMarker(options);
+//                    google.maps.event.addListener(marker, 'mouseover', function () {
+//                        $(goMap.mapId).data(orderId + 'info').open(goMap.map, goMap.getMarker(orderId));
+//                    });
+
+//                    google.maps.event.addListener(marker, 'mouseout', function () {
+//                        $(goMap.mapId).data(orderId + 'info').close();
+//                    });
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        cancelOthers();
+                        $('#order-' + orderId).closest("ul").children("li").removeClass("active");
+                        $('#order-' + orderId).closest("ul").find(".order-ticket-info").css('cursor', 'pointer');
+                        $('#order-' + orderId).addClass("active");
+                        $('#order-' + orderId + ' .order-ticket-info').css('cursor', 'initial');
+                        markers = goMap.getMarkers('markers');
+                        for (index in markers) {
+                            markers[index].setAnimation(null);
+                        }
+
+                        $('#order-' + orderId).addClass("active");
+                        $('#order-' + orderId + ' .order-ticket-info').css('cursor', 'initial');
+
+
+                        marker.setIcon('/img/icons2/yellow-dot.png');
+                        goMap.map.panTo(marker.position);
+                        //$('#order-' + order.OrderId + ' .order-ticket-info').trigger('click');
+                        $('#unplanned-orders').scrollTo('#order-' + orderId + ' .order-ticket');
+                    });
+
+                    goMap.removeMarker('temp-' + orderId);
+
+                    $('#setLocation-' + orderId).removeClass('hide');
+                    $('#setLocation-' + orderId + ' img').attr('src', '/img/icons2/red-dot.png');
+                    $('#confirmSetLocation-' + orderId).addClass('hide');
+                    $('#cancelSetLocation-' + orderId).addClass('hide');
+                }
+                else bootbox.alert('Failed to set location.');
+            }
+        );
+    };
+
+    var cancelSetLocation = function (orderId) {
+        goMap.singleMarker = false;
+        if (goMap.getMarker(orderId)) goMap.getMarker(orderId).setVisible(true);
+        if (goMap.getMarker('temp-' + orderId)) {
+            goMap.getMarker('temp-' + orderId).setMap(null);
+            goMap.removeMarker('temp-' + orderId);
+        }
+        $('#setLocation-' + orderId).removeClass('hide');
+        $('#confirmSetLocation-' + orderId).addClass('hide');
+        $('#cancelSetLocation-' + orderId).addClass('hide');
+    };
+
+    var removeOtherMarkers = function () {
+        var markersToRemove = new Array();
+        $.each(goMap.getMarkers('ids'), function (i, id) {
+            if (id != 'hub' && $.inArray(parseInt(id), selectedOrderIds) < 0) {
+                markersToRemove.push(id);
+            }
+        });
+
+        $.each(markersToRemove, function (i, id) {
+            goMap.removeMarker(id);
+        });
+    };
+
+    var cancelOthers = function () {
+        for (var i = 0; i < goMap.getMarkers('ids').length; i++) {
+            if(goMap.getMarkers('ids')[i] != 'hub'){
+                orderId = goMap.getMarkers('ids')[i].indexOf('temp') >= 0 ? goMap.getMarkers('ids')[i].substring(5) : goMap.getMarkers('ids')[i];
+                cancelSetLocation(orderId);
+                //goMap.getMarker(orderId).setAnimation(null);
+                if($.inArray(parseInt(orderId),selectedOrderIds) < 0 ){
+                    goMap.getMarker(orderId).setIcon('/img/icons2/red-dot.png');
+                } else {
+                    goMap.getMarker(orderId).setIcon('/img/icons2/green-dot.png');
+                }
+            }
+        }
+    };
+
+    var updateOrdersView = function (orders) {
+        var orderTickets = createOrderTickets(orders);
+        $("#unplanned-orders > ul").html(orderTickets);
+        removeOtherMarkers();
+        addMarkers(orders);
+        setupOrderTicket();
+        $('.myToolTip').tooltip();
+    };
+</script>
