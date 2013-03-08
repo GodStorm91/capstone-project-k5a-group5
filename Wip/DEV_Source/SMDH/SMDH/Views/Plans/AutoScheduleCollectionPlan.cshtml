@@ -145,7 +145,7 @@
         <div class="widget-content">
             <div id="unplanned-requests">
                 <ul class="site-stats">
-@*                    <li>
+                    <li>
                         <div class="request-ticket-info">
                             <i class="icon-book"></i><small class="requestId"></small><i class="icon-user"></i>
                             <small class="customer"></small><i class="icon-calendar"></i><small class="requestedDate">
@@ -163,7 +163,7 @@
                                     class="removeToPlan hide removeFromPlan btn action" rel="tooltip" title="Cancel Set Location">
                                     <span class="icomoon-icon-cancel"></span>\ </a></span>
                         </div>
-                    </li>*@
+                    </li>
                 </ul>
             </div>
             <div>
@@ -180,7 +180,7 @@
         </div>
         <div class="widget-content">
             <div id="selected-requests">
-                <ul>
+                <ul class="site-stats">
                 </ul>
             </div>
             <div>
@@ -356,7 +356,7 @@
         $("#request-" + requestId + " a.addToPlan").tooltip('hide');
         $("#selected-requests > ul").append($("#request-" + requestId));
         selectedRequestIds[selectedRequestIds.length] = requestId;
-        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan btn action myToolTip" rel="tooltip" onclick="removeFromPlan(' + requestId + ')" title="Add to plan"><img src="/img/icons2/cross.png" alt="Add" width="18px"/></a>');
+        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan label label-important" rel="tooltip" onclick="removeFromPlan(' + requestId + ')" title="Add to plan">Remove</a>');
         $('.myToolTip').tooltip();
     };
 
@@ -376,7 +376,7 @@
         $("#request-" + requestId + " a.removeToPlan").hide();
         $("#unplanned-requests > ul").append($("#request-" + requestId));
         selectedRequestIds[selectedRequestIds.length] = requestId;
-        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan btn action myToolTip" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan"><img src="/img/icons2/arrow_right2.png" alt="Add" width="18px"/></a>');
+        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan label label-success" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan">Add</a>');
         $('.myToolTip').tooltip();
     };
 

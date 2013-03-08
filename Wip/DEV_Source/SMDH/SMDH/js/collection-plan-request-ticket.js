@@ -3,11 +3,11 @@
     $.each(requests, function (index, request) {
         var ticket = $('<li>\
                         <div class="request-ticket-info">\
-                            <i class="icon-book"></i><small class="requestId"></small><i class="icon-user"></i>\
-                            <small class="customer"></small><i class="icon-calendar"></i><small class="requestedDate">\
-                            </small>\
+                            <span class="icon-book"></span><span class="label label-info requestId"></span><span class="icon-user"></span>\
+                            <span class="label label-info customer"></span><span class="icon-calendar"></span><span class="label label-info requestedDate">\
+                            </span>\
                             <div>\
-                                <i class="icon-globe"></i><small class="collectionAddress"></small>\
+                                <span class="icon-globe"></span><small class="collectionAddress"></small>\
                             </div>\
                         </div>\
                         <div class="right-column">\
@@ -21,9 +21,9 @@
                         </div>\
                     </li>');
 
-        ticket.find('small.customer').html(request.Customer);
-        ticket.find('small.requestId').html(request.RequestId);
-        ticket.find('small.requestedDate').html(request.RequestedDate);
+        ticket.find('span.customer').html(request.Customer);
+        ticket.find('span.requestId').html(request.RequestId);
+        ticket.find('span.requestedDate').html(request.RequestedDate);
         ticket.find('small.collectionAddress').html(request.CollectionAddress);
         ticket.find('a.addToPlan').attr('onclick', 'addToPlan(' + request.RequestId + ')');
         ticket.find('a.removeToPlan').attr('onclick', 'removeFromPlan(' + request.RequestId + ')');
