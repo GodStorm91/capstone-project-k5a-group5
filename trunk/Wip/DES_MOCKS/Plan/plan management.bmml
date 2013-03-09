@@ -70,5 +70,10 @@
         <text>per%20page</text>
       </controlProperties>
     </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="586" y="204" w="-1" h="-1" measuredW="88" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>View%20Detail</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>

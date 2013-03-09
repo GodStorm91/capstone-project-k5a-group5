@@ -5,7 +5,7 @@
         <text>Solve%0Ahttp%3A//</text>
       </controlProperties>
     </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="141" y="226" w="-1" h="-1" measuredW="254" measuredH="113" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="141" y="226" w="280" h="113" measuredW="254" measuredH="113" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
         <text>request%2C%20Action%0Arequest%201%2C%20Delete/Move%20to%20another%20plan%0Arequest%202%2C%20Delete/Move%20to%20another%20plan%0Arequest%203%2C%20Delete/Move%20to%20another%20plan</text>
       </controlProperties>
@@ -33,6 +33,36 @@
     <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="343" y="155" w="-1" h="-1" measuredW="41" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>plan%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="214" y="243" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="277" y="243" w="-1" h="-1" measuredW="144" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Move%20to%20another%20plan</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Button" x="214" y="276" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="277" y="276" w="-1" h="-1" measuredW="144" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Move%20to%20another%20plan</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Button" x="214" y="303" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="277" y="303" w="-1" h="-1" measuredW="144" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Move%20to%20another%20plan</text>
       </controlProperties>
     </control>
   </controls>
