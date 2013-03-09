@@ -200,17 +200,25 @@ namespace SMDH.Areas.Hub.Controllers
         ////    return View(order);
         ////}
 
-        public ViewResult SubmitPasscode(string passCode)
+        public ActionResult SubmitPasscode(string passCode)
         {
-            var result = context.Orders.FirstOrDefault(x => x.Passcode.ToString() == passCode);
-            if (result == null)
+            try
             {
-                return null;
+                var result = context.Orders.Where(x => x.Passcode.ToString() == passCode && x.OrderStatus == (int)OrderStatus.Delivering).Single();
+                if (result == null)
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
+                OrderViewModel returnResult = new OrderViewModel(result);
+
+                return Json(new { success = true, result = returnResult }, JsonRequestBehavior.AllowGet);
             }
-
-            ViewBag.Items = result;
-
-            return View(result);
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+           
         }
 
         public ActionResult ChangeStatusByPasscode(int selectedId)

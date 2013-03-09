@@ -189,7 +189,7 @@
         </div>
     </div>
 </div>
-<div class="span8">
+<div class="span7">
     <div class="widget-box">
         <div class="widget-title">
             <span class="icon"><i class="icon-th-list"></i></span>
@@ -294,7 +294,31 @@
     });
 
     function createPlan() {
-        alert(selectedRequestIds[0]);
+        if (selectedRequestIds.length == 0) {
+            bootbox.alert('Please select at least 1 request to create plan.');
+        } else {
+//            for (i = 0; i < selectedRequestIds.length; i++) {
+//                alert(selectedRequestIds[i]);
+//            }
+            $.post('/Plans/ConfirmCreateCollectionPlan', { selectedRequestIds: selectedRequestIds.toString() }, function (result) {
+                if (result.success) {
+                    $.blockUI();
+                    window.location = '/Plans/Details?&id=' + result.planId;
+                }
+            });
+        }
+    }
+
+    function removeA(arr) {
+        var what, a = arguments, L = a.length, ax;
+        while (L > 1 && arr.length) {
+            what = a[--L];
+            while ((ax = arr.indexOf(what)) != -1) {
+                arr.splice(ax, 1);
+            }
+
+        }
+        return arr;
     }
 
     function createLatsLons(waypointsLists, segmentsLists) {
@@ -375,7 +399,7 @@
         //alert("remove " + requestId);
         $("#request-" + requestId + " a.removeToPlan").hide();
         $("#unplanned-requests > ul").append($("#request-" + requestId));
-        selectedRequestIds[selectedRequestIds.length] = requestId;
+        removeA(selectedRequestIds, requestId);
         $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan label label-success" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan">Add</a>');
         $('.myToolTip').tooltip();
     };

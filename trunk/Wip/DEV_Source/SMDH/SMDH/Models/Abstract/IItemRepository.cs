@@ -13,7 +13,7 @@ namespace SMDH.Models.Abstract
          bool Cancel(Item item);
          bool Cancel(Item item, bool commit);
          bool Delete(Item item);
-         bool Delete(Item item, bool commit);
+         bool Delete(Item item, bool commit);    
         
     }
 }

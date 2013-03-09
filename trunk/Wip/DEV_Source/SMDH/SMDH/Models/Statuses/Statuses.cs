@@ -36,7 +36,8 @@ namespace SMDH.Models.Statuses
         Delivered = 11, //at hub
         Returned = 12,
         WaitingForReturn = 13, //at hub
-        DeliveringToHub = 14 // at hub
+        DeliveringToHub = 14, // at hub
+        Expired = 15
     }
 
     public enum CollectionPlanStatus
@@ -73,12 +74,12 @@ namespace SMDH.Models.Statuses
 
     public enum HubStatus
     {
-        SendingToHub = 1,
-        InHub = 2,
-        Delivered =3,
-        Expired = 4,
-        WaitingForReturn = 5,
-        Return = 6
+        SendingToHub = 14,
+        InHub = 9,
+        Delivered =11,
+        Expired = 15,
+        WaitingForReturn = 13,
+        Return = 12
     }
 
     //public enum ItemStatus

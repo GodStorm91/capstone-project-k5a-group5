@@ -275,7 +275,19 @@ namespace SMDH.Models.Concrete
 
         public bool MarkAsDelivered(Order order)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var myOrder = context.Orders.Single(o => o.OrderId == order.OrderId);
+                myOrder.OrderStatus = (int)OrderStatus.Delivered;
+                context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+            
         }
 
         public bool MarkAsDelivered(Order order, bool commit)
