@@ -197,5 +197,11 @@ namespace SMDH.Controllers
                 return Json(new { success = false });
             }
         }
+
+        public ActionResult GetLatLongOfHub(int id)
+        {
+            var hub = context.Hubs.Single(o => o.HubId == id);
+            return Json(new { latitude= hub.Latitude , longitude = hub.Longitude }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

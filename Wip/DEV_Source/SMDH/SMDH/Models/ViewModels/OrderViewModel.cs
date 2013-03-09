@@ -28,6 +28,7 @@ namespace SMDH.Models.ViewModels
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
         public Nullable<int> HubId;
+        public string DueDateString { get; set; }
 
         public List<ItemViewModel> Items { get; set; }
 
@@ -49,6 +50,7 @@ namespace SMDH.Models.ViewModels
             //Status = Regex.Replace(order.Status.ToString(), "(\\B[A-Z])", " $1");
             AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
             Note = order.Note;
+            DueDateString = String.Format("{0:dd/MM/yyyy hh:mm tt}", DueDate);
             //AddressFromWard = AddressHelper.GetAddressFromWard(order);
         }
     }

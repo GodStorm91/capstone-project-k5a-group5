@@ -83,8 +83,9 @@ namespace SMDH.Models.Concrete
                 if (commit) context.SubmitChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string message = e.Message;
                 return false;
                 throw;
             }
@@ -319,8 +320,9 @@ namespace SMDH.Models.Concrete
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string message = e.Message;
                 return false;
                 throw;
             }

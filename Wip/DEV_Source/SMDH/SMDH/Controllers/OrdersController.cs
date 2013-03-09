@@ -320,6 +320,19 @@ namespace SMDH.Controllers
             return 0;
         }
 
+        public ActionResult MarkAsDelivered(int orderId)
+        {
+            var order = _repository.Find(orderId);
+            if (!_repository.MarkAsDelivered(order))
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
+        }
+
 
 
         
