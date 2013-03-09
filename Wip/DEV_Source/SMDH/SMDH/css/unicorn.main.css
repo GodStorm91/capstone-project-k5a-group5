@@ -1513,3 +1513,8 @@ form {
 		text-align: center;
 	}
 }
+
+.input-mini
+{
+    width: 30px;
+}
