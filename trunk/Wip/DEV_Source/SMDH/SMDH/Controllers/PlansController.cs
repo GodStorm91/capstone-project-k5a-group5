@@ -589,5 +589,10 @@ namespace SMDH.Controllers
 
             throw new HttpException(404, "Not found!");
         }
+
+        public ViewResult EditAutoScheduleCollectionPlan()
+        {
+            return View();
+        }
     }
 }
