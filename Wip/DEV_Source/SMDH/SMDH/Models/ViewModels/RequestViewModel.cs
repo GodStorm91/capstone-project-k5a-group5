@@ -31,7 +31,7 @@ public partial class RequestViewModel
         AddressFromWard = AddressHelper.GetAddressFromWard(request.CustomerAddress);
     }
 
-    public RequestViewModel(Request request, float weightedDeliveryTypeScore, float weightedDateScore)
+    public RequestViewModel(Request request, double weightedDeliveryTypeScore, double weightedDateScore)
     {
         RequestId = request.RequestId;
         Customer = request.Customer.DisplayName;
@@ -43,6 +43,6 @@ public partial class RequestViewModel
         Longitude = request.CustomerAddress.Longitude;
         AddressFromWard = AddressHelper.GetAddressFromWard(request.CustomerAddress);
         System.TimeSpan diff = System.DateTime.Now.Subtract(DateTime.Parse(RequestedDate, new System.Globalization.CultureInfo("fr-FR", false)));
-        WeightedScore = weightedDateScore * diff.Days + weightedDeliveryTypeScore;
+        WeightedScore = (float)(weightedDateScore * diff.Days + weightedDeliveryTypeScore);
     }
 }

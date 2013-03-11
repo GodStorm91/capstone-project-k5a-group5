@@ -14,6 +14,9 @@
 <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
 <script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/date.format.js" type="text/javascript"></script>
+<script src = "/Scripts/jquery.unobtrusive-ajax.js" type ="text/javascript"></script>
+<script src = "/Scripts/MicrosoftAjax.js" type ="text/javascript"></script>
+<script src = "/Scripts/MicrosoftMVCAjax.js" type ="text/javascript"></script>
 <script type="text/javascript">
     var map, vectors, epsg900913 = new OpenLayers.Projection('EPSG:900913'), epsg4326 = new OpenLayers.Projection('EPSG:4326');
     //var xml = "<plans><plan id = '1'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80023' lon='106.6673' /><wpt lat='10.80139' lon='106.6683' /><wpt lat='10.80167' lon='106.6657' /><wpt lat='10.8027' lon='106.6668' /><wpt lat='10.80382' lon='106.6658' /><wpt lat='10.80439' lon='106.6661' /><wpt lat='10.80481' lon='106.6663' /><wpt lat='10.80486' lon='106.6646' /><wpt lat='10.80348' lon='106.6626' /><wpt lat='10.80079' lon='106.6613' /></plan><plan id='2'><wpt lat='10.80079' lon='106.6613'/><wpt lat='10.80137' lon='106.6531' /><wpt lat='10.80118' lon='106.6554' /><wpt lat='10.80147' lon='106.6545' /><wpt lat='10.80432' lon='106.6548' /><wpt lat='10.80618' lon='106.6552' /><wpt lat='10.80531' lon='106.6587' /><wpt lat='10.80458' lon='106.661' /><wpt lat='10.80556' lon='106.6614' /><wpt lat='10.80079' lon='106.6613'/></plan><plans>";
@@ -137,13 +140,10 @@
         <div class="widget-content nopadding">
             <div style="height: 100px; overflow: scroll;">
                 <ul class="activity-list">
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 1</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 2</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 3</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 4</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 5</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 6</strong> </a></li>
-                    <li><a href="#"><i class="icon-file"></i><strong>Plan 7</strong> </a></li>
+                    @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
+                    {
+                        <li><i class="icon-file"></i><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong></li>                            
+                    }
                 </ul>
             </div>
         </div>
@@ -158,137 +158,29 @@
                     Plan details</h5>
             </div>
             <div class="widget-content nopadding">
-                <div style="height: 500px; overflow: scroll;">
+                <div style="height: 500px; overflow: scroll;" id="requestDetailsZone">
                     <ul class="site-stats">
-                        <li>
-                            <div style="float: right;">
-                                <a class="label label-success" href="#"><i class="icon-circle-arrow-right"></i></a>
-                                <a class="label label-important" href="#"><i class="icon-remove"></i></a>
-                            </div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span>
+                        @foreach (var request in ViewBag.RequestDetails)
+                        {
+                            <li>
+                                <div style="float: right;">
+                                    <a class="label label-success" href="#"><i class="icon-circle-arrow-right"></i></a>
+                                    <a class="label label-important" href="#"><i class="icon-remove"></i></a>
                                 </div>
                                 <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
+                                    <div>
+                                        <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
+                                            class="icon-user"></span><span class="label label-info requestId">@request.Customer</span><span
+                                                class="icon-calendar"></span><span class="label label-info requestId">@request.RequestedDate</span>
+                                    </div>
+                                    <div>
+                                        <span class="icon-globe"></span><span>@request.CollectionAddress</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
                                 <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                        </li>
-                        <li>
-                            <div style="float: right;">
-                                <a class="label label-success" href="#"><i class="icon-circle-arrow-right"></i></a>
-                                <a class="label label-important" href="#"><i class="icon-remove"></i></a>
-                            </div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                        </li>
-                        <li>
-                            <div style="float: right;">
-                                <a class="label label-success" href="#"><i class="icon-circle-arrow-right"></i></a>
-                                <a class="label label-important" href="#"><i class="icon-remove"></i></a>
-                            </div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                            <div>
-                                <div>
-                                    <span class="icon-book"></span><span class="label label-info requestId">259</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">tiktak.com</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">10/02/2013</span></div>
-                                <div>
-                                    <span class="icon-globe"></span><span>112 To ky Q.12 Tp.HCM</span>
-                                </div>
-                            </div>
-                            <div>
-                                ---------------------------------------------------</div>
-                        </li>
+                                    ---------------------------------------------------</div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -340,6 +232,20 @@
             $("#ddlPlansNumber").html(deliveryMenItems);
 
         });
+    });
+
+    $('.myLink').click(function (e) {
+        $.post(this.href, function (data) {
+            $('#requestDetailsZone').html(data.listRequest);
+            createLatsLons(data.waypoints, data.segments);
+            addMarker();
+            addDirection();
+            map.setCenter(wpt[0][0].location, 16);
+            e.preventDefault();
+            return false;
+        });
+        e.preventDefault();
+        return false;
     });
 
     $("#btnOK").click(function () {
