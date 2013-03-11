@@ -26,14 +26,14 @@
         <h5>
             Number of plan</h5>
     </div>
-    <div class="widget-content nopadding">        
+    <div class="widget-content nopadding">
         <div class="control-group">
             <label class="control-label">
                 Number of plan</label>
             <div class="controls">
                 <input style="width: 160px;" type="text" />
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 <div class="widget-box">
@@ -52,12 +52,12 @@
                     <input type="radio" name="radios" checked />
                     Group all requests</label>
                 <label>
-                    <input type="radio" name="radios" id = "rdoMaximumRequestOption" />
-                    Group<input style="width: 30px;" class="input-mini" type="text" id ="txtMaximumRequest" />request(s)
+                    <input type="radio" name="radios" id="rdoMaximumRequestOption" />
+                    Group<input style="width: 30px;" class="input-mini" type="text" id="txtMaximumRequest" />request(s)
                 </label>
-                      <button class="btn btn-primary" id="btnGroup">
+                <button class="btn btn-primary" id="btnGroup">
                     Group</button>
-            </div>                      
+            </div>
         </div>
         </form>
     </div>
@@ -75,8 +75,8 @@
                 {
                     foreach (var request in ViewBag.PossibleRequests)
                     {
-                    <li id="item">
-                        <input style="float: right;" type="checkbox" onclick="CheckStatus()" />
+                    <li id="request-@request.RequestId">
+                        <input style="float: right;" id="@request.RequestId" type="checkbox"/>
                         <div>
                             <div>
                                 <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
@@ -94,9 +94,7 @@
                 }
                 else
                 {
-                    <li>
-                            No Request Available
-                    </li>       
+                    <li>No Request Available </li>       
                     
                 }
             </ul>
@@ -105,9 +103,10 @@
 </div>
 <div class="span1" style="text-align: center; vertical-align: bottom;">
     <div style="margin-top: 80px;">
-        <a class="label label-success" href="#">Add<i class="icon-circle-arrow-right"></i></a></div>
+        <a class="label label-success" id="addtoplan" href="javascript:void(0)">Add<i class="icon-circle-arrow-right"></i></a></div>
     <div style="margin-top: 10px;">
-        <a class="label label-important" href="#"><i class="icon-circle-arrow-left"></i>Remove</a></div>
+        <a class="label label-important" id="removeplan" href="javascript:void(0)"><i class="icon-circle-arrow-left">
+        </i>Remove</a></div>
 </div>
 <div class="span6">
     <div class="widget-box">
@@ -116,7 +115,7 @@
             <h5>
                 Selected Request(s)</h5>
         </div>
-        <div class="widget-content">
+        <div class="widget-content" id="selectedRequest">
             <ul class="site-stats">
                 <li></li>
             </ul>
@@ -128,11 +127,11 @@
         Solve</button>
 </div>
 <script type="text/javascript">
-//$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
-//     bootbox.alert("Positive integers only"); 
-//     this.value = ""; 
-//     this.focus(); 
-// });
+    //$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
+    //     bootbox.alert("Positive integers only"); 
+    //     this.value = ""; 
+    //     this.focus(); 
+    // });
     $('#btnGroup').click(function () {
         var maxRequest = -1;
         if ($('#rdoMaximumRequestOption').prop('checked')) {
@@ -187,4 +186,31 @@
             }
         });
     });
+
+    var selectedrq = new Array();
+    var i = 0;
+    $("#addtoplan").click(function () {
+        $("#requestsZone :checkbox:checked").each(function () {
+            var id = $(this).attr('id');
+            $(this).attr('checked', false);
+            $("#selectedRequest > ul").append($("#request-" + id));
+        })
+    })
+
+    $("#removeplan").click(function () {
+        $("#selectedRequest :checkbox:checked").each(function () {
+            var id = $(this).attr('id');
+            $(this).attr('checked', false);
+            $("#requestsZone > ul").append($("#request-" + id));
+        })
+    })
+
+    $('#btnConfirm').click(function () {
+        selectedrq.length = 0;
+        $("#selectedRequest :checkbox").each(function () {
+            var requestid = $(this).attr('id');
+            selectedrq.push(requestid);
+        })
+        alert(selectedrq);
+    })
 </script>
