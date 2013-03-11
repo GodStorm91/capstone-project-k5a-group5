@@ -128,11 +128,11 @@
         Solve</button>
 </div>
 <script type="text/javascript">
-$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
-     bootbox.alert("Positive integers only"); 
-     this.value = ""; 
-     this.focus(); 
- });
+//$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
+//     bootbox.alert("Positive integers only"); 
+//     this.value = ""; 
+//     this.focus(); 
+// });
     $('#btnGroup').click(function () {
         var maxRequest = -1;
         if ($('#rdoMaximumRequestOption').prop('checked')) {
@@ -143,9 +143,7 @@ $("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() 
                 bootbox.alert("Must maximum value");
                 return;
             }
-
-            //user enter not a number value
-            if ($('#txtMaximumRequest').numer
+            //user enter not a number value            
 
         }
 

@@ -235,6 +235,11 @@
     });
 
     $('#btnSave').click(function (e) {
+        var testItems = new Object();
+        testItems.Entry = new Array();
+        testItem.Entry[0] = new Object({Id: 0 , listRequests : [38,39]});
+        testItem.Entry[1] = new object({Id: 1, listRequests : [32, 7]});
+        $.post("/Plans/ConfirmCreate", {data: $.toJson(
     });
 
     $('.myLink').click(function (e) {
