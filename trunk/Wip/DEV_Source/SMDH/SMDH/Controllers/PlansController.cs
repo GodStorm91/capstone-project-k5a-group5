@@ -66,7 +66,7 @@ namespace SMDH.Controllers
         //
         //GET: /CollectionPlans
         public ViewResult ViewDeliveryPlans()
-        {            
+        {
             var statuses = new List<int>();
             statuses.Add((int)PlanStatus.New);
             statuses.Add((int)PlanStatus.Assigned);
@@ -115,15 +115,15 @@ namespace SMDH.Controllers
 
             ViewBag.SelectedStatuses = statuses;
 
-            return View(deliveryPlans);            
-            
+            return View(deliveryPlans);
+
         }
 
         //
         //GET: /Plans/ViewDeliveryPlans
         public ViewResult ViewCollectionPlans()
         {
-            
+
             var statuses = new List<int>();
             statuses.Add((int)PlanStatus.New);
             statuses.Add((int)PlanStatus.Assigned);
@@ -172,19 +172,19 @@ namespace SMDH.Controllers
 
             ViewBag.SelectedStatuses = statuses;
 
-            return View(collectionPlans);            
+            return View(collectionPlans);
         }
 
         //
         //GET: /Plans/Create
         public ActionResult CreateDeliveryPlan()
-        {            
+        {
             var usingMap = true;
             if (!string.IsNullOrEmpty(Request["usingMap"]))
             {
                 if (Request["usingMap"].ToLower() == "no" || Request["usingMap"].ToLower() == "false") usingMap = false;
             }
-            
+
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.PossibleDistricts = new SelectList(new List<District>());
             ViewBag.PossibleWards = new SelectList(new List<Ward>());
@@ -217,7 +217,7 @@ namespace SMDH.Controllers
         {
             try
             {
-                var deliveryPlan = new Plan();                
+                var deliveryPlan = new Plan();
                 var orderIdStrs = Request["selectedOrderIds"].Split(',');
                 var orderIds = new int[orderIdStrs.Length];
                 for (int i = 0; i < orderIdStrs.Length; i++)
@@ -250,7 +250,7 @@ namespace SMDH.Controllers
                     requestIds[i] = int.Parse(requestIdsStrs[i]);
                 }
 
-                if (_repository.CreateCollectionPlan(collectionPlan , requestIds))
+                if (_repository.CreateCollectionPlan(collectionPlan, requestIds))
                 {
                     return Json(new { success = true, planId = collectionPlan.PlanId });
                 }
@@ -259,7 +259,7 @@ namespace SMDH.Controllers
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -355,7 +355,7 @@ namespace SMDH.Controllers
             try
             {
                 EFDeliveryMenRepository deliveryMenRepo = new EFDeliveryMenRepository();
-                deliveryMenRepo.AssignDeliveryMenToPlan(PlanId, listdeliveryman, listNotAssignedDeliveryMen);                
+                deliveryMenRepo.AssignDeliveryMenToPlan(PlanId, listdeliveryman, listNotAssignedDeliveryMen);
                 return Json(new { success = true });
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace SMDH.Controllers
             return View();
         }
 
-        
+
         /// <summary>
         /// Mark plan to be finished
         /// </summary>
@@ -532,12 +532,12 @@ namespace SMDH.Controllers
 
         public ViewResult AutoScheduleCollectionPlan(int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
-            
+
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
-            
+
             //Return all requests with status is approved            
             var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved
-                                                        && r.CustomerAddress.District.CityProvinceId == cityId                                                        
+                                                        && r.CustomerAddress.District.CityProvinceId == cityId
                                                         ).OrderBy(r => r.RequestedDate).ToList();
             //return View("UnplannedRequestList", requests);
             var requestViewModels = new List<RequestViewModel>();
@@ -552,11 +552,11 @@ namespace SMDH.Controllers
             //
             return View();
         }
-        
+
 
         public ActionResult Details(int id)
         {
-            Plan plans = context.Plans.Single(o=> o.PlanId == id);
+            Plan plans = context.Plans.Single(o => o.PlanId == id);
             if (plans != null)
             {
                 try
@@ -609,37 +609,46 @@ namespace SMDH.Controllers
 
         public ActionResult GroupRequestByCollectionAddressId(int maxRequest = -1, int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
-            if (maxRequest == -1)
-            {
-                var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved
-                                                        && r.CustomerAddress.District.CityProvinceId == cityId
-                                                        ).OrderBy(r => r.RequestedDate).ToList();
-                var requestGroups =
-                        from request in requests
-                        group request by request.CollectionAddressId into g
-                        select new { CollectionAddressId = g.Key, Groups = g };
 
-                List<List<RequestViewModel>> result = new List<List<RequestViewModel>>();
-                foreach (var g in requestGroups)
+            var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved
+                                                    && r.CustomerAddress.District.CityProvinceId == cityId
+                                                    ).OrderBy(r => r.RequestedDate).ToList();
+            var requestGroups =
+                    from request in requests
+                    group request by request.CollectionAddressId into g
+                    select new { CollectionAddressId = g.Key, Groups = g };
+
+            List<List<RequestViewModel>> result = new List<List<RequestViewModel>>();
+            foreach (var g in requestGroups)
+            {
+                List<RequestViewModel> currList = new List<RequestViewModel>();
+                int i = 0;
+                foreach (var n in g.Groups)
                 {
-                    List<RequestViewModel> currList = new List<RequestViewModel>();
-                    foreach (var n in g.Groups)
+                    i++;
+                    currList.Add(new RequestViewModel(n, weightedDeliveryTypeScore, weightedDateScore));
+
+                    //it's equal the maximum request
+                    if (i == maxRequest)
                     {
-                        currList.Add(new RequestViewModel(n, weightedDeliveryTypeScore, weightedDateScore));
+                        result.Add(currList);
+                        currList = new List<RequestViewModel>();
+                        i = 0;
                     }
+                }
+                if (currList.Count > 0)
+                {
                     result.Add(currList);
                 }
 
-                return Json(new { success = true, groupList = result });
             }
-            else
-            {
-                return Json(new { success = true });
-            }
+
+            return Json(new { success = true, groupList = result });
+
         }
 
         [HttpGet]
-        public ActionResult EditAutoScheduleCollectionPlan(int planNumber = 2,int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        public ActionResult EditAutoScheduleCollectionPlan(int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
             try
             {
@@ -675,17 +684,17 @@ namespace SMDH.Controllers
                     {
                         pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
                     }
-                    
+
                     List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
 
                     for (int i = 0; i < listPointCollection.Count; i++)
                     {
-                        PointCollection cluster = listPointCollection[i];                        
+                        PointCollection cluster = listPointCollection[i];
                     }
 
                     ViewBag.NumberOfPlans = planNumber;
                     string listRequestsIds = "";
-                    for (int i = 0; i < requestIds.Length -1; i++)
+                    for (int i = 0; i < requestIds.Length - 1; i++)
                     {
                         listRequestsIds += requestIds[i] + ",";
                     }
@@ -707,11 +716,11 @@ namespace SMDH.Controllers
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
-        
+
         public ActionResult GetRequestsInPlan(string selectedRequestsIds, int planNumber, int planId)
         {
             try
@@ -723,64 +732,64 @@ namespace SMDH.Controllers
                     requestIds[i] = Int16.Parse(selectedRequestIdsArr[i]);
                 }
                 var requests = context.Requests.Where(o => requestIds.Contains(o.RequestId));
-                    List<GeoCoordinate> pointList = new List<GeoCoordinate>();
-                    List<RequestViewModel> requestViewModel = new List<RequestViewModel>();
-                    foreach (var request in requests)
-                    {
-                        requestViewModel.Add(new RequestViewModel(request, 0.5, 0.5));
-                    }
-                    for (int i = 0; i < requests.Count(); i++)
-                    {
-                        pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
-                    }
+                List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                List<RequestViewModel> requestViewModel = new List<RequestViewModel>();
+                foreach (var request in requests)
+                {
+                    requestViewModel.Add(new RequestViewModel(request, 0.5, 0.5));
+                }
+                for (int i = 0; i < requests.Count(); i++)
+                {
+                    pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                }
 
-                    PointCollection pointCollection = new PointCollection();
-                    for (int i = 0; i < pointList.Count; i++)
-                    {
-                        pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
-                    }
-                    
-                    List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
-                    var requestsList = requests.ToList();
-                    List<RequestViewModel> returnList = new List<RequestViewModel>();
-                    PointCollection cluster = listPointCollection[planId];
-                    for (int i = 0; i < cluster.Count; i++)
-                    {
-                        returnList.Add(new RequestViewModel(requestsList.ElementAt(cluster.ElementAt(i).Id)));
-                    }
-                    string result = "<ul class='site-stats'>";
-                    for (int i = 0; i < returnList.Count; i++)
-                    {
-                        string itemString = "<li>" +
-                                "<div style='float: right;'>" +
-                                    "<a class='label label-success' href='#'><i class='icon-circle-arrow-right'></i></a>" +
-                                    "<a class='label label-important' href='#'><i class='icon-remove'></i></a>" +
+                PointCollection pointCollection = new PointCollection();
+                for (int i = 0; i < pointList.Count; i++)
+                {
+                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                }
+
+                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+                var requestsList = requests.ToList();
+                List<RequestViewModel> returnList = new List<RequestViewModel>();
+                PointCollection cluster = listPointCollection[planId];
+                for (int i = 0; i < cluster.Count; i++)
+                {
+                    returnList.Add(new RequestViewModel(requestsList.ElementAt(cluster.ElementAt(i).Id)));
+                }
+                string result = "<ul class='site-stats'>";
+                for (int i = 0; i < returnList.Count; i++)
+                {
+                    string itemString = "<li>" +
+                            "<div style='float: right;'>" +
+                                "<a class='label label-success' href='#'><i class='icon-circle-arrow-right'></i></a>" +
+                                "<a class='label label-important' href='#'><i class='icon-remove'></i></a>" +
+                            "</div>" +
+                            "<div>" +
+                                "<div>" +
+                                    "<span class='icon-book'></span><span class='label label-info requestId'>" + returnList[i].RequestId + "</span><span " +
+                                        "class='icon-user'></span><span class='label label-info requestId'>" + returnList[i].Customer + "</span><span " +
+                                            "class='icon-calendar'></span><span class='label label-info requestId'>" + returnList[i].RequestedDate + "</span>" +
                                 "</div>" +
                                 "<div>" +
-                                    "<div>" +
-                                        "<span class='icon-book'></span><span class='label label-info requestId'>"+ returnList[i].RequestId + "</span><span " +
-                                            "class='icon-user'></span><span class='label label-info requestId'>" + returnList[i].Customer + "</span><span " +
-                                                "class='icon-calendar'></span><span class='label label-info requestId'>" + returnList[i].RequestedDate+ "</span>" +
-                                    "</div>" +
-                                    "<div>" +
-                                        "<span class='icon-globe'></span><span>" + returnList[i].CollectionAddress + "</span>" +
-                                    "</div>" +
+                                    "<span class='icon-globe'></span><span>" + returnList[i].CollectionAddress + "</span>" +
                                 "</div>" +
-                                "<div>" +
-                                    "---------------------------------------------------</div>" +
-                            "</li>";
-                        result += itemString;
-                    }
-                    result += "</ul>";
-                    pointList.Clear();
-                    for (int i = 0; i < returnList.Count; i++)
-                    {
-                        pointList.Add(new GeoCoordinate((double)returnList.ElementAt(i).Latitude, (double)returnList.ElementAt(i).Longitude));
-                    }
+                            "</div>" +
+                            "<div>" +
+                                "---------------------------------------------------</div>" +
+                        "</li>";
+                    result += itemString;
+                }
+                result += "</ul>";
+                pointList.Clear();
+                for (int i = 0; i < returnList.Count; i++)
+                {
+                    pointList.Add(new GeoCoordinate((double)returnList.ElementAt(i).Latitude, (double)returnList.ElementAt(i).Longitude));
+                }
 
-                    MTspHelper.initialize();
-                    MTspHelper.solveTsp(pointList, 1);
-                    return Json(new { success = true, listRequest = result, waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists }, JsonRequestBehavior.AllowGet);
+                MTspHelper.initialize();
+                MTspHelper.solveTsp(pointList, 1);
+                return Json(new { success = true, listRequest = result, waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
