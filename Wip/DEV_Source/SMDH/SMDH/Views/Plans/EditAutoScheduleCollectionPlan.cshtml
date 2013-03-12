@@ -72,7 +72,7 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-});
+        });
         map.addLayer(gmap);
         map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
 
@@ -162,7 +162,7 @@
             <div class="widget-content nopadding">
                 <div style="height: 500px; overflow: scroll;" id="requestDetailsZone">
                     <ul class="site-stats">
-                        @foreach (var request in ViewBag.RequestDetails)
+                        @foreach (var request in ViewBag.RequestList)
                         {
                             <li id="request-@request.RequestId">
                                 <div style="float: right;">
