@@ -48,7 +48,6 @@ namespace SMDH.Areas.Hub.Controllers
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.SendingToHub),
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.InHub),
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.Delivered),
-                    listorders.Count(o => o.OrderStatus == (int) HubStatus.Expired),
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.WaitingForReturn),
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.Return)
                 };
@@ -103,14 +102,13 @@ namespace SMDH.Areas.Hub.Controllers
                          select new
                          {
                             orderid = o.OrderId,
-                            item = o.Items.Count,
-                            fee = o.Fee,
-                            deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                            expireddate = (o.DeliveryDate.Value.Day+3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                            itemno = o.Items.Count,
+                            amount = o.AmountToBeCollectedFromReceiver,
+                            duedate = o.DueDate
                          }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" />", r.orderid.ToString(), r.item.ToString(), r.fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString(), "<a class=\"btn btn-mini btn-success\" href=\"Dashboard/changestatustoInhub?&orderid=" + r.orderid + "\">ChangeStatus</a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" class=\"checksth\" id=\"" + r.orderid.ToString() + "\" />", r.orderid.ToString(), r.itemno.ToString(), r.amount.ToString(), r.duedate.ToString(), "<a class=\"btn btn-mini btn-success myLink\" onclick='checkStatusinHub(" + r.orderid + ")'\">ChangeStatus</a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -123,15 +121,14 @@ namespace SMDH.Areas.Hub.Controllers
                           where o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1
                           select new
                           {
-                              o.OrderId,
-                              o.Items.Count,
-                              o.Fee,
-                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              orderid = o.OrderId,
+                              itemno = o.Items.Count,
+                              amount = o.AmountToBeCollectedFromReceiver,
+                              duedate = o.DueDate
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
+                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.amount.ToString(), r.duedate.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -144,39 +141,17 @@ namespace SMDH.Areas.Hub.Controllers
                           where o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1
                           select new
                           {
-                              o.OrderId,
-                              o.Items.Count,
-                              o.Fee,
-                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              orderid = o.OrderId,
+                              itemno = o.Items.Count,
+                              duedate = o.DueDate,
+                              deliverydate = o.DeliveryDate
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
+                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString(), r.deliverydate.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
-        }
-
-        public ActionResult getalldataExpired()
-        {
-            var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.Expired && o.HubId == 1
-                          select new
-                          {
-                              o.OrderId,
-                              o.Items.Count,
-                              o.Fee,
-                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                          }).Distinct().ToList();
-            foreach (var r in result)
-            {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
-            }
-
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult getalldataWaitingForReturn()
@@ -186,15 +161,13 @@ namespace SMDH.Areas.Hub.Controllers
                           where o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1
                           select new
                           {
-                              o.OrderId,
-                              o.Items.Count,
-                              o.Fee,
-                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              orderid = o.OrderId,
+                              itemno = o.Items.Count,
+                              duedate = o.DueDate
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" />", r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString(), "<a class=\"btn btn-mini btn-success\" href=\"Dashboard/changestatustoReturn?&orderid=" + r.OrderId + "\">ChangeStatus</a>" });
+                orders.Add(new String[] { "<input type=\"checkbox\" class=\"checkwtr\" id=\"" + r.orderid.ToString() + "\" />", r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString(), "<a class=\"btn btn-mini btn-success myLink\" onclick='checkStatuswaiting(" + r.orderid + ")'\">ChangeStatus</a>" });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -207,15 +180,13 @@ namespace SMDH.Areas.Hub.Controllers
                           where o.OrderStatus == (int)HubStatus.Return && o.HubId == 1
                           select new
                           {
-                              o.OrderId,
-                              o.Items.Count,
-                              o.Fee,
-                              deliverydate = o.DeliveryDate.Value.Day + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
-                              expireddate = (o.DeliveryDate.Value.Day + 3) + "/" + o.DeliveryDate.Value.Month + "/" + o.DeliveryDate.Value.Year,
+                              orderid = o.OrderId,
+                              itemno = o.Items.Count,
+                              collecteddate = o.CollectedDate
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { r.OrderId.ToString(), r.Count.ToString(), r.Fee.ToString(), r.deliverydate.ToString(), r.expireddate.ToString() });
+                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.collecteddate.ToString()});
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);
@@ -223,26 +194,43 @@ namespace SMDH.Areas.Hub.Controllers
 
         public ActionResult changestatustoInhub(int orderid)
         {
-            var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
-            if (order == null)
+            try
             {
-                return Redirect("/Hubs/Dashboard");
+                var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
+                if (order == null)
+                {
+                    return Redirect("/Hubs/Dashboard");
+                }
+                order.OrderStatus = (int)HubStatus.InHub;
+                context.SubmitChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                
             }
-            order.OrderStatus = (int)HubStatus.InHub;
-            context.SubmitChanges();
-            return Redirect("/Hub/Dashboard");
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
         }
 
         public ActionResult changestatustoReturn(int orderid)
         {
-            var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
-            if (order == null)
+            try
             {
-                return Redirect("/Hubs/Dashboard");
+                var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
+                if (order == null)
+                {
+                    return Redirect("/Hubs/Dashboard");
+                }
+                order.OrderStatus = (int)HubStatus.Return;
+                context.SubmitChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            order.OrderStatus = (int)HubStatus.Return;
-            context.SubmitChanges();
-            return Redirect("/Hub/Dashboard");
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
         }
     }
 }
