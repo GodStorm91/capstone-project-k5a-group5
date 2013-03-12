@@ -213,6 +213,9 @@
     var numPlans;
     var dateScore = 0.5;
     var deliveryTypeScore = 0.5;
+    var someValue = @(ViewBag.Waypoints)
+
+    
 
     $("#ddlCityProvince").change(function () {
         var items = '';
@@ -508,10 +511,11 @@
             selectedrq.push(requestid);
         })
 
+        alert(someValue);
+
         var testItems = new Object();
         testItems.Entrys = new Array();
-        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });    
-            
+        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });           
 
         var json = $.toJSON(testItems);
         alert(json)

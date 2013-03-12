@@ -49,11 +49,11 @@
                 Group types</label>
             <div class="controls">
                 <label>
-                    <input type="radio" name="radios" checked />
+                    <input type="radio" class="radios" name="radios" onclick="triggerRadio()" id ="rdoGroupAll" checked />
                     Group all requests</label>
                 <label>
-                    <input type="radio" name="radios" id="rdoMaximumRequestOption" />
-                    Group<input style="width: 30px;" class="input-mini" type="text" id="txtMaximumRequest" />request(s)
+                    <input type="radio" class"radios" name = "radios" onclick="triggerRadio()" id="rdoMaximumRequestOption" />
+                    Group<input style="width: 30px;" class="input-mini" type="text" id="txtMaximumRequest" value="10" /> request(s)
                 </label>
                 <button class="btn btn-primary" id="btnGroup">
                     Group</button>
@@ -73,23 +73,30 @@
             <ul class="site-stats" id="selectedRequestZone">
                 @if (ViewBag.PossibleRequests != null)
                 {
-                    foreach (var request in ViewBag.PossibleRequests)
+                    foreach (var listRequestViewModel in ViewBag.PossibleRequests)
                     {
-                    <li id="request-@request.RequestId">
-                        <input style="float: right;" id="@request.RequestId" type="checkbox"/>
+                        string addressId = "";                        
+                    <li id="XXX">
+                        <input style="float: right;" id="XXX" type="checkbox" />
                         <div>
+                            @foreach (var request in listRequestViewModel)
+                            {
+                            
+                                <div>
+                                    <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
+                                        class="icon-user"></span><span class="label label-info requestId">@request.Customer</span><span
+                                            class="icon-calendar"></span><span class="label label-info requestId">@request.RequestedDate</span>
+                                </div>
+                                addressId = request.CollectionAddress;
+                            }
                             <div>
-                                <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
-                                    class="icon-user"></span><span class="label label-info requestId">@request.Customer</span><span
-                                        class="icon-calendar"></span><span class="label label-info requestId">@request.RequestedDate</span>
-                            </div>
-                            <div>
-                                <span class="icon-globe"></span><span>@request.CollectionAddress</span>
+                                <span class="icon-globe"></span><span>@addressId</span>
                             </div>
                         </div>
                         <div>
                             ---------------------------------------------------</div>
-                    </li>
+                    </li>                       
+                   
                     }
                 }
                 else
@@ -126,15 +133,39 @@
     <button type="submit" class="btn btn-primary" id="btnConfirm">
         Solve</button>
 </div>
-<form id = "toBeSubmit" action="EditAutoScheduleCollectionPlan">
+<form id="toBeSubmit" action="EditAutoScheduleCollectionPlan">
 </form>
 <script type="text/javascript">
     //$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
     //     bootbox.alert("Positive integers only"); 
     //     this.value = ""; 
-    //     this.focus(); 
+    //     this.focus();
     // });
-    $('#btnGroup').click(function () {
+    var defaultString = "10";
+    function triggerRadio() {
+        if ($('#rdoMaximumRequestOption').prop('checked')) {            
+            $('#txtMaximumRequest').readOnly = false;
+            $('#txtMaximumRequest').focus();
+        } else {
+           if ($('#rdoGroupAll').prop('checked')) {
+               $('#txtMaximumRequest').readOnly = true;
+               $('#txtMaximumRequest').val("10");
+               triggerGroup();
+           }
+            
+        }
+
+    };
+
+    $('#txtMaximumRequest').blur(function () {
+        if ($('#txtMaximumRequest').val() != defaultString) {
+            triggerGroup();
+        }
+        
+    });
+
+    function triggerGroup() {
+        defaultString = $('#txtMaximumRequest').val();
         var maxRequest = -1;
         if ($('#rdoMaximumRequestOption').prop('checked')) {
             maxRequest = $('#txtMaximumRequest').val();
@@ -146,6 +177,8 @@
             }
             //user enter not a number value            
 
+        } else {
+        maxRequest = 100000;
         }
 
         //check if maxRequest is Not null
@@ -158,36 +191,38 @@
 
                 for (var i = 0; i < data.groupList.length; i++) {
                     var resultItemString = "";
+                    var collectionAddress = "";
                     resultItemString += '<div>';
                     resultItemString += '<li id="item">' +
-                        '<input style="float: right;" type="checkbox" onclick="CheckStatus()" />';
+                        '<input style="float: right;" type="checkbox" onclick="CheckStatus()" />' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
-                        resultItemString += '<div>' +
+                        resultItemString +=
                             '<div>' +
                                 '<span class="icon-book"></span><span class="label label-info requestId">' + item.RequestId + '</span><span ' +
                                     'class="icon-user"></span><span class="label label-info requestId">' + item.Customer + '</span><span ' +
                                         'class="icon-calendar"></span><span class="label label-info requestId">' + item.RequestedDate + '</span>' +
-                            '</div>' +
-                            '<div>' +
-                                '<span class="icon-globe"></span><span>' + item.CollectionAddress + '</span>' +
+                            '</div>';
+                        collectionAddress = item.CollectionAddress;
+                    }
+                    resultItemString += '<div>' +
+                                '<span class="icon-globe"></span><span>' + collectionAddress + '</span>' +
                             '</div>' +
                         '</div>' +
                         '<div>' +
                             '---------------------------------------------------</div>';
-                    }
                     resultItemString += "</li>";
                     resultItemString += '</div>';
                     resultHtml += resultItemString;
                 }
                 resultHtml += "</ul>";
-                alert(resultHtml);
+                //alert(resultHtml);
                 $('#requestsZone').html(resultHtml);
             } else {
             }
         });
-    });
+    };
 
     var selectedrq = new Array();
     var i = 0;
@@ -213,12 +248,16 @@
             var requestid = $(this).attr('id');
             selectedrq.push(requestid);
         })
+        //forTest
+        selectedrq.push(32); selectedrq.push(38);
+        //end For Tests
+
         var planNumber = $('#txtNumPlans').val();
         var input = $("<input>").attr("type", "hidden").attr("name", "requestsIdsList").val(selectedrq);
         var planNum = $("<input>").attr("type", "hidden").attr("name", "planNumber").val(planNumber);
         $('#toBeSubmit').append($(input))
         $('#toBeSubmit').append($(planNum))
         $('#toBeSubmit').submit();
-        
+
     })
 </script>
