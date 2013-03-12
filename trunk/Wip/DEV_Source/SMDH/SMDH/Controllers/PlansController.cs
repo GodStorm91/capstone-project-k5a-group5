@@ -535,19 +535,40 @@ namespace SMDH.Controllers
 
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
 
-            //Return all requests with status is approved            
-            var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved
-                                                        && r.CustomerAddress.District.CityProvinceId == cityId
-                                                        ).OrderBy(r => r.RequestedDate).ToList();
-            //return View("UnplannedRequestList", requests);
-            var requestViewModels = new List<RequestViewModel>();
-            foreach (var request in requests)
-            {
-                requestViewModels.Add(new RequestViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
-            }
+           var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved
+                                                    && r.CustomerAddress.District.CityProvinceId == cityId
+                                                    ).OrderBy(r => r.RequestedDate).ToList();
+            var requestGroups =
+                    from request in requests
+                    group request by request.CollectionAddressId into g
+                    select new { CollectionAddressId = g.Key, Groups = g };
 
-            requestViewModels.Sort(CompareRequestByWeightedScore);
-            ViewBag.PossibleRequests = requestViewModels;
+            //group all
+            int maxRequest = 10000000;
+            List<List<RequestViewModel>> result = new List<List<RequestViewModel>>();
+            foreach (var g in requestGroups)
+            {
+                List<RequestViewModel> currList = new List<RequestViewModel>();
+                int i = 0;
+                foreach (var n in g.Groups)
+                {
+                    i++;
+                    currList.Add(new RequestViewModel(n, weightedDeliveryTypeScore, weightedDateScore));
+
+                    //it's equal the maximum request
+                    if (i == maxRequest)
+                    {
+                        result.Add(currList);
+                        currList = new List<RequestViewModel>();
+                        i = 0;
+                    }
+                }
+                if (currList.Count > 0)
+                {
+                    result.Add(currList);
+                }
+            }
+            ViewBag.PossibleRequests = result;
 
             //
             return View();
@@ -712,8 +733,14 @@ namespace SMDH.Controllers
                     {
                         returnList.Add(new RequestViewModel(requestsList.ElementAt(pointCluster.ElementAt(i).Id)));
                     }
+                    
+                    //Solve mTsp;
+                    MTspHelper.initialize();
+                    MTspHelper.solveTsp(pointList, planNumber);                    
 
                     ViewBag.RequestDetails = returnList;
+                    ViewBag.Waypoints = MTspHelper.waypointLists;
+                    ViewBag.Segments =  MTspHelper.segmentsLists;
 
                 }
 
