@@ -647,17 +647,22 @@ namespace SMDH.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult EditAutoScheduleCollectionPlan(int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        public ActionResult EditAutoScheduleCollectionPlanAJax(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        {
+            return Json(new {url = Url.Action("EditAutoScheduleCollectionPlan", "Plans", new { requestsIdsList = requestsIdsList, planNumber = planNumber, selectedPlan = selectedPlan , weightedDeliveryTypeScore = weightedDeliveryTypeScore, weightedDateScore = weightedDateScore })});
+        }
+        
+
+        public ActionResult EditAutoScheduleCollectionPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
             try
             {
-                int[] requestIds = new int[5];
-                requestIds[0] = 38;
-                requestIds[1] = 39;
-                requestIds[2] = 40;
-                requestIds[3] = 32;
-                requestIds[4] = 7;
+                string[] strRequestsIds = requestsIdsList.Split(',');
+                int[] requestIds = new int[strRequestsIds.Length];
+                for (int i = 0; i < requestIds.Length; i++)
+                {
+                    requestIds[i] = Int16.Parse(strRequestsIds[i]);
+                }
 
                 //planNumber must be greateer than reqestIds
                 if (requestIds.Length < planNumber)
@@ -798,6 +803,51 @@ namespace SMDH.Controllers
             }
         }
 
+        public ActionResult ConfirmCreateAutoScheduleCollectionPlan(List<ListRequestsJsonModel> Entrys)
+        {
+            string planIds = "";
+            bool success = true;
+            foreach (var entry in Entrys)
+            {
+                int[] listRequests = entry.listRequests.ToArray();
+                var plan = new Plan();
+                if (_repository.CreateCollectionPlan(plan, listRequests))
+                {
+                    planIds += plan.PlanId + ",";
+                }
+                else
+                {
+                    success = false;
+                    break;
+                }
+            }
+
+            //remove the "," redundancy
+            planIds = planIds.Remove(planIds.Length - 1);
+
+            if (success)
+            {
+                return Json(new {success = success,  url = Url.Action("ViewDetailsCollectionPlans", "Plans", new { planIds = planIds }) });
+            }
+            else
+            {
+                return Json(new { success = success });
+            }
+
+            
+        }
+
+        public ActionResult ViewDetailsCollectionPlans(string planIds)
+        {
+            string[] planIdsList = planIds.Split(',');
+            int[] planIdsNumList = new int[planIdsList.Length];
+            for (int i = 0; i < planIdsList.Length; i++)
+            {
+                planIdsNumList[i] = int.Parse(planIdsList[i]);
+            }
+            var plans = context.Plans.Where(o => planIdsNumList.Contains(o.PlanId));
+            return View(plans);
+        }
         //public ActionResult
     }
 }

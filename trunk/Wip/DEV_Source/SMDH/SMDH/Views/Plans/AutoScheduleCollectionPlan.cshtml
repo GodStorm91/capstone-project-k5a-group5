@@ -31,7 +31,7 @@
             <label class="control-label">
                 Number of plan</label>
             <div class="controls">
-                <input style="width: 160px;" type="text" />
+                <input style="width: 160px;" type="text" id="txtNumPlans" />
             </div>
         </div>
     </div>
@@ -126,6 +126,8 @@
     <button type="submit" class="btn btn-primary" id="btnConfirm">
         Solve</button>
 </div>
+<form id = "toBeSubmit" action="EditAutoScheduleCollectionPlan">
+</form>
 <script type="text/javascript">
     //$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
     //     bootbox.alert("Positive integers only"); 
@@ -211,6 +213,12 @@
             var requestid = $(this).attr('id');
             selectedrq.push(requestid);
         })
-        alert(selectedrq);
+        var planNumber = $('#txtNumPlans').val();
+        var input = $("<input>").attr("type", "hidden").attr("name", "requestsIdsList").val(selectedrq);
+        var planNum = $("<input>").attr("type", "hidden").attr("name", "planNumber").val(planNumber);
+        $('#toBeSubmit').append($(input))
+        $('#toBeSubmit').append($(planNum))
+        $('#toBeSubmit').submit();
+        
     })
 </script>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SMDH.Models.Plan>
+@using SMDH.Models.Utilities
+@using SMDH.Models.Statuses
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Create new Plan";
+    ViewBag.Heading = "Plan";
+}
+
+ <div class="row-fluid">
+        <div class="span10">
+            <div class="checkButtonStatus">
+                <div class="row-fluid">
+                    <button type="button" class="btn btn-inverse pull-left" id="checkAll">
+                        All</button>
+                    <div class="btn-group pull-left" data-toggle="buttons-checkbox">
+                        <button type="button" class="sttNew btn status" data-status="new">
+                            New</button>
+                        <button type="button" class="sttAssigned btn status" data-status="assigned">
+                            Assigned</button>
+                        <button type="button" class="sttFinished btn status" data-status="finished">
+                            Finished</button>
+                    </div>
+                    <button type="button" class="btn btn-inverse pull-left" id="checkNone">
+                        None</button>
+                </div>
+            </div>
+            <div id="dateFilterSelector">
+                <div class="row-fluid bordered">
+                    <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
+                        Created Date: 
+                    </div>
+                    <div class="pull-left" data-date-format="dd/mm/yyyy">
+                        From
+                        <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter" name="startDate"><br />
+                    </div>
+                    <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left:30px;">
+                        To
+                        <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter" name="endDate">
+                    </div>
+                    <div class="span3" style="line-height: 28px; position: relative;">
+                        <div style="position: absolute; bottom: 0; left: 0;">
+                            <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
+                            Disable Date Filter
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span2">
+            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter">Filter</a>
+        </div>
+    </div>
+    <div id="divTable">
+    @Html.Partial("PlansTable", Model)
+</div>

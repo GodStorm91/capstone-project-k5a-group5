@@ -37,11 +37,24 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Api.Maps.Service, Version=0.9.2.25429, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Google.Api.Maps.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="OsmSharp, Version=3.1.4722.18513, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\OsmSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
     <Reference Include="System.Web.Helpers" />
@@ -66,24 +79,36 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Buyer\BuyerAreaRegistration.cs" />
+    <Compile Include="Areas\Buyer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
+    <Compile Include="Areas\Hub\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Hub\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Hub\Controllers\HubDefaultController.cs" />
+    <Compile Include="Areas\Hub\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Hub\HubAreaRegistration.cs" />
     <Compile Include="Controllers\CityProvinceController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DeliveryMenController.cs" />
+    <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HubCategoriesController.cs" />
     <Compile Include="Controllers\HubsController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\WardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\Abstract\ICityProvinceRepository.cs" />
     <Compile Include="Models\Abstract\ICustomerRepository.cs" />
@@ -92,13 +117,26 @@
     <Compile Include="Models\Abstract\IItemRepository.cs" />
     <Compile Include="Models\Abstract\IOrderRepository.cs" />
     <Compile Include="Models\Abstract\IPlanRepository.cs" />
+    <Compile Include="Models\Abstract\IProductRepository.cs" />
     <Compile Include="Models\Abstract\IRequestRepository.cs" />
     <Compile Include="Models\Concrete\EFCityProvincesRepository.cs" />
     <Compile Include="Models\Concrete\EFCustomersRepository.cs" />
     <Compile Include="Models\Concrete\EFDbContext.cs" />
+    <Compile Include="Models\Concrete\EFDeliveryMenRepository.cs" />
+    <Compile Include="Models\Concrete\EFHubCategoryRepository.cs" />
     <Compile Include="Models\Concrete\EFItemsRepository.cs" />
     <Compile Include="Models\Concrete\EFOrdersRepository.cs" />
+    <Compile Include="Models\Concrete\EFPlansRepository.cs" />
+    <Compile Include="Models\Concrete\EFProductsRepository.cs" />
     <Compile Include="Models\Concrete\EFRequestsRepository.cs" />
+    <Compile Include="Models\Metadata\CustomerAddressMetadata.cs" />
+    <Compile Include="Models\Metadata\CustomerMetadata.cs" />
+    <Compile Include="Models\Metadata\HubMetadata.cs" />
+    <Compile Include="Models\Metadata\ItemMetadata.cs" />
+    <Compile Include="Models\Metadata\OrderMetadata.cs" />
+    <Compile Include="Models\Metadata\RequestMetadata.cs" />
+    <Compile Include="Models\mTsp\MTspHelper.cs" />
+    <Compile Include="Models\mTsp\PointCollection.cs" />
     <Compile Include="Models\SMDH.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -106,13 +144,144 @@
     </Compile>
     <Compile Include="Models\Statuses\EntityTypes.cs" />
     <Compile Include="Models\Statuses\Statuses.cs" />
+    <Compile Include="Models\Utilities\AddressHelper.cs" />
+    <Compile Include="Models\Utilities\GoogleMapsHelper.cs" />
     <Compile Include="Models\ViewModels\DateViewModel.cs" />
+    <Compile Include="Models\ViewModels\ListRequestsJsonModel.cs" />
     <Compile Include="Models\ViewModels\ItemViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProductViewModel.cs" />
+    <Compile Include="Models\ViewModels\RequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Buyer\Views\Home\css\bootstrap.css" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap.min.css" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap.min.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\jquery-1.8.2.min.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\maruti.js" />
+    <Content Include="Areas\Hub\css\main.css" />
+    <Content Include="Areas\Hub\js\bootstrap.min.js" />
+    <Content Include="Areas\Hub\js\jquery-1.7.1.min.js" />
+    <Content Include="Areas\Hub\js\main.js" />
+    <Content Include="Buyer\Home\js\bootstrap.min.css" />
+    <Content Include="Buyer\Home\js\bootstrap.min.js" />
+    <Content Include="Buyer\Home\js\jquery-1.8.2.min.js" />
+    <Content Include="Buyer\Home\js\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Buyer\Home\js\maruti.js" />
     <Content Include="css\application.css" />
+    <Content Include="css\base.css" />
+    <Content Include="css\bootstrap-responsive.css" />
+    <Content Include="css\bootstrap-responsive.min.css" />
+    <Content Include="css\bootstrap-wysihtml5.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\bootstrap\bootstrap-responsive.css" />
+    <Content Include="css\bootstrap\bootstrap-responsive.min.css" />
+    <Content Include="css\bootstrap\bootstrap.css" />
+    <Content Include="css\bootstrap\bootstrap.min.css" />
+    <Content Include="css\bottons.css" />
+    <Content Include="css\callender.css" />
+    <Content Include="css\charts.css" />
+    <Content Include="css\chat.css" />
+    <Content Include="css\chosen.css" />
+    <Content Include="css\colorpicker.css" />
+    <Content Include="css\customized-bootstrap.css" />
+    <Content Include="css\darkblue.css" />
+    <Content Include="css\dataTables.bootstrap.css" />
+    <Content Include="css\datepicker.css" />
+    <Content Include="css\DT_bootstrap.css" />
+    <Content Include="css\elements.css" />
+    <Content Include="css\error-page.css" />
+    <Content Include="css\fonts\broccolidry.svg" />
+    <Content Include="css\fonts\cuticons.svg" />
+    <Content Include="css\fonts\ecoico.svg" />
+    <Content Include="css\fonts\entypo.svg" />
+    <Content Include="css\fonts\icomoon.svg" />
+    <Content Include="css\fonts\iconic.svg" />
+    <Content Include="css\fonts\meteocons.svg" />
+    <Content Include="css\fonts\minia.svg" />
+    <Content Include="css\fonts\silkcons.svg" />
+    <Content Include="css\fonts\typicons.svg" />
+    <Content Include="css\fonts\wpzoom.svg" />
+    <Content Include="css\forms.css" />
+    <Content Include="css\fullcalendar.css" />
+    <Content Include="css\gallery\adipoli.css" />
+    <Content Include="css\gallery\audiojs.css" />
+    <Content Include="css\gallery\camera.css" />
+    <Content Include="css\gallery\colorbox.css" />
+    <Content Include="css\gallery\isotope.css" />
+    <Content Include="css\gallery\jquery.fileupload-ui.css" />
+    <Content Include="css\gallery\modal.css" />
+    <Content Include="css\gallery\video-js.css" />
+    <Content Include="css\gallery\wookmark.css" />
+    <Content Include="css\grid.css" />
+    <Content Include="css\home-page.css" />
+    <Content Include="css\icons.css" />
+    <Content Include="css\ie.css" />
+    <Content Include="css\images\back_disabled.png" />
+    <Content Include="css\images\back_enabled.png" />
+    <Content Include="css\images\back_enabled_hover.png" />
+    <Content Include="css\images\favicon.ico" />
+    <Content Include="css\images\forward_disabled.png" />
+    <Content Include="css\images\forward_enabled.png" />
+    <Content Include="css\images\forward_enabled_hover.png" />
+    <Content Include="css\images\sort_asc.png" />
+    <Content Include="css\images\sort_asc_disabled.png" />
+    <Content Include="css\images\sort_both.png" />
+    <Content Include="css\images\sort_desc.png" />
+    <Content Include="css\images\sort_desc_disabled.png" />
+    <Content Include="css\inbox.css" />
+    <Content Include="css\jquery-ui-bootstrap-1.8.16.custom.css" />
+    <Content Include="css\koottam\css\koottam.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\maruti-media.css" />
+    <Content Include="css\maruti-style.css" />
+    <Content Include="css\media-fluid.css" />
+    <Content Include="css\media.css" />
+    <Content Include="css\metro-ui.css" />
+    <Content Include="css\noty-css\jquery.noty.css" />
+    <Content Include="css\noty-css\noty_theme_default.css" />
+    <Content Include="css\noty-css\noty_theme_facebook.css" />
+    <Content Include="css\noty-css\noty_theme_growl.css" />
+    <Content Include="css\noty-css\noty_theme_mitgux.css" />
+    <Content Include="css\noty-css\noty_theme_twitter.css" />
+    <Content Include="css\noty.css" />
+    <Content Include="css\select2.css" />
+    <Content Include="css\smart_tab.css" />
+    <Content Include="css\smart_wizard.css" />
+    <Content Include="css\social_icon\icons.css" />
+    <Content Include="css\social_icon\zocial-regular-webfont.svg" />
+    <Content Include="css\style.css" />
+    <Content Include="css\supr-theme\jquery-ui-timepicker-addon.css" />
+    <Content Include="css\supr-theme\jquery.ui.autocomplete.css" />
+    <Content Include="css\supr-theme\jquery.ui.combobox.css" />
+    <Content Include="css\supr-theme\jquery.ui.core.css" />
+    <Content Include="css\supr-theme\jquery.ui.datepicker.css" />
+    <Content Include="css\supr-theme\jquery.ui.dialog.css" />
+    <Content Include="css\supr-theme\jquery.ui.progressbar.css" />
+    <Content Include="css\supr-theme\jquery.ui.resizable.css" />
+    <Content Include="css\supr-theme\jquery.ui.slider.css" />
+    <Content Include="css\supr-theme\jquery.ui.stepper.css" />
+    <Content Include="css\supr-theme\jquery.ui.supr.css" />
+    <Content Include="css\supr-theme\jquery.ui.theme.css" />
+    <Content Include="css\tables.css" />
+    <Content Include="css\themes\utopia-dark.css" />
+    <Content Include="css\themes\utopia-dark2e13.css" />
+    <Content Include="css\themes\utopia-wooden.css" />
+    <Content Include="css\timepicker.css" />
+    <Content Include="css\ui-lightness\jquery-ui.css" />
+    <Content Include="css\unicorn.grey.css" />
+    <Content Include="css\unicorn.main.css" />
+    <Content Include="css\utopia-dark.css" />
+    <Content Include="css\utopia-responsive.css" />
+    <Content Include="css\utopia-white.css" />
+    <Content Include="css\validationEngine.jquery.css" />
+    <Content Include="css\weather.css" />
+    <Content Include="css\widget.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
@@ -134,7 +303,6 @@
     <Content Include="img\avatar\photo.png" />
     <Content Include="img\backgrounds\bg_wood.jpg" />
     <Content Include="img\bg-rep.png" />
-    <Content Include="img\big-buck-bunny.png" />
     <Content Include="img\buttons.gif" />
     <Content Include="img\chosen-sprite.png" />
     <Content Include="img\fullsize\01.jpg" />
@@ -593,6 +761,8 @@
     <Content Include="img\loading.gif" />
     <Content Include="img\login.png" />
     <Content Include="img\logo-small.png" />
+    <Content Include="img\logo.jpg" />
+    <Content Include="img\logo.png" />
     <Content Include="img\markers\home.png" />
     <Content Include="img\markers\Numbers\red00.png" />
     <Content Include="img\markers\Numbers\red01.png" />
@@ -763,6 +933,7 @@
     <Content Include="img\user2.jpg" />
     <Content Include="img\utopia-logo.png" />
     <Content Include="img\video-js.png" />
+    <Content Include="js\accounting.js" />
     <Content Include="js\bootbox.min.js" />
     <Content Include="js\bootstrap-alert.js" />
     <Content Include="js\bootstrap-colorpicker.js" />
@@ -772,6 +943,7 @@
     <Content Include="js\bootstrap-wysihtml5.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\buyer.js" />
     <Content Include="js\charts\charts-page.js" />
     <Content Include="js\charts\customcharts.js" />
     <Content Include="js\charts\jquery.flot.js" />
@@ -791,6 +963,7 @@
     <Content Include="js\delivery-plan-order-ticket.js" />
     <Content Include="js\DT_bootstrap.js" />
     <Content Include="js\enhance.min.js" />
+    <Content Include="js\excanvas.min.js" />
     <Content Include="js\form-action.js" />
     <Content Include="js\fullcalendar.min.js" />
     <Content Include="js\gmap3.js" />
@@ -816,18 +989,22 @@
     <Content Include="js\jquery.dataTables.min.js" />
     <Content Include="js\jquery.gomap-1.3.2-edited.js" />
     <Content Include="js\jquery.gomap-1.3.2.min.js" />
+    <Content Include="js\jquery.json-2.4.js" />
     <Content Include="js\jquery.mousewheel.js" />
     <Content Include="js\jquery.mousewheel.min.js" />
     <Content Include="js\jquery.noty.js" />
     <Content Include="js\jquery.numberformatter-1.2.3.js" />
+    <Content Include="js\jquery.numeric.js" />
     <Content Include="js\jquery.smartTab.js" />
     <Content Include="js\jquery.smartWizard-2.0.js" />
     <Content Include="js\jquery.smartWizard-2.0.min.js" />
     <Content Include="js\jquery.tokeninput.js" />
+    <Content Include="js\jquery.uniform.js" />
     <Content Include="js\jquery.validationEngine-en.js" />
     <Content Include="js\jquery.validationEngine.js" />
     <Content Include="js\main.js" />
     <Content Include="js\map-helper.js" />
+    <Content Include="js\maruti.js" />
     <Content Include="js\noty-script.js" />
     <Content Include="js\order-item-ticket.js" />
     <Content Include="js\plugins\animated-progress-bar\jquery.progressbar.js" />
@@ -925,6 +1102,9 @@
     <Content Include="js\supr-theme\jquery-ui-sliderAccess.js" />
     <Content Include="js\supr-theme\jquery-ui-timepicker-addon.js" />
     <Content Include="js\topRight.js" />
+    <Content Include="js\unicorn.dashboard.js" />
+    <Content Include="js\unicorn.js" />
+    <Content Include="js\unicorn.tables.js" />
     <Content Include="js\username.js" />
     <Content Include="js\utopia.js" />
     <Content Include="js\wysihtml5-0.3.0.js" />
@@ -1136,20 +1316,49 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Buyer\Models\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Customer\Views\Shared\" />
-    <Folder Include="Areas\Hub\Controllers\" />
     <Folder Include="Areas\Hub\Models\" />
-    <Folder Include="Areas\Hub\Views\Shared\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\Views\Web.config" />
     <Content Include="Areas\Hub\Views\Web.config" />
+    <Content Include="Areas\Buyer\Views\Web.config" />
+    <Content Include="Areas\Buyer\Views\Home\ViewProductsByCustomerId.cshtml" />
+    <Content Include="Areas\Customer\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Customer\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Customer\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Products\ProductTable.cshtml" />
+    <Content Include="Areas\Customer\Views\Products\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Buyer\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Buyer\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Buyer\Views\_ViewStart.cshtml" />
+    <None Include="Areas\Hub\css\Open Notebook.onetoc2" />
+    <None Include="Areas\Hub\js\Open Notebook.onetoc2" />
+    <Content Include="Areas\Hub\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\Details.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\Edit.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\EnterPasscode.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\OrdersTable.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\OrdersTableForSingleItem.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\SubmitPasscode.cshtml" />
+    <Content Include="Areas\Hub\Views\Orders\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Hub\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Hub\Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Areas\Hub\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Hub\Views\Dashboard\OrderTable.cshtml" />
+    <Content Include="Areas\Hub\Views\Dashboard\Index - Copy.cshtml" />
+    <None Include="css\fonts\icomoon.ttf" />
+    <None Include="css\fonts\icomoon.woff" />
+    <None Include="css\fonts\minia.ttf" />
+    <None Include="css\fonts\minia.woff" />
     <None Include="img\markers\Numbers\Open Notebook.onetoc2" />
     <None Include="js\supr-theme\Open Notebook.onetoc2" />
     <None Include="Models\js\supr-theme\Open Notebook.onetoc2" />
     <Content Include="Views\Home\Index.cshtml" />
+    <EmbeddedResource Include="Models\mTsp\HoChiMinh.osm" />
     <None Include="Models\SMDH.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>SMDH.designer.cs</LastGenOutput>
@@ -1172,6 +1381,26 @@
     <Content Include="Views\CityProvince\_CreateOrEdit.cshtml" />
     <Content Include="Views\CityProvince\Delete.cshtml" />
     <Content Include="Views\CityProvince\Edit.cshtml" />
+    <Content Include="Views\Orders\OrdersTable.cshtml" />
+    <Content Include="Views\Orders\RequestListByStatus.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\Requests\Edit.cshtml" />
+    <Content Include="Views\Requests\Details.cshtml" />
+    <Content Include="Views\Requests\RequestTable.cshtml" />
+    <Content Include="Views\Requests\ApproveOrders.cshtml" />
+    <Content Include="Views\Plans\ViewDeliveryPlans.cshtml" />
+    <Content Include="Views\Plans\DeliveryPlansTable.cshtml" />
+    <Content Include="Views\Plans\CreateDeliveryPlan.cshtml" />
+    <Content Include="Views\Plans\CreateDeliveryPlanUsingMap.cshtml" />
+    <Content Include="Views\Plans\CreateCollectionPlan.cshtml" />
+    <Content Include="Views\Plans\CreateCollectionPlanUsingMap.cshtml" />
+    <Content Include="Views\Plans\AutoScheduleCollectionPlan.cshtml" />
+    <Content Include="Views\Plans\Details.cshtml" />
+    <Content Include="Views\Plans\EditAutoScheduleCollectionPlan.cshtml" />
+    <Content Include="Views\Plans\_RequestsPartialView.cshtml" />
+    <Content Include="Views\Plans\ViewDetailsCollectionPlans.cshtml" />
+    <Content Include="Views\Plans\PlansTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
