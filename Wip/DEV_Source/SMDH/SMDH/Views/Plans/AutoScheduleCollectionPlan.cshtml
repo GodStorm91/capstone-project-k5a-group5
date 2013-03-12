@@ -183,7 +183,7 @@
 
 
         $.post("/Plans/GroupRequestByCollectionAddressId", { maxRequest: maxRequest }, function (data) {
-            var resultHtml = '<ul class="site-stats" id="selectedRequestZone">';
+            var resultHtml = '<ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow: scroll;">';
             if (data.success) {
                 $('#requestsZone').html("")
                 var k = 1;
