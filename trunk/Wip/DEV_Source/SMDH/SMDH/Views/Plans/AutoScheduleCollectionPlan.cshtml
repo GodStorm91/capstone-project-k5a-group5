@@ -20,7 +20,6 @@
 <script src="/js/accounting.js" type="text/javascript"></script>
 <script src="/js/jquery.numeric.js" type="text/javascript"></script>
 <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-
 <div class="widget-box">
     <div class="widget-title">
         <span class="icon"><i class=" icon-hand-right"></i></span>
@@ -28,6 +27,7 @@
             Number of plan</h5>
     </div>
     <div class="widget-content nopadding">
+        <form action="#" method="get" class="form-horizontal">
         <div class="control-group">
             <label class="control-label">
                 Number of plan</label>
@@ -35,6 +35,7 @@
                 <input style="width: 160px;" type="text" id="txtNumPlans" />
             </div>
         </div>
+        </form>
     </div>
 </div>
 <div class="widget-box">
@@ -122,7 +123,7 @@
                 Selected Request(s)</h5>
         </div>
         <div class="widget-content" id="selectedRequest">
-            <ul class="site-stats" style="height: 500px; overflow: scroll;">
+            <ul class="site-stats" style="height: 500px; overflow: scroll;" id="selectedRequestul">
             </ul>
         </div>
     </div>
@@ -146,6 +147,7 @@
             $('#txtMaximumRequest').focus();
         } else {
             if ($('#rdoGroupAll').prop('checked')) {
+                $('#selectedRequestul').html('');
                 $('#txtMaximumRequest').readOnly = true;
                 $('#txtMaximumRequest').val("10");
                 triggerGroup();
@@ -191,8 +193,8 @@
                     var resultItemString = "";
                     var collectionAddress = "";
                     resultItemString += '<div>';
-                    resultItemString += '<li id="group-'+ k +'">' +
-                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan('+ k +')">Add<i class="icon-circle-arrow-right"></i></a></div>' + '<div>';
+                    resultItemString += '<li id="group-' + k + '">' +
+                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')">Add<i class="icon-circle-arrow-right"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
@@ -225,21 +227,21 @@
 
     var selectedrq = new Array();
     var i = 0;
-//    $("#addtoplan").click(function () {
-//        $("#requestsZone :checkbox:checked").each(function () {
-//            var id = $(this).attr('id');
-//            $(this).attr('checked', false);
-//            $("#selectedRequest > ul").append($("#group-" + id));
-//        })
-//    })
+    //    $("#addtoplan").click(function () {
+    //        $("#requestsZone :checkbox:checked").each(function () {
+    //            var id = $(this).attr('id');
+    //            $(this).attr('checked', false);
+    //            $("#selectedRequest > ul").append($("#group-" + id));
+    //        })
+    //    })
 
-//    $("#removeplan").click(function () {
-//        $("#selectedRequest :checkbox:checked").each(function () {
-//            var id = $(this).attr('id');
-//            $(this).attr('checked', false);
-//            $("#requestsZone > ul").append($("#request-" + id));
-//        })
-//    })
+    //    $("#removeplan").click(function () {
+    //        $("#selectedRequest :checkbox:checked").each(function () {
+    //            var id = $(this).attr('id');
+    //            $(this).attr('checked', false);
+    //            $("#requestsZone > ul").append($("#request-" + id));
+    //        })
+    //    })
 
     function addtoplan() {
         //alert(arguments[0]);
@@ -271,5 +273,9 @@
         $('#toBeSubmit').append($(planNum))
         $('#toBeSubmit').submit();
 
+    })
+
+    $('#btnGroup').click(function () {
+        $('#selectedRequestul').html('');
     })
 </script>
