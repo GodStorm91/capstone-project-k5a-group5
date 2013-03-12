@@ -237,20 +237,13 @@
         });
     });
 
-    $('#btnSave').click(function (e) {
-        var testItems = new Object();
-        testItems.Entry = new Array();
-        testItem.Entry[0] = new Object({ Id: 0, listRequests: [38, 39] });
-        testItem.Entry[1] = new object({ Id: 1, listRequests: [32, 7] });
-        $.post("/Plans/ConfirmCreate", { submitData: $.toJSON(testItems) }, function (data) {
-
-        });
-    });
+    
 
     $('.myLink').click(function (e) {
         $.blockUI();
         $.post(this.href, function (data) {
             $('#requestDetailsZone').html(data.listRequest);
+            //clearGrid();
             createLatsLons(data.waypoints, data.segments);
             addMarker();
             addDirection();
@@ -277,6 +270,7 @@
 
                 if (result.success) {
                     updateRequestsView(result.requests, result.notSelected);
+                    clearGrid();
                     createLatsLons(result.waypoints, result.segments);
                     addMarker();
                     addDirection();
@@ -424,19 +418,19 @@
                 }
                 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
                 icon[j] = new OpenLayers.Icon(image, size, offset);
-                var markerslayer = map.getLayer('Markers');
+                markerslayer = map.getLayer('Markers');
                 markerslayer.addMarker(new OpenLayers.Marker(position[j], icon[j]));
 
             }
         }
     }
-
+    var lineLayer, markerslayer;
     function addDirection() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
 });
-        var lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
+        lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
         for (var i = 0; i < geopt.length; i++) {
             var color = randomColor();
             var style = {
@@ -472,6 +466,18 @@
         }
     }
 
+    function clearGrid() {        
+        if (lineLayer != undefined) {
+            lineLayer.clearGrid();
+        }
+
+        if (markerslayer != undefined) {
+            markerslayer.clearGrid();
+        }
+        
+
+    }
+
     //function random color
     function randomColor() {
         var hexno = new String;
@@ -501,7 +507,31 @@
             var requestid = $(this).attr('id');
             selectedrq.push(requestid);
         })
-        alert(selectedrq);
+
+        var testItems = new Object();
+        testItems.Entrys = new Array();
+        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });    
+            
+
+        var json = $.toJSON(testItems);
+        alert(json)
+        $.ajax({
+            url: '/Plans/ConfirmCreateAutoScheduleCollectionPlan',
+            type: 'POST',
+            dataType: 'json',
+            data: json,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                // get the result and do some magic with it
+                if (data.success) {
+                    window.location.href = data.url;
+                } else {
+                    bootbox.alert("Can't create plans");
+                }
+            }
+        });
+
+
     })
 
 </script>
