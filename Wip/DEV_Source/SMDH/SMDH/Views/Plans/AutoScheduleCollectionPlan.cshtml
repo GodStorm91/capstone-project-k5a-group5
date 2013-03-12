@@ -49,11 +49,14 @@
                 Group types</label>
             <div class="controls">
                 <label>
-                    <input type="radio" class="radios" name="radios" onclick="triggerRadio()" id ="rdoGroupAll" checked />
+                    <input type="radio" class="radios" name="radios" onclick="triggerRadio()" id="rdoGroupAll"
+                        checked />
                     Group all requests</label>
                 <label>
-                    <input type="radio" class"radios" name = "radios" onclick="triggerRadio()" id="rdoMaximumRequestOption" />
-                    Group<input style="width: 30px;" class="input-mini" type="text" id="txtMaximumRequest" value="10" /> request(s)
+                    <input type="radio" class="radios" name="radios" onclick="triggerRadio()" id="rdoMaximumRequestOption" />
+                    Group<input style="width: 30px;" class="input-mini" type="text" id="txtMaximumRequest"
+                        value="10" />
+                    request(s)
                 </label>
                 <button class="btn btn-primary" id="btnGroup">
                     Group</button>
@@ -62,7 +65,7 @@
         </form>
     </div>
 </div>
-<div class="span5">
+<div class="span6">
     <div class="widget-box">
         <div class="widget-title">
             <span class="icon"><i class=" icon-hand-right"></i></span>
@@ -70,14 +73,16 @@
                 Request(s)</h5>
         </div>
         <div class="widget-content" id="requestsZone">
-            <ul class="site-stats" id="selectedRequestZone">
+            <ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow: scroll;">
                 @if (ViewBag.PossibleRequests != null)
                 {
+                    int i = 1;
                     foreach (var listRequestViewModel in ViewBag.PossibleRequests)
                     {
                         string addressId = "";                        
-                    <li id="XXX">
-                        <input style="float: right;" id="XXX" type="checkbox" />
+                    <li id="group-@i">
+                        <div id="add-@i" style="float: right;">
+                            <a class="label label-success" onclick="addtoplan(@i)">Add<i class="icon-circle-arrow-right"></i></a></div>
                         <div>
                             @foreach (var request in listRequestViewModel)
                             {
@@ -96,7 +101,7 @@
                         <div>
                             ---------------------------------------------------</div>
                     </li>                       
-                   
+                            i++;
                     }
                 }
                 else
@@ -108,13 +113,6 @@
         </div>
     </div>
 </div>
-<div class="span1" style="text-align: center; vertical-align: bottom;">
-    <div style="margin-top: 80px;">
-        <a class="label label-success" id="addtoplan" href="javascript:void(0)">Add<i class="icon-circle-arrow-right"></i></a></div>
-    <div style="margin-top: 10px;">
-        <a class="label label-important" id="removeplan" href="javascript:void(0)"><i class="icon-circle-arrow-left">
-        </i>Remove</a></div>
-</div>
 <div class="span6">
     <div class="widget-box">
         <div class="widget-title">
@@ -123,8 +121,7 @@
                 Selected Request(s)</h5>
         </div>
         <div class="widget-content" id="selectedRequest">
-            <ul class="site-stats">
-                <li></li>
+            <ul class="site-stats" style="height: 500px; overflow: scroll;">
             </ul>
         </div>
     </div>
@@ -143,16 +140,16 @@
     // });
     var defaultString = "10";
     function triggerRadio() {
-        if ($('#rdoMaximumRequestOption').prop('checked')) {            
+        if ($('#rdoMaximumRequestOption').prop('checked')) {
             $('#txtMaximumRequest').readOnly = false;
             $('#txtMaximumRequest').focus();
         } else {
-           if ($('#rdoGroupAll').prop('checked')) {
-               $('#txtMaximumRequest').readOnly = true;
-               $('#txtMaximumRequest').val("10");
-               triggerGroup();
-           }
-            
+            if ($('#rdoGroupAll').prop('checked')) {
+                $('#txtMaximumRequest').readOnly = true;
+                $('#txtMaximumRequest').val("10");
+                triggerGroup();
+            }
+
         }
 
     };
@@ -161,7 +158,7 @@
         if ($('#txtMaximumRequest').val() != defaultString) {
             triggerGroup();
         }
-        
+
     });
 
     function triggerGroup() {
@@ -178,7 +175,7 @@
             //user enter not a number value            
 
         } else {
-        maxRequest = 100000;
+            maxRequest = 100000;
         }
 
         //check if maxRequest is Not null
@@ -188,13 +185,13 @@
             var resultHtml = '<ul class="site-stats" id="selectedRequestZone">';
             if (data.success) {
                 $('#requestsZone').html("")
-
+                var j = 1;
                 for (var i = 0; i < data.groupList.length; i++) {
                     var resultItemString = "";
                     var collectionAddress = "";
                     resultItemString += '<div>';
-                    resultItemString += '<li id="item">' +
-                        '<input style="float: right;" type="checkbox" onclick="CheckStatus()" />' + '<div>';
+                    resultItemString += '<li id="group-"'+ j +'>' +
+                        '<div id="add-' + j + ' style="float:right;"><a class="label label-success" onclick="addtoplan('+ j +')">Add<i class="icon-circle-arrow-right"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
@@ -215,6 +212,7 @@
                     resultItemString += "</li>";
                     resultItemString += '</div>';
                     resultHtml += resultItemString;
+                    j++;
                 }
                 resultHtml += "</ul>";
                 //alert(resultHtml);
@@ -226,21 +224,32 @@
 
     var selectedrq = new Array();
     var i = 0;
-    $("#addtoplan").click(function () {
-        $("#requestsZone :checkbox:checked").each(function () {
-            var id = $(this).attr('id');
-            $(this).attr('checked', false);
-            $("#selectedRequest > ul").append($("#request-" + id));
-        })
-    })
+//    $("#addtoplan").click(function () {
+//        $("#requestsZone :checkbox:checked").each(function () {
+//            var id = $(this).attr('id');
+//            $(this).attr('checked', false);
+//            $("#selectedRequest > ul").append($("#group-" + id));
+//        })
+//    })
 
-    $("#removeplan").click(function () {
-        $("#selectedRequest :checkbox:checked").each(function () {
-            var id = $(this).attr('id');
-            $(this).attr('checked', false);
-            $("#requestsZone > ul").append($("#request-" + id));
-        })
-    })
+//    $("#removeplan").click(function () {
+//        $("#selectedRequest :checkbox:checked").each(function () {
+//            var id = $(this).attr('id');
+//            $(this).attr('checked', false);
+//            $("#requestsZone > ul").append($("#request-" + id));
+//        })
+//    })
+
+    function addtoplan() {
+        //alert(arguments[0]);
+        $("#selectedRequest > ul").append($("#group-" + arguments[0]));
+        $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-circle-arrow-left"></i>Remove</a>');
+    }
+
+    function removefromplan() {
+        $("#requestsZone > ul").append($("#group-" + arguments[0]));
+        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-circle-arrow-right"></i>Add</a>');
+    }
 
     $('#btnConfirm').click(function () {
         selectedrq.length = 0;
