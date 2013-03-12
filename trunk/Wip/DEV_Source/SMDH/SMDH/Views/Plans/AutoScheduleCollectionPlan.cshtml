@@ -91,8 +91,8 @@
                             
                                 <div>
                                     <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
-                                        class="icon-user"></span><span class="label label-info requestId">@request.Customer</span><span
-                                            class="icon-calendar"></span><span class="label label-info requestId">@request.RequestedDate</span>
+                                        class="icon-user"></span><span class="label label-info">@request.Customer</span><span
+                                            class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
                                 </div>
                                 addressId = request.CollectionAddress;
                             }
@@ -201,8 +201,8 @@
                         resultItemString +=
                             '<div>' +
                                 '<span class="icon-book"></span><span class="label label-info requestId">' + item.RequestId + '</span><span ' +
-                                    'class="icon-user"></span><span class="label label-info requestId">' + item.Customer + '</span><span ' +
-                                        'class="icon-calendar"></span><span class="label label-info requestId">' + item.RequestedDate + '</span>' +
+                                    'class="icon-user"></span><span class="label label-info">' + item.Customer + '</span><span ' +
+                                        'class="icon-calendar"></span><span class="label label-info">' + item.RequestedDate + '</span>' +
                             '</div>';
                         collectionAddress = item.CollectionAddress;
                     }
@@ -256,12 +256,15 @@
         $("#group-" + arguments[0]).removeClass('alert-danger');
     }
 
+
+
     $('#btnConfirm').click(function () {
         selectedrq.length = 0;
-        $("#selectedRequest :checkbox").each(function () {
-            var requestid = $(this).attr('id');
+        $("#selectedRequestul").find('span.requestId').each(function () {
+            var requestid = $(this).text();
             selectedrq.push(requestid);
         })
+        alert(selectedrq);
         //forTest
         selectedrq.push(32); selectedrq.push(38);
         //end For Tests
