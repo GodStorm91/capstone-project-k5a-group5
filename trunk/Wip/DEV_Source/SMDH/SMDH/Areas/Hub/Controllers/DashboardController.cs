@@ -76,17 +76,17 @@ namespace SMDH.Areas.Hub.Controllers
 
                         return Redirect("/Hub/Orders?&status=deliveringToHub");
                     }
-                    if (listObject.Any(x => x.Status == OrderStatus.WaitingForReturn))
-                    {
-                        foreach (var item in listObject)
-                        {
-                            item.Status = OrderStatus.Returned;
-                        }
+                    //if (listObject.Any(x => x.Status == OrderStatus.WaitingForReturn))
+                    //{
+                    //    foreach (var item in listObject)
+                    //    {
+                    //        item.Status = OrderStatus.Returned;
+                    //    }
 
-                        context.SubmitChanges();
+                    //    context.SubmitChanges();
 
-                        return Redirect("/Hub/Orders?&status=waitingForReturn");
-                    }
+                    //    return Redirect("/Hub/Orders?&status=waitingForReturn");
+                    //}
                 }
             }
 
@@ -167,7 +167,7 @@ namespace SMDH.Areas.Hub.Controllers
                           }).Distinct().ToList();
             foreach (var r in result)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" class=\"checkwtr\" id=\"" + r.orderid.ToString() + "\" />", r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString(), "<a class=\"btn btn-mini btn-success myLink\" onclick='checkStatuswaiting(" + r.orderid + ")'\">ChangeStatus</a>" });
+                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -213,24 +213,24 @@ namespace SMDH.Areas.Hub.Controllers
             }
         }
 
-        public ActionResult changestatustoReturn(int orderid)
-        {
-            try
-            {
-                var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
-                if (order == null)
-                {
-                    return Redirect("/Hubs/Dashboard");
-                }
-                order.OrderStatus = (int)HubStatus.Return;
-                context.SubmitChanges();
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-                throw;
-            }
-        }
+        //public ActionResult changestatustoReturn(int orderid)
+        //{
+        //    try
+        //    {
+        //        var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
+        //        if (order == null)
+        //        {
+        //            return Redirect("/Hubs/Dashboard");
+        //        }
+        //        order.OrderStatus = (int)HubStatus.Return;
+        //        context.SubmitChanges();
+        //        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch
+        //    {
+        //        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        //        throw;
+        //    }
+        //}
     }
 }
