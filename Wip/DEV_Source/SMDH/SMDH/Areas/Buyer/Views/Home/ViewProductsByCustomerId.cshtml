@@ -20,7 +20,7 @@
         <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/js/jquery.cookie.js"></script>
-        <script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>        
+        <script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>      
         <script type="text/javascript"src="http://maps.googleapis.com/maps/api/js?sensor=false&language=vi"></script>
 		<script src="/js/jquery.gomap-1.3.2-edited.js" type="text/javascript"></script>
         <script src="/js/map-helper.js" type="text/javascript"></script>
@@ -43,6 +43,7 @@
                             if (document.forms[0].elements[i].checked == true) {
                                 $('#ddlHubCategories').prop('disabled', false);
                                 $('#ddlHub').prop('disabled', false); 
+
                             }
                         }                    
                     }
@@ -70,10 +71,22 @@
         size: new google.maps.Size(100, 50),
         position: myLatlng
         });
-        infowindow.open(map);
+        infowindow.open(goMap);
 
     }
-
+    function findLocation(tag) {
+        var geocoder = new google.maps.Geocoder();
+        var address = $(tag).val() +", Ho Chi Minh, Viet Nam";
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                goMap.setZoom(18);
+                goMap.setCenter(results[0].geometry.location);
+                goMap.panTo(results[0]);
+            } else {
+                alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
     function addMarkerHouse(lat, long) {
         var myLatLng = new google.maps.LatLng(lat, long);
         currentHouse = new google.maps.Marker(
@@ -186,6 +199,7 @@ overflow: auto;
 			        var tem = $(tag).parent().parent();
 			        var inputFiled = tem.children("td").children("input");
 			        var quantity = inputFiled.val();
+                    var id = tem.children("input[type=hidden]").val();
 			        if (!is_numeric(quantity)) {
 			            alert("Quantity must be a number !!!");
 			            inputFiled.focus();
@@ -200,15 +214,30 @@ overflow: auto;
 			            alert("Quantity must be positive integer!!!");
 			            inputFiled.focus();
 			            return;
-                    }
-			        var textHtml = '<tr align="center" class="buy_tr"><input class="input-mini" style="text-align:right" type="hidden" value="' +
+			        }
+			        var flag = true;
+			        $('.buy_tr').each(function (index) {
+			            if ($(this).children("input[type=hidden]").val() == id) {
+			                var quaTem = $("#quantity" + id).text();
+			                var amoTem = $("#amount" + id).text();
+                            var finalQuan = parseInt(quaTem) + parseInt(quantity);
+			                $("#quantity" + id).text(finalQuan);
+			                $("#amount" + id).text(finalQuan *
+                            tem.children("td").eq(2).text());
+			                flag = false;
+			            }
+			        });
+
+			        if (flag) {
+			            var textHtml = '<tr align="center" class="buy_tr"><input class="input-mini" style="text-align:right" type="hidden" value="' +
                     tem.children("input[type=hidden]").val() +
                      '"/><td>' + tem.children("td").eq(1).text() + '</td><td style="text-align:right">' + tem.children("td").eq(2).text() +
-                    '</td><td style="text-align:right">' +
+                    '</td><td style="text-align:right" id="quantity' + tem.children("input[type=hidden]").val() + '">' +
                     tem.children("td").children("input[type=text]").val() +
-				'</td><td style="text-align:right">' + tem.children("td").eq(2).text() * tem.children("td").children("input").val() +
+				'</td><td style="text-align:right"id="amount'+tem.children("input[type=hidden]").val() + '">'+ tem.children("td").eq(2).text() * tem.children("td").children("input").val() +
                 '</td><td><button class="btn btn-danger" onclick="removeCart(this)" type="button">Remove</button></td></tr>';
-			        $('#tblAddCart tbody').append(textHtml);
+			            $('#tblAddCart tbody').append(textHtml);
+			        }
 			        totalPrice += tem.children("td").eq(2).text() * tem.children("td").children("input").val();
 			        $('#totalPrice').val(totalPrice);
 			        // alert($(tag).parent().parent().prop("tagName"))
@@ -358,18 +387,7 @@ overflow: auto;
       <input type="text" id="phone1" onchange="checkPhone(this)">
     </div>
   </div>
-  <div class="control-group">
-    <label class="control-label" for="phone2">Phone 2</label>
-    <div class="controls">
-      <input type="text" id="phone2" onchange="checkPhone(this)">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputEmail">Email</label>
-    <div class="controls">
-      <input class="span3" type="text" id="inputEmail" placeholder="A@gmail.com" onchange="checkEmail(this)">
-    </div>
-    </div>
+  
     <div class="control-group">
     <label class="control-label" for="city">City</label>
     <div class="controls">
@@ -402,7 +420,7 @@ overflow: auto;
   <div class="control-group">
     <label class="control-label" for="address">Address</label>
     <div class="controls">
-      <input name="address  " type="text" id="address"/>
+      <input name="address  " type="text" id="address" onchange="findLocation(this)"/>
     </div>
   </div>
   <div class="control-group" name="">
@@ -432,7 +450,7 @@ overflow: auto;
 			</form>
 		</div>
 		</div>
-		@*<div id="map_canvas" style="height:700px; width:600px;float:left;margin-top: -700px;margin-left: 750px;"></div>*@
+		<div id="map_canvas" style="height:700px; width:600px;float:left;margin-top: -700px;margin-left: 750px;"></div>
         </div>
 	<script>
 
