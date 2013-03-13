@@ -134,7 +134,7 @@
 <div class="span4">
     <div class="widget-box">
         <div class="widget-title">
-            <span class="icon"><i class=" icon-hand-right"></i></span>
+            <span class="icon"><i class="icon-road"></i></span>
             <h5>
                 Plans</h5>
         </div>
@@ -143,7 +143,7 @@
                 <ul class="site-stats">
                     @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
                     {
-                        <li class="plan" id="plan-@i" style="line-height: 0px;background-color:#f2dede;"><strong><a href="#" onclick = "show(@i)">Plan @(i + 1)</a></strong>
+                        <li class="plan alert alert-success" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;"><p><a href="#" onclick = "show(@i)">Plan @(i + 1)</a></p>
                         </li>
                         
 @*<li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
@@ -155,7 +155,7 @@
     </div>
     <div class="widget-box">
         <div class="widget-title">
-            <span class="icon"><i class=" icon-hand-right"></i></span>
+            <span class="icon"><i class="icon-list-alt"></i></span>
             <h5>
                 Plan details</h5>
         </div>
@@ -183,10 +183,10 @@
         </div>
     </div>
 </div>
-<div class="span8">
+<div class="span7">
     <div class="widget-box">
         <div class="widget-title">
-            <span class="icon"><i class=" icon-hand-right"></i></span>
+            <span class="icon"><i class="icon-globe"></i></span>
             <h5>
                 Maps</h5>
         </div>
@@ -280,7 +280,7 @@
         $('.plan').each(function () {
             $(this).css('background-color', '#F5F5F5');
         })
-        $('#plan-' + id).css('background-color', '#f2dede');
+        $('#plan-' + id).css('background-color', '#dff0d8');
         alert(id);
         var j = 0;
         var waypointsArr = new Array();
@@ -512,7 +512,7 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-});
+        });
         //clear if exists
         if (typeof markerslayer != 'undefined') {
             markerslayer.clearMarkers();
@@ -545,7 +545,7 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-});
+        });
         if (lineLayer != undefined) {
             lineLayer.removeAllFeatures();
         }
@@ -600,7 +600,7 @@
     //function random color
     function randomColor() {
         var hexno = new String;
-        arr = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+        arr = new Array("f", "f", "e", "f", "e", "f", "f", "a", "b", "c", "e", "f", "c", "d", "e", "f");
         var n1 = Math.round(Math.random() * 15);
         var n2 = Math.round(Math.random() * 15);
         var n3 = Math.round(Math.random() * 15);
