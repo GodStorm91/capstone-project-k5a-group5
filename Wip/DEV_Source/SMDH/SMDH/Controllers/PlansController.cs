@@ -804,7 +804,6 @@ namespace SMDH.Controllers
 
                     ViewBag.RequestDetails = returnList;
 
-
                 }
 
                 return View();
@@ -913,7 +912,11 @@ namespace SMDH.Controllers
             }
 
             //remove the "," redundancy
-            planIds = planIds.Remove(planIds.Length - 1);
+            if (success)
+            {
+                planIds = planIds.Remove(planIds.Length - 1);
+            }
+            
 
             if (success)
             {
