@@ -631,18 +631,20 @@
     })
     var selectedrq = new Array();
     $('#btnSave').click(function () {
-        selectedrq.length = 0;
-        $("#selectedRequest :checkbox").each(function () {
-            var requestid = $(this).attr('id');
-            selectedrq.push(requestid);
-        })
-
+        alert("in here");
         //alert(someValue);
-
+        alert("in click");
         var testItems = new Object();
         testItems.Entrys = new Array();
-        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });
+                
+        $.each(requestsInPlans, function (index, requests) {
+            listRequest = new Array();
+            $.each(requests, function (indexj, request) {
+                listRequest.push(request.RequestId);
+            });
 
+            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest });
+        });
         var json = $.toJSON(testItems);
         alert(json)
         $.ajax({
