@@ -37,6 +37,10 @@ namespace SMDH.Areas.Buyer.Controllers
             var products = _repository.GetProductsByCustomerId(customerId);
             ViewBag.HubCategories = new SelectList(context.HubCategories.Where(o => o.isActive).ToArray(), "HubCategoryId", "HubName");
             ViewBag.Hub = new SelectList( new List<SMDH.Models.Hub>());
+            ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
+            ViewBag.District = new SelectList(context.Districts.Where(o => o.IsActive).ToArray(), "DistrictId", "Name");
+            ViewBag.Ward = new SelectList(context.Wards.Where(o => o.IsActive).ToArray(), "WardID", "Name");
+            ViewBag.CompanyName = new SelectList(context.Customers.Where(o => o.IsActive).ToArray(), "CustomerID", "CompanyName");
             return View(products);
         }
 
