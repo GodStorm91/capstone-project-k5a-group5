@@ -61,7 +61,7 @@
                     Request(s)</h5>
             </div>
             <div class="widget-content" id="requestsZone">
-                <ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow: scroll;">
+                <ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow-y: scroll;">
                     @if (ViewBag.PossibleRequests != null)
                     {
                         int i = 1;
@@ -109,7 +109,7 @@
                     Selected Request(s)</h5>
             </div>
             <div class="widget-content" id="selectedRequest">
-                <ul class="site-stats" style="height: 500px; overflow: scroll;" id="selectedRequestul">
+                <ul class="site-stats" style="height: 500px; overflow-y: scroll;" id="selectedRequestul">
                 </ul>
             </div>
         </div>
@@ -174,7 +174,7 @@
 
 
         $.post("/Plans/GroupRequestByCollectionAddressId", { maxRequest: maxRequest }, function (data) {
-            var resultHtml = '<ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow: scroll;">';
+            var resultHtml = '<ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow-y: scroll;">';
             if (data.success) {
                 $('#requestsZone').html("")
                 var k = 1;
