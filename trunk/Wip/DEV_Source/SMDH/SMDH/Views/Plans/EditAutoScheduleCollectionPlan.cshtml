@@ -143,8 +143,11 @@
                 <ul class="activity-list">
                     @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
                     {
-                        <li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
+                        <li><strong><a href="#" onclick = "show(@i)">Plan @(i+1)</a></strong>
                         </li>
+                        
+                        @*<li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
+                        </li>*@
                     }
                 </ul>
             </div>
@@ -207,15 +210,41 @@
             Save</button>
     </div>
 </div>
+@*@{int j = 0;}
+@foreach (var waypointList in ViewBag.Waypoints)
+{    
+    <div id="wayPointsInPlan@j" >
+        @foreach (var waypoint in waypointList)
+        {
+            <input type="hidden" id="waypointLattitude" value="@waypoint.Latitude" />
+            <input type="hidden" id="waypointLongitude" value="@waypoint.Longitude" />
+        }
+    </div>
+    j++;
+}
+@{j =0;}
+@foreach (var segmentList in ViewBag.Segments)
+{
+    <div id="segmentsInPlan@j">
+        @foreach (var segment in segmentList)
+        {
+            <input type="hidden" id="segmentLatitude" value="@segment.Latitude" />
+            <input type="hidden" id="segmentLongitude" value="@segment.Longitude" />
+        }
+    </div>
+}*@
 <script>
     var selectedRequestIds = new Array();
+    var lineLayer, markerslayer;
     var numRequests;
     var numPlans;
     var dateScore = 0.5;
     var deliveryTypeScore = 0.5;
-    var someValue = @(ViewBag.Waypoints)
-
-    
+    var segments = JSON.parse(localStorage.getItem('segments'));
+    alert("segments " + segments.length);
+    var waypoints = JSON.parse(localStorage.getItem('waypoints'));
+    alert("waypoints " + waypoints.length);
+    var requestsInPlans = JSON.parse(localStorage.getItem('requests'));
 
     $("#ddlCityProvince").change(function () {
         var items = '';
@@ -240,7 +269,82 @@
         });
     });
 
-    
+    show(0);
+
+    function show(id) {
+        alert(id);        
+        var j = 0;
+        var waypointsArr = new Array();
+        waypointsArr.length = 0;
+        var lats = new Array();
+        var lons = new Array();
+        alert(waypoints[id].length);
+        $.each(waypoints[id], function (index, waypoint) {
+            lats[j] = waypoint.Latitude;
+            lons[j] = waypoint.Longitude;
+            alert(waypoint.Latitude + " " + waypoint.Longitude);
+            waypointsArr.push({
+                location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
+            });
+            j++;
+        });
+        wpt = new Array();
+        wpt[0] = waypointsArr;
+
+        j = 0;
+        var segmentsArr = new Array();
+        segmentsArr.length = 0;
+        var lats = new Array();
+        var lons = new Array();
+        $.each(segments[id], function (index, segment) {
+            lats[j] = segment.Latitude;
+            lons[j] = segment.Longitude;
+            segmentsArr.push({
+                location: new OpenLayers.Geometry.Point(lons[j], lats[j])
+            });
+
+            j++;
+        });
+        geopt = new Array();
+        geopt[0] = segmentsArr;
+        showRequestsInPlan(id);
+        alert("enter add Marker");
+        addMarker();
+        alert("enter add direction");
+        addDirection();
+        alert("center is :" + segments[0][0]);
+        map.setCenter(segments[0][0].location, 16);
+        $.unblockUI();
+
+    }
+
+    function showRequestsInPlan(id) {
+        var resultString = "<ul class='site-stats'>";
+        $.each(requestsInPlans[id], function (index, request) {
+            var item = "<li>" +
+                            "<div style='float: right;'>" +
+                                "<a class='label label-success' href='#'><i class='icon-circle-arrow-right'></i></a>" +
+                                "<a class='label label-important' href='#'><i class='icon-remove'></i></a>" +
+                            "</div>" +
+                            "<div>" +
+                                "<div>" +
+                                    "<span class='icon-book'></span><span class='label label-info requestId'>" + request.RequestId + "</span><span " +
+                                        "class='icon-user'></span><span class='label label-info requestId'>" + request.Customer + "</span><span " +
+                                            "class='icon-calendar'></span><span class='label label-info requestId'>" + request.RequestedDate + "</span>" +
+                                "</div>" +
+                                "<div>" +
+                                    "<span class='icon-globe'></span><span>" + request.CollectionAddress + "</span>" +
+                                "</div>" +
+                            "</div>" +
+                            "<div>" +
+                                "---------------------------------------------------</div>" +
+                        "</li>";
+            resultString += item;
+        });
+        resultString += "</ul>";
+
+        $('#requestDetailsZone').html(resultString);
+    }
 
     $('.myLink').click(function (e) {
         $.blockUI();
@@ -403,7 +507,12 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-});
+        });
+        //clear if exists
+        if (typeof markerslayer != 'undefined') {
+            markerslayer.clearMarkers();
+            
+        }
         markers = new OpenLayers.Layer.Markers("Markers");
         markers.id = "Markers";
         map.addLayer(markers);
@@ -426,13 +535,15 @@
 
             }
         }
-    }
-    var lineLayer, markerslayer;
+    }    
     function addDirection() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
 });
+        if (lineLayer != undefined) {
+            lineLayer.removeAllFeatures();        
+        }
         lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
         for (var i = 0; i < geopt.length; i++) {
             var color = randomColor();
@@ -469,7 +580,7 @@
         }
     }
 
-    function clearGrid() {        
+    function clearGrid() {
         if (lineLayer != undefined) {
             lineLayer.clearGrid();
         }
@@ -477,7 +588,7 @@
         if (markerslayer != undefined) {
             markerslayer.clearGrid();
         }
-        
+
 
     }
 
@@ -515,7 +626,7 @@
 
         var testItems = new Object();
         testItems.Entrys = new Array();
-        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });           
+        testItems.Entrys[0] = new Object({ Id: 0, listRequests: [7] });
 
         var json = $.toJSON(testItems);
         alert(json)

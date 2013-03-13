@@ -266,7 +266,7 @@
         })
         alert(selectedrq);
         //forTest
-        selectedrq.push(32); selectedrq.push(38);
+        //selectedrq.push(32); selectedrq.push(38);
         //end For Tests
 
         var planNumber = $('#txtNumPlans').val();
@@ -274,7 +274,17 @@
         var planNum = $("<input>").attr("type", "hidden").attr("name", "planNumber").val(planNumber);
         $('#toBeSubmit').append($(input))
         $('#toBeSubmit').append($(planNum))
-        $('#toBeSubmit').submit();
+
+        $.post('/Plans/EditAutoScheduleCollectionPlanAjax', { requestsIdsList: selectedrq.toString(), planNumber: planNumber }, function (data) {
+            alert(data.waypoints.length);
+            localStorage.setItem('waypoints', JSON.stringify(data.waypoints));
+            localStorage.setItem('segments', JSON.stringify(data.segments));
+            //should save the function here
+            localStorage.setItem('requests', JSON.stringify(data.requests));
+            $('#toBeSubmit').submit();
+        });
+
+
 
     })
 
