@@ -62,26 +62,26 @@
     //        k++;
     //    });
 
-    function initialize() {
+//    function initialize() {
 
-        // Create the map object
-        map = new OpenLayers.Map('map');
-        //Create a Google layer
+//        // Create the map object
+//        map = new OpenLayers.Map('map');
+//        //Create a Google layer
 
-        // if i use this instead of gmap then everything works.
-        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
-				{
-				numZoomLevels: 20
-        });
-        map.addLayer(gmap);
-        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+//        // if i use this instead of gmap then everything works.
+//        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+//				{
+//				numZoomLevels: 20
+//});
+//        map.addLayer(gmap);
+//        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
 
-    }
+//    }
 
 
     $(document).ready(function () {
         // Create the map object
-        initialize();
+//        initialize();
         $('#modals').modal('show');
     });
 
@@ -143,10 +143,9 @@
                 <ul class="activity-list">
                     @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
                     {
-                        <li><strong><a href="#" onclick = "show(@i)">Plan @(i+1)</a></strong>
-                        </li>
+                        <li><strong><a href="#" onclick = "show(@i)">Plan @(i + 1)</a></strong> </li>
                         
-                        @*<li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
+@*<li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
                         </li>*@
                     }
                 </ul>
@@ -269,10 +268,26 @@
         });
     });
 
-    show(0);
+    function initialize() {
 
+        // Create the map object
+        map = new OpenLayers.Map('map');
+        //Create a Google layer
+
+        // if i use this instead of gmap then everything works.
+        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+        });
+        map.addLayer(gmap);
+        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+
+    }
+    initialize();
+    show(0);
     function show(id) {
-        alert(id);        
+
+        alert(id);
         var j = 0;
         var waypointsArr = new Array();
         waypointsArr.length = 0;
@@ -312,8 +327,8 @@
         addMarker();
         alert("enter add direction");
         addDirection();
-        alert("center is :" + segments[0][0]);
-        map.setCenter(segments[0][0].location, 16);
+        alert("center is :" + wpt[0][0].location);
+        map.setCenter(wpt[0][0].location, 13);
         $.unblockUI();
 
     }
@@ -507,11 +522,11 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-        });
+});
         //clear if exists
         if (typeof markerslayer != 'undefined') {
             markerslayer.clearMarkers();
-            
+
         }
         markers = new OpenLayers.Layer.Markers("Markers");
         markers.id = "Markers";
@@ -535,14 +550,14 @@
 
             }
         }
-    }    
+    }
     function addDirection() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
 });
         if (lineLayer != undefined) {
-            lineLayer.removeAllFeatures();        
+            lineLayer.removeAllFeatures();
         }
         lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
         for (var i = 0; i < geopt.length; i++) {
@@ -622,7 +637,7 @@
             selectedrq.push(requestid);
         })
 
-        alert(someValue);
+        //alert(someValue);
 
         var testItems = new Object();
         testItems.Entrys = new Array();
