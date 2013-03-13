@@ -62,26 +62,26 @@
     //        k++;
     //    });
 
-//    function initialize() {
+    //    function initialize() {
 
-//        // Create the map object
-//        map = new OpenLayers.Map('map');
-//        //Create a Google layer
+    //        // Create the map object
+    //        map = new OpenLayers.Map('map');
+    //        //Create a Google layer
 
-//        // if i use this instead of gmap then everything works.
-//        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
-//				{
-//				numZoomLevels: 20
-//});
-//        map.addLayer(gmap);
-//        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+    //        // if i use this instead of gmap then everything works.
+    //        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+    //				{
+    //				numZoomLevels: 20
+    //});
+    //        map.addLayer(gmap);
+    //        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
 
-//    }
+    //    }
 
 
     $(document).ready(function () {
         // Create the map object
-//        initialize();
+        //        initialize();
         $('#modals').modal('show');
     });
 
@@ -131,7 +131,7 @@
 <script src="/js/crud.js" type="text/javascript"></script>
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
-<div class="span4 offset3">
+<div class="span4">
     <div class="widget-box">
         <div class="widget-title">
             <span class="icon"><i class=" icon-hand-right"></i></span>
@@ -139,11 +139,12 @@
                 Plans</h5>
         </div>
         <div class="widget-content nopadding">
-            <div style="height: 100px; overflow: scroll;">
-                <ul class="activity-list">
+            <div style="height: 100px; overflow-y: scroll;">
+                <ul class="site-stats">
                     @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
                     {
-                        <li><strong><a href="#" onclick = "show(@i)">Plan @(i + 1)</a></strong> </li>
+                        <li class="plan" id="plan-@i" style="line-height: 0px;background-color:#f2dede;"><strong><a href="#" onclick = "show(@i)">Plan @(i + 1)</a></strong>
+                        </li>
                         
 @*<li><strong>@Html.ActionLink("Plan " + (i + 1), "GetRequestsInPlan", "Plans", new { selectedRequestsIds = ViewBag.SelectedRequestsIds, planNumber = ViewBag.NumberOfPlans, planId = i }, new { @class = "myLink" })</strong>
                         </li>*@
@@ -152,62 +153,52 @@
             </div>
         </div>
     </div>
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class=" icon-hand-right"></i></span>
+            <h5>
+                Plan details</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <div style="height: 400px; overflow-y: scroll;" id="requestDetailsZone">
+                <ul class="site-stats">
+                    @foreach (var request in ViewBag.RequestDetails)
+                    {
+                        <li id="request-@request.RequestId">
+                            <div>
+                                <div>
+                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span><span
+                                        class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
+                                </div>
+                                <div>
+                                    <span class="icon-globe"></span><span>@request.CollectionAddress</span>
+                                </div>
+                            </div>
+                            <div>
+                                ---------------------------------------------------</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="span12">
-    <div class="span4">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon"><i class=" icon-hand-right"></i></span>
-                <h5>
-                    Plan details</h5>
-            </div>
-            <div class="widget-content nopadding">
-                <div style="height: 500px; overflow: scroll;" id="requestDetailsZone">
-                    <ul class="site-stats">
-                        @foreach (var request in ViewBag.RequestDetails)
-                        {
-                            <li id="request-@request.RequestId">
-                                <div style="float: right;">
-                                    <a class="label label-success" href="#"><i class="icon-circle-arrow-right"></i></a>
-                                    <a class="label label-important removerequest" id="@request.RequestId" href="javascript:void(0)">
-                                        <i class="icon-remove"></i></a>
-                                </div>
-                                <div>
-                                    <div>
-                                        <span class="icon-book"></span><span class="label label-info requestId">@request.RequestId</span><span
-                                            class="icon-user"></span><span class="label label-info requestId">@request.Customer</span><span
-                                                class="icon-calendar"></span><span class="label label-info requestId">@request.RequestedDate</span>
-                                    </div>
-                                    <div>
-                                        <span class="icon-globe"></span><span>@request.CollectionAddress</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    ---------------------------------------------------</div>
-                            </li>
-                        }
-                    </ul>
-                </div>
+<div class="span8">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class=" icon-hand-right"></i></span>
+            <h5>
+                Maps</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <div id="map" style="height: 555px;">
             </div>
         </div>
     </div>
-    <div class="span8">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon"><i class=" icon-hand-right"></i></span>
-                <h5>
-                    Maps</h5>
-            </div>
-            <div class="widget-content nopadding">
-                <div id="map" style="height: 500px;">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span6 offset4">
-        <button class="btn btn-primary" id="btnSave">
-            Save</button>
-    </div>
+</div>
+<div class="span6 offset4">
+    <button class="btn btn-primary" id="btnSave">
+        Save</button>
 </div>
 @*@{int j = 0;}
 @foreach (var waypointList in ViewBag.Waypoints)
@@ -278,7 +269,7 @@
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
-        });
+});
         map.addLayer(gmap);
         map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
 
@@ -286,7 +277,10 @@
     initialize();
     show(0);
     function show(id) {
-
+        $('.plan').each(function () {
+            $(this).css('background-color', '#F5F5F5');
+        })
+        $('#plan-' + id).css('background-color', '#f2dede');
         alert(id);
         var j = 0;
         var waypointsArr = new Array();
@@ -337,15 +331,11 @@
         var resultString = "<ul class='site-stats'>";
         $.each(requestsInPlans[id], function (index, request) {
             var item = "<li>" +
-                            "<div style='float: right;'>" +
-                                "<a class='label label-success' href='#'><i class='icon-circle-arrow-right'></i></a>" +
-                                "<a class='label label-important' href='#'><i class='icon-remove'></i></a>" +
-                            "</div>" +
                             "<div>" +
                                 "<div>" +
-                                    "<span class='icon-book'></span><span class='label label-info requestId'>" + request.RequestId + "</span><span " +
-                                        "class='icon-user'></span><span class='label label-info requestId'>" + request.Customer + "</span><span " +
-                                            "class='icon-calendar'></span><span class='label label-info requestId'>" + request.RequestedDate + "</span>" +
+                                    "<span " +
+                                        "class='icon-user'></span><span class='label label-info'>" + request.Customer + "</span><span " +
+                                            "class='icon-calendar'></span><span class='label label-info'>" + request.RequestedDate + "</span>" +
                                 "</div>" +
                                 "<div>" +
                                     "<span class='icon-globe'></span><span>" + request.CollectionAddress + "</span>" +
@@ -489,34 +479,34 @@
         $('.myToolTip').tooltip();
     };
 
-    var addToPlan = function (requestId) {
-        //alert("Added to plan");
-        $("#request-" + requestId + " a.addToPlan").tooltip('hide');
-        $("#selected-requests > ul").append($("#request-" + requestId));
-        selectedRequestIds[selectedRequestIds.length] = requestId;
-        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan label label-important" rel="tooltip" onclick="removeFromPlan(' + requestId + ')" title="Add to plan">Remove</a>');
-        $('.myToolTip').tooltip();
-    };
+    //    var addToPlan = function (requestId) {
+    //        //alert("Added to plan");
+    //        $("#request-" + requestId + " a.addToPlan").tooltip('hide');
+    //        $("#selected-requests > ul").append($("#request-" + requestId));
+    //        selectedRequestIds[selectedRequestIds.length] = requestId;
+    //        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="removeToPlan label label-important" rel="tooltip" onclick="removeFromPlan(' + requestId + ')" title="Add to plan">Remove</a>');
+    //        $('.myToolTip').tooltip();
+    //    };
 
-    var removeFromPlan = function (requestId) {
-        //            for (var i = 0; i < selectedRequestIds.length; i++) {
-        //                if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
-        //            }
-        //            $("#request-" + requestId).remove();
-        //            if ($('#ddlWard option:selected').val() != '-1') {
-        //                $('#ddlWard').trigger("change");!= '-1') {
-        //                $('#ddlDistrict').trigger("change");
-        //            } else if ($('#ddlDistrict option:selected').val() 
-        //            } else {remove
-        //                $('#ddlCityProvince').trigger("change");
-        //            }
-        //alert("remove " + requestId);
-        $("#request-" + requestId + " a.removeToPlan").hide();
-        $("#unplanned-requests > ul").append($("#request-" + requestId));
-        removeA(selectedRequestIds, requestId);
-        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan label label-success" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan">Add</a>');
-        $('.myToolTip').tooltip();
-    };
+    //    var removeFromPlan = function (requestId) {
+    //        //            for (var i = 0; i < selectedRequestIds.length; i++) {
+    //        //                if (selectedRequestIds[i] == requestId) selectedRequestIds.splice(i, 1);
+    //        //            }
+    //        //            $("#request-" + requestId).remove();
+    //        //            if ($('#ddlWard option:selected').val() != '-1') {
+    //        //                $('#ddlWard').trigger("change");!= '-1') {
+    //        //                $('#ddlDistrict').trigger("change");
+    //        //            } else if ($('#ddlDistrict option:selected').val() 
+    //        //            } else {remove
+    //        //                $('#ddlCityProvince').trigger("change");
+    //        //            }
+    //        //alert("remove " + requestId);
+    //        $("#request-" + requestId + " a.removeToPlan").hide();
+    //        $("#unplanned-requests > ul").append($("#request-" + requestId));
+    //        removeA(selectedRequestIds, requestId);
+    //        $("#request-" + requestId + " .right-column").html('<a href="javascript:void(0)" class="addToPlan label label-success" rel="tooltip" onclick="addToPlan(' + requestId + ')" title="Add to plan">Add</a>');
+    //        $('.myToolTip').tooltip();
+    //    };
 
     function addMarker() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
@@ -621,14 +611,6 @@
         return hexno;
     }
 
-    $("a.removerequest").click(function () {
-        var requestid = $(this).attr('id');
-        bootbox.confirm("Are you sure to cancel this request?", function (result) {
-            if (result) {
-                $("#request-" + requestid).hide();
-            }
-        });
-    })
     var selectedrq = new Array();
     $('#btnSave').click(function () {
         alert("in here");
@@ -636,7 +618,7 @@
         alert("in click");
         var testItems = new Object();
         testItems.Entrys = new Array();
-                
+
         $.each(requestsInPlans, function (index, requests) {
             listRequest = new Array();
             $.each(requests, function (indexj, request) {
