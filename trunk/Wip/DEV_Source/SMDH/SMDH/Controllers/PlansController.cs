@@ -948,6 +948,16 @@ namespace SMDH.Controllers
                 planIdsNumList[i] = int.Parse(planIdsList[i]);
             }
             var plans = context.Plans.Where(o => planIdsNumList.Contains(o.PlanId));
+
+            var deliveryStaffs = from d in context.DeliveryMens
+                                 select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status };
+            var listDelivery = new List<DeliveryMen>();
+            foreach (var delivery in deliveryStaffs)
+            {
+                listDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+            }
+            ViewBag.PossibleDeliveryStaffs = listDelivery;
+
             return View(plans);
         }
         //public ActionResult
