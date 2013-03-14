@@ -25,7 +25,7 @@ namespace SMDH.Controllers
             var hubList = from d in context.Hubs
                                where d.HubCategoryId == id
                                     && d.IsActive                               
-                               select new { d.HubId, d.Name };
+                               select new { d.HubId, d.Name, d.HubCategoryId, d.Latitude, d.Longitude, d.Address };
             return Json(hubList, JsonRequestBehavior.AllowGet);
         }
 

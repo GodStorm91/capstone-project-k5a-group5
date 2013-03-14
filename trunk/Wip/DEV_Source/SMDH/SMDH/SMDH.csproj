@@ -124,6 +124,7 @@
     <Compile Include="Models\Concrete\EFDbContext.cs" />
     <Compile Include="Models\Concrete\EFDeliveryMenRepository.cs" />
     <Compile Include="Models\Concrete\EFHubCategoryRepository.cs" />
+    <Compile Include="Models\Concrete\EFHubsRepository.cs" />
     <Compile Include="Models\Concrete\EFItemsRepository.cs" />
     <Compile Include="Models\Concrete\EFOrdersRepository.cs" />
     <Compile Include="Models\Concrete\EFPlansRepository.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Models\Utilities\AddressHelper.cs" />
     <Compile Include="Models\Utilities\GoogleMapsHelper.cs" />
     <Compile Include="Models\ViewModels\DateViewModel.cs" />
+    <Compile Include="Models\ViewModels\HubViewModel.cs" />
     <Compile Include="Models\ViewModels\ListRequestsJsonModel.cs" />
     <Compile Include="Models\ViewModels\ItemViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
