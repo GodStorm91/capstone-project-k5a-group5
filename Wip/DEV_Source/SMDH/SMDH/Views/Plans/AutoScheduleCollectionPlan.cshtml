@@ -68,7 +68,7 @@
                         foreach (var listRequestViewModel in ViewBag.PossibleRequests)
                         {
                             string addressId = "";                        
-                        <li id="group-@i">
+                        <li id="group-@i" style="background-color:#d9edf7;">
                             <div id="add-@i" style="float: right;">
                                 <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-ok"></i></a></div>
                             <div>
@@ -235,6 +235,7 @@
         $("#group-" + arguments[0]).addClass('alert-success');
         $("#selectedRequest span").removeClass('label-info');
         $("#selectedRequest span.lbinfo").addClass('label-success');
+        $("#group-" + arguments[0]).css('background-color', '#dff0d8');
     }
 
     function removefromplan() {
@@ -243,6 +244,7 @@
         $("#group-" + arguments[0]).removeClass('alert-success');
         $("#requestsZone span").removeClass('label-success');
         $("#requestsZone span.lbinfo").addClass('label-info');
+        $("#group-" + arguments[0]).css('background-color', '#d9edf7');
     }
 
 
