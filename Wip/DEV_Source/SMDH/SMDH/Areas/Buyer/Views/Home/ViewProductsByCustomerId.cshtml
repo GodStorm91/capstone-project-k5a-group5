@@ -55,6 +55,8 @@
     var goMap;
     var currentHub;
     var currentHouse;
+    var hubsMarkerArray = new Array();
+    var infowindow;
     function initialize() {
         var myLatlng = new google.maps.LatLng(10.776198, 106.632982);
         var myOptions = {
@@ -66,11 +68,14 @@
         // Biến text chứa nội dung sẽ được hiển thị
         var text;
 
-        var infowindow = new google.maps.InfoWindow(
+        infowindow = new google.maps.InfoWindow(
         { content: text,
         size: new google.maps.Size(100, 50),
         position: myLatlng
-        });
+    });
+    google.maps.event.addListener(goMap, 'click', function () {
+        infowindow.close();
+    });
         infowindow.open(goMap);
 
     }
@@ -92,17 +97,37 @@
         currentHouse = new google.maps.Marker(
         {
             position: myLatLng,
-            map: map, title: "House"
+            map: goMap, title: "House",
+            animation: google.maps.Animation.DROP,
+            icon: "/img/markers/home.png"
         });
+
+        goMap.setCenter(currentHouse.getPosition());        
     }
 
-    function addMarkerHub(lat, long)
-    {
+    function addMarkerHub(lat, long, content) {
+        var contentString = content;
         var myLatLng = new google.maps.LatLng(lat, long);
         currentHub = new google.maps.Marker(
         {
             position: myLatLng,
-            map: map, title: "Hub"
+            map: goMap, title: "Hub"
+        });
+
+        google.maps.event.addListener(currentHub, 'click', function () {
+            infowindow.setContent(contentString);
+            infowindow.open(goMap, currentHub);
+        });
+
+        return currentHub;
+    }
+
+    function addMarkerForMultipleHub(data) {
+        $.each(data, function (index, dataItem) {
+            var content = "Name : " + dataItem.Name + "<br>" +
+                          "Dia chi:" + dataItem.Address;
+            var hub = addMarkerHub(dataItem.Latitude, dataItem.Longitude, content);
+            hubsMarkerArray.push(hub);
         });
     }
 
@@ -454,20 +479,39 @@ overflow: auto;
         </div>
 	<script>
 
-	    $("#ddlHubCategories").change(function () {
+	    function changeHubCategoriesHandler() {	        
 	        var items = '<option value="-1">-- All Locations --</option>';
 	        $('#ddlHub').html(items);
 	        $('#ddlHub').trigger("change");
-	        var id = $('#ddlHubCategories option:selected').val();
+	        var hubId = -1;
+	        var hubLists = null;
+	        if (arguments[0]) {
+	            hubId = arguments[0];
+	        }
+	        var id = $('#ddlHubCategories option:selected').val();	        
 	        if (id == '') id = -1;
 	        $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
 	            items = '<option value="-1">-- All Locagions --</option>';
 	            $.each(data, function (i, hub) {
 	                items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
 	            });
+	            hubLists = data;
 	            $('#ddlHub').html(items);
 	            $('#ddlHub').trigger("liszt:updated");
+	            $('#ddlHub').val(hubId);
+
 	        });
+
+            //check if load all Hub then
+	        if (hubId == -1) {
+	            $.each(hubLists, function (index, hub) {
+                    
+	            });
+	        }
+	    }
+
+	    $("#ddlHubCategories").change(function () {
+	        changeHubCategoriesHandler();
 	    });
 
 	    $("#ddlHub").change(function () {
@@ -506,7 +550,23 @@ overflow: auto;
         });
     });
 
-
+    $('#address').blur(function(){
+        alert("here");
+    }); 
+    function findLocation()
+    {        
+        var address = $('#address').val();
+        $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
+            addMarkerHouse(data.lat, data.lon);
+            addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude);
+            setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+            $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+            var id = 8
+            id = data.nearestHub.HubId;
+            alert(id);
+            changeHubCategoriesHandler(id);
+        });
+    }
 
 
     </script>	
