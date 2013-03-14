@@ -70,15 +70,15 @@
                             string addressId = "";                        
                         <li id="group-@i">
                             <div id="add-@i" style="float: right;">
-                                <a class="label label-success" onclick="addtoplan(@i)">Add<i class="icon-circle-arrow-right"></i></a></div>
+                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-ok"></i></a></div>
                             <div>
                                 @foreach (var request in listRequestViewModel)
                                 {
                             
                                     <div style="margin-top: 5px;">
                                         <input type="hidden" class="label label-info requestId" value="@request.RequestId"/><span
-                                            class="icon-user"></span><span class="label label-info">@request.Customer</span><span
-                                                class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
+                                            class="icon-user"></span><span class="lbinfo label label-info">@request.Customer</span><span
+                                                class="icon-calendar"></span><span class="lbinfo label label-info">@request.RequestedDate</span>
                                     </div>
                                     addressId = request.CollectionAddress;
                                 }
@@ -181,7 +181,7 @@
                     var collectionAddress = "";
                     resultItemString += '<div>';
                     resultItemString += '<li id="group-' + k + '">' +
-                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')">Add<i class="icon-circle-arrow-right"></i></a></div>' + '<div>';
+                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-ok"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
@@ -231,14 +231,18 @@
     function addtoplan() {
         //alert(arguments[0]);
         $("#selectedRequest > ul").prepend($("#group-" + arguments[0]));
-        $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-circle-arrow-left"></i>Remove</a>');
-        $("#group-" + arguments[0]).addClass('alert-danger');
+        $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-remove"></i></a>');
+        $("#group-" + arguments[0]).addClass('alert-success');
+        $("#selectedRequest span").removeClass('label-info');
+        $("#selectedRequest span.lbinfo").addClass('label-success');
     }
 
     function removefromplan() {
         $("#requestsZone > ul").prepend($("#group-" + arguments[0]));
-        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-circle-arrow-right"></i>Add</a>');
-        $("#group-" + arguments[0]).removeClass('alert-danger');
+        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-ok"></i></a>');
+        $("#group-" + arguments[0]).removeClass('alert-success');
+        $("#requestsZone span").removeClass('label-success');
+        $("#requestsZone span.lbinfo").addClass('label-info');
     }
 
 
