@@ -6,20 +6,24 @@
     ViewBag.Title = "Delivery Plans";
     ViewBag.Heading = "Delivery Plans";
 }
-@if (false)
-{ 
-    <script src="/js/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>
-}
+
 <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/select2.css" />
 <link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
 <script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="/js/crud.js" type="text/javascript"></script>
+<script src="/js/form-action.js" type="text/javascript"></script>
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
-<script src="/js/crud.js" type="text/javascript"></script>
+<script src="/js/date.js" type="text/javascript"></script>
+<script src="/js/accounting.js" type="text/javascript"></script>
+@*<script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>*@
+<script src="/js/jquery.numeric.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#main-table').dataTable({
@@ -51,16 +55,18 @@
             </div>
             <div id="dateFilterSelector">
                 <div class="row-fluid bordered">
-                    <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
-                        Created Date: 
+                    <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                        Created Date:
                     </div>
                     <div class="pull-left" data-date-format="dd/mm/yyyy">
                         From
-                        <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter" name="startDate"><br />
+                        <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter"
+                            name="startDate"><br />
                     </div>
-                    <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left:30px;">
+                    <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left: 30px;">
                         To
-                        <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter" name="endDate">
+                        <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter"
+                            name="endDate">
                     </div>
                     <div class="span3" style="line-height: 28px; position: relative;">
                         <div style="position: absolute; bottom: 0; left: 0;">
@@ -73,7 +79,8 @@
         </div>
         <div class="span2">
             @*<input type="submit" class="btn btn-primary" value="Filter" id="btnFilter" />*@
-            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter">Filter</a>
+            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter">
+                Filter</a>
         </div>
     </div>
 }
@@ -101,6 +108,32 @@
             Cancel</button>
     </div>
 </div>
+<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Assign plan to delivery staff</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Assign to</p>
+        @if (ViewBag.PossibleDeliveryStaffs != null)
+        {
+            foreach (var d in ViewBag.PossibleDeliveryStaffs)
+            {
+            <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" />@d.FirstName
+            }
+        }
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="btnAssign">
+            Save</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+    </div>
+</div>
 <script type="text/javascript">
     @foreach (var status in ViewBag.SelectedStatuses)
     {
@@ -118,11 +151,11 @@
         }
     }
 
-    @if(ViewBag.StartDate != null)
+    @if (ViewBag.StartDate != null)
     {
         <text>$('#startDateFilter').val("@ViewBag.StartDate")</text>
     }
-    @if(ViewBag.EndDate != null)
+    @if (ViewBag.EndDate != null)
     {
         <text>$('#endDateFilter').val("@ViewBag.EndDate")</text>
     }
@@ -147,6 +180,38 @@
             //add it to the array
             selectedStatusIds.push(status);
         }
+    });
+
+    var PlanId = 0;
+    function assign(){
+        PlanId = arguments[0];
+    }
+    
+    $('#btnAssign').click(function () {
+        var checkBoxs = $("input[name=deliveryman]");
+        var listdeliveryman = new Array();
+        var listNotChooseDeliveryMan = new Array();
+        var i = 0;
+        var j = 0;
+        $.each(checkBoxs, function() {
+            if ($(this).is(":checked")){
+                listdeliveryman[i] = $(this).val();
+                i++;
+            } else
+            {
+                listNotChooseDeliveryMan[j] = $(this).val();
+                j++
+            }
+        });
+        $.ajaxSettings.traditional = true;
+        $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
+            if(result.success){
+                $.blockUI();
+                window.location.reload();
+            }else{
+                bootbox.alert('Unable to assign. Please refresh and try again.');
+            }
+        });
     });
 
     $('#checkAll').click(function () {
@@ -200,7 +265,7 @@
             urlParams += '&endDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
         }
         $.blockUI();
-        window.location = '/DeliveryPlans?' + urlParams;
+        window.location = '/Plans/ViewDeliveryPlans?' + urlParams;
         return false;
     });
 

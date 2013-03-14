@@ -115,6 +115,15 @@ namespace SMDH.Controllers
 
             ViewBag.SelectedStatuses = statuses;
 
+            var deliveryStaffs = from d in context.DeliveryMens
+                                 select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status };
+            var listDelivery = new List<DeliveryMen>();
+            foreach (var delivery in deliveryStaffs)
+            {
+                listDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+            }
+            ViewBag.PossibleDeliveryStaffs = listDelivery;
+
             return View(deliveryPlans);
 
         }
@@ -688,7 +697,7 @@ namespace SMDH.Controllers
             {
                 var requests = context.Requests.Where(o => requestIds.Contains(o.RequestId));
                 var requestsList = requests.ToList();
-                List<GeoCoordinate> pointList = new List<GeoCoordinate>();                
+                List<GeoCoordinate> pointList = new List<GeoCoordinate>();
                 foreach (var request in requests)
                 {
                     requestViewModel.Add(new RequestViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
@@ -704,7 +713,7 @@ namespace SMDH.Controllers
                     pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
                 }
 
-                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);                
+                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
                 for (int i = 0; i < listPointCollection.Count; i++)
                 {
                     PointCollection cluster = listPointCollection[i];
@@ -725,9 +734,9 @@ namespace SMDH.Controllers
                 listRequestsIds += requestIds[requestIds.Length - 1];
 
                 ViewBag.SelectedRequestsIds = listRequestsIds;
-                
+
                 PointCollection pointCluster = listPointCollection[0];
-                
+
 
                 //Solve mTsp;
                 MTspHelper.initialize();
@@ -916,7 +925,7 @@ namespace SMDH.Controllers
             {
                 planIds = planIds.Remove(planIds.Length - 1);
             }
-            
+
 
             if (success)
             {
