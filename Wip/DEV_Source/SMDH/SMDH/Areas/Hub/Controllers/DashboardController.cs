@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using SMDH.Models;
 using SMDH.Models.Statuses;
+using SMDH.Models.ViewModels;
 
 namespace SMDH.Areas.Hub.Controllers
 {
@@ -97,99 +98,116 @@ namespace SMDH.Areas.Hub.Controllers
         public ActionResult getalldatasendingToHub()
         {
             var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == 1
-                         select new
-                         {
-                            orderid = o.OrderId,
-                            itemno = o.Items.Count,
-                            amount = o.AmountToBeCollectedFromReceiver,
-                            duedate = o.DueDate
-                         }).Distinct().ToList();
-            foreach (var r in result)
+            //var result = (from o in context.Orders
+            //              where o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == 1
+            //             select new
+            //             {
+            //                orderid = o.OrderId,
+            //                itemno = o.Items.Count,
+            //                amount = o.AmountToBeCollectedFromReceiver,
+            //                duedate = o.DueDate
+            //             }).Distinct().ToList();
+
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == 1); 
+            
+            foreach (var r in researchlist)
             {
-                orders.Add(new String[] { "<input type=\"checkbox\" class=\"checksth\" id=\"" + r.orderid.ToString() + "\" />", r.orderid.ToString(), r.itemno.ToString(), r.amount.ToString(), r.duedate.ToString(), "<a class=\"btn btn-mini btn-success myLink\" onclick='checkStatusinHub(" + r.orderid + ")'\">ChangeStatus</a>" });
+                OrderViewModel orderView = new OrderViewModel(r);
+                orders.Add(new String[] { "<input type=\"checkbox\" class=\"checksth\" id=\"" + orderView.OrderId + "\" />", orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.Amount, orderView.DueDate.ToString(), "<a class=\"btn btn-mini btn-success myLink\" onclick='checkStatusinHub(" + orderView.OrderId + ")'\">ChangeStatus</a>" });
             }
 
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+            return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
         public ActionResult getalldatainhub()
         {
             var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1
-                          select new
-                          {
-                              orderid = o.OrderId,
-                              itemno = o.Items.Count,
-                              amount = o.AmountToBeCollectedFromReceiver,
-                              duedate = o.DueDate
-                          }).Distinct().ToList();
-            foreach (var r in result)
+            //var result = (from o in context.Orders
+            //              where o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1
+            //              select new
+            //              {
+            //                  orderid = o.OrderId,
+            //                  itemno = o.Items.Count,
+            //                  amount = o.AmountToBeCollectedFromReceiver,
+            //                  duedate = o.DueDate
+            //              }).Distinct().ToList();
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1);
+
+            foreach (var r in researchlist)
             {
-                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.amount.ToString(), r.duedate.ToString() });
+                OrderViewModel orderView = new OrderViewModel(r);
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.Amount.ToString(), orderView.DueDate.ToString() });
             }
 
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+            return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
         public ActionResult getalldataDelivered()
         {
             var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1
-                          select new
-                          {
-                              orderid = o.OrderId,
-                              itemno = o.Items.Count,
-                              duedate = o.DueDate,
-                              deliverydate = o.DeliveryDate
-                          }).Distinct().ToList();
-            foreach (var r in result)
+            //var result = (from o in context.Orders
+            //              where o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1
+            //              select new
+            //              {
+            //                  orderid = o.OrderId,
+            //                  itemno = o.Items.Count,
+            //                  duedate = o.DueDate,
+            //                  deliverydate = o.DeliveryDate
+            //              }).Distinct().ToList();
+
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1);
+
+            foreach (var r in researchlist)
             {
-                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString(), r.deliverydate.ToString() });
+                OrderViewModel orderView = new OrderViewModel(r);
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.DueDate.ToString(), orderView.DeliveryDate.ToString() });
             }
 
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+            return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
         public ActionResult getalldataWaitingForReturn()
         {
             var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1
-                          select new
-                          {
-                              orderid = o.OrderId,
-                              itemno = o.Items.Count,
-                              duedate = o.DueDate
-                          }).Distinct().ToList();
-            foreach (var r in result)
+            //var result = (from o in context.Orders
+            //              where o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1
+            //              select new
+            //              {
+            //                  orderid = o.OrderId,
+            //                  itemno = o.Items.Count,
+            //                  duedate = o.DueDate
+            //              }).Distinct().ToList();
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1);
+
+            foreach (var r in researchlist)
             {
-                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.duedate.ToString() });
+                OrderViewModel orderView = new OrderViewModel(r);
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.DueDate.ToString() });
             }
 
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);     
+            return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
         public ActionResult getalldataReturn()
         {
             var orders = new List<Array>();
-            var result = (from o in context.Orders
-                          where o.OrderStatus == (int)HubStatus.Return && o.HubId == 1
-                          select new
-                          {
-                              orderid = o.OrderId,
-                              itemno = o.Items.Count,
-                              collecteddate = o.CollectedDate
-                          }).Distinct().ToList();
-            foreach (var r in result)
+            //var result = (from o in context.Orders
+            //              where o.OrderStatus == (int)HubStatus.Return && o.HubId == 1
+            //              select new
+            //              {
+            //                  orderid = o.OrderId,
+            //                  itemno = o.Items.Count,
+            //                  collecteddate = o.CollectedDate
+            //              }).Distinct().ToList();
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Return && o.HubId == 1);
+
+            foreach (var r in researchlist)
             {
-                orders.Add(new String[] { r.orderid.ToString(), r.itemno.ToString(), r.collecteddate.ToString()});
+                OrderViewModel orderView = new OrderViewModel(r);
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.CollectedDate.ToString()});
             }
 
-            return Json(new { sEcho = 10, iTotalRecords = result.Count, iTotalDisplayRecords = result.Count, aaData = orders }, JsonRequestBehavior.AllowGet);
+            return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
         }
 
         public ActionResult changestatustoInhub(int orderid)
