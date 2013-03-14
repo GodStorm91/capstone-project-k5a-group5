@@ -23,7 +23,7 @@ public partial class RequestViewModel
         RequestId = request.RequestId;
         Customer = request.Customer.DisplayName;
         CollectionAddress = request.CustomerAddress.FullAddress;
-        RequestedDate = string.Format("{0:dd/MM/yyyy tt}", request.RequestedDate);
+        RequestedDate = string.Format("{0:dd/MM/yyyy HH:mm:ss}", request.RequestedDate);
         Status = Regex.Replace(request.Status.ToString(), "(\\B[A-Z])", " $1");
         Note = request.Note;
         Latitude = request.CustomerAddress.Latitude;
@@ -36,7 +36,7 @@ public partial class RequestViewModel
         RequestId = request.RequestId;
         Customer = request.Customer.DisplayName;
         CollectionAddress = request.CustomerAddress.FullAddress;
-        RequestedDate = string.Format("{0:dd/MM/yyyy tt}", request.RequestedDate);
+        RequestedDate = string.Format("{0:dd/MM/yyyy HH:mm:ss}", request.RequestedDate);
         Status = Regex.Replace(request.Status.ToString(), "(\\B[A-Z])", " $1");
         Note = request.Note;
         Latitude = request.CustomerAddress.Latitude;
