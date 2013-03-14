@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SMDH.Models.Plan>
 @using SMDH.Models.Utilities
+@using SMDH.Models.Statuses
 @using System.Text.RegularExpressions;
 @{
     Layout = null;
@@ -41,17 +42,20 @@
                     @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
                 </td>
                 <td>
-                   @* @item.CreatedByUserInfo.FullName (@item.CreatedByUser.UserName)*@
+                    @* @item.CreatedByUserInfo.FullName (@item.CreatedByUser.UserName)*@
                 </td>
                 <td>
-                  @*  @if (item.AssignedDeliveryStaffId != null)
+                    @if (item.Status != (int)PlanStatus.New)
                     {
-                        @AccountHelper.GetName(item.AssignedUserInfo.UserId);
+                        @:tennhanvien
+                        @item.DeliveryMenInPlans.
                     }
-                    else*@
+                    else
                     {
-                        <span class="label">Not assigned yet</span>    
-                    }
+                        <span class="label">Not assigned yet</span> 
+                        <a href="#assignModal" data-toggle="modal" onclick="assign(@item.PlanId)" class="myToolTip" rel="tooltip" title="Assign to another staff">
+                            <img src="/img/icons/arrow_right2.png" />
+                        </a>}
                 </td>
                 <td>
                     @item.Status

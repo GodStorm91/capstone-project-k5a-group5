@@ -17,7 +17,7 @@
                 Created By
             </th>
             <th>
-               Finished Date
+                Finished Date
             </th>
             <th>
                 PlantypeID
@@ -59,13 +59,16 @@
                     @item.StartDate
                 </td>
                 <td>
-                    @if (item.Status >1)
+                    @if (item.Status > 1)
                     {
-                       @:tennhanvien
+                        <span class="label label-success">Assigned</span>
                     }
                     else
                     {
-                        <span class="label">Not assigned yet</span>    
+                        <span class="label">Not assigned yet</span>
+                        <a href="#assignModal" data-toggle="modal" onclick="assign(@item.PlanId)" class="myToolTip" rel="tooltip" title="Assign to another staff">
+                            <img src="/img/icons/arrow_right2.png" />
+                        </a>
                     }
                 </td>
                 <td>
@@ -73,8 +76,7 @@
                 </td>
                 <td class="action-column">
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
-                        <img src="/img/icons/notepad.png" alt="View" title="View"></a> 
-                    @*<a class="btn action" href="#" onclick="showUpdateStatusModal(@item.CollectionPlanId,@item.CollectionPlanStatus)">
+                        <img src="/img/icons/notepad.png" alt="View" title="View"></a> @*<a class="btn action" href="#" onclick="showUpdateStatusModal(@item.CollectionPlanId,@item.CollectionPlanStatus)">
                             <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status"></a>*@
                     @*@if (item.Status != HDMS.Models.Statuses.CollectionPlanStatus.Finished)
                     {
