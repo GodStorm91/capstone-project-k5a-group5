@@ -6,7 +6,6 @@
     ViewBag.Title = "Delivery Plans";
     ViewBag.Heading = "Delivery Plans";
 }
-
 <link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/css/select2.css" />
 <link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
@@ -117,15 +116,23 @@
             Assign plan to delivery staff</h3>
     </div>
     <div class="modal-body">
-        <p>
-            Assign to</p>
-        @if (ViewBag.PossibleDeliveryStaffs != null)
-        {
-            foreach (var d in ViewBag.PossibleDeliveryStaffs)
-            {
-            <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" />@d.FirstName
-            }
-        }
+        <<form action="#" method="get" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">
+                Assign to</label>
+            <div class="controls">
+                @if (ViewBag.PossibleDeliveryStaffs != null)
+                {
+                    foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                    {
+                    <label>
+                        <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId"/>
+                        @d.FirstName @d.LastName</label>     
+                    }
+                }
+            </div>
+        </div>
+        </form>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" id="btnAssign">
