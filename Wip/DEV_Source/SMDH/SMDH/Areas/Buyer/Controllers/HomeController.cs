@@ -36,12 +36,12 @@ namespace SMDH.Areas.Buyer.Controllers
         public ActionResult ViewProductsByCustomerId(int customerId)
         {
             var products = _repository.GetProductsByCustomerId(customerId);
+            ViewBag.CompanyInfo = context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
             ViewBag.HubCategories = new SelectList(context.HubCategories.Where(o => o.isActive).ToArray(), "HubCategoryId", "HubName");
             ViewBag.Hub = new SelectList( new List<SMDH.Models.Hub>());
             ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.District = new SelectList(new List<District>());
             ViewBag.Ward = new SelectList(new List<Ward>());
-            ViewBag.CompanyName = new SelectList(context.Customers.Where(o => o.IsActive).ToArray(), "CustomerID", "CompanyName");
             return View(products);
         }
 
@@ -72,7 +72,7 @@ namespace SMDH.Areas.Buyer.Controllers
                 throw;
             }
         }
-
+       
         public ActionResult GetLatitudeAndLongitudeFromAddress(string address)
         {
             try

@@ -75,7 +75,8 @@
     });
     google.maps.event.addListener(goMap, 'click', function () {
         infowindow.close();
-    });
+    });
+
         infowindow.open(goMap);
 
     }
@@ -315,13 +316,13 @@ overflow: auto;
 		<div id="wrapper">
 			
 			<div style=" float:left;margin-top:20px;">
-				<img src="" width="100px" height="150px"/>
-				<p style="margin-left: 150px;margin-top:-65px;"><b>ADIDAS Viet Nam</b> </br>Chuyen Ban Dung Cu The Thao</br>Tel:088888888</p>
+				<img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px"/>
+				<p style="margin-left: 150px;margin-top:-65px;"><b>@ViewBag.CompanyInfo.CompanyName</b></p>
 			</div>
 			
 		<p>
-		<div id="noi_dung" style="margin-left: 60px;margin-top: -10px;"> 
-			<img src="" width="200px" height="200px"/><br/><div class="des"></div>
+		<div id="noi_dung" style="margin-left: 60px;margin-top: -10px;width:500px;height:300px;"> 
+			<img src="" width="150px" height="150px" style="float:left;margin-left:10px;"/><div class="des" style="float:left;margin-left:50px;margin-top:50px;"></div>
 </div>
 		</p>
 		
@@ -332,7 +333,7 @@ overflow: auto;
             <table class="table table-striped">
             	<thead>
             	<tr>
-                  <th></th>
+                  <th>Image</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th>Quantity</th>
@@ -344,14 +345,7 @@ overflow: auto;
             string itemNo = "itemNo" + item.ProductId;
             <tr align="center">
             <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
-				<td>                    @if (item.ImageURL == null)
-                    {
-                        @:None
-                    }
-                    else
-                    {
-                        
-                    }</td>
+				<td><img width ="50" height="30"src="@item.ImageURL"onmouseover="DiChuyen('@item.ImageURL','@item.Description')" onmouseout="noi_dung.style.visibility='hidden';"/></td>
 				<td>@item.Name</td><td style="text-align:right">@item.ProductPrice</td>
 				<td>
 					<input class="input-mini" style="text-align:right" type="text" value="1" id="@itemNo"/>
@@ -412,6 +406,12 @@ overflow: auto;
       <input type="text" id="phone1" onchange="checkPhone(this)">
     </div>
   </div>
+   <div class="control-group">
+    <label class="control-label" for="phone1">Phone 2</label>
+    <div class="controls">
+      <input type="text" id="phone2" onchange="checkPhone(this)">
+    </div>
+  </div>
   
     <div class="control-group">
     <label class="control-label" for="city">City</label>
@@ -431,6 +431,12 @@ overflow: auto;
      @Html.DropDownList("Ward", ViewBag.Ward as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select" })
   </div>   
   </div>
+  <div class="control-group">
+    <label class="control-label" for="address">Address</label>
+    <div class="controls">
+      <input name="address  " type="text" id="address" onchange="findLocation(this)"/>
+    </div>
+  </div>
   <form>
   <div>
  <label class="radio inline">
@@ -442,12 +448,7 @@ overflow: auto;
  Buffer Delivery
 </label>
 </div>
-  <div class="control-group">
-    <label class="control-label" for="address">Address</label>
-    <div class="controls">
-      <input name="address  " type="text" id="address" onchange="findLocation(this)"/>
-    </div>
-  </div>
+  
   <div class="control-group" name="">
     <label class="control-label" for="allHubs"></label>
    
