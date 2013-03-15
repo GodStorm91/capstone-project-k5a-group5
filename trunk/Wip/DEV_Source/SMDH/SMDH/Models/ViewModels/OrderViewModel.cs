@@ -11,6 +11,7 @@ namespace SMDH.Models.ViewModels
     public class OrderViewModel
     {
         public int OrderId { get; set; }
+        public int ItemNo { get; set; }
         public int RequestId { get; set; }
         public string DeliveryOption { get; set; }
         public string OrderPaymentType { get; set; }
@@ -23,6 +24,7 @@ namespace SMDH.Models.ViewModels
         public string AddressFromWard { get; set; }
         public Nullable<int> Fee { get; set; }
         public int AmountToBeCollected { get; set; }
+        public string Amount { get; set; }
         public string Status { get; set; }
         public string Note { get; set; }
         public Nullable<decimal> Latitude { get; set; }
@@ -35,6 +37,7 @@ namespace SMDH.Models.ViewModels
         public OrderViewModel(Order order)
         {
             OrderId = order.OrderId;
+            ItemNo = order.Items.Count;
             RequestId = order.RequestId;
             DeliveryOption = order.DeliveryOption.Name;
             OrderPaymentType = order.OrderPaymentType.Name;
@@ -49,6 +52,7 @@ namespace SMDH.Models.ViewModels
             Fee = order.Fee;
             //Status = Regex.Replace(order.Status.ToString(), "(\\B[A-Z])", " $1");
             AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
+            Amount = order.AmountToBeCollectedFromReceiver.ToString("N3");
             Note = order.Note;
             DueDateString = String.Format("{0:dd/MM/yyyy hh:mm tt}", DueDate);
             //AddressFromWard = AddressHelper.GetAddressFromWard(order);
