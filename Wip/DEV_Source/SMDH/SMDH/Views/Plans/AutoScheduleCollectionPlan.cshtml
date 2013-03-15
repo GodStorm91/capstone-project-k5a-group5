@@ -276,13 +276,13 @@
             selectedrq.push(requestid);
         })
 
-        if ($('#txtNumPlans').val() < 0 || $('#txtNumPlans').val() > selectedrq.length || $('#txtNumPlans').val() == "") {
-            bootbox.alert("Invalid number of plans");
+        if (selectedrq.length <= 0) {
+            bootbox.alert("Please add request(s)");
             return;
         }
 
-        if (selectedrq.length <= 0) {
-            bootbox.alert("Please add request(s)");
+        if ($('#txtNumPlans').val() < 0 || $('#txtNumPlans').val() > selectedrq.length || $('#txtNumPlans').val() == "") {
+            bootbox.alert("Invalid number of plans(need <= total request)");
             return;
         }
 
