@@ -160,17 +160,27 @@
 
     });
 
+    $('#txtMaximumRequest').click(function () {
+        $('#rdoMaximumRequestOption').attr('checked', 'checked');
+        $(this).select();
+    })
+
+    $('#rdoMaximumRequestOption').click(function () {
+        $('#selectedRequestul').html('');
+    })
+
     function triggerGroup() {
         defaultString = $('#txtMaximumRequest').val();
         var maxRequest = -1;
+
         if ($('#rdoMaximumRequestOption').prop('checked')) {
             maxRequest = $('#txtMaximumRequest').val();
 
             //user left the textbox blank
-            if ($('#txtMaximumRequest').val().length == 0) {
-                bootbox.alert("Must maximum value");
-                return;
-            }
+//            if ($('#txtMaximumRequest').val().length == 0) {
+//                bootbox.alert("Must maximum value");
+//                return;
+//            }
             //user enter not a number value            
 
         } else {
