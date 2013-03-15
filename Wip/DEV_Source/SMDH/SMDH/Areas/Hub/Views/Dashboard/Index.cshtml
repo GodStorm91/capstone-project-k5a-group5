@@ -23,6 +23,10 @@
     {
         text-align: right;
     }
+    .table td.orderid
+    {
+        width: 100px;
+    }
 </style>
 <h2>@ViewBag.datasendinginhub</h2>
 <div class="widget-box">
@@ -66,113 +70,121 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="1">
-                <table id="sendingtohub" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
-                            </th>
-                            <th>
-                                OrderID
-                            </th>
-                            <th>
-                                Item No.
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th>
-                                Due Date
-                            </th>
-                            <th>
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="span9 offset1">
+                    <table id="sendingtohub" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
+                                </th>
+                                <th>
+                                    OrderID
+                                </th>
+                                <th>
+                                    Item No.
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="2">
-                <table id="InHub" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                OrderID
-                            </th>
-                            <th>
-                                Item No.
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th>
-                                Due Date
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="span9 offset1">
+                    <table id="InHub" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    OrderID
+                                </th>
+                                <th>
+                                    Item No.
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="3">
-                <table id="Delivered" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                OrderID
-                            </th>
-                            <th>
-                                Item No.
-                            </th>
-                            <th>
-                                Due Date
-                            </th>
-                            <th>
-                                Delivery Date
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="span9 offset1">
+                    <table id="Delivered" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    OrderID
+                                </th>
+                                <th>
+                                    Item No.
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                                <th>
+                                    Delivery Date
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="4">
-                <table id="WaitingForReturn" class="table table-bordered with-check">
-                    <thead>
-                        <tr>
-                            @*<th>
-                                <input type="checkbox" id="checkallwaiting" name="title-table-checkbox" />
-                            </th>*@
-                            <th>
-                                OrderID
-                            </th>
-                            <th>
-                                Item No.
-                            </th>
-                            <th>
-                                Due Date
-                            </th>
-                            @*                            <th>
+                <div class="span9 offset1">
+                    <table id="WaitingForReturn" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    OrderID
+                                </th>
+                                <th>
+                                    Item No.
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                                @*                            <th>
                                 Action
                             </th>*@
-                        </tr>
-                    </thead>
-                </table>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="5">
-                <table id="Return" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                OrderID
-                            </th>
-                            <th>
-                                Item No.
-                            </th>
-                            <th>
-                                Collected Date
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="span9 offset1">
+                    <table id="Return" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    OrderID
+                                </th>
+                                <th>
+                                    Item No.
+                                </th>
+                                <th>
+                                    Collected Date
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="span12" id="btnChangeAll">
 </div>
@@ -199,41 +211,41 @@
             if (!data.success) {
                 bootbox.alert("Not a valid passcode");
             } else {
-//                var resultTableString = '<div class="row-fluid" id="collection-plan-details">' +
-//            '<div class="col-left" style="width: 30%; min-width: 250px; float: left">' +
-//                '<dl class="dl-horizontal">' +
-//                    '<dt>Order No:</dt>' +
-//                    '<dd id="OrderId">' +
-//                        +data.result.OrderId + '</dd>' +
-//                    '<dt>Due date:</dt>' +
-//                    '<dd id="DueDate">' + data.result.DueDateString + '</dd>' +
-//                    '<dt>Order Payment Type</dt>' +
-//                    '<dd id="PaymentType">' + data.result.OrderPaymentType + '</dd>' +
-//                '</dl>' +
-//            '</div>' +
-//            '<div class="col-right" style="width: 30%; min-width: 300px; float: left">' +
-//                '<dl class="dl-horizontal">' +
-//                    '<dt>Receiver Name</dt>' +
-//                    '<dd id="Receiver Name">' +
-//                        data.result.ReceiverName +
-//                    '</dd>' +
-//                    '<dt>Receiver Phone:</dt>' +
-//                    '<dd id="Note">' +
-//                        data.result.ReceiverPhone + '</dd>' +
-//                     '<dt>Amount to be Collected</dt>' +
-//                    '<dd id="ToBeCollected">' +
-//                        accounting.formatMoney(data.result.AmountToBeCollected, "VND", 0, ',', '.') +
-//                    '</dd>' +
-//                '</dl>' +
+                //                var resultTableString = '<div class="row-fluid" id="collection-plan-details">' +
+                //            '<div class="col-left" style="width: 30%; min-width: 250px; float: left">' +
+                //                '<dl class="dl-horizontal">' +
+                //                    '<dt>Order No:</dt>' +
+                //                    '<dd id="OrderId">' +
+                //                        +data.result.OrderId + '</dd>' +
+                //                    '<dt>Due date:</dt>' +
+                //                    '<dd id="DueDate">' + data.result.DueDateString + '</dd>' +
+                //                    '<dt>Order Payment Type</dt>' +
+                //                    '<dd id="PaymentType">' + data.result.OrderPaymentType + '</dd>' +
+                //                '</dl>' +
+                //            '</div>' +
+                //            '<div class="col-right" style="width: 30%; min-width: 300px; float: left">' +
+                //                '<dl class="dl-horizontal">' +
+                //                    '<dt>Receiver Name</dt>' +
+                //                    '<dd id="Receiver Name">' +
+                //                        data.result.ReceiverName +
+                //                    '</dd>' +
+                //                    '<dt>Receiver Phone:</dt>' +
+                //                    '<dd id="Note">' +
+                //                        data.result.ReceiverPhone + '</dd>' +
+                //                     '<dt>Amount to be Collected</dt>' +
+                //                    '<dd id="ToBeCollected">' +
+                //                        accounting.formatMoney(data.result.AmountToBeCollected, "VND", 0, ',', '.') +
+                //                    '</dd>' +
+                //                '</dl>' +
 
-//            '</div>' +
-//            '<div style="width: 6%; min-width: 80px; float: right">' +
+                //            '</div>' +
+                //            '<div style="width: 6%; min-width: 80px; float: right">' +
 
-//                    '<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
-//                        'Mark as Finished</button>' +
+                //                    '<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
+                //                        'Mark as Finished</button>' +
 
-//            '</div>' +
-//        '</div>';
+                //            '</div>' +
+                //        '</div>';
 
                 var resulttable = '<div class="widget-box">' +
                     '<div class="span4 offset1">' +
@@ -265,8 +277,8 @@
                 '<h5>' +
                 'Receiver Phone : ' +
                         data.result.ReceiverPhone + '</h5>' +
-                '</div>'+
-                '<div class="widget-title">'+
+                '</div>' +
+                '<div class="widget-title">' +
                 '<h5>' +
                 'Amount : ' +
                         accounting.formatMoney(data.result.AmountToBeCollected, "", 0, ',', '.') +
@@ -274,8 +286,8 @@
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '</div>'+
-                '<div class="span2" style="margin-top:20px;">'+
+                '</div>' +
+                '<div class="span2" style="margin-top:20px;">' +
                 '<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
                         'Customer Received</button>' +
                 '</div>';
