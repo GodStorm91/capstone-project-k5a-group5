@@ -26,9 +26,6 @@
                 StartDate
             </th>
             <th>
-                Status
-            </th>
-            <th>
                 Note
             </th>
             <th>
@@ -58,7 +55,7 @@
                 <td>
                     @item.StartDate
                 </td>
-                <td>
+                @*                <td>
                     @if (item.Status > 1)
                     {
                         <span class="label label-success">Assigned</span>
@@ -70,20 +67,17 @@
                             <img src="/img/icons/arrow_right2.png" />
                         </a>
                     }
-                </td>
+                </td>*@
                 <td>
                     @item.Note
                 </td>
-                <td class="action-column">
+                @*                <td class="action-column">
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
-                        <img src="/img/icons/notepad.png" alt="View" title="View"></a> @*<a class="btn action" href="#" onclick="showUpdateStatusModal(@item.CollectionPlanId,@item.CollectionPlanStatus)">
-                            <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status"></a>*@
-                    @*@if (item.Status != HDMS.Models.Statuses.CollectionPlanStatus.Finished)
-                    {
-                        <a class="btn action delete" href="#" onclick="cancelPlan(@item.CollectionPlanId);">
-                            <img src="/img/icons2/cross.png" alt="Remove/Cancel" title="Remove/Cancel" width="18px"/>
-                        </a>
-                    }*@
+                        <img src="/img/icons/notepad.png" alt="View" title="View"></a>
+                </td>*@
+                <td>
+                    <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.PlanId)">
+                        <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a>
                 </td>
             </tr>
         }
