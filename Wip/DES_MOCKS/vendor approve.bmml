@@ -137,9 +137,9 @@
         <text>tab%3A%20%22New%22</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::DataGrid" x="194" y="928" w="614" h="93" measuredW="571" measuredH="83" zOrder="29" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::DataGrid" x="194" y="928" w="614" h="93" measuredW="589" measuredH="83" zOrder="29" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>RequestID%2C%20OrderNo%2C%20Description%2C%20Price%2C%20Created%20Date%2C%20Priced%20Date%2C%20Action%0A111%2C12%2C%20aaaaa%2C20000%2C%2012/03/2013%2C12/03/2013%2CView%20Detail%20%20%20%20%20%20%20%0A111%2C12%2C%20aaaaa%2C%2012000%2C%2012/03/2013%2C12/03/2013%2C%20View%20Detail%20%20%20%20%20%20%20</text>
+        <text>RequestID%2C%20OrderNo%2C%20Description%2C%20Price%2C%20Created%20Date%2C%20Approved%20Date%2C%20Action%0A111%2C12%2C%20aaaaa%2C20000%2C%2012/03/2013%2C12/03/2013%2CView%20Detail%20%20%20%20%20%20%20%0A111%2C12%2C%20aaaaa%2C%2012000%2C%2012/03/2013%2C12/03/2013%2C%20View%20Detail%20%20%20%20%20%20%20</text>
       </controlProperties>
     </control>
     <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="687" y="952" w="92" h="27" measuredW="88" measuredH="27" zOrder="30" locked="false" isInGroup="-1">
