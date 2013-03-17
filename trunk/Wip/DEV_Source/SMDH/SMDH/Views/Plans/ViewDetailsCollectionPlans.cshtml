@@ -26,12 +26,6 @@
 <script src="/js/accounting.js" type="text/javascript"></script>
 @*<script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>*@
 <script src="/js/jquery.numeric.js" type="text/javascript"></script>
-<style type="text/css">
-    #map
-    {
-        max-width: none;
-    }
-</style>
 @*<div class="row-fluid">
     <div class="span10">
         <div class="checkButtonStatus">
@@ -119,7 +113,24 @@
     </div>
 </div>*@
 <script type="text/javascript">
+    var selectedRequestIds = new Array();
+    var lineLayer, markerslayer;
+    var numRequests;
+    var numPlans;
+    var dateScore = 0.5;
+    var deliveryTypeScore = 0.5;
+    var segments = JSON.parse(localStorage.getItem('segments'));
+    alert("segments " + segments.length);
+    var waypoints = JSON.parse(localStorage.getItem('waypoints'));
+    alert("waypoints " + waypoints.length);
+    var requestsInPlans = JSON.parse(localStorage.getItem('requests'));
     var map, vectors, epsg900913 = new OpenLayers.Projection('EPSG:900913'), epsg4326 = new OpenLayers.Projection('EPSG:4326');
+    var row = 0;
+    $('td').click(function () {
+        var col = $(this).parent().children().index($(this));
+        row = $(this).parent().parent().children().index($(this).parent());
+        alert('Row: ' + row + ', Column: ' + col);
+    });
     edit = function (modelId) {
         $.ajax({
             url: '/Plans/Details/' + modelId,
@@ -150,6 +161,7 @@
 });
                 map.addLayer(gmap);
                 map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+                show(row);
             }
         });
     };
@@ -157,6 +169,168 @@
     var PlanId = 0;
     function assign() {
         PlanId = arguments[0];
+    }
+
+    function show(id) {
+        $('.plan').each(function () {
+            $(this).css('background-color', '#F5F5F5');
+        })
+        $('#plan-' + id).css('background-color', '#dff0d8');
+        alert(id);
+        var j = 0;
+        var waypointsArr = new Array();
+        waypointsArr.length = 0;
+        var lats = new Array();
+        var lons = new Array();
+        alert(waypoints[id].length);
+        $.each(waypoints[id], function (index, waypoint) {
+            lats[j] = waypoint.Latitude;
+            lons[j] = waypoint.Longitude;
+            alert(waypoint.Latitude + " " + waypoint.Longitude);
+            waypointsArr.push({
+                location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
+            });
+            j++;
+        });
+        wpt = new Array();
+        wpt[0] = waypointsArr;
+
+        j = 0;
+        var segmentsArr = new Array();
+        segmentsArr.length = 0;
+        var lats = new Array();
+        var lons = new Array();
+        $.each(segments[id], function (index, segment) {
+            lats[j] = segment.Latitude;
+            lons[j] = segment.Longitude;
+            segmentsArr.push({
+                location: new OpenLayers.Geometry.Point(lons[j], lats[j])
+            });
+
+            j++;
+        });
+        geopt = new Array();
+        geopt[0] = segmentsArr;
+        //        showRequestsInPlan(id);
+        alert("enter add Marker");
+        addMarker();
+        alert("enter add direction");
+        addDirection();
+        alert("center is :" + wpt[0][0].location);
+        map.setCenter(wpt[0][0].location, 13);
+        $.unblockUI();
+
+    }
+
+    //    function showRequestsInPlan(id) {
+    //        var resultString = "<ul class='site-stats'>";
+    //        $.each(requestsInPlans[id], function (index, request) {
+    //            var item = "<li>" +
+    //                            "<div>" +
+    //                                "<div>" +
+    //                                    "<span " +
+    //                                        "class='icon-user'></span><span class='label label-info'>" + request.Customer + "</span><span " +
+    //                                            "class='icon-calendar'></span><span class='label label-info'>" + request.RequestedDate + "</span>" +
+    //                                "</div>" +
+    //                                "<div>" +
+    //                                    "<span class='icon-globe'></span><span>" + request.CollectionAddress + "</span>" +
+    //                                "</div>" +
+    //                            "</div>" +
+    //                            "<div>" +
+    //                                "--------------------</div>" +
+    //                        "</li>";
+    //            resultString += item;
+    //        });
+    //        resultString += "</ul>";
+
+    //        $('#requestDetailsZone').html(resultString);
+    //    }
+
+    function addMarker() {
+        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+});
+        //clear if exists
+        if (typeof markerslayer != 'undefined') {
+            markerslayer.clearMarkers();
+
+        }
+        markers = new OpenLayers.Layer.Markers("Markers");
+        markers.id = "Markers";
+        map.addLayer(markers);
+        for (var i = 0; i < wpt.length; i++) {
+            for (var j = 0; j < wpt[i].length; j++) {
+                var position = new Array();
+                var icon = new Array();
+                position[j] = wpt[i][j].location;
+                var size = new OpenLayers.Size(21, 25);
+                var image = "/img/markers/Numbers/red0"+ j +".png";
+                if (j == 0) {
+                    image = "/img/markers/home.png";
+                }
+                var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+                icon[j] = new OpenLayers.Icon(image, size, offset);
+                markerslayer = map.getLayer('Markers');
+                markerslayer.addMarker(new OpenLayers.Marker(position[j], icon[j]));
+
+            }
+        }
+    }
+    function addDirection() {
+        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+});
+        if (lineLayer != undefined) {
+            lineLayer.removeAllFeatures();
+        }
+        lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
+        for (var i = 0; i < geopt.length; i++) {
+            var style = {
+                strokeColor: '#0088ff',
+                strokeOpacity: 0.3,
+                strokeWidth: 5
+            };
+            var lineString = new Array();
+            var line = new Array();
+            var endLats = 0;
+            var endLongs = 0;
+            for (var j = 0; j < geopt[i].length - 1; j++) {
+
+                var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
+                var end = geopt[i][j + 1].location;
+
+                endLats = geopt[i][j + 1].location.x;
+                endLongs = geopt[i][j + 1].location.y;
+
+                //alert(endLats);
+
+                var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
+                lineString.push(line);
+                //alert(start);
+
+            }
+            for (var k = 0; k < lineString.length; k++) {
+                lineLayer.addFeatures([new OpenLayers.Feature.Vector(lineString[k], null, style)]);
+                //alert(start + '  ' + end);
+                map.addLayers([gmap, lineLayer]);
+            };
+
+        }
+    }
+
+    function randomColor() {
+        var hexno = new String;
+        arr = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+        var n1 = Math.round(Math.random() * 15);
+        var n2 = Math.round(Math.random() * 15);
+        var n3 = Math.round(Math.random() * 15);
+        var n4 = Math.round(Math.random() * 15);
+        var n5 = Math.round(Math.random() * 15);
+        var n6 = Math.round(Math.random() * 15);
+        hexno = arr[n1] + "" + arr[n2] + "" + arr[n3] + "" + arr[n4] + "" + arr[n5] + "" + arr[n6];
+        return hexno;
     }
 
     $('#btnAssign').click(function () {
