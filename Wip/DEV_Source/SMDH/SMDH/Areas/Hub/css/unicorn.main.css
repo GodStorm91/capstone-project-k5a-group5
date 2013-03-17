@@ -533,6 +533,23 @@ a:hover {
 	background-image: url('../img/icons/16/web.png');
 }
 
+/*Vuongnd*/
+.quick-actions i.icon-draft {
+	background-image: url('/img/iconstatus/pencil.png');
+}
+.quick-actions i.icon-rejected {
+	background-image: url('/img/iconstatus/notok.png');
+}
+.quick-actions i.icon-submitted {
+	background-image: url('/img/iconstatus/button_ok.png');
+}
+.quick-actions i.icon-delivering {
+	background-image: url('/img/iconstatus/finish.png');
+}
+.quick-actions i.icon-tobereturned {
+	background-image: url('/img/iconstatus/arrow_undo.png');
+}
+
 .stat-boxes li:hover, .quick-actions li:hover, .quick-actions-horizontal li:hover  {
     background-color: #fcfcfc;
 	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FCFCFC), to(#F1F1F1));
