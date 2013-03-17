@@ -548,6 +548,83 @@
     //        $('.myToolTip').tooltip();
     //    };
 
+    //    function addMarker() {
+    //        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+    //				{
+    //				numZoomLevels: 20
+    //});
+    //        //clear if exists
+    //        if (typeof markerslayer != 'undefined') {
+    //            markerslayer.clearMarkers();
+
+    //        }
+    //        markers = new OpenLayers.Layer.Markers("Markers");
+    //        markers.id = "Markers";
+    //        map.addLayer(markers);
+    //        for (var i = 0; i < wpt.length; i++) {
+    //            var color = randomColor();
+
+    //            for (var j = 0; j < wpt[i].length; j++) {
+    //                var position = new Array();
+    //                var icon = new Array();
+    //                position[j] = wpt[i][j].location;
+    //                var size = new OpenLayers.Size(21, 25);
+    //                var image = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|" + color + "|000000";
+    //                if (j == 0) {
+    //                    image = "http://www.lupusstudios.com/images/iconHome.png";
+    //                }
+    //                var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    //                icon[j] = new OpenLayers.Icon(image, size, offset);
+    //                markerslayer = map.getLayer('Markers');
+    //                markerslayer.addMarker(new OpenLayers.Marker(position[j], icon[j]));
+
+    //            }
+    //        }
+    //    }
+    //    function addDirection() {
+    //        var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+    //				{
+    //				numZoomLevels: 20
+    //});
+    //        if (lineLayer != undefined) {
+    //            lineLayer.removeAllFeatures();
+    //        }
+    //        lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
+    //        for (var i = 0; i < geopt.length; i++) {
+    //            var color = randomColor();
+    //            var style = {
+    //                strokeColor: '#' + color,
+    //                strokeOpacity: 0.5,
+    //                strokeWidth: 5
+    //            };
+    //            var lineString = new Array();
+    //            var line = new Array();
+    //            var endLats = 0;
+    //            var endLongs = 0;
+    //            for (var j = 0; j < geopt[i].length - 1; j++) {
+
+    //                var start = j == 0 ? geopt[i][j].location : new OpenLayers.Geometry.Point(endLats, endLongs);
+    //                var end = geopt[i][j + 1].location;
+
+    //                endLats = geopt[i][j + 1].location.x;
+    //                endLongs = geopt[i][j + 1].location.y;
+
+    //                //alert(endLats);
+
+    //                var line = new OpenLayers.Geometry.LineString([start, end]).transform(epsg4326, epsg900913);
+    //                lineString.push(line);
+    //                //alert(start);
+
+    //            }
+    //            for (var k = 0; k < lineString.length; k++) {
+    //                lineLayer.addFeatures([new OpenLayers.Feature.Vector(lineString[k], null, style)]);
+    //                //alert(start + '  ' + end);
+    //                map.addLayers([gmap, lineLayer]);
+    //            };
+
+    //        }
+    //    
+
     function addMarker() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
@@ -562,16 +639,14 @@
         markers.id = "Markers";
         map.addLayer(markers);
         for (var i = 0; i < wpt.length; i++) {
-            var color = randomColor();
-
             for (var j = 0; j < wpt[i].length; j++) {
                 var position = new Array();
                 var icon = new Array();
                 position[j] = wpt[i][j].location;
                 var size = new OpenLayers.Size(21, 25);
-                var image = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + j + "|" + color + "|000000";
+                var image = "/img/markers/Numbers/red0" + j + ".png";
                 if (j == 0) {
-                    image = "http://www.lupusstudios.com/images/iconHome.png";
+                    image = "/img/markers/home.png";
                 }
                 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
                 icon[j] = new OpenLayers.Icon(image, size, offset);
@@ -591,10 +666,9 @@
         }
         lineLayer = new OpenLayers.Layer.Vector("Lines Layer");
         for (var i = 0; i < geopt.length; i++) {
-            var color = randomColor();
             var style = {
-                strokeColor: '#' + color,
-                strokeOpacity: 0.5,
+                strokeColor: '#0088ff',
+                strokeOpacity: 0.3,
                 strokeWidth: 5
             };
             var lineString = new Array();
