@@ -624,6 +624,27 @@ namespace SMDH.Controllers
                         ViewBag.PossibleDeliveryStaffs = listDelivery;
                         //ViewBag.AssignTo =
                         //    AccountHelper.GetName(assignedStaff.UserId);
+                        //Get Request Details in here                       
+
+                    }
+                    if (plans.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                    {
+                        var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
+                        int[] requestIds = new int[cargoesInPlan.Count()];
+                        int i = 0;
+                        foreach (var cargo in cargoesInPlan)
+                        {
+                            requestIds[i] = cargo.RequestId.Value;
+                            i++;
+                        }
+
+                        var requests = context.Requests.Where(r => requestIds.Contains(r.RequestId)).ToList();
+                        List<RequestViewModel> resultList = new List<RequestViewModel>();
+                        for (i = 0; i < requests.Count; i++)
+                        {
+                            resultList.Add(new RequestViewModel(requests.ElementAt(i)));
+                        }
+                        ViewBag.RequestDetails = resultList;
                     }
                     return View(plans);
                 }
