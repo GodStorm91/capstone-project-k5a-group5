@@ -1,0 +1,80 @@
+@model SMDH.Models.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Order</legend>
+
+    <div class="display-label">DeliveryPlanId</div>
+    <div class="display-field">@Model.DeliveryPlanId</div>
+
+    <div class="display-label">DueDate</div>
+    <div class="display-field">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.DueDate)</div>
+
+    <div class="display-label">CollectedDate</div>
+    <div class="display-field">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CollectedDate)</div>
+
+    <div class="display-label">DeliveryDate</div>
+    <div class="display-field">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.DeliveryDate)</div>
+
+    <div class="display-label">ReceiverName</div>
+    <div class="display-field">@Model.ReceiverName</div>
+
+    <div class="display-label">ReceiverPhone</div>
+    <div class="display-field">@Model.ReceiverPhone</div>
+
+    <div class="display-label">ReceiverAddress</div>
+    <div class="display-field">@Model.ReceiverAddress</div>
+
+    <div class="display-label">ReceiverAddressWardId</div>
+    <div class="display-field">@Model.ReceiverAddressWardId</div>
+
+    <div class="display-label">ReceiverAddressDistrictId</div>
+    <div class="display-field">@Model.ReceiverAddressDistrictId</div>
+
+    <div class="display-label">Total</div>
+    @*<div class="display-field">@Model.Total</div>*@
+
+    <div class="display-label">AmountToBeCollectedFromReceiver</div>
+    <div class="display-field">@Model.AmountToBeCollectedFromReceiver</div>
+
+    <div class="display-label">OrderStatus</div>
+    <div class="display-field">@Model.OrderStatus</div>
+
+    <div class="display-label">Note</div>
+    <div class="display-field">@Model.Note</div>
+
+    <div class="display-label">Request</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Request).ToString()</div>
+
+    <div class="display-label">DeliveryOption</div>
+    <div class="display-field">@(Model.DeliveryOption == null ? "None" : Model.DeliveryOption.Name)</div>
+
+    <div class="display-label">DeliveryPlan</div>
+    @*<div class="display-field">@Html.DisplayTextFor(_ => Model.DeliveryPlan).ToString()</div>*@
+
+    <div class="display-label">District</div>
+    <div class="display-field">@(Model.District == null ? "None" : Model.District.Name)</div>
+
+    <div class="display-label">Items</div>
+    <div class="display-field">@(Model.Items == null ? "None" : Model.Items.Count.ToString())</div>
+
+    <div class="display-label">Ward</div>
+    <div class="display-field">@(Model.Ward == null ? "None" : Model.Ward.Name)</div>
+
+    <div class="display-label">OrderPaymentType</div>
+    <div class="display-field">@(Model.OrderPaymentType == null ? "None" : Model.OrderPaymentType.Name)</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+
