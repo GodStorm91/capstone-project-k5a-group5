@@ -38,7 +38,7 @@ namespace SMDH.Models.ViewModels
         {
             OrderId = order.OrderId;
             ItemNo = order.Items.Count;
-            RequestId = order.RequestId;
+            RequestId = order.RequestId.Value;
             DeliveryOption = order.DeliveryOption.Name;
             OrderPaymentType = order.OrderPaymentType.Name;
             DueDate = new DateViewModel(order.DueDate);

@@ -16,6 +16,7 @@ namespace SMDH.Models.ViewModels
         public double Longitude { get; set; }
         public string HubCategoryName { get; set; }
         public int HubCategoryId { get; set; }
+        public string Address { get; set; }
 
         private EFHubsRepository repo = new EFHubsRepository();
 
@@ -27,6 +28,7 @@ namespace SMDH.Models.ViewModels
             Longitude = (double)hub.Longitude;
             Latitude = (double)hub.Latitude;
             HubCategoryId = (int)hub.HubCategoryId;
+            Address = hub.Address;
         }
     }
 

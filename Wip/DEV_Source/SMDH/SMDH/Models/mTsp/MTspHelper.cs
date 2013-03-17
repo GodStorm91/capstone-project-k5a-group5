@@ -264,6 +264,7 @@ namespace SMDH.Models.mTsp
 
         public static  List<PointCollection> DoKMeans(PointCollection points, int clusterCount)
         {
+            bool flag = true;
             //divide points into equal clusters
             List<PointCollection> allClusters = new List<PointCollection>();
             List<List<Point>> allGroups = SplitList<Point>(points, clusterCount);
@@ -272,6 +273,20 @@ namespace SMDH.Models.mTsp
                 PointCollection cluster = new PointCollection();
                 cluster.AddRange(group);
                 allClusters.Add(cluster);
+            }
+
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                if (points[i].X != points[i + 1].X || points[i].Y != points[i + 1].Y)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag)
+            {
+                return (allClusters);
             }
 
             //start k-means clustering

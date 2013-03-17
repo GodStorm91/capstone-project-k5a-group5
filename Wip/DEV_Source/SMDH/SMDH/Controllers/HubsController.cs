@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using SMDH.Models.Utilities;
 using SMDH.Models;
+using SMDH.Models.Concrete;
+using SMDH.Models.ViewModels;
 
 namespace SMDH.Controllers
 {
@@ -202,6 +204,13 @@ namespace SMDH.Controllers
         {
             var hub = context.Hubs.Single(o => o.HubId == id);
             return Json(new { latitude= hub.Latitude , longitude = hub.Longitude }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Find(int id)
+        {
+            EFHubsRepository hubRepo = new EFHubsRepository();
+            HubViewModel result = hubRepo.Find(id);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

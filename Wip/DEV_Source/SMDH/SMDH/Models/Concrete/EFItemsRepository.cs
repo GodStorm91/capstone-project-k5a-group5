@@ -8,7 +8,7 @@ namespace SMDH.Models.Concrete
 {
     public class EFItemsRepository : IItemRepository
     {
-        private EFDbContext context = new EFDbContext();        
+        private SMDHDataContext context = new SMDHDataContext();        
 
         public IQueryable<Item> Items
         {
@@ -44,8 +44,8 @@ namespace SMDH.Models.Concrete
             try
             {
                 
-                context.Items.Remove(item);
-                if (commit) context.SaveChanges();
+                //context.Items.Remove(item);
+                //if (commit) context.SaveChanges();
                 return true;
 
             }
@@ -55,5 +55,42 @@ namespace SMDH.Models.Concrete
                 throw;
             }
         }
+
+        public bool Add(Item item)
+        {
+            try
+            {
+                context.Items.InsertOnSubmit(item);
+                context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+            
+        }
+
+        public bool Add(List<Item> itemList)
+        {
+            try
+            {
+                for (int i = 0; i < itemList.Count; i++)
+                {
+                    context.Items.InsertOnSubmit(itemList[i]);
+                }
+
+                context.SubmitChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
     }
 }
