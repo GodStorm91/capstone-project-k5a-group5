@@ -71,7 +71,7 @@
                             string addressId = "";                        
                         <li id="group-@i" style="background-color:#d9edf7;">
                             <div id="add-@i" style="float: right;">
-                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-ok"></i></a></div>
+                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i></a></div>
                             <div>
                                 @foreach (var request in listRequestViewModel)
                                 {
@@ -200,7 +200,7 @@
                     var collectionAddress = "";
                     resultItemString += '<div>';
                     resultItemString += '<li id="group-' + k + '" style="background-color:#d9edf7;">' +
-                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-ok"></i></a></div>' + '<div>';
+                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
@@ -259,7 +259,7 @@
 
     function removefromplan() {
         $("#requestsZone > ul").prepend($("#group-" + arguments[0]));
-        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-ok"></i></a>');
+        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-arrow-right"></i></a>');
         $("#group-" + arguments[0]).removeClass('alert-success');
         $("#requestsZone span").removeClass('label-success');
         $("#requestsZone span.lbinfo").addClass('label-info');
