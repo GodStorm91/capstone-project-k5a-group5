@@ -7,6 +7,7 @@ using SMDH.Models.Abstract;
 using SMDH.Models;
 using SMDH.Models.ViewModels;
 using SMDH.Models.Statuses;
+using SMDH.Models.Concrete;
 
 namespace SMDH.Controllers
 {
@@ -333,8 +334,58 @@ namespace SMDH.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList,string pricesList, string receiverName, string receiverAddress, 
+            int receiverAddressWardId , int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType, 
+            int toBeCollectedAmount, int hubId = -1 )
+        {
+            EFItemsRepository itemRepo = new EFItemsRepository();
+            Order order = new Order();
+            int[] itemsListArr = parseStringToList(itemsList);
+            int[] quantitiesListArr = parseStringToList(quantitiesList);
+            int[] priceListArr = parseStringToList(pricesList);
+            order.AmountToBeCollectedFromReceiver = toBeCollectedAmount;
+            order.DeliveryTypeId = deliveryType;
+            order.ReceiverAddress = receiverAddress;
+            order.ReceiverAddressDistrictId = receiverAddressDistrictId;
+            order.ReceiverAddressWardId = receiverAddressWardId;
+            order.ReceiverMail = receiverEmail;
+            order.ReceiverPhone = receiverPhone;            
+            order.Latitude = latitude;
+            order.Longitude = longitude;
+            order.DeliveryOptionId = 1;
+            order.OrderPaymentTypeId = 1;
+            order.OrderStatus = (int)OrderStatus.New;
 
+            if (_repository.ConfirmAdd(order))
+            {
+                for (int i = 0; i < itemsListArr.Length; i++)
+                {
+                    Item item = new Item();
+                    item.OrderId = order.OrderId;
+                    item.Price = priceListArr[i];
+                    item.ProductId = itemsListArr[i];
+                    if (!itemRepo.Add(item))
+                    {
+                        return View("Error");
+                    }
+                }
+            }
 
+            return View();
+        }
+
+        private int[] parseStringToList(string input)
+        {
+            string[] splitArr = input.Split(',');
+            int[] resultArray = new int[splitArr.Length];
+            for (int i = 0; i < splitArr.Length; i++)
+            {
+                resultArray[i] = int.Parse(splitArr[i]);
+            }
+
+            return resultArray;
+        }
         
     }
 }

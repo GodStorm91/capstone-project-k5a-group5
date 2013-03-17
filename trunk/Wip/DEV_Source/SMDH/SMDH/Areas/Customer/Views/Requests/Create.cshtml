@@ -1,0 +1,111 @@
+﻿@model SMDH.Models.Request
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create new Request</h3>
+</div>
+<div class="modal-body" style="height: 400px;">
+    @using (Html.BeginForm("ConfirmCreate", "Requests", FormMethod.Post, new { id = "create-form", Enctype = "multipart/form-data", Class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="control-group">
+            <label class="control-label">
+                Collection Address <span style="color:Red">*</span>
+            </label>
+            <div class="controls">
+                @*@Html.DropDownListFor(model => model.CollectionAddressId, ViewBag.PossibleCollectionAddresses as SelectList, "-- Choose a Collection Address --", new { id = "ddlCollectionAddress", Class = "chzn-select" })*@
+                @Html.DropDownListFor(model => model.CollectionAddressId, ((IEnumerable<SMDH.Models.CustomerAddress>)ViewBag.PossibleCollectionAddresses).Select(option => new SelectListItem
+       {
+           Text = Html.DisplayTextFor(_ => option.FullAddress).ToString(),
+           Value = option.CustomerAddressId.ToString()
+       }), new { id = "ddlCollectionAddress", Class = "chzn-select" })
+                @Html.ValidationMessageFor(model => model.CollectionAddressId)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Note
+            </label>
+            <div class="controls">
+                @Html.TextAreaFor(model => model.Note)
+                @Html.ValidationMessageFor(model => model.Note)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Excel file
+            </label>
+            <div class="controls">
+                <input type="file" id="excelFile" name="excelFile" />  
+            </div>
+        </div>
+        
+    }
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script>
+    //    $("#create-form").submit(function () {
+    //        if ($(this).valid()) {
+    //            $.ajax({
+    //                type: 'POST',
+    //                url: $(this).attr("action"),
+    //                data: $(this).serialize(),
+    //                success: function (result) {
+    //                    if (result.success) {
+    //                        window.location = '/Request/AddOrders/' + result.requestId;
+    //                    }
+    //                },
+    //                async: false
+    //            });
+    //        }
+    //        return false;
+    //    });
+
+    $('#btnCreate').click(function () {
+        $('#create-form').submit();
+    });
+
+    $("#ddlCustomer").change(function () {
+        var id = $('#ddlCustomer option:selected').val();
+        if (id == '') id = -1;
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerAddresses/GetAddressesOfCustomer/' + id,
+            success: function (data) {
+                var items = '';
+                $.each(data, function (i, address) {
+                    items += "<option value='" + address.CustomerAddressId + "'>" + address.FullAddress + "</option>";
+                });
+                $('#ddlCollectionAddress').html(items);
+                $('#ddlCollectionAddress').removeAttr('data-val-number');
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('#ddlCollectionAddress').trigger("liszt:updated");
+            },
+            async: false
+        });
+    });
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $(".datepicker").datepicker();
+</script>
+<script>
+    $('#uploadExcelForm').submit(function () {
+        if (document.getElementById('excelFile').value.match(/xls$/) || document.getElementById('excelFile').value.match(/xlsx$/)) {
+            return true;
+        } else {
+            alert('Must be a excel file !!!!!');
+            return false;
+        }
+    });
+</script>

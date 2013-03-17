@@ -30,5 +30,12 @@ namespace SMDH.Models.Concrete
             return new HubViewModel(minHub);
 
         }
+
+        public HubViewModel Find(int id)
+        {
+            Hub hub = context.Hubs.Where(o => o.HubId == id).Single();
+            return new HubViewModel(hub);
+
+        }
     }
 }

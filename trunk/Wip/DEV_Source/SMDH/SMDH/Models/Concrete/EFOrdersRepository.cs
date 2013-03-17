@@ -181,7 +181,7 @@ namespace SMDH.Models.Concrete
             get { return context.Requests;  }
         }
 
-        public Request FindRequestById(int requestId)
+        public Request FindRequestById(int? requestId)
         {
             return context.Requests.Single(o => o.RequestId == requestId);
         }
@@ -395,6 +395,28 @@ namespace SMDH.Models.Concrete
         public List<Order> GetOrdersByStatuses(List<int> statuses)
         {
             return context.Orders.Where(o => statuses.Contains(o.OrderStatus)).ToList();
+        }
+
+        public bool ConfirmSave(Order order)
+        {
+            return false;
+        }
+
+        public bool ConfirmAdd(Order order)
+        {
+            try
+            {
+                context.Orders.InsertOnSubmit(order);
+                context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+            
+            
         }
     }
 

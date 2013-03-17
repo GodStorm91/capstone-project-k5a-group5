@@ -19,7 +19,7 @@ namespace SMDH.Models.Abstract
 
         bool AddToRequest(Request request, Order order);
         Order Find(int orderId);
-        Request FindRequestById(int requestId);
+        Request FindRequestById(int? requestId);
         List<ItemViewModel> GetItemsInOrder(int orderId);
         Order ConfirmEdit(Order order);
          bool Cancel(Order order);
@@ -41,6 +41,7 @@ namespace SMDH.Models.Abstract
          bool BackToDraft(Order order);
          bool BackToDraft(Order order, bool commit);
          bool DisApprove(Order order);
+         bool ConfirmAdd(Order order);
          List<Order> GetOrdersByStatuses(List<int> statuses);
 
         //Plan
