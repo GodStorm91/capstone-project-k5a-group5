@@ -1,0 +1,66 @@
+﻿@model SMDH.Models.Order
+
+@{
+    Layout = null;
+}
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create new Order</h3>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("ConfirmCreate", "Orders", FormMethod.Post, new { id = "order-create-form", Class = "form-horizontal" }))
+        {
+            @Html.HiddenFor(model => model.RequestId, new { Value = ViewBag.RequestId })
+            @Html.Partial("_CreateOrEdit", Model)
+        }
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"  id="btnOrderCreate">
+            Create</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Cancel</button>
+    </div>
+
+<script>
+    $(".chzn-select").chosen();    
+
+    setupOrderCreateForm();
+
+    $('#btnOrderCreate').click(function () {
+        $('#order-create-form').submit();
+    });
+
+
+    $("#ddlCityProvince").change(function () {
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        debugger
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            var items = '<option value>-- Choose District --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').removeAttr('data-val-number');
+            refreshValidation();
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+    });
+
+    $("#ddlDistrict").change(function () {
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            var items = '<option value>-- Choose Ward --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').removeAttr('data-val-number');
+            refreshValidation();
+            $('#ddlWard').trigger("liszt:updated");
+        });
+    });   
+</script>

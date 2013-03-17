@@ -319,7 +319,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult AddOrders(int id)
         {
             //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            Request request = context.Requests.Single(o=> o.CustomerId == id);
+            Request request = context.Requests.Single(o=> o.RequestId == id);
             //if (request.CustomerId == userInfo.CustomerId)
             if (request.CustomerId == 1)
             {
