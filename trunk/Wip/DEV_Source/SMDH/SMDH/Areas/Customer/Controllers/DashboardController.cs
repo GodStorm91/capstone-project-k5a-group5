@@ -21,7 +21,6 @@ namespace SMDH.Areas.Customer.Controllers
             var requests = context.Requests.Where(r => r.CustomerId == 1).ToList();
             var orders = context.Orders.Where(o => o.Request.CustomerId == 1).ToList();
 
-
             var numberOfRequestsList = new List<int>();
             numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Draft).Count());
             numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.New
