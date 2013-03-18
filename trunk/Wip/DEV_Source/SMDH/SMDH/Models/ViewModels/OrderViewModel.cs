@@ -54,7 +54,7 @@ namespace SMDH.Models.ViewModels
             AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
             Amount = order.AmountToBeCollectedFromReceiver.ToString("N3");
             Note = order.Note;
-            DueDateString = String.Format("{0:dd/MM/yyyy hh:mm tt}", DueDate);
+            DueDateString = String.Format("{0:dd-MM-yyyy hh:mm tt}", DueDate);
             //AddressFromWard = AddressHelper.GetAddressFromWard(order);
         }
     }
