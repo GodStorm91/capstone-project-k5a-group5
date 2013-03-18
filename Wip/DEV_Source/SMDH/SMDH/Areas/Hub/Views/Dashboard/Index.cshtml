@@ -320,8 +320,12 @@
             "sServerMethod": "POST",
             "bRetrieve": true
         });
-
-        $('#btnChangeAll').html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnChangeAllinHub"><span>Change Status</span></a>');
+        var rowCount = $('#sendingtohub tr').length;
+        if (rowCount > 2) {
+            $('#btnChangeAll').html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnChangeAllinHub"><span>Change Status</span></a>');
+        } else {
+            $('#btnChangeAll').html('');
+        }
     })
 
 

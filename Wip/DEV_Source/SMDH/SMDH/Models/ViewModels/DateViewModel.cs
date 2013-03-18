@@ -14,7 +14,7 @@ namespace SMDH.Models.ViewModels
         {
             if (datetime != null)
             {
-                Date = string.Format("{0:dd/MM/yyyy}", datetime);
+                Date = string.Format("{0:dd-MM-yyyy}", datetime);
                 Time = string.Format("{0:t}", datetime);
             }
             else
