@@ -71,7 +71,9 @@
                             string addressId = "";                        
                         <li id="group-@i" style="background-color:#d9edf7;">
                             <div id="add-@i" style="float: right;">
-                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i></a></div>
+                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i>
+                                </a>
+                            </div>
                             <div>
                                 @foreach (var request in listRequestViewModel)
                                 {
@@ -106,6 +108,7 @@
                 <span class="icon"><i class="icon-ok"></i></span>
                 <h5>
                     Selected Request(s)</h5>
+                <span id="totalplans" class="label label-info">Total : 0 request(s)</span>
             </div>
             <div class="widget-content" id="selectedRequest">
                 <ul class="site-stats" style="height: 500px; overflow-y: scroll;" id="selectedRequestul">
@@ -144,7 +147,7 @@
 
     };
 
-    $('#txtMaximumRequest').bind('textchange',function () {
+    $('#txtMaximumRequest').bind('textchange', function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
             triggerGroup();
@@ -177,10 +180,10 @@
             maxRequest = $('#txtMaximumRequest').val();
 
             //user left the textbox blank
-//            if ($('#txtMaximumRequest').val().length == 0) {
-//                bootbox.alert("Must maximum value");
-//                return;
-//            }
+            //            if ($('#txtMaximumRequest').val().length == 0) {
+            //                bootbox.alert("Must maximum value");
+            //                return;
+            //            }
             //user enter not a number value            
 
         } else {
@@ -250,8 +253,10 @@
     function addtoplan() {
         //alert(arguments[0]);
         $("#selectedRequest > ul").prepend($("#group-" + arguments[0]));
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('Total : ' + numofplans + ' request(s)')
         $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-arrow-left"></i></a>');
-//        $("#group-" + arguments[0]).addClass('alert-success');
+        //        $("#group-" + arguments[0]).addClass('alert-success');
         $("#selectedRequest span").removeClass('label-info');
         $("#selectedRequest span.lbinfo").addClass('label-success');
         $("#group-" + arguments[0]).css('background-color', '#dff0d8');
@@ -259,6 +264,8 @@
 
     function removefromplan() {
         $("#requestsZone > ul").prepend($("#group-" + arguments[0]));
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('<span>Total : ' + numofplans + ' request(s)</span>')
         $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-arrow-right"></i></a>');
         $("#group-" + arguments[0]).removeClass('alert-success');
         $("#requestsZone span").removeClass('label-success');
