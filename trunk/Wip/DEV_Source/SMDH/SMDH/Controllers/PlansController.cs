@@ -592,7 +592,6 @@ namespace SMDH.Controllers
                 try
                 {
                     var deliveryStaffs = from d in context.DeliveryMens
-                                         where d.Status == 1
                                          select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status };
                     if (plans.Status == 1)
                     {
@@ -608,7 +607,7 @@ namespace SMDH.Controllers
                         var assignedStaff = (from d in context.DeliveryMens
                                              join dm in context.DeliveryMenInPlans on d.DeliveryMenId equals dm.DeliveryMenId
                                              join p in context.Plans on dm.PlanId equals p.PlanId
-                                             where d.Status > 1 && p.PlanId == id
+                                             where d.Status !=  (int)PlanStatus.New && p.PlanId == id
                                              select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
                         var listDelivery = new List<DeliveryMen>();
                         var assignDelivery = new List<DeliveryMen>();
