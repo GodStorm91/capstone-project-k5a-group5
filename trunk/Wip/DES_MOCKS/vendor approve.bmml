@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1400" measuredH="1385" mockupW="1267" mockupH="1383">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1400" measuredH="1385" mockupW="1331" mockupH="1383">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="139" y="4" w="811" h="443" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -311,6 +311,11 @@
     <control controlID="81" controlTypeID="com.balsamiq.mockups::Button" x="675" y="198" w="84" h="27" measuredW="77" measuredH="27" zOrder="62" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Reject%28x%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="82" controlTypeID="com.balsamiq.mockups::List" x="69" y="248" w="442" h="126" measuredW="100" measuredH="126" zOrder="63" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%3A%28Statuses%20%3D%20Draft%29%20cac%20Order%20duoc%20mua%20tren%20mang%20se%20co%20trang%20thai%20la%20Draft%20-%3E%20co%20the%20chuyen%20dc%20thanh%20approved%0AApproved%3A%20Cac%20order%20dc%20import%20hoac%20duoc%20tao%20new%20se%20co%20trang%20thai%20la%20approved%20%28status%20%3D%20new%20%29%0AExpired%3A%20cac%20Order%20bi%20expired%20ngay%20thang%20tai%20Hub%20co%20the%20duoc%20extend%20ngay%20hoac%20chuyen%20thanh%20Wait%20for%20Return%0AReturned%3A%20Cac%20order%20dang%20nam%20tai%20Tiktak%20chuan%20bi%20duoc%20giao%20hang%20ve%20cho%20Customer.%0ADelivered%20%3A%20Cac%20order%20da%20duoc%20nhan%20boi%20khach%20hang</text>
       </controlProperties>
     </control>
   </controls>
