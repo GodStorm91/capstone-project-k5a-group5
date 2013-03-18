@@ -206,15 +206,15 @@
                             <li id="request-@request.RequestId">
                                 <div>
                                     <div>
-                                        <span class="icon-user"></span><span class="label label-info">@request.Customer</span><span
-                                            class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
+                                        <div>
+                                            <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                        <div style="margin-top:3px;">
+                                            <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
                                     </div>
                                     <div>
                                         <span class="icon-globe"></span><small>@request.CollectionAddress</small>
                                     </div>
                                 </div>
-                                <div>
-                                    --------------------</div>
                             </li>
                         }
                     </ul>
@@ -373,16 +373,14 @@
             var item = "<li>" +
                             "<div>" +
                                 "<div>" +
-                                    "<span " +
-                                        "class='icon-user'></span><span class='label label-info'>" + request.Customer + "</span><span " +
-                                            "class='icon-calendar'></span><span class='label label-info'>" + request.RequestedDate + "</span>" +
+                                    "<div><span " +
+                                        "class='icon-user'></span><span class='label label-info'>" + request.Customer + "</span></div><div style='margin-top:3px;'><span " +
+                                            "class='icon-calendar'></span><span class='label label-info'>" + request.RequestedDate + "</span></div>" +
                                 "</div>" +
                                 "<div>" +
                                     "<span class='icon-globe'></span><span>" + request.CollectionAddress + "</span>" +
                                 "</div>" +
                             "</div>" +
-                            "<div>" +
-                                "--------------------</div>" +
                         "</li>";
             resultString += item;
         });

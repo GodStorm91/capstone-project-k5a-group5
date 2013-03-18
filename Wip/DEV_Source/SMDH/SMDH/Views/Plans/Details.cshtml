@@ -19,13 +19,13 @@
     <h3>
         Edit Plan</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="max-height: 560px;">
     <div class="plan-details">
-        <div id="plan-details-box" style="margin-bottom: 5px;">
+        <div id="plan-details-box" style="margin-bottom: 5px; margin-top: -25px;">
             <div style="clear: both;">
             </div>
             <div id="collection-plan-details">
-                <div class="col-left" style="width: 30%; min-width: 300px; float: left">
+                <div class="col-left" style="min-width: 320px; float: left">
                     <div class="widget-box">
                         <div class="widget-title">
                             <span class="icon"><i class="icon-th-list"></i></span>
@@ -48,10 +48,17 @@
                                 <dt>Created By:</dt>
                                 <dd id="CreatedBy">@Model.CreatedByUserId</dd>*@
                             </dl>
+                            <div style="width: 6%; min-width: 140px; float: right;margin-top: -30px;">
+                                @if (ViewBag.Assignto != null)
+                                {
+                                    <button class="btn btn-success" id="markAsFinishedBtn" style="width: 100%;">
+                                        Mark as Finished</button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-right" style="width: 30%; min-width: 300px; float: left; margin-left: 30px;">
+                <div class="col-right" style="min-width: 320px; float: left; margin-left: 10px;">
                     <div class="widget-box">
                         <div class="widget-title">
                             <span class="icon"><i class="icon-th-list"></i></span>
@@ -83,17 +90,10 @@
                         </div>
                     </div>
                 </div>
-                <div style="width: 6%; min-width: 80px; float: right">
-                    @if (ViewBag.Assignto != null)
-                    {
-                        <button class="btn btn-success" id="markAsFinishedBtn" style="width: 100%;">
-                            Mark as Finished</button>
-                    }
-                </div>
             </div>
             <div style="clear: both;">
             </div>
-            <div class="span4">
+            <div class="span4" style="margin-top: -25px;">
                 <div class="widget-box">
                     <div class="widget-title">
                         <span class="icon"><i class="icon-list-alt"></i></span>
@@ -101,7 +101,7 @@
                             Plan details</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <div style="height: 555px; overflow-y: scroll;" id="requestDetailsZone">
+                        <div style="height: 295px; overflow-y: scroll;" id="requestDetailsZone">
                             <ul class="site-stats">
                                 @foreach (var request in ViewBag.RequestDetails)
                                 {
@@ -110,7 +110,7 @@
                                             <div>
                                                 <div>
                                                     <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
-                                                <div style="margin-top:3px;">
+                                                <div style="margin-top: 3px;">
                                                     <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
                                             </div>
                                             <div>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </div>
-            <div class="span7">
+            <div class="span7" style="margin-top: -25px;">
                 <div class="widget-box">
                     <div class="widget-title">
                         <span class="icon"><i class="icon-globe"></i></span>
@@ -132,7 +132,7 @@
                             Maps</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <div id="map" style="height: 555px;">
+                        <div id="map" style="height: 295px;">
                         </div>
                     </div>
                 </div>
