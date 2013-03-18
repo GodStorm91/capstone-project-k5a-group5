@@ -533,6 +533,8 @@ a:hover {
 	background-image: url('../img/icons/16/web.png');
 }
 
+
+
 .stat-boxes li:hover, .quick-actions li:hover, .quick-actions-horizontal li:hover  {
     background-color: #fcfcfc;
 	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FCFCFC), to(#F1F1F1));

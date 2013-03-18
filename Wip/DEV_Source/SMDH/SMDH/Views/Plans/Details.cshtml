@@ -21,10 +21,10 @@
 </div>
 <div class="modal-body">
     <div class="plan-details">
-        <div id="plan-details-box" class="green-bordered" style="margin-bottom: 5px;">
+        <div id="plan-details-box" style="margin-bottom: 5px;">
             <div style="clear: both;">
             </div>
-            <div class="row-fluid" id="collection-plan-details">
+            <div id="collection-plan-details">
                 <div class="col-left" style="width: 30%; min-width: 300px; float: left">
                     <div class="widget-box">
                         <div class="widget-title">
@@ -35,11 +35,11 @@
                         <div class="widget-content">
                             <dl class="dl-horizontal">
                                 <div>
-                                    Collection Plan No : #@Model.PlanId</div>
+                                    <b>Collection Plan No</b> : #@Model.PlanId</div>
                                 <div>
-                                    Created Date : @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate)</div>
+                                    <b>Created Date</b> : @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate)</div>
                                 <div>
-                                    Created By : @Model.CreatedByUserId</div>
+                                    <b>Created By</b> : @Model.CreatedByUserId</div>
                                 @* <dt>Collection Plan No.:</dt>
                                 <dd id="PlanNumber">
                                     #@Model.PlanId</dd>
@@ -59,25 +59,27 @@
                                 Assign</h5>
                         </div>
                         <div class="widget-content">
-                            <dl class="dl-horizontal">
-                                @if (ViewBag.PossibleDeliveryStaffs != null)
-                                {
-                                    foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                            <div style="height: 95px; overflow-y: scroll;">
+                                <dl class="dl-horizontal">
+                                    @if (ViewBag.PossibleDeliveryStaffs != null)
                                     {
-                                    <label>
-                                        <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" onchange="" id="deliverymen@d.DeliveryMenId"/>
-                                        @d.FirstName @d.LastName</label>     
+                                        foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                                        {
+                                        <label>
+                                            <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" onchange="" id="deliverymen@d.DeliveryMenId"/>
+                                            @d.FirstName @d.LastName</label>     
+                                        }
                                     }
-                                }
-                                @if (ViewBag.Assignto != null)
-                                {
-                                    foreach (var e in ViewBag.Assignto)
+                                    @if (ViewBag.Assignto != null)
                                     {
-                                    <label>
-                                        <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName</label>     
+                                        foreach (var e in ViewBag.Assignto)
+                                        {
+                                        <label>
+                                            <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName</label>     
+                                        }
                                     }
-                                }
-                            </dl>
+                                </dl>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,48 +93,46 @@
             </div>
             <div style="clear: both;">
             </div>
-            <div class="span12">
-                <div class="span4">
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <span class="icon"><i class="icon-list-alt"></i></span>
-                            <h5>
-                                Plan details</h5>
-                        </div>
-                        <div class="widget-content nopadding">
-                            <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
-                                <ul class="site-stats">
-                                    @foreach (var request in ViewBag.RequestDetails)
-                                    {
-                                        <li id="request-@request.RequestId">
+            <div class="span4">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon"><i class="icon-list-alt"></i></span>
+                        <h5>
+                            Plan details</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <div style="height: 555px; overflow-y: scroll;" id="requestDetailsZone">
+                            <ul class="site-stats">
+                                @foreach (var request in ViewBag.RequestDetails)
+                                {
+                                    <li id="request-@request.RequestId">
+                                        <div>
                                             <div>
                                                 <div>
-                                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span><span
-                                                        class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
-                                                </div>
-                                                <div>
-                                                    <span class="icon-globe"></span><small>@request.CollectionAddress</small>
-                                                </div>
+                                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                                <div style="margin-top:3px;">
+                                                    <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
                                             </div>
                                             <div>
-                                                --------------------</div>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+                                                <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="span7">
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <span class="icon"><i class="icon-globe"></i></span>
-                            <h5>
-                                Maps</h5>
-                        </div>
-                        <div class="widget-content nopadding">
-                            <div id="map" style="height: 555px;">
-                            </div>
+            </div>
+            <div class="span7">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon"><i class="icon-globe"></i></span>
+                        <h5>
+                            Maps</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <div id="map" style="height: 555px;">
                         </div>
                     </div>
                 </div>
