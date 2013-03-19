@@ -161,9 +161,31 @@
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Buyer\Views\Home\css\bootstrap-responsive.css" />
     <Content Include="Areas\Buyer\Views\Home\css\bootstrap.css" />
+    <Content Include="Areas\Buyer\Views\Home\js\application.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-affix.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-alert.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-button.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-carousel.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-collapse.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-dropdown.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-fileupload.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-inputmask.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-modal.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-popover.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-rowlink.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-scrollspy.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-tab.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-tooltip.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-transition.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap-typeahead.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\bootstrap.js" />
     <Content Include="Areas\Buyer\Views\Home\js\bootstrap.min.css" />
     <Content Include="Areas\Buyer\Views\Home\js\bootstrap.min.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\google-code-prettify\prettify.css" />
+    <Content Include="Areas\Buyer\Views\Home\js\google-code-prettify\prettify.js" />
+    <Content Include="Areas\Buyer\Views\Home\js\holder\holder.js" />
     <Content Include="Areas\Buyer\Views\Home\js\jquery-1.8.2.min.js" />
     <Content Include="Areas\Buyer\Views\Home\js\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="Areas\Buyer\Views\Home\js\maruti.js" />
@@ -946,6 +968,7 @@
     <Content Include="js\accounting.js" />
     <Content Include="js\bootbox.min.js" />
     <Content Include="js\bootstrap-alert.js" />
+    <Content Include="js\bootstrap-carousel.js" />
     <Content Include="js\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap-timepicker.js" />
@@ -986,6 +1009,7 @@
     <Content Include="js\jquery-1.8.2-vsdoc.js" />
     <Content Include="js\jquery-1.8.2.js" />
     <Content Include="js\jquery-1.8.2.min.js" />
+    <Content Include="js\jquery-migrate-1.1.0.min.js" />
     <Content Include="js\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="js\jquery-ui-bootstrap-date.js" />
     <Content Include="js\jquery-ui-bootstrap-daterangepicker.jQuery.js" />
@@ -994,6 +1018,7 @@
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\jquery.blockUI.js" />
+    <Content Include="js\jquery.carouFredSel-2.1.3.js" />
     <Content Include="js\jquery.cookie.js" />
     <Content Include="js\jquery.dataTables.js" />
     <Content Include="js\jquery.dataTables.min.js" />
@@ -1008,14 +1033,18 @@
     <Content Include="js\jquery.smartTab.js" />
     <Content Include="js\jquery.smartWizard-2.0.js" />
     <Content Include="js\jquery.smartWizard-2.0.min.js" />
+    <Content Include="js\jquery.textchange.min.js" />
     <Content Include="js\jquery.tokeninput.js" />
     <Content Include="js\jquery.uniform.js" />
+    <Content Include="js\jquery.validate.js" />
     <Content Include="js\jquery.validationEngine-en.js" />
     <Content Include="js\jquery.validationEngine.js" />
+    <Content Include="js\json.js" />
     <Content Include="js\main.js" />
     <Content Include="js\map-helper.js" />
     <Content Include="js\maruti.js" />
     <Content Include="js\noty-script.js" />
+    <Content Include="js\OpenLayers.js" />
     <Content Include="js\order-item-ticket.js" />
     <Content Include="js\plugins\animated-progress-bar\jquery.progressbar.js" />
     <Content Include="js\plugins\color-picker\color-picker.css" />

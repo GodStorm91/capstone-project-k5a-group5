@@ -42,6 +42,7 @@ namespace SMDH.Areas.Buyer.Controllers
             ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.District = new SelectList(new List<District>());
             ViewBag.Ward = new SelectList(new List<Ward>());
+            ViewBag.Items = products;
             return View(products);
         }
 
@@ -71,7 +72,7 @@ namespace SMDH.Areas.Buyer.Controllers
                 return Json(new { success = false });
                 throw;
             }
-        }
+        }        
        
         public ActionResult GetLatitudeAndLongitudeFromAddress(string address)
         {

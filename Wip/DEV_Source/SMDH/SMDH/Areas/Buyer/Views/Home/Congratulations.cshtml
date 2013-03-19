@@ -2,4 +2,8 @@
     ViewBag.Title = "Congratulations";
 }
 
-<h2>Congratulations</h2>
+<h2>Thankyou for shopping with us</h2>
+@if (Model.HubId != -1)
+{
+    <h3>Your passcode is: <b>Model.Passcode</b></h3>
+}
