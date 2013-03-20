@@ -20,6 +20,142 @@
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-shopping-cart"></i></span>
+        <h5>Order Tables</h5>
+    </div>
+    <div class="widget-content">
+        <ul class="nav nav-tabs" id="myTab">
+            <li><a href="#1"><i class="icon icon-road"></i><span>Draft</span> <span
+                class="label">@ViewBag.NumberOfOrders[0]</span></a></li>
+            <li><a href="#2"><i class="icon icon-download-alt"></i><span>Approved</span> <span
+                class="label">@ViewBag.NumberOfOrders[1]</span></a></li>
+            <li><a href="#3"><i class="icon icon-ok"></i><span>Delivered</span> <span class="label">@ViewBag.NumberOfOrders[2]</span></a></li>
+            <li><a href="#4"><i class="icon icon-refresh"></i><span>Waiting For Return</span> <span
+                class="label">@ViewBag.NumberOfOrders[3]</span></a></li>
+            <li><a href="#5"><i class="icon icon-share-alt"></i><span>Returned</span> <span class="label">@ViewBag.NumberOfOrders[4]</span></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="1">
+                <div class="span8">
+                    <table id="draftOrders" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
+                                </th>
+                                <th style="width:70px;">
+                                    OrderID
+                                </th>
+                                <th style="width:70px;">
+                                    Item No.
+                                </th>                                
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="2">
+                <div class="span9 offset1">
+                    <table id="approvedOrders" class="table table-bordered">
+                        <thead>                            
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
+                                </th>
+                                <th style="width:70px;">
+                                    OrderID
+                                </th>
+                                <th style="width:70px;">
+                                    Item No.
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>
+                                    Approved Date
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="3">
+                <div class="span9 offset1">
+                    <table id="deliveredOrders" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">
+                                    OrderID
+                                </th>
+                                <th style="width:70px;">
+                                    Item No.
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                                <th>
+                                    Delivery Date
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="4">
+                <div class="span9 offset1">
+                    <table id="WaitingForReturn" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">
+                                    OrderID
+                                </th>
+                                <th style="width:70px;">
+                                    Item No.
+                                </th>
+                                <th>
+                                    Due Date
+                                </th>
+                                @*                            <th>
+                                Action
+                            </th>*@
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="5">
+                <div class="span9 offset1">
+                    <table id="Return" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">
+                                    OrderID
+                                </th>
+                                <th style="width:70px;">
+                                    Item No.
+                                </th>
+                                <th>
+                                    Collected Date
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @using (Html.BeginForm("RequestListByStatus", "Orders", FormMethod.Post, new { id = "statusFilter" }))
 { 
     <fieldset>

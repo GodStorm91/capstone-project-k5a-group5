@@ -31,5 +31,13 @@ namespace SMDH.Controllers
             return Json(wardList, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetWardsFromDistrictIdAndChars(int id, string str)
+        {
+            var wardList = from w in context.Wards
+                           where w.DistrictId == id && w.Name.Contains(str)
+                           select new { w.WardId, w.Name };
+            return Json(wardList, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

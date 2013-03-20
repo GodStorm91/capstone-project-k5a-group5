@@ -609,6 +609,16 @@ namespace SMDH.Controllers
                                              join p in context.Plans on dm.PlanId equals p.PlanId
                                              where d.Status !=  (int)PlanStatus.New && p.PlanId == id
                                              select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
+
+                        int[] listAssignedStaffIds = new int[assignedStaff.Count()];                        
+
+                        for (int i = 0; i < listAssignedStaffIds.Length; i++)
+                        {
+                            listAssignedStaffIds[i] = assignedStaff.ToList().ElementAt(i).DeliveryMenId;
+                        }
+
+                        deliveryStaffs = deliveryStaffs.Where(d => !listAssignedStaffIds.Contains(d.DeliveryMenId));
+
                         var listDelivery = new List<DeliveryMen>();
                         var assignDelivery = new List<DeliveryMen>();
                         foreach (var delivery in deliveryStaffs)
