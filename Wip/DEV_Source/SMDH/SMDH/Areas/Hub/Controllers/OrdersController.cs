@@ -9,6 +9,7 @@ using SMDH.Models;
 using SMDH.Models.Statuses;
 using SMDH.Utilities;
 using SMDH.Models.ViewModels;
+using SMDH.Models.Concrete;
 
 namespace SMDH.Areas.Hub.Controllers
 {
@@ -271,5 +272,6 @@ namespace SMDH.Areas.Hub.Controllers
 
             return Redirect("/Hub/");
         }
+
     }
 }

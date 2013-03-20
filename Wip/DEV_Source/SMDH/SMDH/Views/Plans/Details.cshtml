@@ -82,7 +82,7 @@
                                         foreach (var e in ViewBag.Assignto)
                                         {
                                         <label>
-                                            <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName</label>     
+                                            <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName @e.LastName</label>     
                                         }
                                     }
                                 </dl>

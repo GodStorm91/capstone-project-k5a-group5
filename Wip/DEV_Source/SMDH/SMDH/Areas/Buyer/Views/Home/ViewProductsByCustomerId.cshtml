@@ -423,6 +423,7 @@
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
             var deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("1");
             var totalPrice = $("<input>").attr("type", "hidden").attr("name", "toBeCollectedAmount").val($('#totalPrice').val());
+            var hubId = $("<input>").attr("type", "hidden").attr("name", "hubId").val($('#ddlHub').val());
             //alert($('#totalPrice').val());
 
             //alert($('#address').val());
@@ -456,6 +457,7 @@
             $('#toBeSubmit').append($(longitude));
 
             $('#toBeSubmit').append($(customerId));
+            $('#toBeSubmit').append($(hubId));
 
             //alert("can append");        
 
@@ -610,7 +612,7 @@
     </script>
 </head>
 <body onload="initialize()">
-    <form id="toBeSubmit" action="/Orders/ConfirmCreateOrder" method="post">
+    <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
     </form>
     <div id="myCarousel" class="carousel slide">
         <!-- Carousel items -->
@@ -783,7 +785,19 @@
                                             <label class="control-label" for="ward">
                                                 Ward(*)</label>
                                             <div class="controls">
-                                                @Html.DropDownList("Ward", ViewBag.Ward as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select", name = "ward" })
+                                                @*@Html.DropDownList("Ward", ViewBag.Ward as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select", name = "ward" })*@
+                                                <input type="text" class="search" name="ddlWard" placeholder="Search for ward" onblur="hideWard()" onkeyup="searchWard(this.value)">
+                                                    <div class="result-widget">
+                                <!--                    <ul>
+                                            <li><a href="" data-isbn="9780545317801"><div>
+                                                <img class="coverUrl" src="http://goo.gl/83T3v">
+                                                <div class="desc">
+                                                    <div class="title">A Novel: The Last Man on Earth</div>
+                                                    <div class="author">Vince Flynn</div>
+                                                </div>
+                                            </div></a></li>
+                                        </ul>-->
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -871,6 +885,15 @@
             } (window.jQuery)
         </script>
         <script>
+            function hideWard() {
+                $('.result-widget').html("");
+            }
+
+            function searchWard(chars) {
+                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: chars, str: $('#txtWard').value() }, function (data) {
+                    
+                });
+            }
 
             function changeHubCategoriesHandler() {
                 var items = '<option value="-1">-- All Locations --</option>';
