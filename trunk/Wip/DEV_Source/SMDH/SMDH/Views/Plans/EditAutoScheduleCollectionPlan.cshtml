@@ -137,37 +137,42 @@
     $(function () {
         $('ul#user_interaction').carouFredSel({
             circular: true,
-            items: 4,
+            items: 5,
             direction: 'left',
             scroll: {
-                items: 2,
+                items: 1,
                 effect: 'easeOutBounce',
                 speed: 1250,
                 pauseOnHover: true
             },
-            prev: "#prev",
+            prev: ["#prev","onEnd"],
             next: "#next",
             align: "center",
-            auto: false
+            auto: true
         });
     });
 </script>
-<div class="span1">
-    <a id="prev" href="" class="bx-prev">prev</a></div>
-<div class="span8">
-    <ul id="user_interaction">
-        @*<li style="width: 93px; float: left; list-style: none;">a</li>*@
-        @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
-        {
-            <li class="plan alert alert-success" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;width: 80px; float: left; list-style: none;">
-                <p>
-                    <a href="#" onclick = "show(@i)">Plan @(i + 1)</a></p>
-            </li>
-        }
-    </ul>
+<div class="span12">
+    <strong> Total Plan : @ViewBag.NumberOfPlans</strong>
 </div>
-<div class="span2">
-    <a id="next" href="" class="bx-next">next</a></div>
+<div class="span12">
+    <div class="span1">
+        <a id="prev" href="" class="bx-prev">prev</a></div>
+    <div class="span8">
+        <ul id="user_interaction" style="margin-left: 0px;">
+            @*<li style="width: 93px; float: left; list-style: none;">a</li>*@
+            @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
+            {
+                <li onclick = "show(@i)" class="plan alert alert-error" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;width: 80px; float: left; list-style: none;">
+                    <p style="margin-left:15px;">
+                        <b>Plan @(i + 1)</b></p>
+                </li>
+            }
+        </ul>
+    </div>
+    <div>
+        <a id="next" href="" class="bx-next">next</a></div>
+</div>
 @*<div class="span12">
     <div class="widget-box">
         <div class="widget-title">
@@ -208,7 +213,7 @@
                                     <div>
                                         <div>
                                             <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
-                                        <div style="margin-top:3px;">
+                                        <div style="margin-top: 3px;">
                                             <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
                                     </div>
                                     <div>
@@ -320,7 +325,7 @@
         $('.plan').each(function () {
             $(this).css('background-color', '#F5F5F5');
         })
-        $('#plan-' + id).css('background-color', '#dff0d8');
+        $('#plan-' + id).css('background-color', '#f2dede');
         alert(id);
         var j = 0;
         var waypointsArr = new Array();
@@ -666,8 +671,8 @@
         for (var i = 0; i < geopt.length; i++) {
             var style = {
                 strokeColor: '#0088ff',
-                strokeOpacity: 0.3,
-                strokeWidth: 5
+                strokeOpacity: 1,
+                strokeWidth: 3
             };
             var lineString = new Array();
             var line = new Array();

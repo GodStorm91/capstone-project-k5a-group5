@@ -2,24 +2,28 @@
 {
     display: inline-block;
     vertical-align: middle;
-    text-align:center;
-    margin-left:5px;
+    text-align: center;
+    margin-left: 5px;
 }
 .bx-prev
 {
-    background:white url("../images/icon_arrow_left.png") no-repeat 0 -31px;
-    display:block;
-    margin-top:-2px;
-    height: 31px;width:31px;
-    text-indent:-99999px;
+    background: #eeeeee url("../images/icon_arrow_left.png") no-repeat 0 -31px;
+    display: block;
+    margin-top: -2px;
+    height: 31px;
+    width: 31px;
+    text-indent: -99999px;
+    opacity: 0.5;
 }
 
 .bx-next
 {
-    background:white url("../images/icon_arrow_right.png") no-repeat 0 -31px;
-    display:block;
-    margin-top:-2px;
-    height: 31px;width: 31px;
-    text-indent:-99999px;
-    float:right;
+    background: #eeeeee url("../images/icon_arrow_right.png") no-repeat 0 -31px;
+    display: block;
+    margin-top: -2px;
+    height: 31px;
+    width: 31px;
+    text-indent: -99999px;
+    float: right;
+    opacity: 0.5;
 }

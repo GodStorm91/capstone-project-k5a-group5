@@ -17,132 +17,131 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;</button>
     <h3>
-        Edit Plan</h3>
+        Plan No : @Model.PlanId / Create by @Model.CreatedByUserId (@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate))</h3>
 </div>
 <div class="modal-body" style="max-height: 560px;">
-    <div class="plan-details">
-        <div id="plan-details-box" style="margin-bottom: 5px; margin-top: -25px;">
-            <div style="clear: both;">
-            </div>
-            <div id="collection-plan-details">
-                <div class="col-left" style="min-width: 320px; float: left">
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <span class="icon"><i class="icon-th-list"></i></span>
-                            <h5>
-                                Customer Information</h5>
-                        </div>
-                        <div class="widget-content">
-                            <dl class="dl-horizontal">
-                                <div>
-                                    <b>Collection Plan No</b> : #@Model.PlanId</div>
-                                <div>
-                                    <b>Created Date</b> : @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate)</div>
-                                <div>
-                                    <b>Created By</b> : @Model.CreatedByUserId</div>
-                                @* <dt>Collection Plan No.:</dt>
-                                <dd id="PlanNumber">
-                                    #@Model.PlanId</dd>
-                                <dt>Created Date:</dt>
-                                <dd id="CreatedDate">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate)</dd>
-                                <dt>Created By:</dt>
-                                <dd id="CreatedBy">@Model.CreatedByUserId</dd>*@
-                            </dl>
-                            <div style="width: 6%; min-width: 140px; float: right;margin-top: -30px;">
-                                @if (ViewBag.Assignto != null)
-                                {
-                                    <button class="btn btn-success" id="markAsFinishedBtn" style="width: 100%;">
-                                        Mark as Finished</button>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-right" style="min-width: 320px; float: left; margin-left: 10px;">
-                    <div class="widget-box">
-                        <div class="widget-title">
-                            <span class="icon"><i class="icon-th-list"></i></span>
-                            <h5>
-                                Assign</h5>
-                        </div>
-                        <div class="widget-content">
-                            <div style="height: 95px; overflow-y: scroll;">
-                                <dl class="dl-horizontal">
-                                    @if (ViewBag.PossibleDeliveryStaffs != null)
-                                    {
-                                        foreach (var d in ViewBag.PossibleDeliveryStaffs)
-                                        {
-                                        <label>
-                                            <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" onchange="" id="deliverymen@d.DeliveryMenId"/>
-                                            @d.FirstName @d.LastName</label>     
-                                        }
-                                    }
-                                    @if (ViewBag.Assignto != null)
-                                    {
-                                        foreach (var e in ViewBag.Assignto)
-                                        {
-                                        <label>
-                                            <input type="checkbox" name="deliveryman" value="@e.DeliveryMenId" checked="checked" />@e.FirstName @e.LastName</label>     
-                                        }
-                                    }
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="clear: both;">
-            </div>
-            <div class="span4" style="margin-top: -25px;">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <span class="icon"><i class="icon-list-alt"></i></span>
+    <div style="margin-bottom: 5px; margin-top: -25px;">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#Assign" data-toggle="collapse" class="collapsed"><span class="icon"><i
+                        class="icon-user"></i></span>
                         <h5>
-                            Plan details</h5>
-                    </div>
-                    <div class="widget-content nopadding">
-                        <div style="height: 295px; overflow-y: scroll;" id="requestDetailsZone">
-                            <ul class="site-stats">
-                                @foreach (var request in ViewBag.RequestDetails)
+                            Assign</h5>
+                    </a>
+                </div>
+                <div class="collapse in" id="Assign">
+                    <div class="widget-content">
+                        <div style="overflow-x: scroll;">
+                            <dl class="dl-horizontal">
+                                @if (ViewBag.PossibleDeliveryStaffs != null)
                                 {
-                                    <li id="request-@request.RequestId">
+                                    foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                                    {
+                                    <span>
+                                        <input type="checkbox" style="margin-bottom: 5px;margin-left:6px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                        @d.FirstName @d.LastName</span>
+@* <label>
+                                    <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" onchange="" id="deliverymen@d.DeliveryMenId"/>
+                                    @d.FirstName @d.LastName</label> *@    
+                                    }
+                                }
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span12">
+            <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" />
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Close popup</button>
+            @if (ViewBag.Assignto != null)
+            {
+                <button class="btn btn-success" id="markAsFinishedBtn" style="float:right;">
+                    Mark as Finished</button>
+            }
+        </div>
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <a href="#Details" data-toggle="collapse" class="collapsed"><span class="icon"><i
+                        class="icon-th-list"></i></span>
+                        <h5>
+                            Click to see map and details</h5>
+                    </a>
+                </div>
+                <div class="collapse" id="Details">
+                    <div style="width: 230px; height: 295px; overflow-y: scroll; float: left;" id="requestDetailsZone">
+                        <ul class="site-stats">
+                            @foreach (var request in ViewBag.RequestDetails)
+                            {
+                                <li id="request-@request.RequestId">
+                                    <div>
                                         <div>
                                             <div>
-                                                <div>
-                                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
-                                                <div style="margin-top: 3px;">
-                                                    <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
-                                            </div>
-                                            <div>
-                                                <span class="icon-globe"></span><small>@request.CollectionAddress</small>
-                                            </div>
+                                                <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                            <div style="margin-top: 3px;">
+                                                <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
                                         </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                                        <div>
+                                            <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     </div>
-                </div>
-            </div>
-            <div class="span7" style="margin-top: -25px;">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <span class="icon"><i class="icon-globe"></i></span>
-                        <h5>
-                            Maps</h5>
-                    </div>
-                    <div class="widget-content nopadding">
+                    <div style="width: 438px; float: left">
                         <div id="map" style="height: 295px;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Save" id="btnAssign" />
-        <button class="btn" data-dismiss="modal" aria-hidden="true">
-            Cancel</button>
+        @*<div class="span4">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"><i class="icon-list-alt"></i></span>
+                    <h5>
+                        Plan details</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div style="height: 295px; overflow-y: scroll;" id="requestDetailsZone">
+                        <ul class="site-stats">
+                            @foreach (var request in ViewBag.RequestDetails)
+                            {
+                                <li id="request-@request.RequestId">
+                                    <div>
+                                        <div>
+                                            <div>
+                                                <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                            <div style="margin-top: 3px;">
+                                                <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
+                                        </div>
+                                        <div>
+                                            <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>*@ @*<div class="span7">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"><i class="icon-globe"></i></span>
+                    <h5>
+                        Maps</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div id="map" style="height: 295px;">
+                    </div>
+                </div>
+            </div>
+        </div>*@
     </div>
     @*<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -210,6 +209,10 @@
                     j++
                 }
             });
+            if(listdeliveryman.length < 0)
+            {
+                bootbox.alert('Please choose one or more deliveryman');
+            }
             $.ajaxSettings.traditional = true;
             $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
                 if(result.success){

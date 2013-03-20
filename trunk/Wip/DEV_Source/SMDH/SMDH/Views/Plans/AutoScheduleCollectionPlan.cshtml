@@ -133,11 +133,13 @@
     var defaultString = "10";
     function triggerRadio() {
         if ($('#rdoMaximumRequestOption').prop('checked')) {
+            $('#totalplans').html('Total : 0 request');
             $('#txtMaximumRequest').readOnly = false;
             $('#txtMaximumRequest').focus();
         } else {
             if ($('#rdoGroupAll').prop('checked')) {
                 $('#selectedRequestul').html('');
+                $('#totalplans').html('Total : 0 request');
                 $('#txtMaximumRequest').readOnly = true;
                 $('#txtMaximumRequest').val("10");
                 triggerGroup();
@@ -150,6 +152,7 @@
     $('#txtMaximumRequest').bind('textchange', function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
+            $('#totalplans').html('Total : 0 request');
             triggerGroup();
         }
 
@@ -158,6 +161,7 @@
     $('#txtMaximumRequest').blur(function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
+            $('#totalplans').html('Total : 0 request');
             triggerGroup();
         }
 
@@ -170,6 +174,8 @@
 
     $('#rdoMaximumRequestOption').click(function () {
         $('#selectedRequestul').html('');
+        $('#totalplans').html('Total : 0 request');
+        triggerGroup();
     })
 
     function triggerGroup() {
