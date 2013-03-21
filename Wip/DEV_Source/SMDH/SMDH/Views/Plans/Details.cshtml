@@ -40,10 +40,18 @@
                                     {
                                     <span>
                                         <input type="checkbox" style="margin-bottom: 5px;margin-left:6px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                        @d.FirstName @d.LastName</span>
-@* <label>
-                                    <input type="checkbox" name="deliveryman" value="@d.DeliveryMenId" onchange="" id="deliverymen@d.DeliveryMenId"/>
-                                    @d.FirstName @d.LastName</label> *@    
+                                        @d.FirstName @d.LastName</span>                              
+                                   
+                                    }
+                                }
+                                
+                                @if (ViewBag.Assignto != null)
+                                {
+                                    foreach (var d in ViewBag.Assignto)
+                                    {                                        
+                                       
+                                            <input type="checkbox" style="margin-bottom: 5px;margin-left:6px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                            @d.FirstName @d.LastName
                                     }
                                 }
                             </dl>

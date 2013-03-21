@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SMDH.Models.Concrete;
 using SMDH.Models.Abstract;
 using SMDH.Models;
+using SMDH.Models.ViewModels;
 
 
 namespace SMDH.Controllers
@@ -33,10 +34,16 @@ namespace SMDH.Controllers
 
         public ActionResult GetWardsFromDistrictIdAndChars(int id, string str)
         {
-            var wardList = from w in context.Wards
-                           where w.DistrictId == id && w.Name.Contains(str)
-                           select new { w.WardId, w.Name };
-            return Json(wardList, JsonRequestBehavior.AllowGet);
+            var wardList = context.Wards.Where(w => w.DistrictId == id && w.Name.Contains(str));
+            List<WardViewModel> wardViewList = new List<WardViewModel>();
+            foreach (var ward in wardList)
+            {
+                wardViewList.Add(new WardViewModel(ward));
+            }
+            //var wardList = from w in context.Wards
+            //               where w.DistrictId == id && w.Name.Contains(str)
+            //               select new { w.WardId, w.Name };
+            return Json(new { wardList = wardViewList }, JsonRequestBehavior.AllowGet);
         }
 
     }
