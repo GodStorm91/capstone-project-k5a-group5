@@ -52,7 +52,7 @@ namespace SMDH.Models.ViewModels
             Fee = order.Fee;
             //Status = Regex.Replace(order.Status.ToString(), "(\\B[A-Z])", " $1");
             AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
-            Amount = order.AmountToBeCollectedFromReceiver.ToString("N3");
+            Amount = order.AmountToBeCollectedFromReceiver.ToString("N0");
             Note = order.Note;
             DueDateString = String.Format("{0:dd-MM-yyyy hh:mm tt}", DueDate);
             //AddressFromWard = AddressHelper.GetAddressFromWard(order);
