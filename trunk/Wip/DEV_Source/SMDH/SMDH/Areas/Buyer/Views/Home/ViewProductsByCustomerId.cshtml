@@ -786,8 +786,8 @@
                                                 Ward(*)</label>
                                             <div class="controls">
                                                 @*@Html.DropDownList("Ward", ViewBag.Ward as SelectList, "-- Choose a Ward --", new { id = "ddlWard", Class = "chzn-select", name = "ward" })*@
-                                                <input type="text" class="search" name="ddlWard" placeholder="Search for ward" onblur="hideWard()" onkeyup="searchWard(this.value)">
-                                                    <div class="result-widget">
+                                                <input type="text" class="search" name="txtWard" id="txtWard" placeholder="Search for ward" onblur="hideWard()" onkeyup="searchWard()">
+                                                    <div class="result-widget" id="resultWard">
                                 <!--                    <ul>
                                             <li><a href="" data-isbn="9780545317801"><div>
                                                 <img class="coverUrl" src="http://goo.gl/83T3v">
@@ -890,8 +890,14 @@
             }
 
             function searchWard(chars) {
-                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: chars, str: $('#txtWard').value() }, function (data) {
-                    
+                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
+                    var strList = "<ul>";
+                    for (var i = 0; i < data.wardList.length; i++) {
+                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
+                    }
+                    strList += '</ul>';
+                    $('#resultWard').html(strList);
+
                 });
             }
 
