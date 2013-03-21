@@ -57,7 +57,7 @@
     <div class="span6">
         <div class="widget-box">
             <div class="widget-title">
-                <span class="icon"><i class="icon-list-alt"></i></span>
+                <span class="icon"><button class="btnselectall btn-primary btn-mini">Select all</button></span>
                 <h5>
                     Request(s)</h5>
             </div>
@@ -70,7 +70,7 @@
                         {
                             string addressId = "";                        
                         <li id="group-@i" style="background-color:#d9edf7;">
-                            <div id="add-@i" style="float: right;">
+                            <div class="divadd" id="add-@i" style="float: right;">
                                 <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i>
                                 </a>
                             </div>
@@ -105,7 +105,7 @@
     <div class="span6">
         <div class="widget-box">
             <div class="widget-title">
-                <span class="icon"><i class="icon-ok"></i></span>
+                <span class="icon"><button class="btnremoveall btn-primary btn-mini">Remove all</button></span>
                 <h5>
                     Selected Request(s)</h5>
                 <span id="totalplans" class="label label-info">Total : 0 request(s)</span>
@@ -152,7 +152,7 @@
     $('#txtMaximumRequest').bind('textchange', function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
-            $('#totalplans').html('Total : 0 request');
+            $('#totalplans').html('Total : 0 request(s)');
             triggerGroup();
         }
 
@@ -161,7 +161,7 @@
     $('#txtMaximumRequest').blur(function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
-            $('#totalplans').html('Total : 0 request');
+            $('#totalplans').html('Total : 0 request(s)');
             triggerGroup();
         }
 
@@ -174,9 +174,10 @@
 
     $('#rdoMaximumRequestOption').click(function () {
         $('#selectedRequestul').html('');
-        $('#totalplans').html('Total : 0 request');
+        $('#totalplans').html('Total : 0 request(s)');
         triggerGroup();
     })
+
 
     function triggerGroup() {
         defaultString = $('#txtMaximumRequest').val();
@@ -209,7 +210,7 @@
                     var collectionAddress = "";
                     resultItemString += '<div>';
                     resultItemString += '<li id="group-' + k + '" style="background-color:#d9edf7;">' +
-                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
+                        '<div class="divadd" id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
@@ -279,7 +280,32 @@
         $("#group-" + arguments[0]).css('background-color', '#d9edf7');
     }
 
+    $('.btnselectall').click(function () {
+        $('#selectedRequestZone').find('li').each(function () {
+            $("#selectedRequest > ul").append($(this));
+            $(this).find('div.divadd').html('<a class="label label-important" onclick="removefromplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-left"></i></a>');
+            //            $("#add-" + i).html('<a class="label label-important" onclick="removefromplan(' + i + ')"><i class="icon-arrow-left"></i></a>');
+            //        $("#group-" + arguments[0]).addClass('alert-success');
+            $("#selectedRequest span").removeClass('label-info');
+            $("#selectedRequest span.lbinfo").addClass('label-success');
+            $(this).css('background-color', '#dff0d8');
+        })
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('Total : ' + numofplans + ' request(s)');
+    })
 
+    $('.btnremoveall').click(function () {
+        $('#selectedRequestul').find('li').each(function () {
+            $("#requestsZone > ul").append($(this));
+            $(this).find('div.divadd').html('<a class="label label-success" onclick="addtoplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-right"></i></a>');
+            //$("#add-" + i).html('<a class="label label-success" onclick="addtoplan(' + i + ')"><i class="icon-arrow-right"></i></a>');
+            $(this).removeClass('alert-success');
+            $("#requestsZone span").removeClass('label-success');
+            $("#requestsZone span.lbinfo").addClass('label-info');
+            $(this).css('background-color', '#d9edf7');
+        })
+        $('#totalplans').html('Total : 0 request(s)')
+    })
 
     $('#btnConfirm').click(function () {
 
