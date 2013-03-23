@@ -172,15 +172,15 @@
             </li>
             <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-cog"></i><span
                 class="text">Settings</span></a></li>
-            <li class="btn btn-inverse"><a title="" href=""><i class="icon icon-share-alt"></i><span
-                class="text">Logout</span></a></li>
+            <li class="btn btn-inverse"><a title="" href="/Account/Logoff"><i class="icon icon-share-alt">
+            </i><span class="text">Logout</span></a></li>
         </ul>
     </div>
     <div id="sidebar">
         <a href="#" class="visible-phone"><i class="icon icon-home"></i>Dashboard</a>
         <ul>
             <li class="active"><a href="/Dashboard"><i class="icon icon-home"></i><span>Dashboard</span></a></li>
-            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i><span>Plans</span>
+            <li class="submenu1"><a class="plans" href="#"><i class="icon icon-th-list"></i><span>Plans</span>
                 <span class="label">3</span></a>
                 <ul>
                     <li><a href="/Plans/AutoScheduleCollectionPlan">Collection Plans</a></li>
@@ -191,7 +191,7 @@
             <li><a href="/Requests"><i class="icon icon-tint"></i><span>Requests</span></a></li>
             <li><a href="/Orders"><i class="icon icon-pencil"></i><span>Orders</span></a></li>
             <li><a href="/Customers"><i class="icon icon-th"></i><span>Customers</span></a></li>
-            <li class="submenu"><a href="#"><i class="icon icon-file"></i><span>Options Config</span>
+            <li class="submenu2"><a class="config" href="#"><i class="icon icon-file"></i><span>Options Config</span>
                 <span class="label">6</span></a>
                 <ul>
                     <li><a href="">Hubs</a></li>
@@ -215,6 +215,33 @@
     </div>
     <!-- End #content -->
     <script type="text/javascript">
+
+
+        var plan = $('.submenu1 > ul');
+        $('.plans').click(function (e) {
+            e.preventDefault();
+            var sidebar = $('#sidebar');
+            if (sidebar.hasClass('open')) {
+                sidebar.removeClass('open');
+                plan.slideUp(250);
+            } else {
+                sidebar.addClass('open');
+                plan.slideDown(250);
+            }
+        });
+
+        var config = $('.submenu2 > ul');
+        $('.config').click(function (e) {
+            e.preventDefault();
+            var sidebar = $('#sidebar');
+            if (sidebar.hasClass('open')) {
+                sidebar.removeClass('open');
+                config.slideUp(250);
+            } else {
+                sidebar.addClass('open');
+                config.slideDown(250);
+            }
+        });
 
         $(function () {
             //checkNotifications();
