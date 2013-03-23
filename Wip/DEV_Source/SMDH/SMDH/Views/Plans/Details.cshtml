@@ -32,29 +32,25 @@
                 </div>
                 <div class="collapse in" id="Assign">
                     <div class="widget-content">
-                        <div style="overflow-x: scroll;">
-                            <dl class="dl-horizontal">
-                                @if (ViewBag.PossibleDeliveryStaffs != null)
+                        <div>
+                            @if (ViewBag.PossibleDeliveryStaffs != null)
+                            {
+                                foreach (var d in ViewBag.PossibleDeliveryStaffs)
                                 {
-                                    foreach (var d in ViewBag.PossibleDeliveryStaffs)
-                                    {
-                                    <span>
-                                        <input type="checkbox" style="margin-bottom: 5px;margin-left:6px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                        @d.FirstName @d.LastName</span>                              
-                                   
-                                    }
+                                <span>
+                                    <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                    @d.FirstName@d.LastName</span>                              
                                 }
-                                
-                                @if (ViewBag.Assignto != null)
-                                {
-                                    foreach (var d in ViewBag.Assignto)
-                                    {                                        
-                                       
-                                            <input type="checkbox" style="margin-bottom: 5px;margin-left:6px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                            @d.FirstName @d.LastName
-                                    }
+                            }
+                            @if (ViewBag.Assignto != null)
+                            {
+                                foreach (var d in ViewBag.Assignto)
+                                {                                        
+                                <span>
+                                    <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                    @d.FirstName@d.LastName</span>     
                                 }
-                            </dl>
+                            }
                         </div>
                     </div>
                 </div>
@@ -66,7 +62,7 @@
                 Close popup</button>
             @if (ViewBag.Assignto != null)
             {
-                <button class="btn btn-success" id="markAsFinishedBtn" style="float:right;">
+                <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
                     Mark as Finished</button>
             }
         </div>
