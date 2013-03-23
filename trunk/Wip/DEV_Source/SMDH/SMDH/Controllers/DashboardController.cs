@@ -8,12 +8,12 @@ using SMDH.Models;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {   
         
         //
         // GET: /Dashboard/
-
         public ActionResult Index()
         {
              int  numberOfNewRequests;

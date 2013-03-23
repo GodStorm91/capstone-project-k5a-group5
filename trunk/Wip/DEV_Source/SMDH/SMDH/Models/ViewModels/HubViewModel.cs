@@ -27,7 +27,7 @@ namespace SMDH.Models.ViewModels
             HubId = hub.HubId;
             Longitude = (double)hub.Longitude;
             Latitude = (double)hub.Latitude;
-            HubCategoryId = (int)hub.HubCategoryId;
+            //HubCategoryId = hub.HubCategoryId!=null ? -1 : (int)hub.HubCategoryId;
             Address = hub.Address;
         }
     }

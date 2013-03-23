@@ -1,0 +1,335 @@
+﻿@model SMDH.Models.Plan
+@{
+    ViewBag.Title = "Create New Delivery Plan";
+    ViewBag.Heading = "Create New Delivery Plan";
+}
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/select2.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="/js/crud.js" type="text/javascript"></script>
+<script src="/js/form-action.js" type="text/javascript"></script>
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date.js" type="text/javascript"></script>
+<script src="/js/accounting.js" type="text/javascript"></script>
+@*<script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>*@
+<script src="/js/jquery.numeric.js" type="text/javascript"></script>
+<script src="/js/jquery.textchange.min.js" type="text/javascript"></script>
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-wrench"></i></span>
+        <h5>
+            Configuration</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <form action="#" method="get" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">
+                Number of plan</label>
+            <div class="controls">
+                <input class="numeric" style="width: 160px; margin-bottom: 5px;" type="text" id="txtNumPlans" />
+            </div>
+        </div>
+        <div class="control-group">
+            <span class="control-label">Group types</span>
+            <div class="controls">
+                <span>
+                    <input type="radio" style="margin-bottom: 5px;" class="radios" name="radios" onclick="triggerRadio()"
+                        id="rdoGroupAll" checked />
+                    Group all Orders</span> <span>
+                        <input type="radio" style="margin-bottom: 5px; margin-left: 30px;" class="radios"
+                            name="radios" onclick="triggerRadio()" id="rdoMaximumRequestOption" />
+                        Group<input class="numeric" style="width: 80px;" class="input-mini" type="text" id="txtMaximumRequest"
+                            value="10" />
+                        order(s) </span>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="span12">
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"><i class="icon-list-alt"></i></span>
+                <h5>
+                    Order(s)</h5>
+            </div>
+            <div class="widget-content" id="requestsZone">
+                <ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow-y: scroll;">
+                    @if (ViewBag.PossibleOrders != null)
+                    {
+                        int i = 1;
+                        foreach (var listOrderViewModel in ViewBag.PossibleOrders)
+                        {
+                            string addressId = "";                        
+                        <li id="group-@i" style="background-color:#d9edf7;">
+                            <div id="add-@i" style="float: right;">
+                                <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div>
+                                @foreach (var order in listOrderViewModel)
+                                {
+                            
+                                    <div style="margin-top: 5px;">
+                                        <input type="hidden" class="label label-info requestId" value="@order.OrderId"/><span
+                                            class="icon-user"></span><span class="lbinfo label label-info">@order.Customer</span><span
+                                                class="icon-calendar"></span><span class="lbinfo label label-info">@order.CreatedDate</span>
+                                    </div>
+                                    addressId = order.DeliverAddress;
+                                }
+                                <div>
+                                    <span class="icon-globe"></span><span>@addressId</span>
+                                </div>
+                            </div>
+                        </li>                       
+                                i++;
+                        }
+                    }
+                    else
+                    {
+                        <li>No Orders Available </li>       
+                    
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"><i class="icon-ok"></i></span>
+                <h5>
+                    Selected Order(s)</h5>
+                <span id="totalplans" class="label label-info">Total : 0 request(s)</span>
+            </div>
+            <div class="widget-content" id="selectedRequest">
+                <ul class="site-stats" style="height: 500px; overflow-y: scroll;" id="selectedRequestul">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="span12">
+    <button type="submit" class="btn btn-primary" id="btnConfirm">
+        Solve</button>
+</div>
+<form id="toBeSubmit" action="EditAutoScheduleDeliveryPlan">
+</form>
+<script type="text/javascript">
+    //$("#txtMaximumRequest").numeric({ decimal: false, negative: false }, function() {
+    //     bootbox.alert("Positive integers only"); 
+    //     this.value = ""; 
+    //     this.focus();
+    //
+    $(".numeric").numeric({ decimal: false, negative: false }, function () { alert("Positive integers only"); this.value = ""; this.focus(); });
+    var defaultString = "10";
+    function triggerRadio() {
+        if ($('#rdoMaximumRequestOption').prop('checked')) {
+            $('#totalplans').html('Total : 0 request');
+            $('#txtMaximumRequest').readOnly = false;
+            $('#txtMaximumRequest').focus();
+        } else {
+            if ($('#rdoGroupAll').prop('checked')) {
+                $('#selectedRequestul').html('');
+                $('#totalplans').html('Total : 0 request');
+                $('#txtMaximumRequest').readOnly = true;
+                $('#txtMaximumRequest').val("10");
+                triggerGroup();
+            }
+
+        }
+
+    };
+
+    $('#txtMaximumRequest').bind('textchange', function () {
+        if ($('#txtMaximumRequest').val() != defaultString) {
+            $('#selectedRequestul').html('');
+            $('#totalplans').html('Total : 0 request');
+            triggerGroup();
+        }
+
+    });
+
+    $('#txtMaximumRequest').blur(function () {
+        if ($('#txtMaximumRequest').val() != defaultString) {
+            $('#selectedRequestul').html('');
+            $('#totalplans').html('Total : 0 request');
+            triggerGroup();
+        }
+
+    });
+
+    $('#txtMaximumRequest').click(function () {
+        $('#rdoMaximumRequestOption').attr('checked', 'checked');
+        $(this).select();
+    })
+
+    $('#rdoMaximumRequestOption').click(function () {
+        $('#selectedRequestul').html('');
+        $('#totalplans').html('Total : 0 request');
+        triggerGroup();
+    })
+
+    function triggerGroup() {
+        defaultString = $('#txtMaximumRequest').val();
+        var maxRequest = -1;
+
+        if ($('#rdoMaximumRequestOption').prop('checked')) {
+            maxRequest = $('#txtMaximumRequest').val();
+
+            //user left the textbox blank
+            //            if ($('#txtMaximumRequest').val().length == 0) {
+            //                bootbox.alert("Must maximum value");
+            //                return;
+            //            }
+            //user enter not a number value            
+
+        } else {
+            maxRequest = 100000;
+        }
+
+        //check if maxRequest is Not null
+
+
+        $.post("/Plans/GroupOrdersByDistrictId", { maxOrders: maxRequest }, function (data) {
+            var resultHtml = '<ul class="site-stats" id="selectedRequestZone" style="height: 500px; overflow-y: scroll;">';
+            if (data.success) {
+                $('#requestsZone').html("")
+                var k = 1;
+                for (var i = 0; i < data.groupList.length; i++) {
+                    var resultItemString = "";
+                    var collectionAddress = "";
+                    resultItemString += '<div>';
+                    resultItemString += '<li id="group-' + k + '" style="background-color:#d9edf7;">' +
+                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
+                    var list = data.groupList[i];
+                    for (var j = 0; j < list.length; j++) {
+                        var item = list[j];
+                        resultItemString +=
+                            '<div style="margin-top:5px;">' +
+                                '<input type="hidden" class="label label-info requestId" value="' + item.OrderId + '"/><span ' +
+                                    'class="icon-user"></span><span class="lbinfo label label-info">' + item.Customer + '</span><span ' +
+                                        'class="icon-calendar"></span><span class="lbinfo label label-info">' + item.CreatedDate + '</span>' +
+                            '</div>';
+                        collectionAddress = item.DeliverAddress;
+                    }
+                    resultItemString += '<div>' +
+                                '<span class="icon-globe"></span><span>' + collectionAddress + '</span>' +
+                            '</div>' +
+                        '</div>';
+                    resultItemString += "</li>";
+                    resultItemString += '</div>';
+                    resultHtml += resultItemString;
+                    k++;
+                }
+                resultHtml += "</ul>";
+                //alert(resultHtml);
+                $('#requestsZone').html(resultHtml);
+            } else {
+            }
+        });
+    };
+
+    var selectedrq = new Array();
+    var i = 0;
+    //    $("#addtoplan").click(function () {
+    //        $("#requestsZone :checkbox:checked").each(function () {
+    //            var id = $(this).attr('id');
+    //            $(this).attr('checked', false);
+    //            $("#selectedRequest > ul").append($("#group-" + id));
+    //        })
+    //    })
+
+    //    $("#removeplan").click(function () {
+    //        $("#selectedRequest :checkbox:checked").each(function () {
+    //            var id = $(this).attr('id');
+    //            $(this).attr('checked', false);
+    //            $("#requestsZone > ul").append($("#request-" + id));
+    //        })
+    //    })
+
+    function addtoplan() {
+        //alert(arguments[0]);
+        $("#selectedRequest > ul").prepend($("#group-" + arguments[0]));
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('Total : ' + numofplans + ' request(s)')
+        $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-arrow-left"></i></a>');
+        //        $("#group-" + arguments[0]).addClass('alert-success');
+        $("#selectedRequest span").removeClass('label-info');
+        $("#selectedRequest span.lbinfo").addClass('label-success');
+        $("#group-" + arguments[0]).css('background-color', '#dff0d8');
+    }
+
+    function removefromplan() {
+        $("#requestsZone > ul").prepend($("#group-" + arguments[0]));
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('<span>Total : ' + numofplans + ' request(s)</span>')
+        $("#add-" + arguments[0]).html('<a class="label label-success" onclick="addtoplan(' + arguments[0] + ')"><i class="icon-arrow-right"></i></a>');
+        $("#group-" + arguments[0]).removeClass('alert-success');
+        $("#requestsZone span").removeClass('label-success');
+        $("#requestsZone span.lbinfo").addClass('label-info');
+        $("#group-" + arguments[0]).css('background-color', '#d9edf7');
+    }
+
+
+
+    $('#btnConfirm').click(function () {
+
+        selectedrq.length = 0;
+        $("#selectedRequestul").find('input.requestId').each(function () {
+            var requestid = $(this).val();
+            selectedrq.push(requestid);
+        })
+
+        if (selectedrq.length <= 0) {
+            bootbox.alert("Please add request(s)");
+            return;
+        }
+
+        if ($('#txtNumPlans').val() < 0 || $('#txtNumPlans').val() > selectedrq.length || $('#txtNumPlans').val() == "") {
+            bootbox.alert("Invalid number of plans(need <= total request)");
+            return;
+        }
+
+        $.blockUI();
+
+        alert(selectedrq);
+        //forTest
+        //selectedrq.push(32); selectedrq.push(38);
+        //end For Tests
+
+        var planNumber = $('#txtNumPlans').val();
+        var input = $("<input>").attr("type", "hidden").attr("name", "requestsIdsList").val(selectedrq);
+        var planNum = $("<input>").attr("type", "hidden").attr("name", "planNumber").val(planNumber);
+        $('#toBeSubmit').append($(input))
+        $('#toBeSubmit').append($(planNum))
+
+        $.post('/Plans/EditAutoScheduleDeliveryPlanAjax', { ordersIdLists: selectedrq.toString(), planNumber: planNumber }, function (data) {
+            alert(data.waypoints.length);
+            localStorage.setItem('waypoints', JSON.stringify(data.waypoints));
+            localStorage.setItem('segments', JSON.stringify(data.segments));
+            //should save the function here
+            localStorage.setItem('requests', JSON.stringify(data.requests));
+            $('#toBeSubmit').submit();
+            $.unblockUI();
+        });
+
+
+
+
+    })
+
+
+
+    $('#btnGroup').click(function () {
+        $('#selectedRequestul').html('');
+    })
+</script>

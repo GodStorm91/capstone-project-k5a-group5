@@ -253,23 +253,19 @@
     <script type="text/javascript">
 
         function chMd() {
-            for (var i = 0; i < document.forms[0].elements.length; i++) {
-                if (document.forms[0].elements[i].name == "optionsRadios") {
-                    if (document.forms[0].elements[i].value == "option1") {
-                        if (document.forms[0].elements[i].checked == true) {
-                            $('#ddlHubCategories').prop('disabled', true);
-                            $('#ddlHub').prop('disabled', true);
-                        }
-                    }
-                    else if (document.forms[0].elements[i].value == "option2") {
-                        if (document.forms[0].elements[i].checked == true) {
-                            $('#ddlHubCategories').prop('disabled', false);
-                            $('#ddlHub').prop('disabled', false);
 
-                        }
-                    }
-                }
+            if ($('#optionsRadios1').is(":checked")) {
+                //alert("radio 1 checked");
+                $('#ddlHubCategories').prop('disabled', true);
+                $('#ddlHub').prop('disabled', true);
             }
+            else {
+                //alert("radio 2 checked");
+                $('#ddlHubCategories').prop('disabled', false);
+                $('#ddlHub').prop('disabled', false);
+            } 
+                       
+            
         }
     </script>
     <script type="text/javascript">
@@ -847,5 +843,224 @@
             <a class="carousel-control left" href="#myCarousel" data-slide="prev" >&lsaquo;</a>
             <a class="carousel-control right" href="#myCarousel" data-slide="next" >&rsaquo;</a>
         </div>       
+        <script>
+            function triggerResize() {                
+                //google.maps.event.trigger(goMap, "resize");
+                //google.maps.event.trigger(map_canvas, "resize");
+            }
+
+            setInterval(function () {
+                google.maps.event.trigger(map_canvas, "resize");
+            }, 200)
+
+            function hideWard() {
+                $('.result-widget').html("");
+            }
+
+            function searchWard(chars) {
+                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
+                    var strList = "<ul>";
+                    for (var i = 0; i < data.wardList.length; i++) {
+                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
+                    }
+                    strList += '</ul>';
+                    $('#resultWard').html(strList);
+
+                });
+            }
+
+            function changeHubCategoriesHandler() {
+                var items = '<option value="-1">-- All Locations --</option>';
+                $('#ddlHub').html(items);
+                $('#ddlHub').trigger("change");
+                var hubId = -1;
+                var hubLists = null;
+                if (arguments[0]) {
+                    hubId = arguments[0];
+                }
+                var id = $('#ddlHubCategories option:selected').val();
+                if (id == '') id = -1;
+                //alert(id);
+                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
+                    items = '<option value="-1">-- All Locagions --</option>';
+                    $.each(data, function (i, hub) {
+                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
+                        //alert(hub.HubId);
+                    });
+                    $('#ddlHub').html(items);
+                    $('#ddlHub').trigger("liszt:updated");
+                    $('#ddlHub').val(hubId);
+
+                    if (hubId == -1) {
+                        clearOverlays();
+                        addMarkerForMultipleHub(data);
+                    }
+
+                });
+
+            }
+
+            $("#ddlHubCategories").change(function () {
+                changeHubCategoriesHandler();
+            });
+
+            $("#ddlHub").change(function () {
+                //CLEAR MOI OVERLAYS
+                clearOverlays();
+
+                //DROP LAI Pins + tu focus den pin da co
+                var id = $('#ddlHub option:selected').val();
+                $.getJSON('/Hubs/Find/' + id, function (data) {
+                    var content = "Name : " + data.Name + "<br>" +
+                          "Dia chi:" + data.Address;
+                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                });
+            });
+
+            $("#ddlCityProvince").change(function () {
+                var items = '<option value="-1">-- All Districts --</option>';
+                $('#ddlDistrict').html(items);
+                $('#ddlDistrict').trigger("change");
+                var id = $('#ddlCityProvince option:selected').val();
+
+                if (id == '') id = -1;
+                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+                    items = '<option value="-1">-- All Districts --</option>';
+                    $.each(data, function (i, district) {
+                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+                    });
+                    $('#ddlDistrict').html(items);
+                    $('#ddlDistrict').trigger("liszt:updated");
+                });
+            });
+
+            $("#ddlDistrict").change(function () {
+                var items = '<option value="-1">-- All Wards --</option>';
+                $('#ddlWard').html(items);
+                $('#ddlWard').trigger("change");
+                var id = $('#ddlDistrict option:selected').val();
+                if (id == '') id = -1;
+                $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+                    items = '<option value="-1">-- All Wards --</option>';
+                    $.each(data, function (i, ward) {
+                        items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+                    });
+                    $('#ddlWard').html(items);
+                });
+            });
+
+            $('#address').blur(function () {
+                findLocation();
+            });
+
+            function clearOverlays() {
+                if (hubsMarkerArray.length > 0) {
+                    for (var i = 0; i < hubsMarkerArray.length; i++) {
+                        hubsMarkerArray[i].setMap(null);
+                    }
+                }
+            }
+
+
+            function findLocation() {
+                var address = $('#address').val();
+                if (address.length == 0) return;
+                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
+                    var content = "Name : " + data.nearestHub.Name + "<br>" +
+                          "Dia chi:" + data.nearestHub.Address;
+
+                    addMarkerHouse(data.lat, data.lon);
+                    localStorage.setItem('HomeLat', data.lat);
+                    localStorage.setItem('HomeLon', data.lon);
+                    //alert(data.HubId);
+                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+                    var id = 8
+                    id = data.nearestHub.HubId;
+                    //alert(id);
+                    changeHubCategoriesHandler(id);
+                });
+            }
+
+            $().ready(function () {
+                $("#checkForm").validate({
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        phone: {
+                            digits: true,
+                            minlength: 10,
+                            maxlength: 12,
+                            required: true
+                        },
+                        name: "required",
+                        CityProvinceId: {
+                            min: 0,
+                            required: true
+                        },
+                        DistrictId: {
+                            min: 0,
+                            required: true
+                        },
+                        Ward: {
+                            min: 0,
+                            required: true
+                        },
+                        HubCategory: {
+                            min: 0,
+                            required: "#optionsRadios2:checked"
+                        },
+                        Hub: {
+                            min: 0,
+                            required: "#optionsRadios2:checked"
+                        },
+                        address: {
+                            required: "#optionsRadios1:checked"
+                        }
+
+                    },
+                    messages: {
+                        email: {
+                            email: "Please enter a valid email address",
+                            required: "Please enter your email address"
+                        },
+                        phone: {
+                            digits: "Please enter digits not character",
+                            minlength: "The minimum of cell phone digits is 10",
+                            maxlength: "The maximum of cell phone digits is 12",
+                            required: "Please enter your phone number"
+                        },
+                        name: "Please enter your name!",
+                        CityProvinceId: {
+                            min: "Please choose city",
+                            required: "Please choose city"
+                        },
+                        DistrictId: {
+                            min: "Please choose district",
+                            required: "Please choose district"
+                        },
+                        Ward: {
+                            required: "Please choose ward",
+                            min: "Please choose ward"
+                        },
+                        Hub: {
+                            required: "Please choose Hub",
+                            min: "Please choose hub"
+                        },
+                        HubCategory: {
+                            required: "Please choose Hub Category",
+                            min: "Please choose Hub category"
+                        },
+                        address: "Please enter address"
+
+                    }
+                });
+
+            });           
+
+        </script>
 </body>
 </html>

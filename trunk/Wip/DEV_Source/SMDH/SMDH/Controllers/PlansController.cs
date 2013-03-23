@@ -60,7 +60,9 @@ namespace SMDH.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            //Data table
+            var plans = context.Plans.Where(p => p.PlanId != null);
+            return View(plans);
         }
 
         //
@@ -707,6 +709,45 @@ namespace SMDH.Controllers
 
         }
 
+        public ActionResult GroupOrdersByDistrictId(int maxOrders = -1, int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        {
+
+            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected                                                     
+                                                     ).OrderBy(r => r.CreatedDate).ToList();
+            var orderGroups =
+                    from order in orders
+                    group order by order.ReceiverAddressDistrictId into g
+                    select new { ReceiverAddressDistrictId = g.Key, Groups = g };
+
+                        
+            List<List<OrderViewModel>> result = new List<List<OrderViewModel>>();
+            foreach (var g in orderGroups)
+            {
+                List<OrderViewModel> currList = new List<OrderViewModel>();
+                int i = 0;
+                foreach (var n in g.Groups)
+                {
+                    i++;
+                    currList.Add(new OrderViewModel(n, weightedDeliveryTypeScore, weightedDateScore));
+
+                    //it's equal the maximum request
+                    if (i == maxOrders)
+                    {
+                        result.Add(currList);
+                        currList = new List<OrderViewModel>();
+                        i = 0;
+                    }
+                }
+                if (currList.Count > 0)
+                {
+                    result.Add(currList);
+                }
+            }            
+
+            return Json(new { success = true, groupList = result });
+
+        }
+
         public ActionResult EditAutoScheduleCollectionPlanAJax(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
             string[] strRequestsIds = requestsIdsList.Split(',');
@@ -775,7 +816,6 @@ namespace SMDH.Controllers
 
             return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList });
         }
-
 
         public ActionResult EditAutoScheduleCollectionPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
@@ -990,6 +1030,194 @@ namespace SMDH.Controllers
 
             return View(plans);
         }
+
+        public ActionResult AutoScheduleDeliveryPlan(int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        {
+            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected                                                     
+                                                     ).OrderBy(r => r.CreatedDate).ToList();
+            var orderGroups =
+                    from order in orders
+                    group order by order.ReceiverAddressDistrictId into g
+                    select new { ReceiverAddressDistrictId = g.Key, Groups = g };
+
+            //group all
+            int maxRequest = 10000000;
+            List<List<OrderViewModel>> result = new List<List<OrderViewModel>>();
+            foreach (var g in orderGroups)
+            {
+                List<OrderViewModel> currList = new List<OrderViewModel>();
+                int i = 0;
+                foreach (var n in g.Groups)
+                {
+                    i++;
+                    currList.Add(new OrderViewModel(n, weightedDeliveryTypeScore, weightedDateScore));
+
+                    //it's equal the maximum request
+                    if (i == maxRequest)
+                    {
+                        result.Add(currList);
+                        currList = new List<OrderViewModel>();
+                        i = 0;
+                    }
+                }
+                if (currList.Count > 0)
+                {
+                    result.Add(currList);
+                }
+            }
+            ViewBag.PossibleOrders = result;
+
+            //
+            return View();
+        }
+
+
+        public ActionResult EditAutoScheduleDeliveryPlanAJax(string ordersIdLists, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        {
+            string[] strRequestsIds = ordersIdLists.Split(',');
+            int[] requestIds = new int[strRequestsIds.Length];
+            List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
+            List<List<OrderViewModel>> returnList = new List<List<OrderViewModel>>();
+            for (int i = 0; i < requestIds.Length; i++)
+            {
+                requestIds[i] = Int16.Parse(strRequestsIds[i]);
+            }
+
+            //planNumber must be greateer than reqestIds
+            if (requestIds.Length < planNumber)
+            {
+                return null;
+            }
+            else
+            {
+                var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
+                var requestsList = requests.ToList();
+                List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                foreach (var request in requests)
+                {
+                    orderViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
+                }
+                for (int i = 0; i < requests.Count(); i++)
+                {
+                    pointList.Add(new GeoCoordinate((double)orderViewModel.ElementAt(i).Latitude, (double)orderViewModel.ElementAt(i).Longitude));
+                }
+
+                PointCollection pointCollection = new PointCollection();
+                for (int i = 0; i < pointList.Count; i++)
+                {
+                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                }
+
+                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+                for (int i = 0; i < listPointCollection.Count; i++)
+                {
+                    PointCollection cluster = listPointCollection[i];
+                    List<OrderViewModel> listItem = new List<OrderViewModel>();
+                    for (int j = 0; j < cluster.Count; j++)
+                    {
+                        listItem.Add(new OrderViewModel(requestsList.ElementAt(cluster.ElementAt(j).Id)));
+                    }
+                    returnList.Add(listItem);
+                }
+
+                ViewBag.NumberOfPlans = planNumber;
+                string listRequestsIds = "";
+                for (int i = 0; i < requestIds.Length - 1; i++)
+                {
+                    listRequestsIds += requestIds[i] + ",";
+                }
+                listRequestsIds += requestIds[requestIds.Length - 1];
+
+                ViewBag.SelectedRequestsIds = listRequestsIds;
+
+                PointCollection pointCluster = listPointCollection[0];
+
+                //Solve mTsp;
+                MTspHelper.initialize();
+                MTspHelper.solveTsp(pointList, planNumber);
+            }
+
+            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList });
+        }
+
+
+        public ActionResult EditAutoScheduleDeliveryPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
+        {
+            try
+            {
+                string[] strRequestsIds = requestsIdsList.Split(',');
+                int[] requestIds = new int[strRequestsIds.Length];
+                for (int i = 0; i < requestIds.Length; i++)
+                {
+                    requestIds[i] = Int16.Parse(strRequestsIds[i]);
+                }
+
+                //planNumber must be greateer than reqestIds
+                if (requestIds.Length < planNumber)
+                {
+                    return null;
+                }
+                else
+                {
+                    var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
+                    var requestsList = requests.ToList();
+                    List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                    List<OrderViewModel> requestViewModel = new List<OrderViewModel>();
+                    foreach (var request in requests)
+                    {
+                        requestViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
+                    }
+                    for (int i = 0; i < requests.Count(); i++)
+                    {
+                        pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                    }
+
+                    PointCollection pointCollection = new PointCollection();
+                    for (int i = 0; i < pointList.Count; i++)
+                    {
+                        pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    }
+
+                    List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+
+                    for (int i = 0; i < listPointCollection.Count; i++)
+                    {
+                        PointCollection cluster = listPointCollection[i];
+                    }
+
+                    ViewBag.NumberOfPlans = planNumber;
+                    string listRequestsIds = "";
+                    for (int i = 0; i < requestIds.Length - 1; i++)
+                    {
+                        listRequestsIds += requestIds[i] + ",";
+                    }
+                    listRequestsIds += requestIds[requestIds.Length - 1];
+
+                    ViewBag.SelectedRequestsIds = listRequestsIds;
+                    List<OrderViewModel> returnList = new List<OrderViewModel>();
+                    PointCollection pointCluster = listPointCollection[0];
+                    for (int i = 0; i < pointCluster.Count; i++)
+                    {
+                        returnList.Add(new OrderViewModel(requestsList.ElementAt(pointCluster.ElementAt(i).Id)));
+                    }
+
+                    //Solve mTsp;
+                    MTspHelper.initialize();
+                    MTspHelper.solveTsp(pointList, planNumber);
+
+                    ViewBag.RequestDetails = returnList;
+
+                }
+
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+                
         //public ActionResult
     }
 }
