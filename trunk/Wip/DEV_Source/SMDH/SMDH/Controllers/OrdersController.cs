@@ -12,9 +12,10 @@ using SMDH.Utilities;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
-        private IOrderRepository _repository;        
+        private IOrderRepository _repository;
 
         public OrdersController(IOrderRepository orderRepository)
         {
@@ -101,12 +102,12 @@ namespace SMDH.Controllers
         //
         // GET: /Orders/Details/5
         public ViewResult Details(int id)
-        {            
+        {
             var order = _repository.Find(id);
 
             ViewBag.Items = _repository.GetItemsInOrder(id);
 
-            return View(order);           
+            return View(order);
         }
 
         //
@@ -128,7 +129,7 @@ namespace SMDH.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult ConfirmCreate(Order order)
-        { 
+        {
             try
             {
                 var request = _repository.FindRequestById(order.RequestId);
@@ -145,7 +146,7 @@ namespace SMDH.Controllers
             {
                 return Json(new { success = false });
                 throw;
-            } 
+            }
         }
 
         [HttpPost]
@@ -176,7 +177,7 @@ namespace SMDH.Controllers
                 {
                     return Json(new { success = true });
                 }
-                
+
             }
             catch (Exception)
             {
@@ -221,11 +222,11 @@ namespace SMDH.Controllers
                 if (_repository.Approve(order, dueDate, fee))
                 {
                     var orderDetails = new OrderViewModel(order);
-                    return Json(new { success = true, order = orderDetails});
+                    return Json(new { success = true, order = orderDetails });
 
                 }
-              
-                return Json(new { success = false });              
+
+                return Json(new { success = false });
             }
             catch (Exception)
             {
@@ -245,7 +246,7 @@ namespace SMDH.Controllers
                     return Json(new { success = true });
                 }
                 return Json(new { success = false });
-                
+
             }
             catch (Exception)
             {
@@ -333,7 +334,7 @@ namespace SMDH.Controllers
             {
                 return Json(new { success = true });
             }
-        }        
+        }
 
         private int[] parseStringToList(string input)
         {
@@ -346,6 +347,6 @@ namespace SMDH.Controllers
 
             return resultArray;
         }
-        
+
     }
 }

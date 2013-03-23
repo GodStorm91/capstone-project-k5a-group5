@@ -8,6 +8,7 @@ using SMDH.Models.Abstract;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class DeliveryMenController : Controller
     {
 

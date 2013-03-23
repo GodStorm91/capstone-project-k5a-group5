@@ -45,6 +45,7 @@ using OsmSharp.Routing.Core.Graph.DynamicGraph.PreProcessed;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class PlansController : Controller
     {
         private IPlanRepository _repository;
