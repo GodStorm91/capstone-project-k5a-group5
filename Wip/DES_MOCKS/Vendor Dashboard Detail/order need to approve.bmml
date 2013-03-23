@@ -1,43 +1,78 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1285" measuredH="439" mockupW="1146" mockupH="433">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1373" measuredH="439" mockupW="1234" mockupH="433">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="139" y="6" w="805" h="433" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Need%20to%20approve%0Ahttp%3A//</text>
       </controlProperties>
     </control>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="276" y="164" w="448" h="203" measuredW="341" measuredH="203" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="267" y="192" w="448" h="203" measuredW="341" measuredH="203" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
         <text>No%2COrder%20ID%2C%20Item%20No%2C%20Description%2C%20Created%20Date%0A%20%0A%20%0A%20%0A%20%0A%20%0A%20</text>
       </controlProperties>
     </control>
-    <control controlID="4" controlTypeID="com.balsamiq.mockups::SearchBox" x="572" y="124" w="-1" h="-1" measuredW="141" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>search%20any%20condition</text>
-      </controlProperties>
-    </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::Link" x="167" y="110" w="-1" h="-1" measuredW="113" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Link" x="154" y="83" w="-1" h="-1" measuredW="113" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Back%20to%20Dashboard</text>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextArea" x="828" y="126" w="457" h="256" measuredW="200" measuredH="140" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextArea" x="916" y="119" w="457" h="256" measuredW="200" measuredH="140" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Order%20ID%3A%20%0ACreated%20Date%3A</text>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::DataGrid" x="860" y="181" w="392" h="151" measuredW="238" measuredH="233" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::DataGrid" x="948" y="174" w="392" h="151" measuredW="238" measuredH="233" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <text>No%2CItem%20ID%2C%20Description%2C%20Quantity%0A%201%2C%2011%2C%20T-shirt%2C%201%0A%202%2C%2014%2C%20jeans%2C%202%0A%20%0A%20%0A%20%0A%20%0A%20</text>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Link" x="411" y="192" w="-1" h="-1" measuredW="14" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Link" x="419" y="219" w="-1" h="-1" measuredW="14" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>3</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::StickyNote" x="955" y="12" w="243" h="83" measuredW="109" measuredH="123" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::StickyNote" x="955" y="12" w="356" h="119" measuredW="109" measuredH="123" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>bam%20vao%20item%20no%20de%20coi%20item%20detail%20theo%20orderID</text>
+        <text>-%20bam%20vao%20item%20no%20de%20coi%20item%20detail%20theo%20orderID%20%0A-%20vendor%20co%20the%20approve%20order%20or%20reject%20order%20tai%20day%0A-%20sau%20khi%20approve%20or%20reject%2C%20redirect%20den%20page%20need%20to%20approve%20%0A%28ko%20hien%20thi%20order%20moi%20vua%20approve/reject%20nua%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="1084" y="333" w="-1" h="-1" measuredW="73" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Approve</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Button" x="1166" y="333" w="-1" h="-1" measuredW="62" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Reject</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::ButtonBar" x="200" y="104" w="-1" h="-1" measuredW="578" measuredH="29" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>All%2C%20Draft%2C%20New%2C%20Rejected%2C%20Submitted%2C%20Delivering%2C%20To%20be%20return%2C%20None</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::DateChooser" x="326" y="148" w="-1" h="-1" measuredW="90" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%20%20/%20%20/%20%20%20%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::DateChooser" x="487" y="148" w="-1" h="-1" measuredW="90" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%20%20/%20%20/%20%20%20%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="275" y="149" w="-1" h="-1" measuredW="36" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>From</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Label" x="450" y="150" w="-1" h="-1" measuredW="22" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>To</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="804" y="119" w="86" h="55" measuredW="69" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>FILTER</text>
       </controlProperties>
     </control>
   </controls>
