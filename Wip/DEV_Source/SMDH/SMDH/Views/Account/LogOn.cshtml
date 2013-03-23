@@ -20,7 +20,7 @@
             <div class="controls">
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-user"></i></span>
-                    @Html.TextBoxFor(m => m.UserName, new { placehoder = "Username", style = "height:30px;" })
+                    @Html.TextBoxFor(m => m.UserName, new { placeholder = "Username", style = "height:30px;" })
                     @Html.ValidationMessageFor(m => m.UserName)
                 </div>
             </div>
@@ -29,7 +29,7 @@
             <div class="controls">
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-lock"></i></span>
-                    @Html.PasswordFor(m => m.Password, new { placehoder = "Password", style = "height:30px;" })
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", style = "height:30px;" })
                     @Html.ValidationMessageFor(m => m.Password)
                 </div>
             </div>
