@@ -282,7 +282,7 @@
 
     $('.btnselectall').click(function () {
         $('#selectedRequestZone').find('li').each(function () {
-            $("#selectedRequest > ul").append($(this));
+            $("#selectedRequest > ul").prepend($(this));
             $(this).find('div.divadd').html('<a class="label label-important" onclick="removefromplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-left"></i></a>');
             //            $("#add-" + i).html('<a class="label label-important" onclick="removefromplan(' + i + ')"><i class="icon-arrow-left"></i></a>');
             //        $("#group-" + arguments[0]).addClass('alert-success');
@@ -296,7 +296,7 @@
 
     $('.btnremoveall').click(function () {
         $('#selectedRequestul').find('li').each(function () {
-            $("#requestsZone > ul").append($(this));
+            $("#requestsZone > ul").prepend($(this));
             $(this).find('div.divadd').html('<a class="label label-success" onclick="addtoplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-right"></i></a>');
             //$("#add-" + i).html('<a class="label label-success" onclick="addtoplan(' + i + ')"><i class="icon-arrow-right"></i></a>');
             $(this).removeClass('alert-success');
