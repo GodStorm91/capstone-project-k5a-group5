@@ -14,22 +14,7 @@ namespace SMDH.Models
         public string FullAddress
         {
             get { return AddressHelper.GetFullAddress(this); }
-        }
-
-        public bool UpdateLocation(SMDHDataContext context, decimal latitude, decimal longitude)
-        {
-            try
-            {
-                Latitude = latitude;
-                Longitude = longitude;
-                context.SubmitChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
+        }        
     }
 
     public partial class HubMetadata

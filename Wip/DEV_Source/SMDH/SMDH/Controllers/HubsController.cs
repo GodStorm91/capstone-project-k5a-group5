@@ -175,7 +175,7 @@ namespace SMDH.Controllers
             try
             {
                 var hub = context.Hubs.Single(o=> o.HubId == id);
-                if (hub.UpdateLocation(context, latitude, longitude)) return Json(new { success = true });
+                //if (hub.UpdateLocation(context, latitude, longitude)) return Json(new { success = true });
                 return Json(new { success = false });
             }
             catch (Exception e)
