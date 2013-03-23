@@ -9,6 +9,7 @@ using SMDH.Models;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class CityProvinceController : Controller
     {
         private ICityProvinceRepository _repository;

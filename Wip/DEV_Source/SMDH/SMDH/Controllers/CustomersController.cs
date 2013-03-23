@@ -9,6 +9,7 @@ using SMDH.Models.Concrete;
 
 namespace SMDH.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private ICustomerRepository _repository;
