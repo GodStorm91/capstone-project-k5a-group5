@@ -14,7 +14,7 @@ namespace MvcApplication1.Controllers
 
         //
         // GET: /Account/LogOn
-
+        
         public ActionResult LogOn()
         {
             return View();
@@ -58,7 +58,7 @@ namespace MvcApplication1.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogOn", "Account");
         }
 
         //
