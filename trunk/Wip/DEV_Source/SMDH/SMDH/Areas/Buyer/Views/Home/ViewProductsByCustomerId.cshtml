@@ -30,248 +30,226 @@
     <script src="/js/jquery.validate.js" type="text/javascript"></script>
     <script src="/js/bootbox.min.js" type="text/javascript"></script>
     <script src="/js/accounting.js" type="text/javascript"></script>
-    <style> body {
-      padding-bottom: 40px;
-      color: #5a5a5a;
-    }
+    <script src="/js/bootstrap-carousel.js" type="text/javascript"></script>
+   @* <script src="js/jquery-1.8.1.min.js" type="text/javascript"></script>*@
+        <script>
+            !function ($) {
+                $(function () {
+                    // carousel demo
+                    $('#myCarousel').carousel('pause')
+                })
+            } (window.jQuery)
+        </script>
+        <script>
+            function hideWard() {
+                $('.result-widget').html("");
+            }
+
+            function searchWard(chars) {
+                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
+                    var strList = "<ul>";
+                    for (var i = 0; i < data.wardList.length; i++) {
+                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
+                    }
+                    strList += '</ul>';
+                    $('#resultWard').html(strList);
+
+                });
+            }
+
+            function changeHubCategoriesHandler() {
+                var items = '<option value="-1">-- All Locations --</option>';
+                $('#ddlHub').html(items);
+                $('#ddlHub').trigger("change");
+                var hubId = -1;
+                var hubLists = null;
+                if (arguments[0]) {
+                    hubId = arguments[0];
+                }
+                var id = $('#ddlHubCategories option:selected').val();
+                if (id == '') id = -1;
+                //alert(id);
+                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
+                    items = '<option value="-1">-- All Locagions --</option>';
+                    $.each(data, function (i, hub) {
+                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
+                        //alert(hub.HubId);
+                    });
+                    $('#ddlHub').html(items);
+                    $('#ddlHub').trigger("liszt:updated");
+                    $('#ddlHub').val(hubId);
+
+                    if (hubId == -1) {
+                        clearOverlays();
+                        addMarkerForMultipleHub(data);
+                    }
+
+                });
+
+            }
+
+            $("#ddlHubCategories").change(function () {
+                changeHubCategoriesHandler();
+            });
+
+            $("#ddlHub").change(function () {
+                //CLEAR MOI OVERLAYS
+                clearOverlays();
+
+                //DROP LAI Pins + tu focus den pin da co
+                var id = $('#ddlHub option:selected').val();
+                $.getJSON('/Hubs/Find/' + id, function (data) {
+                    var content = "Name : " + data.Name + "<br>" +
+                          "Dia chi:" + data.Address;
+                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                });
+            });
+
+            $("#ddlCityProvince").change(function () {
+                var items = '<option value="-1">-- All Districts --</option>';
+                $('#ddlDistrict').html(items);
+                $('#ddlDistrict').trigger("change");
+                var id = $('#ddlCityProvince option:selected').val();
+
+                if (id == '') id = -1;
+                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+                    items = '<option value="-1">-- All Districts --</option>';
+                    $.each(data, function (i, district) {
+                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+                    });
+                    $('#ddlDistrict').html(items);
+                    $('#ddlDistrict').trigger("liszt:updated");
+                });
+            });
+
+            $("#ddlDistrict").change(function () {
+                var items = '<option value="-1">-- All Wards --</option>';
+                $('#ddlWard').html(items);
+                $('#ddlWard').trigger("change");
+                var id = $('#ddlDistrict option:selected').val();
+                if (id == '') id = -1;
+                $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+                    items = '<option value="-1">-- All Wards --</option>';
+                    $.each(data, function (i, ward) {
+                        items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+                    });
+                    $('#ddlWard').html(items);
+                });
+            });
+
+            $('#address').blur(function () {
+                findLocation();
+            });
+
+            function clearOverlays() {
+                if (hubsMarkerArray.length > 0) {
+                    for (var i = 0; i < hubsMarkerArray.length; i++) {
+                        hubsMarkerArray[i].setMap(null);
+                    }
+                }
+            }
 
 
+            function findLocation() {
+                var address = $('#address').val();
+                if (address.length == 0) return;
+                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
+                    var content = "Name : " + data.nearestHub.Name + "<br>" +
+                          "Dia chi:" + data.nearestHub.Address;
 
-    /* CUSTOMIZE THE NAVBAR
-    -------------------------------------------------- */
+                    addMarkerHouse(data.lat, data.lon);
+                    localStorage.setItem('HomeLat', data.lat);
+                    localStorage.setItem('HomeLon', data.lon);
+                    //alert(data.HubId);
+                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+                    var id = 8
+                    id = data.nearestHub.HubId;
+                    //alert(id);
+                    changeHubCategoriesHandler(id);
+                });
+            }
 
-    /* Special class on .container surrounding .navbar, used for positioning it into place. */
-    .navbar-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      margin-top: 20px;
-      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
-    }
-    .navbar-wrapper .navbar {
+            $().ready(function () {
+                $("#checkForm").validate({
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        phone: {
+                            digits: true,
+                            minlength: 10,
+                            maxlength: 12,
+                            required: true
+                        },
+                        name: "required",
+                        CityProvinceId: {
+                            min: 0,
+                            required: true
+                        },
+                        DistrictId: {
+                            min: 0,
+                            required: true
+                        },
+                        Ward: {
+                            min: 0,
+                            required: true
+                        },
+                        HubCategory: {
+                            min: 0,
+                            required: "#optionsRadios2:checked"
+                        },
+                        Hub: {
+                            min: 0,
+                            required: "#optionsRadios2:checked"
+                        },
+                        address: {
+                            required: true
+                        }
 
-    }
+                    },
+                    messages: {
+                        email: {
+                            email: "Please enter a valid email address",
+                            required: "Please enter your email address"
+                        },
+                        phone: {
+                            digits: "Please enter digits not character",
+                            minlength: "The minimum of cell phone digits is 10",
+                            maxlength: "The maximum of cell phone digits is 12",
+                            required: "Please enter your phone number"
+                        },
+                        name: "Please enter your name!",
+                        CityProvinceId: {
+                            min: "Please choose city",
+                            required: "Please choose city"
+                        },
+                        DistrictId: {
+                            min: "Please choose district",
+                            required: "Please choose district"
+                        },
+                        Ward: {
+                            required: "Please choose ward",
+                            min: "Please choose ward"
+                        },
+                        Hub: {
+                            required: "Please choose Hub",
+                            min: "Please choose hub"
+                        },
+                        HubCategory: {
+                            required: "Please choose Hub Category",
+                            min: "Please choose Hub category"
+                        },
+                        address: "Please enter address"
 
-    /* Remove border and change up box shadow for more contrast */
-    .navbar .navbar-inner {
-      border: 0;
-      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-              box-shadow: 0 2px 10px rgba(0,0,0,.25);
-    }
+                    }
+                });
 
-    /* Downsize the brand/project name a bit */
-    .navbar .brand {
-      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-      font-size: 16px;
-      font-weight: bold;
-      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    }
+            });           
 
-    /* Navbar links: increase padding for taller navbar */
-    .navbar .nav > li > a {
-      padding: 15px 20px;
-    }
-
-    /* Offset the responsive button for proper vertical alignment */
-    .navbar .btn-navbar {
-      margin-top: 10px;
-    }
-
-
-
-    /* CUSTOMIZE THE NAVBAR
-    -------------------------------------------------- */
-
-    /* Carousel base class */
-    .carousel {
-      margin-bottom: 60px;
-    }
-
-    .carousel .container {
-      position: relative;
-      z-index: 9;
-    }
-
-    .carousel-control {
-      height: 80px;
-      margin-top: 0;
-      font-size: 120px;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-      background-color: transparent;
-      border: 0;
-    }
-
-    .carousel .item {
-      height: 500px;
-    }
-    .carousel img {
-     
-      top: 0;
-      left: 0;
-     
-    }
-
-    .carousel-caption {
-      background-color: transparent;
-      position: static;
-      max-width: 550px;
-      padding: 0 20px;
-      margin-top: 200px;
-    }
-    .carousel-caption h1,
-    .carousel-caption .lead {
-      margin: 0;
-      line-height: 1.25;
-      color: #fff;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-    }
-    .carousel-caption .btn {
-      margin-top: 10px;
-    }
-
-
-
-    /* MARKETING CONTENT
-    -------------------------------------------------- */
-
-    /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
-      text-align: center;
-    }
-    .marketing h2 {
-      font-weight: normal;
-    }
-    .marketing .span4 p {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-
-
-    /* Featurettes
-    ------------------------- */
-
-    .featurette-divider {
-      margin: 80px 0; /* Space out the Bootstrap <hr> more */
-    }
-    .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
-      overflow: hidden; /* Vertically center images part 2: clear their floats. */
-    }
-    .featurette-image {
-      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
-    }
-
-    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
-    .featurette-image.pull-left {
-      margin-right: 40px;
-    }
-    .featurette-image.pull-right {
-      margin-left: 40px;
-    }
-
-    /* Thin out the marketing headings */
-    .featurette-heading {
-      font-size: 50px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-
-
-
-    /* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-    #media (max-width: 979px) {
-
-      .container.navbar-wrapper {
-        margin-bottom: 0;
-        width: auto;
-      }
-      .navbar-inner {
-        border-radius: 0;
-        margin: -20px 0;
-      }
-
-      .carousel .item {
-        height: 500px;
-      }
-      .carousel img {
-        width: auto;
-        height: 500px;
-      }
-
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-      .featurette-image.pull-left,
-      .featurette-image.pull-right {
-        display: block;
-        float: none;
-        max-width: 40%;
-        margin: 0 auto 20px;
-      }
-    }
-    
-    #checkForm label.error
-    {
-        margin-left: 10px;
-        width: auto;
-        display: block;
-        color: Red
-    }
-
-
-    #media (max-width: 767px) {
-
-      .navbar-inner {
-        margin: -20px;
-      }
-
-      .carousel {
-        margin-left: -20px;
-        margin-right: -20px;
-      }
-      .carousel .container {
-
-      }
-      .carousel .item {
-        height: 300px;
-      }
-      .carousel img {
-        height: 300px;
-      }
-      .carousel-caption {
-        width: 65%;
-        padding: 0 70px;
-        margin-top: 100px;
-      }
-      .carousel-caption h1 {
-        font-size: 30px;
-      }
-      .carousel-caption .lead,
-      .carousel-caption .btn {
-        font-size: 18px;
-      }
-
-      .marketing .span4 + .span4 {
-        margin-top: 40px;
-      }
-
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-
-    }
-   </style>
+        </script>
     <script type="text/javascript">
 
         function chMd() {
@@ -614,225 +592,6 @@
 
 
     </script>
-    <script src="/js/bootstrap-carousel.js" type="text/javascript"></script>
-        <script>
-            !function ($) {
-                $(function () {
-                    // carousel demo
-                    $('#myCarousel').carousel()
-                })
-            } (window.jQuery)
-        </script>
-        <script>
-            function hideWard() {
-                $('.result-widget').html("");
-            }
-
-            function searchWard(chars) {
-                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
-                    var strList = "<ul>";
-                    for (var i = 0; i < data.wardList.length; i++) {
-                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
-                    }
-                    strList += '</ul>';
-                    $('#resultWard').html(strList);
-
-                });
-            }
-
-            function changeHubCategoriesHandler() {
-                var items = '<option value="-1">-- All Locations --</option>';
-                $('#ddlHub').html(items);
-                $('#ddlHub').trigger("change");
-                var hubId = -1;
-                var hubLists = null;
-                if (arguments[0]) {
-                    hubId = arguments[0];
-                }
-                var id = $('#ddlHubCategories option:selected').val();
-                if (id == '') id = -1;
-                //alert(id);
-                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-                    items = '<option value="-1">-- All Locagions --</option>';
-                    $.each(data, function (i, hub) {
-                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
-                        //alert(hub.HubId);
-                    });
-                    $('#ddlHub').html(items);
-                    $('#ddlHub').trigger("liszt:updated");
-                    $('#ddlHub').val(hubId);
-
-                    if (hubId == -1) {
-                        clearOverlays();
-                        addMarkerForMultipleHub(data);
-                    }
-
-                });
-
-            }
-
-            $("#ddlHubCategories").change(function () {
-                changeHubCategoriesHandler();
-            });
-
-            $("#ddlHub").change(function () {
-                //CLEAR MOI OVERLAYS
-                clearOverlays();
-
-                //DROP LAI Pins + tu focus den pin da co
-                var id = $('#ddlHub option:selected').val();
-                $.getJSON('/Hubs/Find/' + id, function (data) {
-                    var content = "Name : " + data.Name + "<br>" +
-                          "Dia chi:" + data.Address;
-                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
-                });
-            });
-
-            $("#ddlCityProvince").change(function () {
-                var items = '<option value="-1">-- All Districts --</option>';
-                $('#ddlDistrict').html(items);
-                $('#ddlDistrict').trigger("change");
-                var id = $('#ddlCityProvince option:selected').val();
-
-                if (id == '') id = -1;
-                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
-                    items = '<option value="-1">-- All Districts --</option>';
-                    $.each(data, function (i, district) {
-                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
-                    });
-                    $('#ddlDistrict').html(items);
-                    $('#ddlDistrict').trigger("liszt:updated");
-                });
-            });
-
-            $("#ddlDistrict").change(function () {
-                var items = '<option value="-1">-- All Wards --</option>';
-                $('#ddlWard').html(items);
-                $('#ddlWard').trigger("change");
-                var id = $('#ddlDistrict option:selected').val();
-                if (id == '') id = -1;
-                $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
-                    items = '<option value="-1">-- All Wards --</option>';
-                    $.each(data, function (i, ward) {
-                        items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
-                    });
-                    $('#ddlWard').html(items);
-                });
-            });
-
-            $('#address').blur(function () {
-                findLocation();
-            });
-
-            function clearOverlays() {
-                if (hubsMarkerArray.length > 0) {
-                    for (var i = 0; i < hubsMarkerArray.length; i++) {
-                        hubsMarkerArray[i].setMap(null);
-                    }
-                }
-            }
-
-
-            function findLocation() {
-                var address = $('#address').val();
-                if (address.length == 0) return;
-                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
-                    var content = "Name : " + data.nearestHub.Name + "<br>" +
-                          "Dia chi:" + data.nearestHub.Address;
-
-                    addMarkerHouse(data.lat, data.lon);
-                    localStorage.setItem('HomeLat', data.lat);
-                    localStorage.setItem('HomeLon', data.lon);
-                    //alert(data.HubId);
-                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
-                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
-                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
-                    var id = 8
-                    id = data.nearestHub.HubId;
-                    //alert(id);
-                    changeHubCategoriesHandler(id);
-                });
-            }
-
-            $().ready(function () {
-                $("#checkForm").validate({
-                    rules: {
-                        email: {
-                            required: true,
-                            email: true
-                        },
-                        phone: {
-                            digits: true,
-                            minlength: 10,
-                            maxlength: 12,
-                            required: true
-                        },
-                        name: "required",
-                        CityProvinceId: {
-                            min: 0,
-                            required: true
-                        },
-                        DistrictId: {
-                            min: 0,
-                            required: true
-                        },
-                        Ward: {
-                            min: 0,
-                            required: true
-                        },
-                        HubCategory: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        Hub: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        address: {
-                            required: true
-                        }
-
-                    },
-                    messages: {
-                        email: {
-                            email: "Please enter a valid email address",
-                            required: "Please enter your email address"
-                        },
-                        phone: {
-                            digits: "Please enter digits not character",
-                            minlength: "The minimum of cell phone digits is 10",
-                            maxlength: "The maximum of cell phone digits is 12",
-                            required: "Please enter your phone number"
-                        },
-                        name: "Please enter your name!",
-                        CityProvinceId: {
-                            min: "Please choose city",
-                            required: "Please choose city"
-                        },
-                        DistrictId: {
-                            min: "Please choose district",
-                            required: "Please choose district"
-                        },
-                        Ward: {
-                            required: "Please choose ward",
-                            min: "Please choose ward"
-                        },
-                        Hub: {
-                            required: "Please choose Hub",
-                            min: "Please choose hub"
-                        },
-                        HubCategory: {
-                            required: "Please choose Hub Category",
-                            min: "Please choose Hub category"
-                        },
-                        address: "Please enter address"
-
-                    }
-                });
-
-            });           
-
-        </script>
 </head>
 <body onload="initialize()">
     <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
@@ -953,16 +712,9 @@
                         </div>
                     </div>
                 </div>
-                <p>
-            <div id="noi_dung" style="margin-left: 60px; margin-top: -10px; width: 500px; height: 300px;">
-                <img src="" width="150px" height="150px" style="float: left; margin-left: 10px;" /><div
-                    class="des" style="float: left; margin-left: 50px; margin-top: 50px;">
-                </div>
-            </div>
-        </p>
             </div>
             <div class="item">
-                <div class="span12">
+               
                     <div class="row-fluid">
                         <div class="span6">
                             <div>
@@ -1094,10 +846,8 @@
                 </div>
             </div>
             <!-- Carousel nav -->
-            <a class="carousel-control left" href="#myCarousel" data-slide="prev" style="color:Blue;">&lsaquo;</a>
-            <a class="carousel-control right" href="#myCarousel" data-slide="next" style="color:Blue;">&rsaquo;</a>
-        </div>
-        
-        
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev" >&lsaquo;</a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next" >&rsaquo;</a>
+        </div>       
 </body>
 </html>
