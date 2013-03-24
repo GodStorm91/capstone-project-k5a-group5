@@ -80,14 +80,14 @@
                             
                                     <div style="margin-top: 5px;">
                                         <input type="hidden" class="label label-info requestId" value="@order.OrderId"/><span
-                                            class="icon-user"></span><span class="lbinfo label label-info">@order.Customer</span><span
+                                            class="icon-user"></span><span class="lbinfo label label-info">@order.ReceiverName</span><span
                                                 class="icon-calendar"></span><span class="lbinfo label label-info">@order.CreatedDate</span>
                                     </div>
-                                    addressId = order.DeliverAddress;
-                                }
-                                <div>
-                                    <span class="icon-globe"></span><span>@addressId</span>
+                                    <div>
+                                    <span class="icon-globe"></span><span>@order.DeliverAddress</span>
                                 </div>
+                                }
+                                
                             </div>
                         </li>                       
                                 i++;
@@ -108,7 +108,7 @@
                 <span class="icon"><i class="icon-ok"></i></span>
                 <h5>
                     Selected Order(s)</h5>
-                <span id="totalplans" class="label label-info">Total : 0 request(s)</span>
+                <span id="totalplans" class="label label-info">Total : 0 Order(s)</span>
             </div>
             <div class="widget-content" id="selectedRequest">
                 <ul class="site-stats" style="height: 500px; overflow-y: scroll;" id="selectedRequestul">
@@ -216,14 +216,14 @@
                         resultItemString +=
                             '<div style="margin-top:5px;">' +
                                 '<input type="hidden" class="label label-info requestId" value="' + item.OrderId + '"/><span ' +
-                                    'class="icon-user"></span><span class="lbinfo label label-info">' + item.Customer + '</span><span ' +
+                                    'class="icon-user"></span><span class="lbinfo label label-info">' + item.ReceiverName + '</span><span ' +
                                         'class="icon-calendar"></span><span class="lbinfo label label-info">' + item.CreatedDate + '</span>' +
+                            '</div>' + '<div>' +
+                                '<span class="icon-globe"></span><span>' + item.DeliverAddress + '</span>' +
                             '</div>';
                         collectionAddress = item.DeliverAddress;
                     }
-                    resultItemString += '<div>' +
-                                '<span class="icon-globe"></span><span>' + collectionAddress + '</span>' +
-                            '</div>' +
+                    resultItemString +=
                         '</div>';
                     resultItemString += "</li>";
                     resultItemString += '</div>';
@@ -260,7 +260,7 @@
         //alert(arguments[0]);
         $("#selectedRequest > ul").prepend($("#group-" + arguments[0]));
         var numofplans = $("#selectedRequestul").find('input.requestId').length;
-        $('#totalplans').html('Total : ' + numofplans + ' request(s)')
+        $('#totalplans').html('Total : ' + numofplans + ' Order(s)')
         $("#add-" + arguments[0]).html('<a class="label label-important" onclick="removefromplan(' + arguments[0] + ')"><i class="icon-arrow-left"></i></a>');
         //        $("#group-" + arguments[0]).addClass('alert-success');
         $("#selectedRequest span").removeClass('label-info');
