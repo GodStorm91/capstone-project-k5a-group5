@@ -17,7 +17,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;</button>
     <h3>
-        Plan No : @Model.PlanId / Create by @Model.CreatedByUserId (@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate))</h3>
+        Plan No : @Model.PlanId /(@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate))/Distance: @((Model.Distance.Value/1000).ToString("N2")) km(s)</h3>
 </div>
 <div class="modal-body" style="max-height: 560px;">
     <div style="margin-bottom: 5px; margin-top: -25px;">

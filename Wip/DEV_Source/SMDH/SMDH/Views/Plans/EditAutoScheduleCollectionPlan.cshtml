@@ -456,7 +456,7 @@
             //            for (i = 0; i < selectedRequestIds.length; i++) {
             //                alert(selectedRequestIds[i]);
             //            }
-            $.post('/Plans/ConfirmCreateCollectionPlan', { selectedRequestIds: selectedRequestIds.toString() }, function (result) {
+            $.post('/Plans/ConfirmCreateCollectionPlan', { selectedRequestIds: selectedRequestIds.toString(), distanceList: distanceList }, function (result) {
                 if (result.success) {
                     $.blockUI();
                     window.location = '/Plans/Details?&id=' + result.planId;
@@ -751,7 +751,7 @@
                 listRequest.push(request.RequestId);
             });
 
-            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest });
+            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest, Distance: distanceList[index] });
         });
         var json = $.toJSON(testItems);
         alert(json)

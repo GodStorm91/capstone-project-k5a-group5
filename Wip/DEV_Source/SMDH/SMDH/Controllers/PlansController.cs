@@ -610,10 +610,10 @@ namespace SMDH.Controllers
                         var assignedStaff = (from d in context.DeliveryMens
                                              join dm in context.DeliveryMenInPlans on d.DeliveryMenId equals dm.DeliveryMenId
                                              join p in context.Plans on dm.PlanId equals p.PlanId
-                                             where d.Status !=  (int)PlanStatus.New && p.PlanId == id
+                                             where d.Status != (int)PlanStatus.New && p.PlanId == id
                                              select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
 
-                        int[] listAssignedStaffIds = new int[assignedStaff.Count()];                        
+                        int[] listAssignedStaffIds = new int[assignedStaff.Count()];
 
                         for (int i = 0; i < listAssignedStaffIds.Length; i++)
                         {
@@ -713,14 +713,14 @@ namespace SMDH.Controllers
         public ActionResult GroupOrdersByDistrictId(int maxOrders = -1, int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
 
-            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected                                                     
+            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected
                                                      ).OrderBy(r => r.CreatedDate).ToList();
             var orderGroups =
                     from order in orders
                     group order by order.ReceiverAddressDistrictId into g
                     select new { ReceiverAddressDistrictId = g.Key, Groups = g };
 
-                        
+
             List<List<OrderViewModel>> result = new List<List<OrderViewModel>>();
             foreach (var g in orderGroups)
             {
@@ -743,7 +743,7 @@ namespace SMDH.Controllers
                 {
                     result.Add(currList);
                 }
-            }            
+            }
 
             return Json(new { success = true, groupList = result });
 
@@ -979,7 +979,9 @@ namespace SMDH.Controllers
             foreach (var entry in Entrys)
             {
                 int[] listRequests = entry.listRequests.ToArray();
+                double distance = entry.Distance;
                 var plan = new Plan();
+                plan.Distance = (Decimal)distance;
                 if (_repository.CreateCollectionPlan(plan, listRequests))
                 {
                     planIds += plan.PlanId + ",";
@@ -1034,7 +1036,7 @@ namespace SMDH.Controllers
 
         public ActionResult AutoScheduleDeliveryPlan(int cityId = 1, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
-            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected                                                     
+            var orders = context.Orders.Where(r => r.OrderStatus == (int)OrderStatus.Collected
                                                      ).OrderBy(r => r.CreatedDate).ToList();
             var orderGroups =
                     from order in orders
@@ -1218,7 +1220,68 @@ namespace SMDH.Controllers
                 throw;
             }
         }
-                
+
+        public ActionResult CalculateRouteOfPlan(int id)
+        {
+            List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+            Plan plans = context.Plans.Single(o => o.PlanId == id);
+            if (plans.PlanTypeId == (int)PlanTypes.CollectionPlan)
+            {
+                var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
+                int[] requestIds = new int[cargoesInPlan.Count()];
+                int i = 0;
+                foreach (var cargo in cargoesInPlan)
+                {
+                    requestIds[i] = cargo.RequestId.Value;
+                    i++;
+                }
+
+                var requests = context.Requests.Where(r => requestIds.Contains(r.RequestId)).ToList();
+                List<RequestViewModel> resultList = new List<RequestViewModel>();
+                for (i = 0; i < requests.Count; i++)
+                {
+                    resultList.Add(new RequestViewModel(requests.ElementAt(i)));
+                }
+
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    pointList.Add(new GeoCoordinate((double)resultList.ElementAt(i).Latitude, (double)resultList.ElementAt(i).Longitude));
+                }
+                PointCollection pointCollection = new PointCollection();
+                for (i = 0; i < pointList.Count; i++)
+                {
+                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                }
+
+                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, 1);
+                for (i = 0; i < listPointCollection.Count; i++)
+                {
+                    PointCollection cluster = listPointCollection[i];
+                    List<RequestViewModel> listItem = new List<RequestViewModel>();
+                }
+
+                ViewBag.NumberOfPlans = 1;
+                string listRequestsIds = "";
+                for (i = 0; i < requestIds.Length - 1; i++)
+                {
+                    listRequestsIds += requestIds[i] + ",";
+                }
+                listRequestsIds += requestIds[requestIds.Length - 1];
+
+                ViewBag.SelectedRequestsIds = listRequestsIds;
+
+                PointCollection pointCluster = listPointCollection[0];
+
+
+                //Solve mTsp;
+                MTspHelper.initialize();
+                MTspHelper.solveTsp(pointList, 1);
+                return Json(new {segments = MTspHelper.segmentsLists, waypoints = MTspHelper.waypointLists});
+            }
+
+            return Json(new { });
+        }
+
         //public ActionResult
     }
 }
