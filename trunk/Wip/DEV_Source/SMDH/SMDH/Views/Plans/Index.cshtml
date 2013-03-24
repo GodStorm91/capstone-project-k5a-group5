@@ -131,6 +131,11 @@
         row = $(this).parent().parent().children().index($(this).parent());
         alert('Row: ' + row + ', Column: ' + col);
     });
+
+    $('.table > tr').click(function () {
+        alert("Clicked");
+    });
+
     edit = function (modelId) {
         $.ajax({
             url: '/Plans/Details/' + modelId,
@@ -161,9 +166,16 @@
 });
                 map.addLayer(gmap);
                 map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
-                show(row);
+                //show(row);
             }
         });
+
+        $.post("/Plans/CalculateRouteOfPlan", { id: modelId }, function (data) {
+            segments = data.segments;
+            waypoints = data.waypoints;
+            show(0);
+        });
+
     };
 
     var PlanId = 0;
