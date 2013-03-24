@@ -17,6 +17,9 @@ namespace SMDH.Models.ViewModels
         public string HubCategoryName { get; set; }
         public int HubCategoryId { get; set; }
         public string Address { get; set; }
+        public int DistrictId { get; set; }
+        public int WardId { get; set; }
+
 
         private EFHubsRepository repo = new EFHubsRepository();
 
@@ -27,6 +30,10 @@ namespace SMDH.Models.ViewModels
             HubId = hub.HubId;
             Longitude = (double)hub.Longitude;
             Latitude = (double)hub.Latitude;
+            WardId = hub.WardId.Value;
+            DistrictId = hub.DistrictId;
+            WardName = hub.Ward.Name;
+            DistrictName = hub.District.Name;
             //HubCategoryId = hub.HubCategoryId!=null ? -1 : (int)hub.HubCategoryId;
             Address = hub.Address;
         }

@@ -47,9 +47,9 @@
 
             function searchWard(chars) {
                 $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
-                    var strList = "<ul>";
+                    var strList = "<ul style='list-style: none;'>";
                     for (var i = 0; i < data.wardList.length; i++) {
-                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
+                        strList += '<li><a href="" onclick="fillData(' + data.WardList[i].WardName + ')">' + data.wardList[i].WardName + '</li>';
                     }
                     strList += '</ul>';
                     $('#resultWard').html(strList);
@@ -256,11 +256,20 @@
 
             if ($('#optionsRadios1').is(":checked")) {
                 //alert("radio 1 checked");
+                //If user select the Direct Delivery. Enable the textField for user to enter address and any thing else
+                $('#ddlCityProvince').prop('disabled', false);
+                $('#ddlDistrict').prop('disabled', false);
+                $('#txtWard').prop('disabled', false);
+                $('#txtAddress').prop('disabled', false);
                 $('#ddlHubCategories').prop('disabled', true);
                 $('#ddlHub').prop('disabled', true);
             }
             else {
                 //alert("radio 2 checked");
+                $('#ddlCityProvince').prop('disabled', true);
+                $('#ddlDistrict').prop('disabled', true);
+                $('#txtWard').prop('disabled', true);
+                $('#txtAddress').prop('disabled', false);
                 $('#ddlHubCategories').prop('disabled', false);
                 $('#ddlHub').prop('disabled', false);
             } 
@@ -327,7 +336,7 @@
         function addMarkerHub(lat, long, content) {
             var contentString = content;
             var myLatLng = new google.maps.LatLng(lat, long);
-            currentHub = new google.maps.Marker(
+            var currentHub = new google.maps.Marker(
         {
             position: myLatLng,
             map: goMap, title: "Hub"
@@ -384,16 +393,29 @@
 
                 amountArray[index] = $("#amount" + id).text();
 
-            });
-            
+            }); 
+
+            //alert("can append");
+            createFormInformation();
+            //alert("form can submit");
+            $('#toBeSubmit').submit();
+            $('#checkForm').submit();
+        }
+
+        function createFormInformation(wardId) {
+            $('#toBeSubmit').remove();
             var customerId = $("<input>").attr("type", "hidden").attr("name", "customerId").val(getURLParameter("customerId"));
             var itemsList = $("<input>").attr("type", "hidden").attr("name", "itemsList").val(itemIdArray.toString());
             var quantitiesList = $("<input>").attr("type", "hidden").attr("name", "quantitiesList").val(quantityArray.toString());
             var pricesList = $("<input>").attr("type", "hidden").attr("name", "pricesList").val(amountArray.toString());
             var receiverName = $("<input>").attr("type", "hidden").attr("name", "receiverName").val($('#name').val());
             var receiverAddress = $("<input>").attr("type", "hidden").attr("name", "receiverAddress").val($('#address').val());
-            var receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val("1");
-            var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val("1");
+
+            if (wardId != undefined) {
+                var receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val(wardId);
+            }
+            
+            var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val("#ddlDistrict");
             var receiverEmail = $("<input>").attr("type", "hidden").attr("name", "receiverEmail").val($('#email').val());
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
             var deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("1");
@@ -433,12 +455,6 @@
 
             $('#toBeSubmit').append($(customerId));
             $('#toBeSubmit').append($(hubId));
-
-            //alert("can append");        
-
-            //alert("form can submit");
-            //$('#toBeSubmit').submit();
-            $('#checkForm').submit();
         }
 
         $.validator.setDefaults({
@@ -472,6 +488,11 @@
         };
     </script>
     <style type="text/css">
+        #checkForm label.error {
+	        margin-left: 10px;
+	        width: auto;	        
+	        color: Red;
+        }
         #noi_dung
         {
             position: absolute;
@@ -710,7 +731,7 @@
             <div class="item">
                
                     <div class="row-fluid">
-                        <div class="span6" style="width:590px;margin-top:-30px;margin-left:60px;">
+                        <div class="span6" style="width:590px;margin-top:-50px;margin-left:60px; z-index:80000">
                             
                                 <div class="widget-box">
                                     <div class="widget-title">
@@ -745,7 +766,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="city">
                                                 City(*)</label>
-                                            <div class="controls">
+                                            <div class="controls pull-left  ">
                                                 @Html.DropDownList("CityProvinceId", ViewBag.City as SelectList, "-- Choose a City or Province --", new { id = "ddlCityProvince", Class = "chzn-select", name = "city" })
                                             </div>
                                         </div>
@@ -823,7 +844,7 @@
                                 </div>
                             
                         </div>
-                        <div class="span6" style="margin-top:-30px;">
+                        <div class="span5" style="margin-top:-50px;z-index:80000">
                             <div class="widget-box">
                                 <div class="widget-title">
                                     <span class="icon"><i class="icon-th-list"></i></span>
@@ -871,8 +892,7 @@
 
             function changeHubCategoriesHandler() {
                 var items = '<option value="-1">-- All Locations --</option>';
-                $('#ddlHub').html(items);
-                $('#ddlHub').trigger("change");
+                $('#ddlHub').html(items);                
                 var hubId = -1;
                 var hubLists = null;
                 if (arguments[0]) {
@@ -898,7 +918,11 @@
 
                 });
 
+
             }
+
+            hubDistrictId = -1;
+            hubWardId = -1;
 
             $("#ddlHubCategories").change(function () {
                 changeHubCategoriesHandler();
@@ -910,14 +934,20 @@
 
                 //DROP LAI Pins + tu focus den pin da co
                 var id = $('#ddlHub option:selected').val();
+                var hubDistrictId;
+                var hubWardId;
                 $.getJSON('/Hubs/Find/' + id, function (data) {
                     var content = "Name : " + data.Name + "<br>" +
                           "Dia chi:" + data.Address;
+                    //change dropdownlist value to match the value in HUb
+                    $('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
+                    $('#ddlCityProvince').trigger("change",[data.DistrictId, data.WardId, data.WardName]);
+                    //$('#ddlWard').val(hubWardId);
                     addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
                 });
             });
 
-            $("#ddlCityProvince").change(function () {
+            $("#ddlCityProvince").change(function (event, districtId, wardId, wardName) {
                 var items = '<option value="-1">-- All Districts --</option>';
                 $('#ddlDistrict').html(items);
                 $('#ddlDistrict').trigger("change");
@@ -930,6 +960,12 @@
                         items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
                     });
                     $('#ddlDistrict').html(items);
+                    $('#ddlDistrict').val(hubDistrictId);
+                    if (districtId != undefined) {
+                        $('#ddlDistrict').val(districtId);
+                        //append information to form for submitting ?
+                        $('#txtWard').val(wardName);
+                    }
                     $('#ddlDistrict').trigger("liszt:updated");
                 });
             });
@@ -984,6 +1020,7 @@
             }
 
             $().ready(function () {
+                $('#optionsRadios2').trigger("click");
                 $("#checkForm").validate({
                     rules: {
                         email: {
@@ -1005,10 +1042,10 @@
                             min: 0,
                             required: true
                         },
-                        Ward: {
-                            min: 0,
-                            required: true
-                        },
+//                        Ward: {
+//                            min: 0,
+//                            required: true
+//                        },
                         HubCategory: {
                             min: 0,
                             required: "#optionsRadios2:checked"
@@ -1042,10 +1079,10 @@
                             min: "Please choose district",
                             required: "Please choose district"
                         },
-                        Ward: {
-                            required: "Please choose ward",
-                            min: "Please choose ward"
-                        },
+//                        Ward: {
+//                            required: "Please choose ward",
+//                            min: "Please choose ward"
+//                        },
                         Hub: {
                             required: "Please choose Hub",
                             min: "Please choose hub"

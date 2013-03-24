@@ -344,6 +344,8 @@
             localStorage.setItem('segments', JSON.stringify(data.segments));
             //should save the function here
             localStorage.setItem('requests', JSON.stringify(data.requests));
+            localStorage.setItem('planDistanceLists', JSON.stringify(data.distanceList));
+            localStorage.setItem('planTimeLists', JSON.stringify(data.timeList));
             $('#toBeSubmit').submit();
             $.unblockUI();
         });
