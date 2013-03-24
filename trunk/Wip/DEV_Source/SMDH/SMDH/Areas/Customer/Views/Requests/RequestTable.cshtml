@@ -13,8 +13,6 @@
                 Requested Date
             </th>
             <th>
-            </th>
-            <th>
                 Orders
             </th>
             <th>
@@ -56,6 +54,7 @@
                 </td>
                 <td>
                     @item.ValidOrders.Count
+                </td>
                 @*</td>
                 <td>@item.CollectionAddress
                 </td>*@
@@ -84,7 +83,7 @@
                     @if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
                     {
                         <a class="btn action delete" href="#" onclick="cancelRequest(@item.RequestId);">
-                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Request" width="15px"/>
+                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Request" width="15px" />
                         </a> 
                     }
                 </td>

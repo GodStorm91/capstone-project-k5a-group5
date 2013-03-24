@@ -550,6 +550,22 @@ a:hover {
 	background-image: url('/img/iconstatus/arrow_undo.png');
 }
 
+.quick-actions i.icon-prices {
+	background-image: url('/img/iconstatus/prices.png');
+}
+
+.quick-actions i.icon-collected {
+	background-image: url('/img/iconstatus/collected.png');
+}
+
+.quick-actions i.icon-request {
+	background-image: url('/img/iconstatus/request.png');
+}
+
+.quick-actions i.icon-wait {
+	background-image: url('/img/iconstatus/wait.png');
+}
+
 .stat-boxes li:hover, .quick-actions li:hover, .quick-actions-horizontal li:hover  {
     background-color: #fcfcfc;
 	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FCFCFC), to(#F1F1F1));
