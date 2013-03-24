@@ -8,16 +8,13 @@ namespace SMDH.Models.Statuses
     public enum RequestStatus
     {
         Draft = 0,
-        New = 1,
-        Approved = 2,
-        //Planning = 3,
+        New = 1,//using
+        Approved = 2,//using
         PlannedForCollecting = 4,
-        //Collecting = 5,
-        Collected = 6,
-        //Delivering = 7,
+        Collected = 6,//using
+        Pricing = 7,//using
         Finished = 8,
-        //Finished = 9,
-        Canceled = 10
+        Canceled = 10//using
     }
 
     public enum OrderStatus
@@ -32,7 +29,6 @@ namespace SMDH.Models.Statuses
         ToBeReturned = 7,
         PlannedForDelivering = 8,
         Delivering = 9, // at hub
-        //Postponed = 10,
         Delivered = 11, //at hub
         Returned = 12,
         WaitingForReturn = 13, //at hub
