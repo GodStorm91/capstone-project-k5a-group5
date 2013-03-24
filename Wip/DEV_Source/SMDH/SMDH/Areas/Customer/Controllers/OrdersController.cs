@@ -48,6 +48,8 @@ namespace SMDH.Areas.Customer.Controllers
                                     break;
                                 case "plannedforcollecting": statuses.Add((int)OrderStatus.PlannedForCollecting);
                                     break;
+                                case "delivering": statuses.Add((int)OrderStatus.Delivering);
+                                    break;
                                 case "collected": statuses.Add((int)OrderStatus.Collected);
                                     break;
                                 case "tobereturned": statuses.Add((int)OrderStatus.ToBeReturned);

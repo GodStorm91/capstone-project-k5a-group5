@@ -25,8 +25,8 @@ namespace SMDH.Areas.Customer.Controllers
             var requests = new List<Request>();
             var statuses = new List<int>();
             statuses.Add((int)RequestStatus.New);
+            statuses.Add((int)RequestStatus.Pricing);
             statuses.Add((int)RequestStatus.Approved);
-            statuses.Add((int)RequestStatus.PlannedForCollecting);
             statuses.Add((int)RequestStatus.Collected);
             try
             {
@@ -40,17 +40,13 @@ namespace SMDH.Areas.Customer.Controllers
                         {
                             switch (statusStr.ToLower())
                             {
-                                case "draft": statuses.Add((int)RequestStatus.Draft);
-                                    break;
                                 case "new": statuses.Add((int)RequestStatus.New);
+                                    break;
+                                case "pricing": statuses.Add((int)RequestStatus.Pricing);
                                     break;
                                 case "approved": statuses.Add((int)RequestStatus.Approved);
                                     break;
-                                case "planned": statuses.Add((int)RequestStatus.PlannedForCollecting);
-                                    break;
                                 case "collected": statuses.Add((int)RequestStatus.Collected);
-                                    break;
-                                case "finished": statuses.Add((int)RequestStatus.Finished);
                                     break;
                                 case "canceled": statuses.Add((int)RequestStatus.Canceled);
                                     break;
@@ -101,7 +97,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ViewResult Details(int id)
         {
             //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            Request request = context.Requests.Single( o=> o.RequestId == id);
+            Request request = context.Requests.Single(o => o.RequestId == id);
             //if (request.CustomerId == userInfo.CustomerId)
             if (request.CustomerId == 1)
             {
@@ -319,7 +315,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult AddOrders(int id)
         {
             //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            Request request = context.Requests.Single(o=> o.RequestId == id);
+            Request request = context.Requests.Single(o => o.RequestId == id);
             //if (request.CustomerId == userInfo.CustomerId)
             if (request.CustomerId == 1)
             {
@@ -327,7 +323,7 @@ namespace SMDH.Areas.Customer.Controllers
                 {
                     //ViewBag.Customer = userInfo.Customer.CompanyName;
                     ViewBag.Customer = "Lazara";
-                    if (request.Status != RequestStatus.Draft) return RedirectToAction("Index");
+                    //if (request.Status != RequestStatus.Draft) return RedirectToAction("Index");
                     return View(request);
                 }
             }
@@ -362,7 +358,7 @@ namespace SMDH.Areas.Customer.Controllers
             try
             {
                 EFRequestsRepository requestRepo = new EFRequestsRepository();
-                var request = context.Requests.Single( r=> r.RequestId == id);
+                var request = context.Requests.Single(r => r.RequestId == id);
                 if (requestRepo.CustomerCancel(request))
                 {
                     return Json(new { success = true });
