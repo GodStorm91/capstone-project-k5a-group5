@@ -54,6 +54,10 @@ namespace SMDH.Models.mTsp
         public static List<List<GeoCoordinate>> segmentsLists;
 
         public static List<List<GeoCoordinate>> waypointLists;
+
+        public static List<double> planDistanceLists;
+
+        public static List<double> planTimeLists;
         /// <summary>
         /// The box the routing is limited to.
         /// </summary>
@@ -140,6 +144,8 @@ namespace SMDH.Models.mTsp
             List<List<GeoCoordinate>> listGeo = new List<List<GeoCoordinate>>(_numCluster);
             segmentsLists = new List<List<GeoCoordinate>>(_numCluster);
             waypointLists = new List<List<GeoCoordinate>>(_numCluster);
+            planDistanceLists = new List<double>(_numCluster);
+            planTimeLists = new List<double>(_numCluster);
 
             for (int i = 0; i < _numCluster; i++)
             {
@@ -154,24 +160,29 @@ namespace SMDH.Models.mTsp
                 PointCollection collection = allClusters[i];
                 //list
                 List<GeoCoordinate> pointsList = new List<GeoCoordinate>();
+                List<GeoCoordinate> pointsList2 = new List<GeoCoordinate>();
                 waypointLists.Add(pointsList);
                 //Add Tiktak Headquarters to Route
                 var headquarter = context.Hubs.Single(o=> o.HubId == 1);
-                pointsList.Add(new GeoCoordinate((double)headquarter.Latitude, (double)headquarter.Longitude));
+                pointsList2.Add(new GeoCoordinate((double)headquarter.Latitude, (double)headquarter.Longitude));
 
                 for (int j = 0; j < collection.Count; j++)
                 {
-                    pointsList.Add(_points[collection[j].Id]);
+                    pointsList2.Add(_points[collection[j].Id]);
                     
                 }                
                 
-                doTspCalculation(pointsList, VehicleEnum.Car,segmentsLists.ElementAt(i), waypointLists.ElementAt(i));
+                doTspCalculation(pointsList2, VehicleEnum.Car,segmentsLists.ElementAt(i), waypointLists.ElementAt(i));
             }
         }
 
         public static string doTspCalculation(List<GeoCoordinate> points, VehicleEnum vehicle, List<GeoCoordinate> segments, List<GeoCoordinate> waypoints)
         {
             _waypoints = new List<GeoCoordinate>();
+
+            //clear all points in waypoints because it we will add it up later
+            waypoints.Clear();
+
             List<RouterPoint> resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
             IRouter<RouterPoint> router = new Router<PreProcessedEdge>(osm_data, interpreter, new DykstraRoutingPreProcessed(osm_data.TagsIndex));
 
@@ -179,7 +190,7 @@ namespace SMDH.Models.mTsp
             for (int i = 0; i < points.Count; i++)
             {
                 RouterPoint resolved = router.Resolve(VehicleEnum.Car, points.ElementAt<GeoCoordinate>(i));
-                if (resolved != null && router.CheckConnectivity(VehicleEnum.Car, resolved, 100)) ;
+                if (resolved != null && router.CheckConnectivity(VehicleEnum.Car, resolved, 100)) 
                 {
                     resolvedPoints.Add(resolved);
                 }
@@ -203,13 +214,28 @@ namespace SMDH.Models.mTsp
                     for (int p_idx = 0; p_idx < entry.Points.Length; p_idx++)
                     {
                         RoutePoint point = entry.Points[p_idx];
-                        //waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
+                        waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
                     }
                 }
 
                 segments.Add(new GeoCoordinate(entry.Latitude, entry.Longitude));
             }
+            //Calculate time and distances
+            double tempTime = 0;
+            double tempDistance = 0;
+            for (int i = 0; i < waypoints.Count - 1; i++)
+            {
+                RouterPoint rpoint1 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, waypoints[i]);
+                RouterPoint rpoint2 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, waypoints[i + 1]);
+                OsmSharpRoute tempRoute = router.Calculate(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, rpoint1, rpoint2);
+                tempTime += tempRoute.TotalTime;
+                tempDistance += tempRoute.TotalDistance;                
+            }
 
+            planDistanceLists.Add(tempDistance);
+            planTimeLists.Add(tempTime);
+
+            waypoints.RemoveAt(waypoints.Count - 1);            
             byte[] streamByte = tsp.SaveToByteArray();
             string tempString = System.Text.Encoding.Default.GetString(streamByte);
             return tempString;
