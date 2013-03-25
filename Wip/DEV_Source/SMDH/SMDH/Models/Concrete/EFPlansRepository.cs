@@ -87,8 +87,8 @@ namespace SMDH.Models.Concrete
             plan.CreatedDate = DateTime.Now;
             plan.Status = (int)CollectionPlanStatus.New;//Which status goes here ?
             plan.CreatedByUserId = 1;
-            plan.PlanTypeId = (int)PlanTypes.DeliverPlan;
-            var orderRepo = new EFOrderRepository();
+            plan.PlanTypeId = (int)PlanTypes.DeliveryPlan;
+            var orderRepo = new EFOrdersRepository();
             using (var trans = new TransactionScope())
             {
                 context.Plans.InsertOnSubmit(plan);
