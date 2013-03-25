@@ -81,5 +81,30 @@ namespace SMDH.Models.Concrete
 
             return false;
         }
+		
+		public bool CreateDeliveryPlan(Plan plan, int[] orderIds)
+        {            
+            plan.CreatedDate = DateTime.Now;
+            plan.Status = (int)CollectionPlanStatus.New;//Which status goes here ?
+            plan.CreatedByUserId = 1;
+            plan.PlanTypeId = (int)PlanTypes.DeliverPlan;
+            var orderRepo = new EFOrderRepository();
+            using (var trans = new TransactionScope())
+            {
+                context.Plans.InsertOnSubmit(plan);
+                context.SubmitChanges();
+                var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
+                                                        && r.OrderStatus == (int)OrderStatus.Collected).ToList(); // Only Order status that is collected can be add to Delivery Plan
+
+                if (orders.Count == orderIds.Length && orderRepo.AddToPlan(plan, orders))
+                {
+                    trans.Complete();
+                    return true;
+
+                }
+            }
+
+            return false;
+        }
     }
 }
