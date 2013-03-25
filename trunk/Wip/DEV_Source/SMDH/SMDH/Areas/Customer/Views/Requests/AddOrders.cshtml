@@ -30,9 +30,9 @@
                 <text>@Model.Note</text>
             }
         </div>
-        <div class="pull-left">
+        @*        <div class="pull-left">
             <strong>Collection Address: &nbsp;&nbsp;</strong>@Model.CustomerAddress.FullAddress
-        </div>
+        </div>*@
         <div style="clear: both;">
         </div>
     </div>
@@ -44,10 +44,11 @@
             @foreach (var order in Model.Orders.Where(o => o.Status != OrderStatus.Canceled))
             {
                 <li id="order-@order.OrderId">
-                    <div class="ticket-container span12 ticket order-ticket @if(order.Status == OrderStatus.Rejected){<text>rejected</text>}">
-                        @if(order.Status == OrderStatus.Rejected)
+                    <div class="ticket-container span12 ticket order-ticket @if (order.Status == OrderStatus.Rejected)
+                                                                            {<text>rejected</text>}">
+                        @if (order.Status == OrderStatus.Rejected)
                         {
-                            <div class="row-fluid rejected-header" style="background:#000;color:#fff;text-align:center;">
+                            <div class="row-fluid rejected-header" style="background: #000; color: #fff; text-align: center;">
                                 Rejected
                             </div>
                         }
@@ -55,27 +56,43 @@
                             <div class="row-fluid">
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt>
-                                            <span class="myToolTip" rel="tooltip" title="Order Number"style="font-size: 15px;
-                                            color: #969696">#</span>
-                                        </dt>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
+                                            color: #969696">#</span> </dt>
                                         <dd class="order-number">
                                             @order.OrderId</dd>
                                     </dl>
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt>
-                                            <img src="/img/icons/user.png" class="myToolTip" rel="tooltip" title="Receiver Name" width="15px" />
-                                        </dt>
-                                        <dd class="receiver-name">
-                                            @order.ReceiverName</dd>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
+                                            color: #969696">#</span> </dt>
+                                        <dd class="order-number">
+                                            @order.DeliveryOptionId</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
+                                            color: #969696">#</span> </dt>
+                                        <dd class="order-number">
+                                            @order.OrderPaymentTypeId</dd>
                                     </dl>
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            <img src="/img/icons/phone.png" class="myToolTip" rel="tooltip" title="Receiver Phone" width="15px" />
+                                            <img src="/img/icons/user.png" class="myToolTip" rel="tooltip" title="Receiver Name"
+                                                width="15px" />
+                                        </dt>
+                                        <dd class="receiver-name">
+                                            @order.ReceiverAddress</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/phone.png" class="myToolTip" rel="tooltip" title="Receiver Phone"
+                                                width="15px" />
                                         </dt>
                                         <dd class="receiver-phone">
                                             @order.ReceiverPhone</dd>
@@ -84,17 +101,30 @@
                                 <div class="column">
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            <img src="/img/icons/info.png" class="myToolTip" rel="tooltip" title="Properties" width="15px" />
+                                            <img src="/img/icons/info.png" class="myToolTip" rel="tooltip" title="Properties"
+                                                width="15px" />
                                         </dt>
                                         <dd class="properties">
-                                            <span class="label label-success">@order.DeliveryOption.Name</span> <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                            <span class="label label-success">@order.DeliveryOption.Name</span>
                                         </dd>
                                     </dl>
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            <img src="/img/icons/bill.png" class="myToolTip" rel="tooltip" title="Amount to collect" width="15px" />
+                                            <img src="/img/icons/info.png" class="myToolTip" rel="tooltip" title="Properties"
+                                                width="15px" />
+                                        </dt>
+                                        <dd class="properties">
+                                            <span class="label label-success">@order.ReceiverAddressDistrictId</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/bill.png" class="myToolTip" rel="tooltip" title="Amount to collect"
+                                                width="15px" />
                                         </dt>
                                         <dd class="amount-to-be-collected">
                                             @order.AmountToBeCollectedFromReceiver VNĐ</dd>
@@ -103,7 +133,18 @@
                                 <div class="column">
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            <img src="/img/icons/notepencil32.png" class="myToolTip" rel="tooltip" title="Note" width="15px" />
+                                            <img src="/img/icons/bill.png" class="myToolTip" rel="tooltip" title="Amount to collect"
+                                                width="15px" />
+                                        </dt>
+                                        <dd class="amount-to-be-collected">
+                                            @order.OrderStatus</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" class="myToolTip" rel="tooltip" title="Note"
+                                                width="15px" />
                                         </dt>
                                         <dd class="note">
                                             @if (string.IsNullOrWhiteSpace(order.Note))
@@ -115,14 +156,6 @@
                                                 @order.Note
                                             }
                                         </dd>
-                                    </dl>
-                                </div>
-                                <div class="column">
-                                    <dl class="dl-horizontal">
-                                        <dt><span class="myToolTip" rel="tooltip" title="Receiver Address" style="font-size: 15px;
-                                            color: #969696">@@</span></dt>
-                                        <dd class="full-address">
-                                            @order.FullAddress</dd>
                                     </dl>
                                 </div>
                             </div>
@@ -207,7 +240,7 @@
                                                         }
                                                     </dd>
                                             </dl>
-                                        </div>                                        
+                                        </div>
                                         <div class="ticket-btn-group">
                                             <a href="#" onclick="cancelItem(@item.ItemId)" role="button" class="deleteItem btn action" data-toggle="modal">
                                                 <img src="/img/icons2/cross.png" alt="Delete" title="Delete" width="15">
@@ -271,4 +304,37 @@
     $(window).resize(function () {
         $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
     });
+
+    $("#ddlCityProvince").change(function () {
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+//        debugger
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            var items = '<option value>-- Choose District --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').removeAttr('data-val-number');
+            refreshValidation();
+            $('#ddlDistrict').trigger("liszt:updated");
+        });
+    });
+
+    $("#ddlDistrict").change(function () {
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {\
+                alert("dasd");
+            var items = '<option value>-- Choose Ward --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').removeAttr('data-val-number');
+            refreshValidation();
+            $('#ddlWard').trigger("liszt:updated");
+        });
+    }); 
 </script>
