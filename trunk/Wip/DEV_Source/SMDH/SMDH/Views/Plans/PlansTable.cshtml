@@ -48,9 +48,12 @@
                     @if (item.Status == (int)PlanStatus.Assigned)
                     {
                         <span class="label label-info">Assigned</span>
-                    }else
+                    }else if (item.Status == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
+                    }else if (item.Status == (int)PlanStatus.Finished)
+                    {
+                           <span class="label label-success">Finished</span>
                     }
                 </td>
               
@@ -68,7 +71,7 @@
                     }
                 </td>*@
                 <td>
-                    @((item.Distance.Value/1000).ToString("N2")) km(s)
+                    @((item.Distance.Value / 1000).ToString("N2")) km(s)
                 </td>
                 @*                <td class="action-column">
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
@@ -95,7 +98,8 @@
                     @if (item.Status == (int)PlanStatus.Assigned)
                     {
                         <span class="label label-info">Assigned</span>
-                    }else
+                    }
+                    else
                     {
                         <span class="label label-danger">Not Assigned yet</span>
                     }
@@ -114,7 +118,7 @@
                     }
                 </td>*@
                 <td>
-                    @((item.Distance.Value/1000).ToString("N2")) km(s)
+                    @((item.Distance.Value / 1000).ToString("N2")) km(s)
                 </td>
                 @*                <td class="action-column">
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
@@ -161,7 +165,7 @@
                     }
                 </td>*@
                 <td>
-                    @((item.Distance.Value/1000).ToString("N2")) km(s)
+                    @((item.Distance.Value / 1000).ToString("N2")) km(s)
                 </td>
                 @*                <td class="action-column">
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">

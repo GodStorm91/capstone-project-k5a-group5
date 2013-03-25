@@ -62,7 +62,7 @@ namespace SMDH.Models.Concrete
             plan.CreatedDate = DateTime.Now;
             plan.Status = (int)CollectionPlanStatus.New;
             plan.CreatedByUserId = 1;
-            plan.PlanTypeId = (int)PlanTypes.CollectionPlan;
+            plan.PlanTypeId = (int)PlanTypes.CollectionPlan;            
             var requestRepo = new EFRequestsRepository();
             using (var trans = new TransactionScope())
             {
@@ -91,20 +91,53 @@ namespace SMDH.Models.Concrete
             var orderRepo = new EFOrdersRepository();
             using (var trans = new TransactionScope())
             {
-                context.Plans.InsertOnSubmit(plan);
-                context.SubmitChanges();
-                var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
-                                                        && r.OrderStatus == (int)OrderStatus.Collected).ToList(); // Only Order status that is collected can be add to Delivery Plan
-
-                if (orders.Count == orderIds.Length && orderRepo.AddToPlan(plan, orders))
+                using (var myContext = new SMDHDataContext())
                 {
-                    trans.Complete();
-                    return true;
+                    myContext.Plans.InsertOnSubmit(plan);
+                    myContext.SubmitChanges();
+                    var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
+                                                            && r.OrderStatus == (int)OrderStatus.Collected).ToList(); // Only Order status that is collected can be add to Delivery Plan
 
+                    if (orders.Count == orderIds.Length && orderRepo.AddToPlan(plan, orders))
+                    {
+                        trans.Complete();
+                        return true;
+
+                    }
                 }
+                
             }
 
             return false;
+        }
+
+        public bool MarkCollectionPlanFinished(Plan plan)
+        {
+            try
+            {
+                using (var myContext = new SMDHDataContext())
+                {
+                    plan = myContext.Plans.Single(p => p.PlanId == plan.PlanId);
+                    if (plan.Status != (int)Statuses.DeliveryPlanStatus.Assigned) return false;
+                    foreach (var cargo in plan.Cargos)
+                    {
+                        var request = cargo.Request;
+                        foreach (var order in request.Orders)
+                        {
+                            order.OrderStatus = (int)OrderStatus.Collected;
+                        }
+
+                        request.RequestStatus = (int)RequestStatus.Finished;
+                    }
+                    plan.Status = (int)PlanStatus.Finished;
+                    myContext.SubmitChanges();
+                    return true;
+                }                
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }
