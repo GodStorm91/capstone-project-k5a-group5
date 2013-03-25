@@ -17,7 +17,12 @@ namespace SMDH.Areas.Customer.Controllers
     public class RequestsController : CustomerDefaultController
     {
         private SMDHDataContext context = new SMDHDataContext();
+        private IRequestRepository _repository;
 
+        public RequestsController(IRequestRepository requestRepository)
+        {
+            _repository = requestRepository;
+        }
         //
         // GET: /CRCustomer/
         public ViewResult Index()
@@ -109,6 +114,44 @@ namespace SMDH.Areas.Customer.Controllers
             }
             throw new HttpException(404, "Not found!");
         }
+
+        [HttpPost]
+        public ActionResult ConfirmCreate(HttpPostedFileBase excelFile)
+        {
+            try
+            {
+                var request = new Request
+                {
+                    CustomerId = 1,
+                    CollectionAddressId = 1,
+                    RequestStatus = 0
+                };
+                if (_repository.Create(request))
+                {
+                    return RedirectToAction("AddOrders", new { id = request.RequestId });
+                }
+                return View("CreateUnsuccessful");
+            }
+            catch (Exception)
+            {
+                return View("CreateUnsuccessful");
+            }
+
+        }
+
+        //public ActionResult AddOrders(int id)
+        //{
+        //    Request request = _repository.Find(id);
+        //    if (request.CustomerId == 1)
+        //    {
+        //        if (request != null)
+        //        {
+        //            if (request.Status != RequestStatus.Draft) return RedirectToAction("Index");
+        //            return View(request);
+        //        }
+        //    }
+        //    throw new HttpException(404, "Not found!");
+        //}
 
         //private class JsonRequest
         //{

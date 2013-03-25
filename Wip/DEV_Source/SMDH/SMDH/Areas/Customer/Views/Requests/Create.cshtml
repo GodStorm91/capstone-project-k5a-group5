@@ -12,12 +12,11 @@
     @using (Html.BeginForm("ConfirmCreate", "Requests", FormMethod.Post, new { id = "create-form", Enctype = "multipart/form-data", Class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
-        <div class="control-group">
+@*        <div class="control-group">
             <label class="control-label">
-                Collection Address <span style="color:Red">*</span>
+                Collection Address <span style="color: Red">*</span>
             </label>
             <div class="controls">
-                @*@Html.DropDownListFor(model => model.CollectionAddressId, ViewBag.PossibleCollectionAddresses as SelectList, "-- Choose a Collection Address --", new { id = "ddlCollectionAddress", Class = "chzn-select" })*@
                 @Html.DropDownListFor(model => model.CollectionAddressId, ((IEnumerable<SMDH.Models.CustomerAddress>)ViewBag.PossibleCollectionAddresses).Select(option => new SelectListItem
        {
            Text = Html.DisplayTextFor(_ => option.FullAddress).ToString(),
@@ -25,8 +24,8 @@
        }), new { id = "ddlCollectionAddress", Class = "chzn-select" })
                 @Html.ValidationMessageFor(model => model.CollectionAddressId)
             </div>
-        </div>
-        <div class="control-group">
+        </div>*@
+@*        <div class="control-group">
             <label class="control-label">
                 Note
             </label>
@@ -34,13 +33,13 @@
                 @Html.TextAreaFor(model => model.Note)
                 @Html.ValidationMessageFor(model => model.Note)
             </div>
-        </div>
+        </div>*@
         <div class="control-group">
             <label class="control-label">
                 Excel file
             </label>
             <div class="controls">
-                <input type="file" id="excelFile" name="excelFile" />  
+                <input type="file" id="excelFile" name="excelFile" />
             </div>
         </div>
         
