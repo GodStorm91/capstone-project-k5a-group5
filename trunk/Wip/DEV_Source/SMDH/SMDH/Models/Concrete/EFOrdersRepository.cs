@@ -299,12 +299,18 @@ namespace SMDH.Models.Concrete
         {
             try
             {
+				
                 Cargo cargo = new Cargo();
                 cargo.Plan = plan;
                 cargo.PlanId = plan.PlanId;
                 cargo.OrderId = order.OrderId;
                 context.Cargos.InsertOnSubmit(cargo);
-                context.SubmitChanges();
+				
+				if (commit)
+				{
+					context.SubmitChanges();
+				}
+                
                 return true;
             }
             catch (Exception)
@@ -417,6 +423,31 @@ namespace SMDH.Models.Concrete
             }
             
             
+        }
+		
+		public bool AddToPlan(Plan plan, List<Order> orders)
+        {
+            return AddToPlan(plan, orders, true);
+        }
+
+        public bool AddToPlan(Plan plan, List<Order> orders, bool commit)
+        {            
+            try
+            {
+                foreach (var order in orders)
+                {
+                    if (!AddToPlan(plan, order, false)) return false;
+                }
+
+                if (commit) context.SubmitChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return false;
+                throw;
+            }
         }
     }
 

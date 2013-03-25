@@ -1281,6 +1281,45 @@ namespace SMDH.Controllers
 
             return Json(new { });
         }
+		
+		public ActionResult ConfirmCreateAutoScheduleDeliveryPlan(List<ListRequestsJsonModel> Entrys)
+        {
+            string planIds = "";
+            bool success = true;
+            foreach (var entry in Entrys)
+            {
+                int[] listRequests = entry.listRequests.ToArray();
+                double distance = entry.Distance;
+                var plan = new Plan();
+                plan.Distance = (Decimal)distance;
+                if (_repository.CreateDeliveryPlan(plan, listRequests))
+                {
+                    planIds += plan.PlanId + ",";
+                }
+                else
+                {
+                    success = false;
+                    break;
+                }
+            }
+
+            //remove the "," redundancy
+            if (success)
+            {
+                planIds = planIds.Remove(planIds.Length - 1);
+            }
+
+            if (success)
+            {
+                return Json(new { success = success, url = Url.Action("ViewDetailsDeliveryPlans", "Plans", new { planIds = planIds }) });
+            }
+            else
+            {
+                return Json(new { success = success });
+            }
+
+
+        }
 
         //public ActionResult
     }

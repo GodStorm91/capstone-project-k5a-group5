@@ -152,7 +152,7 @@
     $('#txtMaximumRequest').bind('textchange', function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
-            $('#totalplans').html('Total : 0 request');
+            $('#totalplans').html('Total : 0 order(s)');
             triggerGroup();
         }
 
@@ -161,7 +161,7 @@
     $('#txtMaximumRequest').blur(function () {
         if ($('#txtMaximumRequest').val() != defaultString) {
             $('#selectedRequestul').html('');
-            $('#totalplans').html('Total : 0 request');
+            $('#totalplans').html('Total : 0 order(s)');
             triggerGroup();
         }
 
@@ -174,7 +174,7 @@
 
     $('#rdoMaximumRequestOption').click(function () {
         $('#selectedRequestul').html('');
-        $('#totalplans').html('Total : 0 request');
+        $('#totalplans').html('Total : 0 order(s)');
         triggerGroup();
     })
 
@@ -279,7 +279,32 @@
         $("#group-" + arguments[0]).css('background-color', '#d9edf7');
     }
 
+    $('.btnselectall').click(function () {
+        $('#selectedRequestZone').find('li').each(function () {
+            $("#selectedRequest > ul").prepend($(this));
+            $(this).find('div.divadd').html('<a class="label label-important" onclick="removefromplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-left"></i></a>');
+            //            $("#add-" + i).html('<a class="label label-important" onclick="removefromplan(' + i + ')"><i class="icon-arrow-left"></i></a>');
+            //        $("#group-" + arguments[0]).addClass('alert-success');
+            $("#selectedRequest span").removeClass('label-info');
+            $("#selectedRequest span.lbinfo").addClass('label-success');
+            $(this).css('background-color', '#dff0d8');
+        })
+        var numofplans = $("#selectedRequestul").find('input.requestId').length;
+        $('#totalplans').html('Total : ' + numofplans + ' request(s)');
+    })
 
+    $('.btnremoveall').click(function () {
+        $('#selectedRequestul').find('li').each(function () {
+            $("#requestsZone > ul").prepend($(this));
+            $(this).find('div.divadd').html('<a class="label label-success" onclick="addtoplan(' + $(this).attr('id').split('-')[1] + ')"><i class="icon-arrow-right"></i></a>');
+            //$("#add-" + i).html('<a class="label label-success" onclick="addtoplan(' + i + ')"><i class="icon-arrow-right"></i></a>');
+            $(this).removeClass('alert-success');
+            $("#requestsZone span").removeClass('label-success');
+            $("#requestsZone span.lbinfo").addClass('label-info');
+            $(this).css('background-color', '#d9edf7');
+        })
+        $('#totalplans').html('Total : 0 request(s)')
+    })
 
     $('#btnConfirm').click(function () {
 
@@ -318,6 +343,8 @@
             localStorage.setItem('segments', JSON.stringify(data.segments));
             //should save the function here
             localStorage.setItem('requests', JSON.stringify(data.requests));
+            localStorage.setItem('planDistanceLists', JSON.stringify(data.distanceList));
+            localStorage.setItem('planTimeLists', JSON.stringify(data.timeList));
             $('#toBeSubmit').submit();
             $.unblockUI();
         });
