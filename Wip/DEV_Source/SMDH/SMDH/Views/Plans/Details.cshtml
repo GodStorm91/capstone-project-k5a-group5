@@ -85,12 +85,31 @@
                                         <div>
                                             <div>
                                                 <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
-                                            <div style="margin-top: 3px;">
+                                                @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                                                {
+                                                    <div style="margin-top: 3px;">
                                                 <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
+                                                }
+                                                else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                                                {
+                                                        <div style="margin-top: 3px;">
+                                                <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span></div>
+                                                }
+                                            
                                         </div>
-                                        <div>
-                                            <span class="icon-globe"></span><small>@request.CollectionAddress</small>
-                                        </div>
+                                        @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                                        {
+                                            <div>
+                                                <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                            </div>
+                                        }
+                                        else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                                        {
+                                            <div>
+                                                <span class="icon-globe"></span><small>@request.DeliverAddress</small>
+                                            </div>
+                                        }
+                                        
                                     </div>
                                 </li>
                             }
@@ -198,6 +217,18 @@
                 }
                 j++;                
         });
+        
+        $('#markAsFinishedBtn').click(function() {
+            $.post("/Plans/MarkAsFinished/", {planId: PlanId}, function(data){
+                if (data.success){
+                   $.blockUI();
+                    window.location.reload();
+                }else{
+                    bootbox.alert('Cant mark this plan as finished.');
+                }
+            });
+        });       
+
         $('#btnAssign').click(function () {
             var listdeliveryman = new Array();
             var listNotChooseDeliveryMan = new Array();
@@ -210,7 +241,7 @@
                 } else
                 {
                     listNotChooseDeliveryMan[j] = $(this).val();
-                    j++
+                    j++;
                 }
             });
             if(listdeliveryman.length < 0)

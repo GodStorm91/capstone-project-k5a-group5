@@ -76,6 +76,9 @@
 <div id="divTable">
     @Html.Partial("PlansTable", Model)
 </div>
+<div id="bottomBar">
+    
+</div>
 <div class="modal" id="editModal" style="left: 40%; width: 700px; top: 40%;display:none;">
 </div>
 @*<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -212,11 +215,11 @@
         geopt = new Array();
         geopt[0] = segmentsArr;
         //        showRequestsInPlan(id);
-        alert("enter add Marker");
+        //alert("enter add Marker");
         addMarker();
-        alert("enter add direction");
+        //alert("enter add direction");
         addDirection();
-        alert("center is :" + wpt[0][0].location);
+        //alert("center is :" + wpt[0][0].location);
         map.setCenter(wpt[0][0].location, 13);
         $.unblockUI();
 

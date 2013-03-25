@@ -204,6 +204,7 @@
                 <h5>
                     Plan details</h5>
             </div>
+            <div class="widget-title" id="planInformation"></div>
             <div class="widget-content nopadding">
                 <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
               @*      <ul class="site-stats">
@@ -277,13 +278,13 @@
     var dateScore = 0.5;
     var deliveryTypeScore = 0.5;
     var segments = JSON.parse(localStorage.getItem('segments'));
-    alert("segments " + segments.length);
+    //alert("segments " + segments.length);
     var waypoints = JSON.parse(localStorage.getItem('waypoints'));
-    alert("waypoints " + waypoints.length);
+    //alert("waypoints " + waypoints.length);
     var requestsInPlans = JSON.parse(localStorage.getItem('requests'));
     var timeList = JSON.parse(localStorage.getItem('planTimeLists'));
     var distanceList = JSON.parse(localStorage.getItem('planDistanceLists'));
-
+    //alert("Timelist:" + timeList.length);
     showRequestsInPlan(0);
 
     $("#ddlCityProvince").change(function () {
@@ -738,22 +739,22 @@
 
     var selectedrq = new Array();
     $('#btnSave').click(function () {
-        alert("in here");
+        //alert("in here");
         //alert(someValue);
-        alert("in click");
+        //alert("in click");
         var testItems = new Object();
         testItems.Entrys = new Array();
 
         $.each(requestsInPlans, function (index, requests) {
             listRequest = new Array();
             $.each(requests, function (indexj, request) {
-                listRequest.push(request.RequestId);
+                listRequest.push(request.OrderId);
             });
 
-            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest });
+            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest, Distance: distanceList[index] });
         });
         var json = $.toJSON(testItems);
-        alert(json)
+        //alert(json)
         $.ajax({
             url: '/Plans/ConfirmCreateAutoScheduleDeliveryPlan',
             type: 'POST',

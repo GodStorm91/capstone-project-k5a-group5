@@ -413,19 +413,19 @@ namespace SMDH.Controllers
         /// <param name="id">id: int</param>
         /// <param name="removeUnfinishedOrders">removeUnfinishedOrders: bool</param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult MarkAsFinished(int id, bool removeUnfinishedOrders)
-        {
-            try
-            {
-                return Json(new { success = true });
-            }
-            catch (Exception)
-            {
-                return Json(new { success = false });
-                throw;
-            }
-        }
+        //[HttpPost]
+        //public ActionResult MarkAsFinished(int id, bool removeUnfinishedOrders)
+        //{
+        //    try
+        //    {
+        //        return Json(new { success = true });
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json(new { success = false });
+        //        throw;
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult GetSelectedRequests(int numberOfRequests, int numberOfPlans, float weightedDateScore, float weightedDeliveryTypeScore)
@@ -655,6 +655,25 @@ namespace SMDH.Controllers
                         for (i = 0; i < requests.Count; i++)
                         {
                             resultList.Add(new RequestViewModel(requests.ElementAt(i)));
+                        }
+                        ViewBag.RequestDetails = resultList;
+                    }
+                    else if (plans.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                    {
+                        var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
+                        int[] orderIds = new int[cargoesInPlan.Count()];
+                        int i = 0;
+                        foreach (var cargo in cargoesInPlan)
+                        {
+                            orderIds[i] = cargo.OrderId.Value;
+                            i++;
+                        }
+
+                        var requests = context.Orders.Where(r => orderIds.Contains(r.OrderId)).ToList();
+                        List<OrderViewModel> resultList = new List<OrderViewModel>();
+                        for (i = 0; i < requests.Count; i++)
+                        {
+                            resultList.Add(new OrderViewModel(requests.ElementAt(i)));
                         }
                         ViewBag.RequestDetails = resultList;
                     }
@@ -1140,7 +1159,7 @@ namespace SMDH.Controllers
                 MTspHelper.solveTsp(pointList, planNumber);
             }
 
-            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList });
+            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
         }
 
 
@@ -1162,53 +1181,53 @@ namespace SMDH.Controllers
                 }
                 else
                 {
-                    var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
-                    var requestsList = requests.ToList();
-                    List<GeoCoordinate> pointList = new List<GeoCoordinate>();
-                    List<OrderViewModel> requestViewModel = new List<OrderViewModel>();
-                    foreach (var request in requests)
-                    {
-                        requestViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
-                    }
-                    for (int i = 0; i < requests.Count(); i++)
-                    {
-                        pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
-                    }
+                    //var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
+                    //var requestsList = requests.ToList();
+                    //List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                    //List<OrderViewModel> requestViewModel = new List<OrderViewModel>();
+                    //foreach (var request in requests)
+                    //{
+                    //    requestViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
+                    //}
+                    //for (int i = 0; i < requests.Count(); i++)
+                    //{
+                    //    pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                    //}
 
-                    PointCollection pointCollection = new PointCollection();
-                    for (int i = 0; i < pointList.Count; i++)
-                    {
-                        pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
-                    }
+                    //PointCollection pointCollection = new PointCollection();
+                    //for (int i = 0; i < pointList.Count; i++)
+                    //{
+                    //    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    //}
 
-                    List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+                    //List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
 
-                    for (int i = 0; i < listPointCollection.Count; i++)
-                    {
-                        PointCollection cluster = listPointCollection[i];
-                    }
+                    //for (int i = 0; i < listPointCollection.Count; i++)
+                    //{
+                    //    PointCollection cluster = listPointCollection[i];
+                    //}
 
                     ViewBag.NumberOfPlans = planNumber;
-                    string listRequestsIds = "";
-                    for (int i = 0; i < requestIds.Length - 1; i++)
-                    {
-                        listRequestsIds += requestIds[i] + ",";
-                    }
-                    listRequestsIds += requestIds[requestIds.Length - 1];
+                    //string listRequestsIds = "";
+                    //for (int i = 0; i < requestIds.Length - 1; i++)
+                    //{
+                    //    listRequestsIds += requestIds[i] + ",";
+                    //}
+                    //listRequestsIds += requestIds[requestIds.Length - 1];
 
-                    ViewBag.SelectedRequestsIds = listRequestsIds;
-                    List<OrderViewModel> returnList = new List<OrderViewModel>();
-                    PointCollection pointCluster = listPointCollection[0];
-                    for (int i = 0; i < pointCluster.Count; i++)
-                    {
-                        returnList.Add(new OrderViewModel(requestsList.ElementAt(pointCluster.ElementAt(i).Id)));
-                    }
+                    //ViewBag.SelectedRequestsIds = listRequestsIds;
+                    //List<OrderViewModel> returnList = new List<OrderViewModel>();
+                    //PointCollection pointCluster = listPointCollection[0];
+                    //for (int i = 0; i < pointCluster.Count; i++)
+                    //{
+                    //    returnList.Add(new OrderViewModel(requestsList.ElementAt(pointCluster.ElementAt(i).Id)));
+                    //}
 
-                    //Solve mTsp;
-                    MTspHelper.initialize();
-                    MTspHelper.solveTsp(pointList, planNumber);
+                    ////Solve mTsp;
+                    //MTspHelper.initialize();
+                    //MTspHelper.solveTsp(pointList, planNumber);
 
-                    ViewBag.RequestDetails = returnList;
+                    //ViewBag.RequestDetails = returnList;
 
                 }
 
@@ -1291,6 +1310,7 @@ namespace SMDH.Controllers
                 int[] listRequests = entry.listRequests.ToArray();
                 double distance = entry.Distance;
                 var plan = new Plan();
+                
                 plan.Distance = (Decimal)distance;
                 if (_repository.CreateDeliveryPlan(plan, listRequests))
                 {
@@ -1319,6 +1339,50 @@ namespace SMDH.Controllers
             }
 
 
+        }
+
+        public ActionResult ViewDetailsDeliveryPlans(string planIds)
+        {
+            string[] planIdsList = planIds.Split(',');
+            int[] planIdsNumList = new int[planIdsList.Length];
+            for (int i = 0; i < planIdsList.Length; i++)
+            {
+                planIdsNumList[i] = int.Parse(planIdsList[i]);
+            }
+            var plans = context.Plans.Where(o => planIdsNumList.Contains(o.PlanId));
+
+            var deliveryStaffs = from d in context.DeliveryMens
+                                 select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status };
+            var listDelivery = new List<DeliveryMen>();
+            foreach (var delivery in deliveryStaffs)
+            {
+                listDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+            }
+            ViewBag.PossibleDeliveryStaffs = listDelivery;
+
+            return View(plans);
+        }
+
+        public ActionResult MarkAsFinished(int planId)
+        {
+            var plan = context.Plans.Single(p => p.PlanId == planId);
+            if (plan.PlanTypeId == (int)PlanTypes.CollectionPlan)
+            {
+                if (_repository.MarkCollectionPlanFinished(plan))
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            else if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+            {
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false });
         }
 
         //public ActionResult

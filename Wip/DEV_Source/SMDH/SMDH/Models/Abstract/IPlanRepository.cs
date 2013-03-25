@@ -26,6 +26,8 @@ namespace SMDH.Models.Abstract
         List<Plan> GetCollectionPlansByStatuses(List<int> statuses);
 
         bool CreateDeliveryPlan(Plan plan, int[] orderIds);
+
+        bool MarkCollectionPlanFinished(Plan plan);
       
     }
 }
