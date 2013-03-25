@@ -1774,9 +1774,10 @@ legend + .control-group {
   -webkit-margin-top-collapse: separate;
 }
 
-.form-horizontal .control-group {
-  *zoom: 1;
-}
+.form-horizontal .contrl-group
+{
+    margin-bottom : 20px;
+    }
 
 .form-horizontal .control-group:before,
 .form-horizontal .control-group:after {
