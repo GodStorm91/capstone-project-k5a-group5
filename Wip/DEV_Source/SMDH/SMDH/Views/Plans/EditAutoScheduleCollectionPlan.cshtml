@@ -174,6 +174,10 @@
     <div>
         <a id="next" href="" class="bx-next">next</a></div>
 </div>
+<div class="span6">
+    <button class="btn btn-primary" id="btnSave">
+        Save</button>
+</div>
 @*<div class="span12">
     <div class="widget-box">
         <div class="widget-title">
@@ -203,8 +207,8 @@
                 <span class="icon"><i class="icon-list-alt"></i></span>
                 <h5 >
                     Plan details</h5>
+                    <span id="planInformation" class="label label-info"></span>
             </div>
-            <div class="widget-title" id="planInformation"></div>
             <div class="widget-content nopadding">
                 <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
               @*      <ul class="site-stats">
@@ -243,10 +247,7 @@
         </div>
     </div>
 </div>
-<div class="span6 offset4">
-    <button class="btn btn-primary" id="btnSave">
-        Save</button>
-</div>
+
 @*@{int j = 0;}
 @foreach (var waypointList in ViewBag.Waypoints)
 {    
@@ -367,8 +368,9 @@
         });
         geopt = new Array();
         geopt[0] = segmentsArr;
-        var str = "";       
-        str += " Total distance:" + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s) -- Total time: " + accounting.formatNumber(timeList[i] / 60, 2) + " min(s)";        
+        var str = "";
+        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)"; 
+//        str += " Total distance:" + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s) -- Total time: " + accounting.formatNumber(timeList[i] / 60, 2) + " min(s)";        
         $('#planInformation').html(str);
         showRequestsInPlan(id);
         
