@@ -203,8 +203,8 @@
                 <span class="icon"><i class="icon-list-alt"></i></span>
                 <h5>
                     Plan details</h5>
+                    <span id="planInformation" class="label label-info"></span>
             </div>
-            <div class="widget-title" id="planInformation"></div>
             <div class="widget-content nopadding">
                 <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
               @*      <ul class="site-stats">
@@ -368,7 +368,7 @@
         geopt = new Array();
         geopt[0] = segmentsArr;
         var str = "";       
-        str += " Total distance:" + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s) -- Total time: " + accounting.formatNumber(timeList[i] / 60, 2) + " min(s)";        
+        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)";        
         $('#planInformation').html(str);
         showRequestsInPlan(id);
         
