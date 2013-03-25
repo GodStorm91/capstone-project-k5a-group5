@@ -623,14 +623,14 @@
                         <p >
                             <b>@ViewBag.CompanyInfo.CompanyName</b></p>
                     </div>
-                    <div class="span4" style="margin-left:370px;margin-top:100px;">
+                    <div class="span4" style="margin-left:370px;margin-top:70px;">
                         
                                 Total Price :&nbsp;&nbsp;&nbsp;<input class="input-medium" type="text" id="totalPrice"
                                     value="" style="text-align: right;" disabled="disabled">
                             
                     </div>
                     <div class="row-fluid" style="float: left;">
-                        <div class="span6" style="width:650px;margin-left:30px;">
+                        <div class="span6" style="width:650px;margin-top:0px;">
                             <div class="widget-box">
                                 <div class="widget-title">
                                     <span class="icon"><i class="icon-th-list"></i></span>
@@ -638,7 +638,7 @@
                                         <a name="BM2">Menu</a></h5>
                                 </div>
                                 <div class="widget-content">
-                                    <div style="overflow-y: scroll; height: 555px;">
+                                    <div style="overflow-y: scroll; height: 420px;">
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
@@ -686,7 +686,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="span6" style="width:670px;float:left;margin-left:700px;margin-top:-650px;">
+                        <div class="span6" style="width:670px;float:left;margin-left:700px;margin-top:-515px;">
                             <div>
                                 <div>
                                     <div class="widget-box">
@@ -696,7 +696,7 @@
                                                 Cart Add</h5>
                                         </div>
                                         <div class="widget-content">
-                                            <div style="overflow-y: scroll; height: 555px;">
+                                            <div style="overflow-y: scroll; height: 420px;">
                                                 <table class="table table-striped" id="tblAddCart" cellpadding="0px">
                                                     <thead>
                                                         <tr>
@@ -731,7 +731,7 @@
             <div class="item">
                
                     <div class="row-fluid">
-                        <div class="span6" style="width:590px;margin-top:-50px;margin-left:60px; z-index:80000">
+                        <div class="span6" style="width:590px;margin-left:65px; z-index:80000;">
                             
                                 <div class="widget-box">
                                     <div class="widget-title">
@@ -766,7 +766,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="city">
                                                 City(*)</label>
-                                            <div class="controls pull-left  ">
+                                            <div class="controls">
                                                 @Html.DropDownList("CityProvinceId", ViewBag.City as SelectList, "-- Choose a City or Province --", new { id = "ddlCityProvince", Class = "chzn-select", name = "city" })
                                             </div>
                                         </div>
@@ -844,7 +844,7 @@
                                 </div>
                             
                         </div>
-                        <div class="span5" style="margin-top:-50px;z-index:80000">
+                        <div class="span5" style="margin-top:0px;z-index:80000;width:700px;">
                             <div class="widget-box">
                                 <div class="widget-title">
                                     <span class="icon"><i class="icon-th-list"></i></span>
@@ -852,7 +852,7 @@
                                         Map</h5>
                                 </div>
                                 <div>
-                                    <div id="map_canvas" style="height: 750px;width: 98%;">
+                                    <div id="map_canvas" style="height: 550px;width: 700px;">
                                     </div>
                                 </div>
                             </div>
