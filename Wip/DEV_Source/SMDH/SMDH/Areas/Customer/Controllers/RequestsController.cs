@@ -128,6 +128,152 @@ namespace SMDH.Areas.Customer.Controllers
                 };
                 if (_repository.Create(request))
                 {
+                    if (excelFile != null)
+                    {
+                        string savedFileName = "~/Excel/" + excelFile.FileName;
+                        excelFile.SaveAs(Server.MapPath(savedFileName));
+
+                        var connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=Excel 12.0;", Server.MapPath(savedFileName));
+                        OleDbConnection objConn = new OleDbConnection(connectionString);
+                        objConn.Open();
+                        var dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+
+                        String[] excelSheets = new String[dt.Rows.Count];
+                        int x = 0;
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            excelSheets[x] = row["TABLE_NAME"].ToString();
+                            x++;
+                        }
+
+                        for (int j = 0; j < excelSheets.Length; j++)
+                        {
+                            if (excelSheets[j].Contains("Order"))
+                            {
+                                var adapter = new OleDbDataAdapter("SELECT * FROM " + "[" + excelSheets[j] + "]", connectionString);
+                                var ds = new DataSet();
+                                adapter.Fill(ds, "results");
+                                DataTable data = new DataTable();
+                                data = ds.Tables["results"];
+
+                                var orders = new List<Order>();
+                                var items = new List<Item>();
+                                var products = new List<Product>();
+
+                                Order order = new Order();
+
+                                for (int i = 0; i < data.Rows.Count; i++)
+                                {
+                                    var receiverName = data.Rows[i].Field<string>("Receiver Name");
+                                    var receiverPhone = data.Rows[i].Field<string>("Receiver Phone");
+                                    var receiverAddress = data.Rows[i].Field<string>("Receiver Address");
+                                    var drOption = data.Rows[i].Field<string>("Delivery Option");
+                                    var orPaymentType = data.Rows[i].Field<string>("Order Payment Type");
+                                    var cityName = data.Rows[i].Field<string>("City");
+                                    var districtName = data.Rows[i].Field<string>("District");
+                                    var wardName = data.Rows[i].Field<string>("Ward");
+                                    var amount = data.Rows[i].Field<string>("Amount");
+
+                                    if (i == 0)
+                                    {
+                                        if (string.IsNullOrEmpty(receiverName) == false && string.IsNullOrEmpty(receiverPhone) == false
+                                            && string.IsNullOrEmpty(receiverAddress) == false && string.IsNullOrEmpty(amount) == false
+                                            && string.IsNullOrEmpty(drOption) == false && string.IsNullOrEmpty(orPaymentType) == false
+                                            && string.IsNullOrEmpty(districtName) == false && string.IsNullOrEmpty(cityName) == false
+                                            && string.IsNullOrEmpty(wardName) == false)
+                                        {
+                                            var deliveryOption = context.DeliveryOptions.Single(dr => dr.Name == drOption);
+                                            var orderPaymentType = context.OrderPaymentTypes.Single(op => op.Name == orPaymentType);
+                                            var district = context.Districts.Single(di => di.Name == districtName);
+                                            var ward = context.Wards.Single(w => w.Name == wardName && w.DistrictId == district.DistrictId);
+
+                                            order.RequestId = request.RequestId;
+                                            order.DeliveryOptionId = deliveryOption.DeliveryOptionId;
+                                            order.OrderPaymentTypeId = orderPaymentType.OrderPaymentTypeId;
+                                            order.ReceiverName = receiverName;
+                                            order.ReceiverPhone = receiverPhone;
+                                            order.ReceiverAddress = receiverAddress;
+                                            order.ReceiverAddressDistrictId = district.DistrictId;
+                                            order.ReceiverAddressWardId = ward.WardId;
+                                            order.AmountToBeCollectedFromReceiver = int.Parse(amount);
+                                            order.Note = data.Rows[i].Field<string>("Note");
+                                            order.OrderStatus = (int)OrderStatus.New;
+
+                                            orders.Add(order);
+                                            context.Orders.InsertOnSubmit(order);
+                                            context.SubmitChanges();
+                                        }
+                                        else
+                                        {
+                                            return View("CreateUnsuccessful");
+                                        }
+                                    }
+
+                                    if (i == 4)
+                                    {
+                                        for (int k = 4; k < data.Rows.Count; k++)
+                                        {
+                                            var name = data.Rows[k].Field<string>("Receiver Name");
+                                            var quantity = data.Rows[k].Field<string>("Receiver Phone");
+                                            var isFragile = data.Rows[k].Field<string>("City");
+                                            var hasHighValue = data.Rows[k].Field<string>("District");
+                                            var size = data.Rows[k].Field<string>("Ward");
+                                            var weight = data.Rows[k].Field<string>("Receiver Address");
+                                            var category = data.Rows[k].Field<string>("Delivery Option");
+                                            var price = data.Rows[k].Field<string>("Order Payment Type");
+
+                                            if (string.IsNullOrEmpty(name) == false && string.IsNullOrEmpty(quantity) == false
+                                                && string.IsNullOrEmpty(isFragile) == false && string.IsNullOrEmpty(hasHighValue) == false
+                                                && string.IsNullOrEmpty(size) == false && string.IsNullOrEmpty(weight) == false && string.IsNullOrEmpty(category) == false && string.IsNullOrEmpty(price) == false) 
+                                            {
+                                                Item item = new Item();
+
+                                                item.OrderId = order.OrderId;
+                                                item.Quantity = int.Parse(quantity);
+                                                item.Price = Int32.Parse(price);
+                                                if (isFragile == "True")
+                                                {
+                                                    item.IsFragile = true;
+                                                }
+                                                else
+                                                {
+                                                    item.IsFragile = false;
+                                                }
+                                                if (hasHighValue == "True")
+                                                {
+                                                    item.HasHighValue = true;
+                                                }
+                                                else
+                                                {
+                                                    item.HasHighValue = false;
+                                                }
+                                                item.Note = data.Rows[k].Field<string>("Amount");
+
+                                                items.Add(item);
+                                                context.Items.InsertOnSubmit(item);
+
+                                                Product product = new Product();
+                                                product.ProductCategory = category;
+                                                product.Name = name;
+                                                product.Size = size;
+                                                product.ProductWeight = weight;
+                                                product.IsPermanent = false;
+                                                product.CustomerId = 1;
+                                                products.Add(product);
+                                                context.Products.InsertOnSubmit(product);
+                                                context.SubmitChanges();
+                                            }
+                                            else
+                                            {
+                                                return View("CreateUnsuccessful");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return RedirectToAction("AddOrders", new { id = request.RequestId });
                 }
                 return View("CreateUnsuccessful");
