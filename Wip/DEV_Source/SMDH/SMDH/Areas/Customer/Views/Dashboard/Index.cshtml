@@ -2,25 +2,9 @@
     ViewBag.Title = "Dashboard";
     ViewBag.Heading = "Dashboard";
 }
-<div class="span12"><a style="float:right;margin-bottom:20px;" class="btn btn-primary" href="/Customer/Products/">Product Management</a></div>
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-ok"></i></span>
-        <h5>
-            Requests</h5>
-    </div>
-    <div class="widget-content nopadding">
-        <div style="text-align: center;">
-            <ul class="quick-actions">
-                <li><a href="/Customer/Requests?&status=new"><i class="icon-prices"></i>Waiting For Price(@ViewBag.NumberOfRequests[0])</a></li>
-                <li><a href="/Customer/Requests?&status=pricing"><i class="icon-draft"></i>Need To Approve(@ViewBag.NumberOfRequests[1])</a></li>
-                <li><a href="/Customer/Requests?status=approved"><i class="icon-submitted"></i>Approved(@ViewBag.NumberOfRequests[2])</a></li>
-                <li><a href="/Customer/Requests?&status=collected"><i class="icon-collected"></i>Collected(@ViewBag.NumberOfRequests[3])</a></li>
-                <li><a href="/Customer/Requests?status=canceled"><i class="icon-rejected"></i>Canceled(@ViewBag.NumberOfRequests[4])</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div class="span12">
+    <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">
+        Product Management</a></div>
 <div class="widget-box">
     <div class="widget-title">
         <span class="icon"><i class="icon-shopping-cart"></i></span>
@@ -33,14 +17,31 @@
                 <li><a href="/Customer/Orders?&status=draft"><i class="icon-draft"></i>Need To Approve(@ViewBag.NumberOfOrders[0])</a></li>
                 <li><a href="/Customer/Orders?&status=approved"><i class="icon-submitted"></i>Approved(@ViewBag.NumberOfOrders[1])</a></li>
                 <li><a href="/Customer/Orders?&status=rejected"><i class="icon-rejected"></i>Rejected(@ViewBag.NumberOfOrders[2])</a></li>
-                <li><a href="/Customer/Orders?status=plannedforcollecting"><i class="icon-request">
-                </i>Requested(@ViewBag.NumberOfOrders[3])</a></li>
-                <li><a href="/Customer/Orders?&status=delivering"><i class="icon-delivering">
-                </i>Delivering(@ViewBag.NumberOfOrders[4])</a></li>
-                <li><a href="/Customer/Orders?&status=tobereturned"><i class="icon-wait"></i>
-                    Waiting for Return(@ViewBag.NumberOfOrders[5])</a></li>
-                <li><a href="/Customer/Orders?&status=returned"><i class="icon-tobereturned"></i>
-                    Returned(@ViewBag.NumberOfOrders[6])</a></li>
+                <li><a href="/Customer/Orders?status=plannedforcollecting"><i class="icon-request"></i>
+                    Requested(@ViewBag.NumberOfOrders[3])</a></li>
+                <li><a href="/Customer/Orders?&status=delivering"><i class="icon-delivering"></i>Delivering(@ViewBag.NumberOfOrders[4])</a></li>
+                <li><a href="/Customer/Orders?&status=tobereturned"><i class="icon-wait"></i>Waiting
+                    for Return(@ViewBag.NumberOfOrders[5])</a></li>
+                <li><a href="/Customer/Orders?&status=returned"><i class="icon-tobereturned"></i>Returned(@ViewBag.NumberOfOrders[6])</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-ok"></i></span>
+        <h5>
+            Requests</h5>
+    </div>
+    <div class="widget-content nopadding">
+        <div style="text-align: center;">
+            <ul class="quick-actions">
+                <li><a href="/Customer/Requests?&status=new"><i class="icon-prices"></i>Waiting For
+                    Price(@ViewBag.NumberOfRequests[0])</a></li>
+                <li><a href="/Customer/Requests?&status=pricing"><i class="icon-draft"></i>Need To Approve(@ViewBag.NumberOfRequests[1])</a></li>
+                <li><a href="/Customer/Requests?status=approved"><i class="icon-submitted"></i>Approved(@ViewBag.NumberOfRequests[2])</a></li>
+                <li><a href="/Customer/Requests?&status=collected"><i class="icon-collected"></i>Collected(@ViewBag.NumberOfRequests[3])</a></li>
+                <li><a href="/Customer/Requests?status=canceled"><i class="icon-rejected"></i>Canceled(@ViewBag.NumberOfRequests[4])</a></li>
             </ul>
         </div>
     </div>

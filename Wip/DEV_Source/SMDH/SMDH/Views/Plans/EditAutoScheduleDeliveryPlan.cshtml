@@ -154,7 +154,7 @@
     });
 </script>
 <div class="span12">
-    <strong> Total Plan : @ViewBag.NumberOfPlans</strong>
+    <strong>Total Plan : @ViewBag.NumberOfPlans</strong>
 </div>
 <div class="span12">
     <div class="span1">
@@ -165,7 +165,7 @@
             @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
             {
                 <li onclick = "show(@i)" class="plan alert alert-error" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;width: 80px; float: left; list-style: none;">
-                    <p style="margin-left:15px;">
+                    <p style="margin-left: 15px;">
                         <b>Plan @(i + 1)</b></p>
                 </li>
             }
@@ -199,15 +199,13 @@
 <div class="span12">
     <div class="span4">
         <div class="widget-box">
-            <div class="widget-title"  id="planHeader">
+            <div class="widget-title" id="planHeader">
                 <span class="icon"><i class="icon-list-alt"></i></span>
-                <h5>
-                    Plan details</h5>
-                    <span id="planInformation" class="label label-info"></span>
+                <div style="margin-right: 70px;" id="planInformation" class="label label-info"></div>
             </div>
             <div class="widget-content nopadding">
                 <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
-              @*      <ul class="site-stats">
+                    <span id="planInformation" class="label label-info"></span>@*      <ul class="site-stats">
                         @foreach (var request in ViewBag.RequestDetails)
                         {
                             <li id="request-@request.OrderId">
@@ -326,7 +324,7 @@
         show(0);
     }
     initialize();
-    
+
     function show(id) {
         $('.plan').each(function () {
             $(this).css('background-color', '#F5F5F5');
@@ -367,16 +365,16 @@
         });
         geopt = new Array();
         geopt[0] = segmentsArr;
-        var str = "";       
-        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)";        
+        var str = "";
+        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)";
         $('#planInformation').html(str);
         showRequestsInPlan(id);
-        
+
         addMarker();
-        
+
         addDirection();
-        
-        map.setCenter(wpt[0][0].location, 13);        
+
+        map.setCenter(wpt[0][0].location, 13);
         $.unblockUI();
 
     }

@@ -17,7 +17,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;</button>
     <h3>
-        Plan No : @Model.PlanId /(@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate))/Distance: @((Model.Distance.Value/1000).ToString("N2")) km(s)</h3>
+        Plan No : @Model.PlanId - Distance : @((Model.Distance.Value/1000).ToString("N2")) km(s) <div style="float:right;margin-right:10px;">@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate)</div></h3>
 </div>
 <div class="modal-body" style="max-height: 560px;">
     <div style="margin-bottom: 5px; margin-top: -25px;">
@@ -58,8 +58,6 @@
         </div>
         <div class="span12">
             <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" />
-            <button class="btn" data-dismiss="modal" aria-hidden="true">
-                Close popup</button>
             @if (ViewBag.Assignto != null)
             {
                 <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
