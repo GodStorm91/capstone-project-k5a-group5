@@ -272,6 +272,7 @@
     var openCreateOrderModal = function (requestId) {
         $.post('/Customer/Orders/Create/', { requestId: requestId }, function (data) {
             $('#mainModal').html(data);
+            alert('ddlCityProvince' + $('#ddlCityProvince'));
             refreshValidation();
             $('.editor-field').keypress(function (e) {
                 if (e.which == 13) {
@@ -304,37 +305,4 @@
     $(window).resize(function () {
         $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
     });
-
-    $("#ddlCityProvince").change(function () {
-        var id = $('#ddlCityProvince option:selected').val();
-        if (id == '') id = -1;
-//        debugger
-        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
-            var items = '<option value>-- Choose District --</option>';
-            $.each(data, function (i, district) {
-                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
-            });
-            $('#ddlDistrict').html(items);
-            $('#ddlDistrict').removeAttr('data-val-number');
-            refreshValidation();
-            $('#ddlDistrict').trigger("liszt:updated");
-        });
-    });
-
-    $("#ddlDistrict").change(function () {
-        var id = $('#ddlDistrict option:selected').val();
-        if (id == '') id = -1;
-
-        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {\
-                alert("dasd");
-            var items = '<option value>-- Choose Ward --</option>';
-            $.each(data, function (i, ward) {
-                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
-            });
-            $('#ddlWard').html(items);
-            $('#ddlWard').removeAttr('data-val-number');
-            refreshValidation();
-            $('#ddlWard').trigger("liszt:updated");
-        });
-    }); 
 </script>

@@ -85,3 +85,39 @@
         <br />@Html.ValidationMessageFor(model => model.Note)
     </div>
 </div>
+<script type="text/javascript">
+    $("#ddlCityProvince").change(function () {
+        var items = '<option value="-1">-- All Districts --</option>';
+        $('#ddlDistrict').html(items);
+        $('#ddlDistrict').trigger("change");
+        var id = $('#ddlCityProvince option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+            items = '<option value="-1">-- All Districts --</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+            });
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("liszt:updated");
+        });        
+    });
+
+    $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+
+    $("#ddlDistrict").change(function () {
+        var items = '<option value="-1">-- All Wards --</option>';
+        $('#ddlWard').html(items);
+        $('#ddlWard').trigger("change");
+        var id = $('#ddlDistrict option:selected').val();
+        if (id == '') id = -1;
+        $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+            items = '<option value="-1">-- All Wards --</option>';
+            $.each(data, function (i, ward) {
+                items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+            });
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("liszt:updated");
+        });
+   });
+</script>
