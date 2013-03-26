@@ -143,8 +143,8 @@
             dataType: 'html',
             success: function (data) {
                 $('#editModal').html(data);
-                // Create the map object
-
+                //bootbox.alert("complete show modal");
+                // Create the map object                
                 $("form").removeData("validator");
                 $("form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse("form");
@@ -156,24 +156,26 @@
                     }
                 });
                 $('#editModal').modal();
-                map = new OpenLayers.Map('map');
-                //Create a Google layer
+                $.post("/Plans/CalculateRouteOfPlan", { id: modelId }, function (data) {
+                    segments = data.segments;
+                    waypoints = data.waypoints;
+                    //bootbox.alert("complete calculate route. segments:" + segments.length + " waypoitns:" + waypoints.length);
+                    map = new OpenLayers.Map('map');
 
-                // if i use this instead of gmap then everything works.
-                var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+                    //Create a Google layer
+
+                    // if i use this instead of gmap then everything works.
+                    var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
 				numZoomLevels: 20
 });
-                map.addLayer(gmap);
-                map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+                    map.addLayer(gmap);
+                    map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+                    show(0);
+                });
+
                 //show(row);
             }
-        });
-
-        $.post("/Plans/CalculateRouteOfPlan", { id: modelId }, function (data) {
-            segments = data.segments;
-            waypoints = data.waypoints;
-            show(0);
         });
 
     };
@@ -228,11 +230,11 @@
         geopt = new Array();
         geopt[0] = segmentsArr;
         //        showRequestsInPlan(id);
-        alert("enter add Marker");
+        
         addMarker();
-        alert("enter add direction");
+        
         addDirection();
-        alert("center is :" + wpt[0][0].location);
+        
         map.setCenter(wpt[0][0].location, 13);
         $.unblockUI();
 
@@ -272,6 +274,7 @@
             markerslayer.clearMarkers();
 
         }
+        //map = new OpenLayers.Map('map');               
         markers = new OpenLayers.Layer.Markers("Markers");
         markers.id = "Markers";
         map.addLayer(markers);

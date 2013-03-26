@@ -278,9 +278,9 @@
     var dateScore = 0.5;
     var deliveryTypeScore = 0.5;
     var segments = JSON.parse(localStorage.getItem('segments'));
-    alert("segments " + segments.length);
+    //alert("segments " + segments.length);
     var waypoints = JSON.parse(localStorage.getItem('waypoints'));
-    alert("waypoints " + waypoints.length);
+    //alert("waypoints " + waypoints.length);
     var requestsInPlans = JSON.parse(localStorage.getItem('requests'));
     var timeList = JSON.parse(localStorage.getItem('planTimeLists'));
     var distanceList = JSON.parse(localStorage.getItem('planDistanceLists'));
@@ -332,17 +332,15 @@
             $(this).css('background-color', '#F5F5F5');
         })
         $('#plan-' + id).css('background-color', '#f2dede');
-        alert(id);
+        //(id);
         var j = 0;
         var waypointsArr = new Array();
         waypointsArr.length = 0;
         var lats = new Array();
-        var lons = new Array();
-        alert(waypoints[id].length);
+        var lons = new Array();        
         $.each(waypoints[id], function (index, waypoint) {
             lats[j] = waypoint.Latitude;
-            lons[j] = waypoint.Longitude;
-            alert(waypoint.Latitude + " " + waypoint.Longitude);
+            lons[j] = waypoint.Longitude;            
             waypointsArr.push({
                 location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
             });
@@ -740,10 +738,12 @@
 
     var selectedrq = new Array();
     $('#btnSave').click(function () {
-        alert("in here");
-        //alert(someValue);
-        alert("in click");
+        //alert(someValue);        
         var testItems = new Object();
+        var segmentsLatitudeList = new Array();
+        var segmentsLongitudeList = new Array();
+        var waypointsLongitudeList = new Array();
+        var waypointsLatitudeList = new Array();
         testItems.Entrys = new Array();
 
         $.each(requestsInPlans, function (index, requests) {
@@ -752,10 +752,28 @@
                 listRequest.push(request.RequestId);
             });
 
-            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest, Distance: distanceList[index] });
+            segmentsLongitudeList = new Array();
+            segmentsLatitudeList = new Array();
+            alert("Segment length" + segments[index].length);
+            $.each(segments[index], function (indexj, segment) {
+                segmentsLongitudeList.push(segment.Longitude);
+                segmentsLatitudeList.push(segment.Latitude);
+            });
+
+            waypointsLatitudeList = new Array();
+            waypointsLongitudeList = new Array();
+            $.each(waypoints[index], function (indexj, waypoint) {
+                waypointsLongitudeList.push(waypoint.Longitude);
+                waypointsLatitudeList.push(waypoint.Latitude);
+            });
+
+            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest, Distance: distanceList[index],
+                WaypointsLongitudeList: waypointsLongitudeList, WaypointsLatitudeList: waypointsLatitudeList,
+                SegmentsLongitudeList: segmentsLongitudeList, SegmentsLatitudeList: segmentsLatitudeList
+            });
         });
         var json = $.toJSON(testItems);
-        alert(json)
+        //alert(json)
         $.ajax({
             url: '/Plans/ConfirmCreateAutoScheduleCollectionPlan',
             type: 'POST',

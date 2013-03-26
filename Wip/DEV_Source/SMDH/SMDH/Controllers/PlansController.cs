@@ -1001,6 +1001,10 @@ namespace SMDH.Controllers
                 double distance = entry.Distance;
                 var plan = new Plan();
                 plan.Distance = (Decimal)distance;
+                plan.SegmentsLatitude = string.Join(",", entry.SegmentsLatitudeList.ToArray());
+                plan.SegmentsLongitude = string.Join(",", entry.SegmentsLongitudeList.ToArray());
+                plan.WaypointsLatitude = string.Join(",", entry.WaypointsLatitudeList.ToArray());
+                plan.WaypointsLongitude = string.Join(",", entry.WaypointsLongitudeList.ToArray());
                 if (_repository.CreateCollectionPlan(plan, listRequests))
                 {
                     planIds += plan.PlanId + ",";
@@ -1242,63 +1246,35 @@ namespace SMDH.Controllers
 
         public ActionResult CalculateRouteOfPlan(int id)
         {
-            List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+            List<GeoCoordinate> segments = new List<GeoCoordinate>();
+            List<GeoCoordinate> waypoints = new List<GeoCoordinate>();
+            List<List<GeoCoordinate>> segmentsList = new List<List<GeoCoordinate>>();
+            List<List<GeoCoordinate>> waypointsList = new List<List<GeoCoordinate>>();
             Plan plans = context.Plans.Single(o => o.PlanId == id);
-            if (plans.PlanTypeId == (int)PlanTypes.CollectionPlan)
+            string[] segmentLongitudeStrs = plans.SegmentsLongitude.Split(',');
+            string[] segmentLatitudeStrs = plans.SegmentsLatitude.Split(',');
+            string[] waypointsLatitudeStrs = plans.WaypointsLatitude.Split(',');
+            string[] waypointsLongitudeStrs = plans.WaypointsLongitude.Split(',');
+
+            for (int i = 0; i < segmentLatitudeStrs.Length; i++)
             {
-                var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
-                int[] requestIds = new int[cargoesInPlan.Count()];
-                int i = 0;
-                foreach (var cargo in cargoesInPlan)
-                {
-                    requestIds[i] = cargo.RequestId.Value;
-                    i++;
-                }
-
-                var requests = context.Requests.Where(r => requestIds.Contains(r.RequestId)).ToList();
-                List<RequestViewModel> resultList = new List<RequestViewModel>();
-                for (i = 0; i < requests.Count; i++)
-                {
-                    resultList.Add(new RequestViewModel(requests.ElementAt(i)));
-                }
-
-                for (i = 0; i < resultList.Count; i++)
-                {
-                    pointList.Add(new GeoCoordinate((double)resultList.ElementAt(i).Latitude, (double)resultList.ElementAt(i).Longitude));
-                }
-                PointCollection pointCollection = new PointCollection();
-                for (i = 0; i < pointList.Count; i++)
-                {
-                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
-                }
-
-                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, 1);
-                for (i = 0; i < listPointCollection.Count; i++)
-                {
-                    PointCollection cluster = listPointCollection[i];
-                    List<RequestViewModel> listItem = new List<RequestViewModel>();
-                }
-
-                ViewBag.NumberOfPlans = 1;
-                string listRequestsIds = "";
-                for (i = 0; i < requestIds.Length - 1; i++)
-                {
-                    listRequestsIds += requestIds[i] + ",";
-                }
-                listRequestsIds += requestIds[requestIds.Length - 1];
-
-                ViewBag.SelectedRequestsIds = listRequestsIds;
-
-                PointCollection pointCluster = listPointCollection[0];
-
-
-                //Solve mTsp;
-                MTspHelper.initialize();
-                MTspHelper.solveTsp(pointList, 1);
-                return Json(new {segments = MTspHelper.segmentsLists, waypoints = MTspHelper.waypointLists});
+                double lon = double.Parse(segmentLongitudeStrs[i]);
+                double lat = double.Parse(segmentLatitudeStrs[i]);
+                segments.Add(new GeoCoordinate(lat,lon));
             }
 
-            return Json(new { });
+            for (int i = 0; i < waypointsLatitudeStrs.Length; i++)
+            {
+                double lon = double.Parse(waypointsLongitudeStrs[i]);
+                double lat = double.Parse(waypointsLatitudeStrs[i]);
+                waypoints.Add(new GeoCoordinate(lat,lon));
+            }
+
+            segmentsList.Add(segments);
+            waypointsList.Add(waypoints);
+
+            //create new 
+            return Json(new {segments = segmentsList, waypoints = waypointsList});
         }
 		
 		public ActionResult ConfirmCreateAutoScheduleDeliveryPlan(List<ListRequestsJsonModel> Entrys)
@@ -1310,7 +1286,10 @@ namespace SMDH.Controllers
                 int[] listRequests = entry.listRequests.ToArray();
                 double distance = entry.Distance;
                 var plan = new Plan();
-                
+                plan.SegmentsLatitude = string.Join(",", entry.SegmentsLatitudeList.ToArray());
+                plan.SegmentsLongitude = string.Join(",", entry.SegmentsLongitudeList.ToArray());
+                plan.WaypointsLatitude = string.Join(",", entry.WaypointsLatitudeList.ToArray());
+                plan.WaypointsLongitude = string.Join(",", entry.WaypointsLongitudeList.ToArray());
                 plan.Distance = (Decimal)distance;
                 if (_repository.CreateDeliveryPlan(plan, listRequests))
                 {

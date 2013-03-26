@@ -327,7 +327,7 @@
 
         $.blockUI();
 
-        alert(selectedrq);
+        //alert(selectedrq);
         //forTest
         //selectedrq.push(32); selectedrq.push(38);
         //end For Tests
@@ -339,7 +339,7 @@
         $('#toBeSubmit').append($(planNum))
 
         $.post('/Plans/EditAutoScheduleCollectionPlanAjax', { requestsIdsList: selectedrq.toString(), planNumber: planNumber }, function (data) {
-            alert(data.waypoints.length);
+            //alert(data.waypoints.length);
             localStorage.setItem('waypoints', JSON.stringify(data.waypoints));
             localStorage.setItem('segments', JSON.stringify(data.segments));
             //should save the function here
