@@ -62,7 +62,14 @@ namespace SMDH.Controllers
         public ActionResult Index()
         {
             //Data table
+
             var plans = context.Plans.Where(p => p.PlanId != null);
+            if (!string.IsNullOrWhiteSpace(Request["startDate"]))
+            {
+                var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
+                plans = plans.Where(p => p.CreatedDate >= startDate);
+                ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
+            }
             return View(plans);
         }
 
