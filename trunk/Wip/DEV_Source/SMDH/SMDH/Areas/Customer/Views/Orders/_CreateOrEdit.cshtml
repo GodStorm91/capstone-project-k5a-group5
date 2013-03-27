@@ -87,11 +87,12 @@
 </div>
 <script type="text/javascript">
     $("#ddlCityProvince").change(function () {
+        bootbox.alert("in change");
         var items = '<option value="-1">-- All Districts --</option>';
         $('#ddlDistrict').html(items);
-        $('#ddlDistrict').trigger("change");
         var id = $('#ddlCityProvince option:selected').val();
         if (id == '') id = -1;
+        bootbox.alert("id:" + id);
         $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
             items = '<option value="-1">-- All Districts --</option>';
             $.each(data, function (i, district) {
@@ -99,7 +100,9 @@
             });
             $('#ddlDistrict').html(items);
             $('#ddlDistrict').trigger("liszt:updated");
-        });        
+            bootbox.alert("in city province");
+            $('#ddlDistrict').trigger("change");
+        });
     });
 
     $(".chzn-select").chosen();
@@ -107,8 +110,7 @@
 
     $("#ddlDistrict").change(function () {
         var items = '<option value="-1">-- All Wards --</option>';
-        $('#ddlWard').html(items);
-        $('#ddlWard').trigger("change");
+        $('#ddlWard').html(items);        
         var id = $('#ddlDistrict option:selected').val();
         if (id == '') id = -1;
         $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
@@ -118,6 +120,8 @@
             });
             $('#ddlWard').html(items);
             $('#ddlWard').trigger("liszt:updated");
+            bootbox.alert("in district");
+            $('#ddlWard').trigger("change");
         });
    });
 </script>

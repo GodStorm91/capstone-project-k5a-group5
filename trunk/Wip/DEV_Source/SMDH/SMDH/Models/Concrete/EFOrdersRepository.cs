@@ -80,11 +80,15 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                context.Orders.InsertOnSubmit(order);
-                request.Orders.Add(order);
-                order.OrderStatus = (int)RequestStatus.Draft;
-                context.SubmitChanges();
-                return true;
+                using (var newContext = new SMDHDataContext())
+                {
+                    newContext.Orders.InsertOnSubmit(order);
+                    request.Orders.Add(order);
+                    order.OrderStatus = (int)RequestStatus.Draft;
+                    newContext.SubmitChanges();
+                    return true;
+                }
+                
             }
             catch (Exception)
             {
