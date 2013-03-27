@@ -28,7 +28,6 @@ namespace SMDH.Controllers
             var statuses = new List<int>();
             statuses.Add((int)RequestStatus.New);
             statuses.Add((int)RequestStatus.Approved);
-            statuses.Add((int)RequestStatus.PlannedForCollecting);
             statuses.Add((int)RequestStatus.Collected);
             try
             {
