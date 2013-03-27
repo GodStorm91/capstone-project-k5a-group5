@@ -23,7 +23,7 @@ namespace SMDH.Models
         {
             get
             {
-                return this.Product.ProductHeight + "x" + this.Product.ProductWidth + "x" + this.Product.ProductLength;
+                return this.Product.Size;
             }
         }
 
@@ -48,7 +48,6 @@ namespace SMDH.Models
         public int OrderId { get; set; }
 
         [DisplayName("Name")]
-        [Required(ErrorMessage = "The Name of Item is required.")]
         [MaxLength(255)]
         public string Name { get; set; }
 
@@ -65,12 +64,10 @@ namespace SMDH.Models
         public bool HasHighValue { get; set; }
 
         [DisplayName("Size")]
-        [Required(ErrorMessage = "The Size is required.")]
         [MaxLength(255)]
         public string Size { get; set; }
 
         [DisplayName("Weight")]
-        [Required(ErrorMessage = "The Weight is required.")]
         [MaxLength(255)]
         public string Weight { get; set; }
 
