@@ -9,7 +9,7 @@ using SMDH.Models;
 
 namespace SMDH.Controllers
 {
-    [Authorize]
+    
     public class DistrictController : Controller
     {
         private SMDHDataContext context = new SMDHDataContext();
