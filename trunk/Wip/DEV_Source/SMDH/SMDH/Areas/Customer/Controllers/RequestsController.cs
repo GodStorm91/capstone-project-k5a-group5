@@ -254,10 +254,10 @@ namespace SMDH.Areas.Customer.Controllers
                                                 context.Items.InsertOnSubmit(item);
 
                                                 Product product = new Product();
-                                                product.ProductCategory = category;
+                                                //product.ProductCategory = category;
                                                 product.Name = name;
-                                                product.Size = size;
-                                                product.ProductWeight = weight;
+                                                //product.Size = size;
+                                                //product.ProductWeight = weight;
                                                 product.IsPermanent = false;
                                                 product.CustomerId = 1;
                                                 products.Add(product);
