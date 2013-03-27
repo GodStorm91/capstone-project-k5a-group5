@@ -93,7 +93,6 @@ namespace SMDH.Models
                 return Orders.Where(order => order.AmountToBeCollectedFromReceiver != null).Sum(order => (int)order.AmountToBeCollectedFromReceiver);
             }
         }
-
     }
 
     public partial class RequestMetadata

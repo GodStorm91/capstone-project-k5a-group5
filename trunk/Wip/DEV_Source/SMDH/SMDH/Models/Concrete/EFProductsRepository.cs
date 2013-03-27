@@ -55,11 +55,8 @@ namespace SMDH.Models.Concrete
         {
             Product pro = Find(product.ProductId);
             pro.Name = product.Name;
-            pro.ProductWidth = product.ProductWidth;
-            pro.ProductHeight = product.ProductHeight;
-            pro.ProductLength = product.ProductLength;
+            pro.Size = product.Size;
             pro.ProductWeight = product.ProductWeight;
-            pro.ProductHeight = product.ProductHeight;
             pro.ProductPrice = product.ProductPrice;
             pro.ImageURL = product.ImageURL;
             context.SubmitChanges();

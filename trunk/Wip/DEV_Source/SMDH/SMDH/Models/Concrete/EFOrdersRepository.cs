@@ -44,8 +44,8 @@ namespace SMDH.Models.Concrete
 
         public Order Find(int id)
         {
-            return context.Orders.Single(o=> o.OrderId == id);
-        }        
+            return context.Orders.Single(o => o.OrderId == id);
+        }
 
         /// <summary>
         /// Get Items in Order
@@ -58,13 +58,13 @@ namespace SMDH.Models.Concrete
             List<ItemViewModel> resultList = new List<ItemViewModel>();
 
             //Create the models by looping all items in list
-            foreach(Item item in items)
-            {                
+            foreach (Item item in items)
+            {
                 var itemDetails = new ItemViewModel
                 {
                     ItemId = item.ItemId,
                     OrderId = item.OrderId,
-                    Name = context.Products.Single(o=>o.ProductId == item.ProductId).Name,
+                    Name = context.Products.Single(o => o.ProductId == item.ProductId).Name,
                     Quantity = item.Quantity,
                     IsFragile = item.IsFragile,
                     HasHighValue = item.HasHighValue,
@@ -89,6 +89,8 @@ namespace SMDH.Models.Concrete
                     return true;
                 }
                 
+
+
             }
             catch (Exception)
             {
@@ -98,8 +100,8 @@ namespace SMDH.Models.Concrete
         }
 
         public Order ConfirmEdit(Order order)
-        {            
-            order.OrderStatus = (int)OrderStatus.Draft;            
+        {
+            order.OrderStatus = (int)OrderStatus.Draft;
             context.SubmitChanges();
             var myContext = new EFDbContext();
             order = myContext.Orders.Find(order.OrderId);
@@ -111,7 +113,7 @@ namespace SMDH.Models.Concrete
         public bool Cancel(Order order)
         {
             return Cancel(order, true);
-        }       
+        }
 
         public bool Cancel(Order order, bool commit)
         {
@@ -152,7 +154,7 @@ namespace SMDH.Models.Concrete
                 return false;
                 throw;
             }
-        }        
+        }
 
         public bool Delete(Order order)
         {
@@ -182,7 +184,7 @@ namespace SMDH.Models.Concrete
 
         public IQueryable<Request> Requests
         {
-            get { return context.Requests;  }
+            get { return context.Requests; }
         }
 
         public Request FindRequestById(int? requestId)
@@ -220,7 +222,7 @@ namespace SMDH.Models.Concrete
             }
             catch (Exception)
             {
-                return false;    
+                return false;
                 throw;
             }
         }
@@ -262,7 +264,7 @@ namespace SMDH.Models.Concrete
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -291,7 +293,7 @@ namespace SMDH.Models.Concrete
                 return false;
                 throw;
             }
-            
+
         }
 
         public bool MarkAsDelivered(Order order, bool commit)
@@ -327,7 +329,7 @@ namespace SMDH.Models.Concrete
         public bool AddToPlan(Plan plan, Order order)
         {
             return AddToPlan(plan, order, true);
-        }        
+        }
 
         public bool UpdateLocation(Order order, decimal latitude, decimal longitude)
         {
@@ -357,7 +359,7 @@ namespace SMDH.Models.Concrete
             Plan plan = null;
             foreach (Cargo cargo in cargoes)
             {
-                plan = context.Plans.Single( o=> o.PlanId == cargo.PlanId);
+                plan = context.Plans.Single(o => o.PlanId == cargo.PlanId);
 
                 //Only return when plan status is New
                 if (plan.Status == (int)PlanStatus.New)
@@ -425,8 +427,8 @@ namespace SMDH.Models.Concrete
                 return false;
                 throw;
             }
-            
-            
+
+
         }
 		
 		public bool AddToPlan(Plan plan, List<Order> orders)
