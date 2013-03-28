@@ -11,7 +11,7 @@ namespace SMDH.Models
     [MetadataType(typeof(ItemMetadata))]
     public partial class Item
     {
-       
+      
     }
 
     public partial class ItemMetadata
