@@ -6,8 +6,6 @@ using System.Linq;
 using System.Web.Security;
 using SMDH.Models.Statuses;
 
-
-
 namespace SMDH.Models
 {
 
