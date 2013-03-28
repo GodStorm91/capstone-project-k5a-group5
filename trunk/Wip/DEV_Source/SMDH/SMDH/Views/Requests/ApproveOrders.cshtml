@@ -78,6 +78,169 @@
             </div>
         </div>
     </div>
+  @*  <div class="accordion" id="collapse-group">
+        @foreach (var order in Model.Orders.Where(o => o.OrderStatus != (int)OrderStatus.Canceled))
+        {
+            <div class="accordion-group widget-box">
+                <div class="accordion-heading">
+                    <div class="widget-title">
+                        <a data-parent="#collapse-group" href="#collapse-@order.OrderId" data-toggle="collapse">
+                            <span class="icon"><i class="icon-magnet"></i></span>
+                            <div class="order-ticket-info">
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
+                                            color: #969696">#</span> </dt>
+                                        <dd class="order-number">
+                                            @order.OrderId</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/user.png" class="myTooltip" title="Receiver Name" width="15px" />
+                                        </dt>
+                                        <dd class="receiver-name">
+                                            @order.ReceiverName</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/phone.png" class="myTooltip" title="Receiver Phone" width="15px" />
+                                        </dt>
+                                        <dd class="receiver-phone">
+                                            @order.ReceiverPhone</dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/info.png" class="myTooltip" title="Properties" width="15px" /></dt>
+                                        <dd class="properties">
+                                            <span class="label label-success">@order.DeliveryOption.Name</span> <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/bill.png" class="myTooltip" title="Amount to collect" width="15px" />
+                                        </dt>
+                                        <dd class="amount-to-be-collected">
+                                            @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
+                                            VNĐ</dd>
+                                    </dl>
+                                </div>
+                                @using (Html.BeginForm("Approve", "Orders", FormMethod.Post, new { id = "approve-form" }))
+                                {
+                                    <div class="column">
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                <img src="/img/icons2/calendar.png" class="myTooltip" title="Due Date" width="15px" /></dt>
+                                            <dd class="dueDate">
+                                                @if (order.DueDate != null)
+                                                {
+                                                    <span class="label label-important">@String.Format("{0:dd/MM/yyyy}", order.DueDate)</span><span>&nbsp;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-important">Not set yet</span><span>&nbsp;</span>
+                                                    <input type="hidden" name="OrderId" value="@order.OrderId" />
+                                                    <div class="control-group hide">
+                                                        <div class="controls">
+                                                            <input type="text" id="dueDate-picker" value="" style="float: left; width: 102px;
+                                                                height: 22px; margin: 0px;" placeholder="Set Due Date" name="DueDate" class="datepicker">
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="column">
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                <img src="/img/icons/coin.png" class="myTooltip" title="Fee" width="15px" /></dt>
+                                            <dd class="fee">
+                                                @if (order.Fee != null)
+                                                {
+                                                    @order.Fee <text>VNĐ</text>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-important">Not set yet</span><span>&nbsp;</span>
+                                                    <div class="control-group hide">
+                                                        <div class="controls">
+                                                            <div class="input-append">
+                                                                <input placeholder="Set Fee" name="Fee" style="float: left; width: 92px; height: 22px;" />
+                                                                <span class="add-on" style="padding: 0px 3px;">VNĐ</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                }
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            <img src="/img/icons/notepencil32.png" class="myTooltip" title="Note" width="15px" /></dt>
+                                        <dd class="note">
+                                            @if (string.IsNullOrWhiteSpace(order.Note))
+                                            {
+                                                <text>None</text>        
+                                            }
+                                            else
+                                            {
+                                                @order.Note
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="column">
+                                    <dl class="dl-horizontal">
+                                        <dt><span style="font-size: 15px; color: #969696" class="myTooltip" title="Delivery Address">
+                                            @@</span> </dt>
+                                        <dd class="full-address">
+                                            @order.FullAddress
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                            {
+                                if (order.Fee == null)
+                                {
+                                <div class="ticket-btn-group">
+                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn action myTooltip" title="Approve Order" data-toggle="modal">
+                                        <span aria-hidden="true" class="icomoon-icon-thumbs-up-2"></span></a><a href="#" onclick="rejectOrder(@order.OrderId)" role="button" class="btn action deleteOrder myTooltip" title="Reject Order" data-toggle="modal">
+                                            <span aria-hidden="true" class="icomoon-icon-thumbs-down"></span></a>
+                                </div>
+                                }
+                                else
+                                {
+                                <div class="ticket-btn-group">
+                                    <img src="/img/icons2/checkmark2.png" alt="Approved" title="Approved" class="myTooltip"
+                                        width="14" style="margin-top: 5px;">
+                                    <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
+                                        <img src="/img/icons2/delete.png" alt="Cancel Order" class="myTooltip" title="Disapprove Order"
+                                            width="15">
+                                    </a>
+                                </div>
+                                }
+                            }
+                        </a>
+                    </div>
+                </div>
+                <div class="collapse accordion-body" id="collapse-@order.OrderId">
+                    <div class="widget-content">
+                        This is opened by default
+                    </div>
+                </div>
+            </div>
+        }
+    </div>*@
     <div class="tabbable tabs-left" id="orders-items">
         <ul class="span7" id="order-list" style="list-style: none">
             @foreach (var order in Model.Orders.Where(o => o.OrderStatus != (int)OrderStatus.Canceled))
