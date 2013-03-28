@@ -18,7 +18,7 @@
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="/js/date.js" type="text/javascript"></script>
-@using (Html.BeginForm("RequestListByStatus", "Request", FormMethod.Post, new { id = "statusFilter" }))
+@using (Html.BeginForm("RequestListByStatus", "Requests", FormMethod.Post, new { id = "statusFilter" }))
 {          
     <div class="row-fluid">
         <div class="span10">
@@ -198,9 +198,9 @@
 
     var updateRequestStatus = function (RequestId) {
         var status = $('#ddlStatus option:selected').val();
-        $.post('/Request/UpdateStatus/', { RequestId: RequestId, newStatus: status }, function (result) {
+        $.post('/Requests/UpdateStatus/', { RequestId: RequestId, newStatus: status }, function (result) {
             if (result.success) {
-                window.location = '/Request';
+                window.location = '/Requests';
 
             }
         });
@@ -281,14 +281,14 @@
             urlParams += '&endDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
         }
         $.blockUI();
-        window.location = '/Request?' + urlParams;
+        window.location = '/Requests?' + urlParams;
         return false;
     });
 
     var cancelRequest = function (requestId) {
         bootbox.confirm("Are you sure to cancel this request?", function (result) {
             if (result) {
-                $.post('/Request/Cancel/' + requestId, function (result) {
+                $.post('/Requests/Cancel/' + requestId, function (result) {
                     if (result.success) {
                         $.blockUI();
                         window.location.reload();

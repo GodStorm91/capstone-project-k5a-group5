@@ -122,17 +122,21 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                if (request.RequestStatus != (int)RequestStatus.Draft) return false;
-                var validOrders = ValidOrders(request);
-                foreach (var validOrder in validOrders.Where(o => o.OrderStatus == (int)OrderStatus.Draft))
+                using (var myContext = new SMDHDataContext())
                 {
-                    validOrder.OrderStatus = (int)OrderStatus.New;
-                }
+                    request = myContext.Requests.Single(rq => rq.RequestId == request.RequestId);
+                    if (request.RequestStatus != (int)RequestStatus.Draft) return false;
+                    var validOrders = ValidOrders(request);
+                    foreach (var validOrder in validOrders.Where(o => o.OrderStatus == (int)OrderStatus.Draft))
+                    {
+                        validOrder.OrderStatus = (int)OrderStatus.New;
+                    }
 
-                request.RequestStatus = (int)RequestStatus.New;
-                request.RequestedDate = DateTime.Now;
-                context.SubmitChanges();
-                return true;
+                    request.RequestStatus = (int)RequestStatus.New;
+                    request.RequestedDate = DateTime.Now;
+                    myContext.SubmitChanges();
+                    return true;
+                }              
 
             }
             catch (Exception)

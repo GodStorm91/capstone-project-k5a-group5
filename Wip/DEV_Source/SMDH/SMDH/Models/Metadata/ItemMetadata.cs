@@ -11,29 +11,7 @@ namespace SMDH.Models
     [MetadataType(typeof(ItemMetadata))]
     public partial class Item
     {
-        public string Name
-        {
-            get
-            {
-                return this.Product.Name;
-            }
-        }
-
-        public string Size
-        {
-            get
-            {
-                return this.Product.Size;
-            }
-        }
-
-        public string Weight
-        {
-            get
-            {
-                return this.Product.ProductWeight.ToString();
-            }
-        }
+       
     }
 
     public partial class ItemMetadata

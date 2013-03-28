@@ -84,6 +84,7 @@
     <Compile Include="Areas\Customer\Controllers\CustomerDefaultController.cs" />
     <Compile Include="Areas\Customer\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Customer\Controllers\RequestsController.cs" />
@@ -1475,6 +1476,11 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Plans\Index.cshtml" />
     <Content Include="Views\Plans\ViewDetailsDeliveryPlans.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Items\ItemTicket.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
