@@ -127,7 +127,7 @@ namespace SMDH.Areas.Customer.Controllers
                     RequestStatus = 0
                 };
                 if (_repository.Create(request))
-                {
+                {                    
                     if (excelFile != null)
                     {
                         string savedFileName = "~/Excel/" + excelFile.FileName;
@@ -227,9 +227,24 @@ namespace SMDH.Areas.Customer.Controllers
                                                 && string.IsNullOrEmpty(isFragile) == false && string.IsNullOrEmpty(hasHighValue) == false
                                                 && string.IsNullOrEmpty(size) == false && string.IsNullOrEmpty(weight) == false && string.IsNullOrEmpty(category) == false && string.IsNullOrEmpty(price) == false) 
                                             {
+                                                Product product = new Product();
+                                                product.ProductCategory = category;
+                                                product.Name = name;
+                                                product.Size = size;
+                                                product.ProductWeight = weight;
+                                                product.IsPermanent = false;
+                                                product.CustomerId = 1;
+                                                products.Add(product);
+                                                context.Products.InsertOnSubmit(product);
+                                                context.SubmitChanges();
+
                                                 Item item = new Item();
 
                                                 item.OrderId = order.OrderId;
+                                                item.ProductId = product.ProductId;
+                                                item.Name = name;
+                                                item.Size = size;
+                                                item.Weight = weight;
                                                 item.Quantity = int.Parse(quantity);
                                                 item.Price = Int32.Parse(price);
                                                 if (isFragile == "True")
@@ -252,16 +267,6 @@ namespace SMDH.Areas.Customer.Controllers
 
                                                 items.Add(item);
                                                 context.Items.InsertOnSubmit(item);
-
-                                                Product product = new Product();
-                                                //product.ProductCategory = category;
-                                                product.Name = name;
-                                                //product.Size = size;
-                                                //product.ProductWeight = weight;
-                                                product.IsPermanent = false;
-                                                product.CustomerId = 1;
-                                                products.Add(product);
-                                                context.Products.InsertOnSubmit(product);
                                                 context.SubmitChanges();
                                             }
                                             else

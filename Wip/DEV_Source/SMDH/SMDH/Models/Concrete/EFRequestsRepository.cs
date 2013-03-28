@@ -118,6 +118,23 @@ namespace SMDH.Models.Concrete
             }
         }
 
+        public bool CreateWithStatusNew(Request request)
+        {
+            try
+            {
+                request.RequestStatus = (int)RequestStatus.New;
+                //request.CreatedByUserId =
+                context.Requests.InsertOnSubmit(request);
+                context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
         public bool Confirm(Request request)
         {
             try

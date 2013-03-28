@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using SMDH.Models.Utilities;
+using System.Linq;
+using System.Web.Security;
 using SMDH.Models.Statuses;
+using SMDH.Models.Utilities;
+
 
 namespace SMDH.Models
 {
@@ -24,6 +27,14 @@ namespace SMDH.Models
         {
             get { return AddressHelper.GetFullAddress(this); }
         }
+
+        public decimal TotalFee
+        {
+            get
+            {
+                return PriceCategories.Sum(o => o.Price).Value;
+            }
+        }        
 
         public partial class OrderMetadata
         {
@@ -109,6 +120,9 @@ namespace SMDH.Models
 
             [DisplayName("Order Payment Type")]
             public virtual OrderPaymentType OrderPaymentType { get; set; }
+
+            [DisplayName("PriceCategories")]
+            public virtual ICollection<PriceCategory> PriceCategories { get; set; }
             
         }
     }
