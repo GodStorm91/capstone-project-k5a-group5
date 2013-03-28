@@ -415,10 +415,10 @@ else
     };
 
     var approveRequest = function (requestId) {
-        $.post('/Request/Approve/' + requestId, function (result) {
+        $.post('/Requests/Approve/' + requestId, function (result) {
             if (result.success) {
                 $.blockUI();
-                window.location = '/Request/';
+                window.location = '/Requests/';
             } else {
                 bootbox.alert('Please approve all orders in this request first!');
             }

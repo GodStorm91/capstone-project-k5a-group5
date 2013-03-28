@@ -70,13 +70,13 @@
                         @Regex.Replace(item.RequestStatus.ToString(), "(\\B[A-Z])", " $1")
                         @if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.Draft)
                         {
-                            <a class="update btn action" href="/Request/AddOrders/@item.RequestId">
+                            <a class="update btn action" href="/Requests/AddOrders/@item.RequestId">
                                 <img src="/img/icons/pencil.png" alt="Edit" title="Edit" /></a>   
                         }
                         
                         @if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.New)
                         {
-                            <a class="update btn action" href="/Request/ApproveOrders/@item.RequestId">
+                            <a class="update btn action" href="/Requests/ApproveOrders/@item.RequestId">
                                 <img src="/img/icons/arrow_right2.png" alt="Approve Orders" title="Approve Orders" /></a>   
                         }
                     </td>
@@ -84,7 +84,7 @@
                         @item.Note
                     </td>
                     <td class="action-column"@if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.Draft){<text>style="min-wid"</text>}>
-                        <a class="btn action view" href="/Request/Details/@item.RequestId">
+                        <a class="btn action view" href="/Requests/Details/@item.RequestId">
                             <img src="/img/icons/notepad.png" alt="View" title="View" width="15px"></a> 
                         @*<a class="btn action update" href="#" onclick="showUpdateStatusModal(@item.RequestId,@item.RequestStatus)">
                                 <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" width="15px" /></a>*@ 
