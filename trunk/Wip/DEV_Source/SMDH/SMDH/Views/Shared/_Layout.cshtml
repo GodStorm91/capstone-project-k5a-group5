@@ -1,30 +1,16 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     <title>@ViewBag.Title</title>
-    <meta name="author" content="SuggeElson" />
-    <!-- Mobile Specific Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Le styles -->
-    <!-- Use new way for google web fonts 
-    http://www.smashingmagazine.com/2012/07/11/avoiding-faux-weights-styles-google-web-fonts -->
-    <!-- Headings -->
-    <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />  -->
-    <!-- Text -->
-    <!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css' /> -->
-    <!--[if lt IE 9]>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:700" rel="stylesheet" type="text/css" />
-    <![endif]-->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" href="/css/fullcalendar.css" />
-    <link rel="stylesheet" href="/css/uniform.css" />
-    <link rel="stylesheet" href="/css/unicorn.main.css" />
-    <link rel="stylesheet" href="/css/unicorn.grey.css" class="skin-color" />
-    <!-- Le javascript -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bluemoonstyle.css" rel="stylesheet">
+    <link href="/css/bootstrap-wysihtml5.css" rel="stylesheet">
+    <link href="/css/wysiwyg-color.css" rel="stylesheet">
+    <link href="/css/bluemoonmain.css" rel="stylesheet">
+    <!-- Important. For Theming change primary-color variable in main.css  -->
     <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -140,218 +126,303 @@
     </script>
 </head>
 <body>
-    <!-- loading animation -->
-    <div id="qLoverlay">
-    </div>
-    <div id="qLbar">
-    </div>
-    <div id="header">
-        <h1>
-            <a href="">Home</a></h1>
-    </div>
-    <div id="search">
-        <input type="text" placeholder="Search here..." />
-        <button type="submit" class="tip-right" title="Search">
-            <i class="icon-search icon-white"></i>
+    <header>
+      <a href="#" class="logo">
+        <img src="http://wbpreview.com/previews/WB0375140/img/logo.png" alt="logo" />
+      </a>
+      <div class="btn-group">
+        <button class="btn btn-primary">
+          Srinu Baswa
         </button>
-    </div>
-    <div id="user-nav" class="navbar navbar-inverse">
-        <ul class="nav btn-group">
-            <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i><span
-                class="text">Profile</span></a></li>
-            <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown"
-                data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope">
-                </i><span class="text">Messages</span> <span class="label label-important">5</span>
-                <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a class="sAdd" title="" href="#">new message</a></li>
-                    <li><a class="sInbox" title="" href="#">inbox</a></li>
-                    <li><a class="sOutbox" title="" href="#">outbox</a></li>
-                    <li><a class="sTrash" title="" href="#">trash</a></li>
-                </ul>
-            </li>
-            <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-cog"></i><span
-                class="text">Settings</span></a></li>
-            <li class="btn btn-inverse"><a title="" href="/Account/Logoff"><i class="icon icon-share-alt">
-            </i><span class="text">Logout</span></a></li>
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+          <span class="caret">
+          </span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a href="#">
+              Edit Profile
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Account Settings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Logout
+            </a>
+          </li>
         </ul>
-    </div>
-    <div id="sidebar">
-        <a href="#" class="visible-phone"><i class="icon icon-home"></i>Dashboard</a>
-        <ul>
-            <li class="active"><a href="/Dashboard"><i class="icon icon-home"></i><span>Dashboard</span></a></li>
-            <li class="submenu1"><a class="plans" href="#"><i class="icon icon-th-list"></i><span>Plans</span>
-                <span class="label">3</span></a>
+      </div>
+      <ul class="mini-nav">
+        <li>
+          <a href="#">
+            <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
+            <span class="info-label badge badge-warning">
+              3
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
+            <span class="info-label badge badge-info">
+              5
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+            <span class="info-label badge badge-success">
+              9
+            </span>
+          </a>
+        </li>
+      </ul>
+      
+    </header>
+    <div class="container-fluid">
+        <div class="dashboard-container">
+            <div class="top-nav">
                 <ul>
-                    <li><a href="/Plans/AutoScheduleCollectionPlan">Collection Plans</a></li>
-                    <li><a href="/Plans/AutoScheduleDeliveryPlan">Delivery Plans</a></li>
-                    <li><a href="">Returned Plans</a></li>
+                    <li><a href="index.html" class="selected">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
+                        </div>
+                        Dashboard </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
+                        </div>
+                        Forms </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
+                        </div>
+                        Graphs </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
+                        </div>
+                        UI Elements </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
+                        </div>
+                        Icons </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
+                        </div>
+                        Tables </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
+                        </div>
+                        Media </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe052;">
+                        </div>
+                        Calendar </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe100;">
+                        </div>
+                        Typography </a></li>
+                    <li><a href="#">
+                        <div class="fs1" aria-hidden="true" data-icon="&#xe0aa;">
+                        </div>
+                        Extras </a></li>
                 </ul>
-            </li>
-            <li><a href="/Requests"><i class="icon icon-tint"></i><span>Requests</span></a></li>
-            <li><a href="/Orders"><i class="icon icon-pencil"></i><span>Orders</span></a></li>
-            <li><a href="/Customers"><i class="icon icon-th"></i><span>Customers</span></a></li>
-            <li class="submenu2"><a class="config" href="#"><i class="icon icon-file"></i><span>Options Config</span>
-                <span class="label">6</span></a>
+                <div class="clearfix">
+                </div>
+            </div>
+            <div class="sub-nav">
                 <ul>
-                    <li><a href="/Hubs">Hubs</a></li>
-                    <li><a href="/OrderPaymentTypes">Order Payment Types</a></li>
-                    <li><a href="">Delivery Options</a></li>
-                    <li><a href="/CityProvinces/">Cities/Provinces</a></li>
-                    <li><a href="/Districts/">Districts</a></li>
-                    <li><a href="/Wards/">Wards</a></li>
+                    <li><a href="#" class="heading">Dashboard</a></li>
+                    <li><a href="#mailbox">Mailbox </a></li>
+                    <li><a href="#todo">ToDos </a></li>
+                    <li><a href="#chats">Chats </a></li>
+                    <li><a href="#notifications">Notifications </a></li>
                 </ul>
-            </li>
-            <li><a href=""><i class="icon icon-signal"></i><span>Charts &amp; Reports</span></a>
-            </li>
-        </ul>
-    </div>
-    <div id="content">
-        <div class="container-fluid">
-            <div class="row-fluid">
-                @RenderBody()
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary">
+                        Main Menu
+                    </button>
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="index.html" data-original-title="">Dashboard </a></li>
+                        <li><a href="#" data-original-title="">
+                            Forms </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/graphs.html" data-original-title="">
+                            Graphs </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/ui-elements.html" data-original-title="">
+                            UI Elements </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/icons.html" data-original-title="">
+                            Icons </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/tables.html" data-original-title="">
+                            Tables </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/media.html" data-original-title="">
+                            Media </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/calendar.html" data-original-title="">
+                            Calendar </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/typography.html" data-original-title="">
+                            Typography </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/edit-profile.html" data-original-title="">
+                            Edit Profile </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/invoice.html" data-original-title="">
+                            Invoice </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/login.html" data-original-title="">
+                            Login </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/404.html" data-original-title="">
+                            404 Page </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/500.html" data-original-title="">
+                            500 Page </a></li>
+                        <li><a href="http://wbpreview.com/previews/WB0375140/help.html" data-original-title="">
+                            Help </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dashboard-wrapper">
+                <div class="left-sidebar">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="widget">
+                                <div class="widget-header">
+                                    <div class="title">
+                                        Quick Access <span class="mini-title">Metro UI Navigation </span>
+                                    </div>
+                                    <span class="tools"><a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a></span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="row-fluid">
+                                        <div class="metro-nav">
+                                            <div class="metro-nav-block nav-block-yellow current">
+                                                <a href="index.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Dashboard
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-orange">
+                                                <a href="http://wbpreview.com/previews/WB0375140/ui-elements.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        UI Elements
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-blue double">
+                                                <a href="http://wbpreview.com/previews/WB0375140/graphs.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Graphs
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-green">
+                                                <a href="http://wbpreview.com/previews/WB0375140/forms.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Forms
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-red">
+                                                <a href="http://wbpreview.com/previews/WB0375140/icons.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Icons
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-red double">
+                                                <a href="http://wbpreview.com/previews/WB0375140/tables.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Tables
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-green">
+                                                <a href="http://wbpreview.com/previews/WB0375140/media.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Media
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-orange">
+                                                <a href="http://wbpreview.com/previews/WB0375140/calendar.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe052;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Calendar
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-blue">
+                                                <a href="http://wbpreview.com/previews/WB0375140/typography.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe100;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Typography
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="metro-nav-block nav-block-yellow">
+                                                <a href="http://wbpreview.com/previews/WB0375140/typography.html">
+                                                    <div class="fs1" aria-hidden="true" data-icon="&#xe0aa;">
+                                                    </div>
+                                                    <div class="brand">
+                                                        Extras
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @RenderBody()
+                </div>
             </div>
         </div>
+        <!--/.fluid-container-->
     </div>
-    <!-- End #content -->
-    <script type="text/javascript">
-
-
-        var plan = $('.submenu1 > ul');
-        $('.plans').click(function (e) {
-            e.preventDefault();
-            var sidebar = $('#sidebar');
-            if (sidebar.hasClass('open')) {
-                sidebar.removeClass('open');
-                plan.slideUp(250);
-            } else {
-                sidebar.addClass('open');
-                plan.slideDown(250);
-            }
-        });
-
-        var config = $('.submenu2 > ul');
-        $('.config').click(function (e) {
-            e.preventDefault();
-            var sidebar = $('#sidebar');
-            if (sidebar.hasClass('open')) {
-                sidebar.removeClass('open');
-                config.slideUp(250);
-            } else {
-                sidebar.addClass('open');
-                config.slideDown(250);
-            }
-        });
-
-        $(function () {
-            //checkNotifications();
-        });
-
-        function makeHtml(data) {
-            var html = "<ul>";
-            html += '<li><a href="' + data.link + '"/>' + data.content + "</li>";
-            html += "</ul>";
-
-            alert(html);
-
-            return html;
-        }
-
-        function checkNotifications() {
-
-            var timerId, delay = 5000;
-            var a = $("#alert");
-
-            a.onmouseover = function () {
-                clearTimeout(timerId);
-            };
-
-            a.onmouseout = function () {
-
-                timerId = setTimeout(function () {
-                    a.hide();
-                }, delay);
-            };
-
-            $.post("/Notification", null, function (data, s) {
-                if (data.d) {
-                    showAlert(data.content, data.link, 5000);
-
-                    //create Notifications widget
-                    document.getElementById("notificationBox").innerHTML = makeHtml(data); // "<ul><li>Con mat may</li></ul>"; //makeHtml();//<ul><li>Con mat may</li></ul>
-
-                    clearTimeout(timerId);
-                }
-
-                checkNotifications();
-            })
-        };
-
-        function editGlobeIcon() {
-
-        }
-
-             
+    <footer>
+      <p>
+        &copy; baswaAdmin 2013
+      </p>
+    </footer>
+    <script src="http://wbpreview.com/previews/WB0375140/js/wysiwyg/wysihtml5-0.3.0.js">
     </script>
-    <!-- End #wrapper -->
-    <!-- Le javascript
-    ================================================== -->
-    @*<script type="text/javascript" src="../../ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>  
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>*@
-    <!-- Load plugins -->
-    @*<script type="text/javascript" src="/js/plugins/qtip/jquery.qtip.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.grow.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.tooltip_0.4.4.js"></script>
-    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.orderBars.js"></script>
-
-    <script type="text/javascript" src="/js/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/knob/jquery.knob.js"></script>
-    <script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/prettify/prettify.js"></script>
-
-    <script type="text/javascript" src="/js/plugins/watermark/jquery.watermark.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/elastic/jquery.elastic.js"></script>
-    <script type="text/javascript" src="/js/plugins/inputlimiter/jquery.inputlimiter.1.3.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/maskedinput/jquery.maskedinput-1.3.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/ibutton/jquery.ibutton.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/uniform/jquery.uniform.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/stepper/ui.stepper.js"></script>
-    <script type="text/javascript" src="/js/plugins/color-picker/colorpicker.js"></script>
-    <script type="text/javascript" src="/js/plugins/timeentry/jquery.timeentry.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/dualselect/jquery.dualListBox-1.3.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/tiny_mce/jquery.tinymce.js"></script>
-    <script type="text/javascript" src="/js/plugins/validate/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/search/tipuesearch_set.js"></script>
-    <script type="text/javascript" src="/js/plugins/search/tipuesearch_data.js"></script><!-- JSON for searched results -->
-    <script type="text/javascript" src="/js/plugins/search/tipuesearch.js"></script>
-
-    <script type="text/javascript" src="/js/plugins/animated-progress-bar/jquery.progressbar.js"></script>
-    <script type="text/javascript" src="/js/plugins/pnotify/jquery.pnotify.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/lazy-load/jquery.lazyload.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/jpages/jPages.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/pretty-photo/jquery.prettyPhoto.js"></script>
-    <script type="text/javascript" src="/js/plugins/smartWizzard/jquery.smartWizard-2.0.min.js"></script>
-
-    <script type="text/javascript" src="/js/plugins/ios-fix/ios-orientationchange-fix.js"></script>
-
-    <script type="text/javascript" src="/js/plugins/dataTables/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/elfinder/elfinder.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/plupload/plupload.js"></script>
-    <script type="text/javascript" src="/js/plugins/plupload/plupload.html4.js"></script>
-    <script type="text/javascript" src="/js/plugins/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-    <script type="text/javascript" src="/js/plugins/totop/jquery.ui.totop.min.js"></script> 
-
-    <!-- Init plugins -->
-    <script type="text/javascript" src="js/statistic.js"></script><!-- Control graphs ( chart, pies and etc) -->*@
-    <!-- Important Place before main.js  -->
-    @*<script type="text/javascript" src="../../ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>*@
+    <script src="http://wbpreview.com/previews/WB0375140/js/jquery.min.js">
+    </script>
+    <script src="http://wbpreview.com/previews/WB0375140/js/bootstrap.js">
+    </script>
+    <script src="http://wbpreview.com/previews/WB0375140/js/wysiwyg/bootstrap-wysihtml5.js">
+    </script>
+    <script src="http://wbpreview.com/previews/WB0375140/js/jquery.scrollUp.js">
+    </script>
+    <!-- Google Visualization JS -->
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+    <!-- Easy Pie Chart JS -->
+    <script src="http://wbpreview.com/previews/WB0375140/js/jquery.easy-pie-chart.js">
+    </script>
+    <!-- Sparkline JS -->
+    <script src="http://wbpreview.com/previews/WB0375140/js/jquery.sparkline.js">
+    </script>
+    <!-- Tiny Scrollbar JS -->
+    <script src="http://wbpreview.com/previews/WB0375140/js/tiny-scrollbar.js">
+    </script>
 </body>
+<!-- Mirrored from wbpreview.com/previews/WB0375140/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 29 Mar 2013 15:08:56 GMT -->
 </html>
