@@ -172,6 +172,7 @@
             }
 
             $().ready(function () {
+                $('#optionsRadios2').trigger("click");
                 $("#checkForm").validate({
                     rules: {
                         email: {
@@ -193,10 +194,10 @@
                             min: 0,
                             required: true
                         },
-                        Ward: {
-                            min: 0,
-                            required: true
-                        },
+                        //                        Ward: {
+                        //                            min: 0,
+                        //                            required: true
+                        //                        },
                         HubCategory: {
                             min: 0,
                             required: "#optionsRadios2:checked"
@@ -206,46 +207,47 @@
                             required: "#optionsRadios2:checked"
                         },
                         address: {
-                            required: true
+                            required: "#optionsRadios1:checked"
                         }
 
                     },
                     messages: {
                         email: {
-                            email: "Please enter a valid email address",
-                            required: "Please enter your email address"
+                            email: "Wrong Email",
+                            required: "Required"
                         },
                         phone: {
-                            digits: "Please enter digits not character",
-                            minlength: "The minimum of cell phone digits is 10",
-                            maxlength: "The maximum of cell phone digits is 12",
-                            required: "Please enter your phone number"
+                            digits: "Wrong format",
+                            minlength: "Minimum is 10",
+                            maxlength: "Maximum is 12",
+                            required: "Required"
                         },
-                        name: "Please enter your name!",
+                        name: "Required",
                         CityProvinceId: {
-                            min: "Please choose city",
-                            required: "Please choose city"
+                            min: "Required",
+                            required: "Required"
                         },
                         DistrictId: {
-                            min: "Please choose district",
-                            required: "Please choose district"
+                            min: "Required",
+                            required: "Required"
                         },
-                        Ward: {
-                            required: "Please choose ward",
-                            min: "Please choose ward"
-                        },
+                        //                        Ward: {
+                        //                            required: "Please choose ward",
+                        //                            min: "Please choose ward"
+                        //                        },
                         Hub: {
-                            required: "Please choose Hub",
-                            min: "Please choose hub"
+                            required: "Required",
+                            min: "Required"
                         },
                         HubCategory: {
-                            required: "Please choose Hub Category",
-                            min: "Please choose Hub category"
+                            required: "Required",
+                            min: "Required"
                         },
-                        address: "Please enter address"
+                        address: "Required"
 
                     }
                 });
+
 
             });           
 
@@ -492,6 +494,7 @@
 	        margin-left: 10px;
 	        width: auto;	        
 	        color: Red;
+	        display: inline;
         }
         #noi_dung
         {
@@ -1000,103 +1003,42 @@
 
             function findLocation() {
                 var address = $('#address').val();
-                if (address.length == 0) return;
-                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
-                    var content = "Name : " + data.nearestHub.Name + "<br>" +
-                          "Dia chi:" + data.nearestHub.Address;
-
-                    addMarkerHouse(data.lat, data.lon);
-                    localStorage.setItem('HomeLat', data.lat);
-                    localStorage.setItem('HomeLon', data.lon);
-                    //alert(data.HubId);
-                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
-                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
-                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
-                    var id = 8
-                    id = data.nearestHub.HubId;
-                    //alert(id);
-                    changeHubCategoriesHandler(id);
-                });
-            }
-
-            $().ready(function () {
-                $('#optionsRadios2').trigger("click");
-                $("#checkForm").validate({
-                    rules: {
-                        email: {
-                            required: true,
-                            email: true
-                        },
-                        phone: {
-                            digits: true,
-                            minlength: 10,
-                            maxlength: 12,
-                            required: true
-                        },
-                        name: "required",
-                        CityProvinceId: {
-                            min: 0,
-                            required: true
-                        },
-                        DistrictId: {
-                            min: 0,
-                            required: true
-                        },
-//                        Ward: {
-//                            min: 0,
-//                            required: true
-//                        },
-                        HubCategory: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        Hub: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        address: {
-                            required: "#optionsRadios1:checked"
-                        }
-
-                    },
-                    messages: {
-                        email: {
-                            email: "Please enter a valid email address",
-                            required: "Please enter your email address"
-                        },
-                        phone: {
-                            digits: "Please enter digits not character",
-                            minlength: "The minimum of cell phone digits is 10",
-                            maxlength: "The maximum of cell phone digits is 12",
-                            required: "Please enter your phone number"
-                        },
-                        name: "Please enter your name!",
-                        CityProvinceId: {
-                            min: "Please choose city",
-                            required: "Please choose city"
-                        },
-                        DistrictId: {
-                            min: "Please choose district",
-                            required: "Please choose district"
-                        },
-//                        Ward: {
-//                            required: "Please choose ward",
-//                            min: "Please choose ward"
-//                        },
-                        Hub: {
-                            required: "Please choose Hub",
-                            min: "Please choose hub"
-                        },
-                        HubCategory: {
-                            required: "Please choose Hub Category",
-                            min: "Please choose Hub category"
-                        },
-                        address: "Please enter address"
-
+                if (address != "") {
+                    if (address.indexOf("HCM") == -1 && address.indexOf("Hồ Chí Minh") == -1) {
+                        address += ", Hồ Chí Minh";
                     }
-                });
+                }
+                if (address.length == 0) return;
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    alert(address);
+                    alert("status is: " + status);
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var latitude = results[0].geometry.location.lat();
+                        var longitude = results[0].geometry.location.lng();
+                        alert(latitude);
+                    } else {
+                        bootbox.alert("Sorry we can find your address please try again! Or click on map to set location by Manual!");
+                    }
+                }); 
 
-            });           
+//                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
+//                    var content = "Name : " + data.nearestHub.Name + "<br>" +
+//                          "Dia chi:" + data.nearestHub.Address;
+
+//                    addMarkerHouse(data.lat, data.lon);
+//                    localStorage.setItem('HomeLat', data.lat);
+//                    localStorage.setItem('HomeLon', data.lon);
+//                    //alert(data.HubId);
+//                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+//                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+//                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+//                    var id = 8
+//                    id = data.nearestHub.HubId;
+//                    //alert(id);
+//                    changeHubCategoriesHandler(id);
+//                });
+            }          
 
         </script>
 </body>
