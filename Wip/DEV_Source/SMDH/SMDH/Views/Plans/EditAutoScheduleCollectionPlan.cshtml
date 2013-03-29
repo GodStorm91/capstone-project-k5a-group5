@@ -153,30 +153,36 @@
         });
     });
 </script>
-<div class="span12">
-    <strong> Total Plan : @ViewBag.NumberOfPlans</strong>
-</div>
-<div class="span12">
-    <div class="span1">
-        <a id="prev" href="" class="bx-prev">prev</a></div>
-    <div class="span8">
-        <ul id="user_interaction" style="margin-left: 0px;">
-            @*<li style="width: 93px; float: left; list-style: none;">a</li>*@
-            @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
-            {
-                <li onclick = "show(@i)" class="plan alert alert-error" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;width: 80px; float: left; list-style: none;">
-                    <p style="margin-left:15px;">
-                        <b>Plan @(i + 1)</b></p>
-                </li>
-            }
-        </ul>
+<div class="row-fluid">
+    <div class="span12">
+        <strong>Total Plan : @ViewBag.NumberOfPlans</strong>
     </div>
-    <div>
-        <a id="next" href="" class="bx-next">next</a></div>
 </div>
-<div class="span6">
-    <button class="btn btn-primary" id="btnSave">
-        Save</button>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="span1">
+            <a id="prev" href="" class="bx-prev">prev</a></div>
+        <div class="span8">
+            <ul id="user_interaction" style="margin-left: 0px;">
+                @*<li style="width: 93px; float: left; list-style: none;">a</li>*@
+                @for (int i = 0; i < ViewBag.NumberOfPlans; i++)
+                {
+                    <li onclick = "show(@i)" class="plan alert alert-error" id="plan-@i" style="line-height: 0px;background-color:#dff0d8;width: 80px; float: left; list-style: none;">
+                        <p style="margin-left: 15px;">
+                            <b>Plan @(i + 1)</b></p>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <a id="next" href="" class="bx-next">next</a></div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <button class="btn btn-primary" id="btnSave">
+            Save</button>
+    </div>
 </div>
 @*<div class="span12">
     <div class="widget-box">
@@ -200,17 +206,19 @@
         </div>
     </div>
 </div>*@
-<div class="span12">
-    <div class="span4">
-        <div class="widget-box">
-            <div class="widget-title"  id="planHeader">
-                <span class="icon"><i class="icon-list-alt"></i></span>
-
-                    <div style="margin-right: 70px;" id="planInformation" class="label label-info"></div>
-            </div>
-            <div class="widget-content nopadding">
-                <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
-              @*      <ul class="site-stats">
+<div class="row-fluid">
+    <div class="span12">
+        <div class="span4">
+            <div class="widget">
+                <div class="widget-header" id="planHeader">
+                    <div class="title">
+                        <div style="margin-right: 70px;" id="planInformation" class="label label-info">
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div style="height: 550px; overflow-y: scroll;" id="requestDetailsZone">
+                        @*      <ul class="site-stats">
                         @foreach (var request in ViewBag.RequestDetails)
                         {
                             <li id="request-@request.RequestId">
@@ -228,25 +236,25 @@
                             </li>
                         }
                     </ul>*@
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="span7">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon"><i class="icon-globe"></i></span>
-                <h5>
-                    Maps</h5>
-            </div>
-            <div class="widget-content nopadding">
-                <div id="map" style="height: 555px;">
+        <div class="span7">
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="title">
+                        Maps
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div id="map" style="height: 555px;">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @*@{int j = 0;}
 @foreach (var waypointList in ViewBag.Waypoints)
 {    
@@ -322,11 +330,11 @@
 				numZoomLevels: 20
 });
         map.addLayer(gmap);
-        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 18);
         show(0);
     }
     initialize();
-    
+
     function show(id) {
         $('.plan').each(function () {
             $(this).css('background-color', '#F5F5F5');
@@ -337,10 +345,10 @@
         var waypointsArr = new Array();
         waypointsArr.length = 0;
         var lats = new Array();
-        var lons = new Array();        
+        var lons = new Array();
         $.each(waypoints[id], function (index, waypoint) {
             lats[j] = waypoint.Latitude;
-            lons[j] = waypoint.Longitude;            
+            lons[j] = waypoint.Longitude;
             waypointsArr.push({
                 location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
             });
@@ -366,16 +374,16 @@
         geopt = new Array();
         geopt[0] = segmentsArr;
         var str = "";
-        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)"; 
-//        str += " Total distance:" + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s) -- Total time: " + accounting.formatNumber(timeList[i] / 60, 2) + " min(s)";        
+        str += " Total distance: " + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s)";
+        //        str += " Total distance:" + accounting.formatNumber(distanceList[id] / 1000, 2) + " km(s) -- Total time: " + accounting.formatNumber(timeList[i] / 60, 2) + " min(s)";        
         $('#planInformation').html(str);
         showRequestsInPlan(id);
-        
+
         addMarker();
-        
+
         addDirection();
-        
-        map.setCenter(wpt[0][0].location, 13);        
+
+        map.setCenter(wpt[0][0].location, 13);
         $.unblockUI();
 
     }
@@ -410,7 +418,7 @@
             createLatsLons(data.waypoints, data.segments);
             addMarker();
             addDirection();
-            map.setCenter(wpt[0][0].location, 16);
+            map.setCenter(wpt[0][0].location, 18);
             $.unblockUI();
             e.preventDefault();
             return false;
@@ -437,7 +445,7 @@
                     createLatsLons(result.waypoints, result.segments);
                     addMarker();
                     addDirection();
-                    map.setCenter(wpt[0][0].location, 16);
+                    map.setCenter(wpt[0][0].location, 18);
                     $.unblockUI();
                 }
             });
