@@ -16,110 +16,116 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         &times;</button>
-    <h3>
+    <h6>
         Plan No : @Model.PlanId - Distance: @((Model.Distance.Value / 1000).ToString("N2"))
         km(s)<div style="float: right; margin-right: 10px;">
             (@String.Format("{0:dd/MM/yyyy hh:mm}", Model.CreatedDate))</div>
-    </h3>
+    </h6>
 </div>
-<div class="modal-body" style="max-height: 560px;">
+<div class="modal-body" style="max-height: 600px;">
     <div style="margin-bottom: 5px; margin-top: -25px;">
-        <div class="span12">
-            <div class="widget-box">
-                <div class="widget-title">
-                    <a href="#Assign" data-toggle="collapse" class="collapsed"><span class="icon"><i
-                        class="icon-user"></i></span>
-                        <h5>
-                            Assign</h5>
-                    </a>
-                </div>
-                <div class="collapse in" id="Assign">
-                    <div class="widget-content">
-                        <div>
-                            @if (ViewBag.PossibleDeliveryStaffs != null)
-                            {
-                                foreach (var d in ViewBag.PossibleDeliveryStaffs)
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget">
+                    <div class="widget-header">
+                        <a href="#Assign" data-toggle="collapse" class="collapsed">
+                            <div class="title">
+                                Assign
+                            </div>
+                        </a>
+                    </div>
+                    <div class="collapse in" id="Assign">
+                        <div class="widget-body">
+                            <div>
+                                @if (ViewBag.PossibleDeliveryStaffs != null)
                                 {
-                                <span>
-                                    <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                    @d.FirstName@d.LastName</span>                              
+                                    foreach (var d in ViewBag.PossibleDeliveryStaffs)
+                                    {
+                                    <span>
+                                        <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                        @d.FirstName@d.LastName</span>                              
+                                    }
                                 }
-                            }
-                            @if (ViewBag.Assignto != null)
-                            {
-                                foreach (var d in ViewBag.Assignto)
-                                {                                        
-                                <span>
-                                    <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                    @d.FirstName@d.LastName</span>     
+                                @if (ViewBag.Assignto != null)
+                                {
+                                    foreach (var d in ViewBag.Assignto)
+                                    {                                        
+                                    <span>
+                                        <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
+                                        @d.FirstName@d.LastName</span>     
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="span12">
-            @*            <div id="listbutton">
+        <div class="row-fluid">
+            <div class="span12">
+                @*            <div id="listbutton">
             </div>*@
-            <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" /><input
-                style="margin-left: 30px;" type="submit" class="btn btn-danger" value="Unassign"
-                id="btnUnassign" />
-            @if (ViewBag.Assignto != null)
-            {
-                <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
-                    Mark as Finished</button>
-            }
+                <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" /><input
+                    style="margin-left: 30px;" type="submit" class="btn btn-danger" value="Unassign"
+                    id="btnUnassign" />
+                @if (ViewBag.Assignto != null)
+                {
+                    <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
+                        Mark as Finished</button>
+                }
+            </div>
         </div>
-        <div class="span12">
-            <div class="widget-box">
-                <div class="widget-title">
-                    <a href="#Details" data-toggle="collapse" class="collapsed"><span class="icon"><i
-                        class="icon-th-list"></i></span>
-                        <h5>
-                            Click to see map and details</h5>
-                    </a>
-                </div>
-                <div class="collapse" id="Details">
-                    <div style="width: 230px; height: 295px; overflow-y: scroll; float: left;" id="requestDetailsZone">
-                        <ul class="site-stats">
-                            @foreach (var request in ViewBag.RequestDetails)
-                            {
-                                <li id="request-@request.RequestId">
-                                    <div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget">
+                    <div class="widget-header">
+                        <a href="#Details" data-toggle="collapse" class="collapsed">
+                            <div class="title">
+                                Click to see map and details
+                            </div>
+                        </a>
+                    </div>
+                    <div class="collapse" id="Details">
+                        <div style="width: 230px; height: 295px; overflow-y: scroll; float: left;" id="requestDetailsZone">
+                            <ul class="site-stats">
+                                @foreach (var request in ViewBag.RequestDetails)
+                                {
+                                    <li id="request-@request.RequestId">
                                         <div>
                                             <div>
-                                                <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                                <div>
+                                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span></div>
+                                                @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                                                {
+                                                    <div style="margin-top: 3px;">
+                                                        <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
+                                                }
+                                                else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                                                {
+                                                    <div style="margin-top: 3px;">
+                                                        <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span></div>
+                                                }
+                                            </div>
                                             @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
                                             {
-                                                <div style="margin-top: 3px;">
-                                                    <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span></div>
+                                                <div>
+                                                    <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                                </div>
                                             }
                                             else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
                                             {
-                                                <div style="margin-top: 3px;">
-                                                    <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span></div>
+                                                <div>
+                                                    <span class="icon-globe"></span><small>@request.DeliverAddress</small>
+                                                </div>
                                             }
                                         </div>
-                                        @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
-                                        {
-                                            <div>
-                                                <span class="icon-globe"></span><small>@request.CollectionAddress</small>
-                                            </div>
-                                        }
-                                        else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
-                                        {
-                                            <div>
-                                                <span class="icon-globe"></span><small>@request.DeliverAddress</small>
-                                            </div>
-                                        }
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                    <div style="width: 438px; float: left">
-                        <div id="map" style="height: 295px;">
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div style="width: 438px; float: left">
+                            <div id="map" style="height: 295px;">
+                            </div>
                         </div>
                     </div>
                 </div>
