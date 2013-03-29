@@ -86,6 +86,39 @@ $primary-font-color: #ffffff;*/
 /*  Border Radius  */
 /*  Opacity  */
 /*  CSS  */
+
+/*loader*/
+.loadstate, .loadstate body {overflow:hidden}
+.loadstate body > * {visibility:hidden}
+.loadstate #qLoverlay {visibility:visible;}
+.loadstate #qLbar {visibility:visible;}
+/*.js .tab-pane {display:block !important}*/
+/*.js .hide {display: inherit}*/
+#qLoverlay {
+	visibility: hidden;
+	width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 666999;
+    top: 0;
+    left: 0;
+    background: url(/images/patterns/3-1.png) repeat;
+    opacity: 0.9;
+	filter: alpha(opacity=90);
+}
+#qLbar {
+	visibility: hidden;
+	width: 80px;
+	height: 80px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    margin-top: -80px;
+    margin-left: -40px;
+    background:url(/images/loader.gif) no-repeat;
+    z-index: 667999;
+}
+
 .clearfix {
   *zoom: 1; }
   .clearfix:before {
