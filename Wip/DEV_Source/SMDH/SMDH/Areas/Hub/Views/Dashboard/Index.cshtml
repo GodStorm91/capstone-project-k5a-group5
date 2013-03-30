@@ -29,13 +29,13 @@
     }
 </style>
 <h2>@ViewBag.datasendinginhub</h2>
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-edit"></i></span>
-        <h5>
-            Tracking Order</h5>
+<div class="widget">
+    <div class="widget-header">
+        <div class="title">
+            Tracking Order
+        </div>
     </div>
-    <div class="widget-content nopadding">
+    <div class="widget-body">
         <form action="javascript:void(0);" class="form-horizontal">
         <div class="control-group">
             <label class="control-label">
@@ -51,13 +51,13 @@
         </form>
     </div>
 </div>
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-shopping-cart"></i></span>
-        <h5>
-            Order Tables</h5>
+<div class="widget">
+    <div class="widget-header">
+        <div class="title">
+            Order Tables
+        </div>
     </div>
-    <div class="widget-content">
+    <div class="widget-body">
         <ul class="nav nav-tabs" id="myTab">
             <li><a href="#1"><i class="icon icon-road"></i><span>Sending To Hub</span> <span
                 class="label">@ViewBag.NumberOfOrders[0]</span></a></li>
@@ -70,17 +70,17 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="1">
-                <div class="span8">
+                <div class="span11">
                     <table id="sendingtohub" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>
                                     <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     OrderID
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     Item No.
                                 </th>
                                 <th>
@@ -98,14 +98,14 @@
                 </div>
             </div>
             <div class="tab-pane" id="2">
-                <div class="span9 offset1">
+                <div class="span11">
                     <table id="InHub" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     OrderID
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     Item No.
                                 </th>
                                 <th>
@@ -120,14 +120,14 @@
                 </div>
             </div>
             <div class="tab-pane" id="3">
-                <div class="span9 offset1">
+                <div class="span11">
                     <table id="Delivered" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     OrderID
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     Item No.
                                 </th>
                                 <th>
@@ -142,14 +142,14 @@
                 </div>
             </div>
             <div class="tab-pane" id="4">
-                <div class="span9 offset1">
+                <div class="span11">
                     <table id="WaitingForReturn" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     OrderID
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     Item No.
                                 </th>
                                 <th>
@@ -164,14 +164,14 @@
                 </div>
             </div>
             <div class="tab-pane" id="5">
-                <div class="span9 offset1">
+                <div class="span11">
                     <table id="Return" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     OrderID
                                 </th>
-                                <th style="width:70px;">
+                                <th style="width: 70px;">
                                     Item No.
                                 </th>
                                 <th>
@@ -185,7 +185,6 @@
         </div>
     </div>
 </div>
-
 <div class="span12" id="btnChangeAll">
 </div>
 <script type="text/javascript">
@@ -247,38 +246,38 @@
                 //            '</div>' +
                 //        '</div>';
 
-                var resulttable = '<div class="widget-box">' +
+                var resulttable = '<div class="widget">' +
                     '<div class="span4 offset1">' +
-                        '<div class="widget-box">' +
-                            '<div class="widget-title">' +
+                        '<div class="widget">' +
+                            '<div class="widget-header">' +
                                 '<h5>' +
                                     'Order No : ' +
                         +data.result.OrderId + '</h5>' +
                             '</div>' +
-                            '<div class="widget-title">' +
+                            '<div class="widget-header">' +
                                 '<h5>' +
                                     'Due Date : ' + data.result.DueDateString + '</h5>' +
                             '</div>' +
-                            '<div class="widget-title">' +
+                            '<div class="widget-header">' +
                                 '<h5>' +
                                     'Order Payment Type : ' + data.result.OrderPaymentType + '</h5>' +
                             '</div>' +
                         '</div>' +
                 '</div>' +
                 '<div class="span4">' +
-                '<div class="widget-box">' +
-                '<div class="widget-title">' +
+                '<div class="widget">' +
+                '<div class="widget-header">' +
                 '<h5>' +
                 'Receiver Name : ' +
                         data.result.ReceiverName +
                     '</h5>' +
                 '</div>' +
-                '<div class="widget-title">' +
+                '<div class="widget-header">' +
                 '<h5>' +
                 'Receiver Phone : ' +
                         data.result.ReceiverPhone + '</h5>' +
                 '</div>' +
-                '<div class="widget-title">' +
+                '<div class="widget-header">' +
                 '<h5>' +
                 'Amount : ' +
                         accounting.formatMoney(data.result.AmountToBeCollected, "", 0, ',', '.') +
@@ -303,7 +302,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#sendingtohub').dataTable({
-            "sDom": "<'row'<'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a", 'bSortable': false, "sWidth": "0.1%" },
         { "mDataProp": [1], sDefaultContent: "n/a", "sType": "numeric" },
@@ -333,7 +332,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#InHub').dataTable({
-            "sDom": "<'row'<'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
@@ -354,7 +353,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#Delivered').dataTable({
-            "sDom": "<'row'<'span6'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
@@ -375,7 +374,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#WaitingForReturn').dataTable({
-            "sDom": "<'row'<'span6'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
@@ -397,7 +396,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#Return').dataTable({
-            "sDom": "<'row'<'span6'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
