@@ -2,16 +2,160 @@
     ViewBag.Title = "Dashboard";
     ViewBag.Heading = "Dashboard";
 }
-<div class="span12">
-    <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">
-        Product Management</a></div>
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-shopping-cart"></i></span>
-        <h5>
-            Orders</h5>
+<div class="row-fluid">
+    <div class="span12">
+        <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">
+            Product Management</a></div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    Orders
+                </div>
+            </div>
+            <div class="widget-body quick-actions">
+                <div class="row-fluid">
+                    <div class="metro-nav">
+                        <div class="metro-nav-block nav-block-yellow current double">
+                            <a href="/Customer/Orders?&status=draft">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
+                                </div>
+                                <div class="brand">
+                                    Need To Approve(@ViewBag.NumberOfOrders[0])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-orange">
+                            <a href="/Customer/Orders?&status=approved">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
+                                </div>
+                                <div class="brand">
+                                    Approved(@ViewBag.NumberOfOrders[1])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-blue double">
+                            <a href="/Customer/Orders?&status=rejected">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
+                                </div>
+                                <div class="brand">
+                                    Rejected(@ViewBag.NumberOfOrders[2])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-green">
+                            <a href="/Customer/Orders?status=plannedforcollecting">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
+                                </div>
+                                <div class="brand">
+                                    Requested(@ViewBag.NumberOfOrders[3])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-red">
+                            <a href="/Customer/Orders?&status=delivering">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
+                                </div>
+                                <div class="brand">
+                                    Delivering(@ViewBag.NumberOfOrders[4])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-red double">
+                            <a href="/Customer/Orders?&status=tobereturned">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
+                                </div>
+                                <div class="brand">
+                                    Waiting For Return(@ViewBag.NumberOfOrders[5])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-green">
+                            <a href="/Customer/Orders?&status=returned">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
+                                </div>
+                                <div class="brand">
+                                    Returned(@ViewBag.NumberOfOrders[6])
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="widget-content nopadding">
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    Requests
+                </div>
+            </div>
+            <div class="widget-body quick-actions">
+                <div class="row-fluid">
+                    <div class="metro-nav">
+                        <div class="metro-nav-block nav-block-yellow current double">
+                            <a href="/Customer/Requests?&status=new">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
+                                </div>
+                                <div class="brand">
+                                    Waiting For Price(@ViewBag.NumberOfRequests[0])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-orange double">
+                            <a href="/Customer/Requests?&status=pricing">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
+                                </div>
+                                <div class="brand">
+                                    Need To Approved(@ViewBag.NumberOfRequests[1])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-blue">
+                            <a href="/Customer/Requests?status=approved">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
+                                </div>
+                                <div class="brand">
+                                    Approved(@ViewBag.NumberOfRequests[2])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-green">
+                            <a href="/Customer/Requests?&status=collected">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
+                                </div>
+                                <div class="brand">
+                                    Collected(@ViewBag.NumberOfRequests[3])
+                                </div>
+                            </a>
+                        </div>
+                        <div class="metro-nav-block nav-block-red">
+                            <a href="/Customer/Requests?status=canceled">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
+                                </div>
+                                <div class="brand">
+                                    Canceled(@ViewBag.NumberOfRequests[4])
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="widget">
+    <div class="widget-header">
+        <div class="title">
+            Orders
+        </div>
+    </div>
+    <div class="widget-body">
         <div style="text-align: center;">
             <ul class="quick-actions">
                 <li><a href="/Customer/Orders?&status=draft"><i class="icon-draft"></i>Need To Approve(@ViewBag.NumberOfOrders[0])</a></li>
@@ -27,13 +171,13 @@
         </div>
     </div>
 </div>
-<div class="widget-box">
-    <div class="widget-title">
-        <span class="icon"><i class="icon-ok"></i></span>
-        <h5>
-            Requests</h5>
+<div class="widget">
+    <div class="widget-header">
+        <div class="title">
+            Requests
+        </div>
     </div>
-    <div class="widget-content nopadding">
+    <div class="widget-body nopadding">
         <div style="text-align: center;">
             <ul class="quick-actions">
                 <li><a href="/Customer/Requests?&status=new"><i class="icon-prices"></i>Waiting For
@@ -45,4 +189,4 @@
             </ul>
         </div>
     </div>
-</div>
+</div>*@

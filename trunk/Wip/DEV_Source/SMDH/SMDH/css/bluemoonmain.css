@@ -119,6 +119,38 @@ $primary-font-color: #ffffff;*/
     z-index: 667999;
 }
 
+.quick-actions i.icon-draft {
+	background-image: url('/img/iconstatus/pencil.png');
+}
+.quick-actions i.icon-rejected {
+	background-image: url('/img/iconstatus/notok.png');
+}
+.quick-actions i.icon-submitted {
+	background-image: url('/img/iconstatus/button_ok.png');
+}
+.quick-actions i.icon-delivering {
+	background-image: url('/img/iconstatus/finish.png');
+}
+.quick-actions i.icon-tobereturned {
+	background-image: url('/img/iconstatus/arrow_undo.png');
+}
+
+.quick-actions i.icon-prices {
+	background-image: url('/img/iconstatus/prices.png');
+}
+
+.quick-actions i.icon-collected {
+	background-image: url('/img/iconstatus/collected.png');
+}
+
+.quick-actions i.icon-request {
+	background-image: url('/img/iconstatus/request.png');
+}
+
+.quick-actions i.icon-wait {
+	background-image: url('/img/iconstatus/wait.png');
+}
+
 .clearfix {
   *zoom: 1; }
   .clearfix:before {
@@ -3437,7 +3469,9 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
     color: #999999; }
 
 .pagination {
-  margin: 20px 0; }
+  /*margin: 20px 0; */
+  float:right;
+  }
   .pagination ul {
     display: inline-block;
     *display: inline;
