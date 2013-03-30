@@ -5,7 +5,7 @@ var edit, view;
 setupDataTable = function (model) {
     return $('#main-table').dataTable({
         "bRetrieve": true,
-        "sDom": "<'row'<'span6 tblBtnGroup'><'span6'f>r>t<'row'<'span6'l><'span6'p>>",
+        "sDom": "<'row-fluid'<'span6 tblBtnGroup'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
         "aaSorting": [],
         "fnDrawCallback": function (oSettings) {
             $(".toggleActivate").click(function () {
