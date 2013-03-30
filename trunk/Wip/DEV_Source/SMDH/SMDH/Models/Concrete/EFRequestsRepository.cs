@@ -403,7 +403,9 @@ namespace SMDH.Models.Concrete
                 var cargoes = context.Cargos.Where(p => p.RequestId == request.RequestId);
                 foreach (var cargo in cargoes)
                 {
-                    context.Cargos.DeleteOnSubmit(cargo);
+                    //KhanhNVH Remove -- won't remove from cargo. start
+                    //context.Cargos.DeleteOnSubmit(cargo);
+                    //KhanhNHV Remove end
                 }
 
                 if (commit) context.SubmitChanges();

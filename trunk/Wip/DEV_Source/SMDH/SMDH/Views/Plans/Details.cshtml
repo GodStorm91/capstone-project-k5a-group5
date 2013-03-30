@@ -68,15 +68,15 @@
                 <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" /><input
                     style="margin-left: 30px;" type="submit" class="btn btn-danger" value="Unassign"
                     id="btnUnassign" />
-                @if (ViewBag.Assignto != null && Model.Status != (int)PlanStatus.Finished)
+                @if (ViewBag.Assignto != null && Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
                 {
                     <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
                         Mark as Finished</button>
                 }
                 
-                @if (Model.Status != (int)PlanStatus.Finished)
+                @if (Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
                 {
-                    <button class="btn btn-warning" id="cancelBtn" style="float: right; margin-right:10px;">
+                    <button class="btn btn-warning" id="cancelBtn" style="float: right; margin-right:10px;" onclick="cancelPlan(@Model.PlanId)">
                         Cancel</button>
                 }
             </div>
@@ -220,10 +220,16 @@
         var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
         var PlanId = @Model.PlanId;
         var isFinished = false;
+        var isCanceled = false;
         
         if ('@(Model.Status == (int)PlanStatus.Finished)' == "True")
         {
             isFinished = true;
+        }       
+
+        if ('@(Model.Status == (int)PlanStatus.Canceled)' == "True")
+        {
+            isCanceled = true;
         }       
         
         var checkBoxs = $("input[name=deliveryman]");
@@ -240,12 +246,12 @@
                 j++;                
         });
 
-        if (Assign != null && !isFinished)
+        if (Assign != null && !isFinished && !isCanceled)
         {
             $('#btnAssign').attr('value', 'Reassign');
         }  
         
-        if (isFinished)
+        if (isFinished || isCanceled)
         {
             $('#btnUnassign').addClass('hide');
             $('#btnAssign').addClass('hide');

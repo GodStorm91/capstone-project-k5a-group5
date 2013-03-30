@@ -86,13 +86,15 @@ namespace SMDH.Models.Concrete
 
             if (context.DeliveryMenInPlans.Where(o => o.PlanId == planId).Count() >= 0)
             {
-                plan.Status = (int)PlanStatus.Assigned;
+                plan.Status = (int)PlanStatus.Assigned;                
             }
 
             if (context.DeliveryMenInPlans.Where(o => o.PlanId == planId).Count() == 0)
             {
                 plan.Status = (int)PlanStatus.New;
             }
+
+            plan.CreatedDate = DateTime.Now;
 
             context.SubmitChanges();
 
