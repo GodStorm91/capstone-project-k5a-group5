@@ -103,7 +103,7 @@ $primary-font-color: #ffffff;*/
     top: 0;
     left: 0;
     background: url(/images/patterns/3-1.png) repeat;
-    opacity: 0.9;
+    opacity: 1;
 	filter: alpha(opacity=90);
 }
 #qLbar {
