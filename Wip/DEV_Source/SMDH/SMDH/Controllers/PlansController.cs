@@ -394,7 +394,15 @@ namespace SMDH.Controllers
         {
             try
             {
-                return Json(new { success = true });
+                var plan = context.Plans.Single(p => p.PlanId == id);
+                if (_repository.Cancel(plan))
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch (Exception)
             {
@@ -617,7 +625,7 @@ namespace SMDH.Controllers
                         var assignedStaff = (from d in context.DeliveryMens
                                              join dm in context.DeliveryMenInPlans on d.DeliveryMenId equals dm.DeliveryMenId
                                              join p in context.Plans on dm.PlanId equals p.PlanId
-                                             where d.Status != (int)PlanStatus.New && p.PlanId == id
+                                             where p.PlanId == id
                                              select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
 
                         int[] listAssignedStaffIds = new int[assignedStaff.Count()];

@@ -68,10 +68,16 @@
                 <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" /><input
                     style="margin-left: 30px;" type="submit" class="btn btn-danger" value="Unassign"
                     id="btnUnassign" />
-                @if (ViewBag.Assignto != null)
+                @if (ViewBag.Assignto != null && Model.Status != (int)PlanStatus.Finished)
                 {
                     <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
                         Mark as Finished</button>
+                }
+                
+                @if (Model.Status != (int)PlanStatus.Finished)
+                {
+                    <button class="btn btn-warning" id="cancelBtn" style="float: right; margin-right:10px;">
+                        Cancel</button>
                 }
             </div>
         </div>
@@ -213,6 +219,13 @@
         var assignman = new Array();
         var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
         var PlanId = @Model.PlanId;
+        var isFinished = false;
+        
+        if ('@(Model.Status == (int)PlanStatus.Finished)' == "True")
+        {
+            isFinished = true;
+        }       
+        
         var checkBoxs = $("input[name=deliveryman]");
         var j = 0;
         $.each(checkBoxs, function() {
@@ -226,6 +239,17 @@
                 }
                 j++;                
         });
+
+        if (Assign != null && !isFinished)
+        {
+            $('#btnAssign').attr('value', 'Reassign');
+        }  
+        
+        if (isFinished)
+        {
+            $('#btnUnassign').addClass('hide');
+            $('#btnAssign').addClass('hide');
+        }      
         
         $('#markAsFinishedBtn').click(function() {
             $.post("/Plans/MarkAsFinished/", {planId: PlanId}, function(data){

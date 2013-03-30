@@ -34,7 +34,7 @@
             switch (item.PlanTypeId)
             {
                 case (int)PlanTypes.CollectionPlan:
-            <tr class="success" onclick="edit(@item.PlanId)">
+            <tr class="success">
                 <td>
                     #@item.PlanId
                 </td>
@@ -54,6 +54,9 @@
                     }else if (item.Status == (int)PlanStatus.Finished)
                     {
                            <span class="label label-success">Finished</span>
+                     }else if (item.Status == (int)PlanStatus.Canceled)
+                    {
+                        <span class="label label-important">Canceled</span>
                     }
                 </td>
               
@@ -78,13 +81,30 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                        <i class="icon-pencil"></i></a>
+                    <div class="btn-group">
+                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action 
+                                <span class="caret">
+                                </span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
+                                    Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
+                                    Canceled
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>                   
                 </td>
             </tr>
-                                                                                    break;
+                                                                              break;
                 case (int)PlanTypes.DeliveryPlan:
-            <tr class="info" onclick="edit(@item.PlanId)">
+            <tr class="info">
                 <td>
                     #@item.PlanId
                 </td>
@@ -99,9 +119,13 @@
                     {
                         <span class="label label-info">Assigned</span>
                     }
-                    else
+                    else if (item.StaffId == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
+                    }
+                    else if (item.Status == (int)PlanStatus.Canceled)
+                    {
+                        <span class="label label-error">Canceled</span>
                     }
                 </td>                
                 @*                <td>
@@ -125,13 +149,30 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                        <i class="icon-pencil"></i></a>
+                    <div class="btn-group">
+                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action 
+                                <span class="caret">
+                                </span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
+                                    Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
+                                    Canceled
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>                   
                 </td>
             </tr>
-                                                                                    break;
+                                                                              break;
                 case (int)PlanTypes.ReturnedPlan:
-            <tr class="warning" onclick="edit(@item.PlanId)">
+            <tr class="warning">
                 <td>
                     #@item.PlanId
                 </td>
@@ -172,8 +213,25 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                        <i class="icon-pencil"></i></a>
+           <div class="btn-group">
+                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action 
+                                <span class="caret">
+                                </span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
+                                    Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
+                                    Canceled
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>                   
                 </td>
             </tr>
                                                                                     break;
