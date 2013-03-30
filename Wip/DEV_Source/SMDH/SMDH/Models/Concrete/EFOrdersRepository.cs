@@ -385,10 +385,14 @@ namespace SMDH.Models.Concrete
             {
                 var cargoes = context.Cargos.Where(p => p.PlanId == plan.PlanId &&
                 p.OrderId == order.OrderId);
+
+                var myOrder = context.Orders.Single(o => o.OrderId == order.OrderId);
                 foreach (Cargo cargo in cargoes)
                 {
-                    plan.Cargos.Remove(cargo);
+                    //plan.Cargos.Remove(cargo);
                 }
+
+                myOrder.OrderStatus = (int)OrderStatus.Collected;
                 if (commit) context.SubmitChanges();
 
                 return true;

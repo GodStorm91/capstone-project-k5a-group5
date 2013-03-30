@@ -70,7 +70,31 @@ namespace SMDH.Models.Concrete
 
                 if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
                 {
-                    return true;
+                    if (plan.Status == (int)Statuses.CollectionPlanStatus.Finished || plan.Status == (int)Statuses.CollectionPlanStatus.Canceled) return false;
+                    List<int> orderIds = new List<int>();
+                    foreach (var cargo in plan.Cargos)
+                    {
+                        orderIds.Add(cargo.OrderId.Value);
+                    }
+
+                    var orderIdsTmp = context.Orders.Where(r => orderIds.Contains(r.OrderId));
+                    if (orderIdsTmp.Any(r => r.OrderStatus != (int)OrderStatus.PlannedForDelivering)) return false;
+
+                    var orders = orderIdsTmp.ToArray();
+
+                    EFOrdersRepository orderRepo = new EFOrdersRepository();
+                    for (int i = 0; i < orders.Length; i++)
+                    {
+                        orderRepo.RemoveFromPlan(plan, orders[i]);
+                    }
+                    using (var myContext = new SMDHDataContext())
+                    {
+                        var myPlan = myContext.Plans.Single(p => p.PlanId == plan.PlanId);
+                        myPlan.Status = (int)Statuses.CollectionPlanStatus.Canceled;
+                        myPlan.CreatedDate = DateTime.Now;
+                        myContext.SubmitChanges();
+                    }
+                    
                 }
 
                 return true;
@@ -173,6 +197,7 @@ namespace SMDH.Models.Concrete
                         request.RequestStatus = (int)RequestStatus.Finished;
                     }
                     plan.Status = (int)PlanStatus.Finished;
+                    plan.CreatedDate = DateTime.Now;
                     myContext.SubmitChanges();
                     return true;
                 }                

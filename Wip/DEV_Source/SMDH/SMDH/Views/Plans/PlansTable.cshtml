@@ -12,7 +12,7 @@
                 Plan No.
             </th>
             <th>
-                Created Date
+                Modified Date
             </th>            
             <th>
                 Plantype
@@ -119,13 +119,13 @@
                     {
                         <span class="label label-info">Assigned</span>
                     }
-                    else if (item.StaffId == (int)PlanStatus.New)
+                    else if (item.Status == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
                     }
                     else if (item.Status == (int)PlanStatus.Canceled)
                     {
-                        <span class="label label-error">Canceled</span>
+                        <span class="label label-important">Canceled</span>
                     }
                 </td>                
                 @*                <td>
