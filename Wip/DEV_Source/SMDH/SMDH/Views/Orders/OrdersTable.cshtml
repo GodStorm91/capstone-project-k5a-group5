@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<SMDH.Models.Order>
-@using System.Text.RegularExpressions; 
+@using System.Text.RegularExpressions;
 @using SMDH.Models.Statuses;
 @{
     Layout = null;
@@ -74,8 +74,7 @@
                     @if (item.OrderStatus == (int)OrderStatus.ToBeReturned)
                     {
                         <a class="btn btn-success btn-mini" href="#" onclick="markAsReturned(@item.OrderId)">
-                            Mark As Returned
-                        </a>
+                            Mark As Returned </a>
                     }
                 </td>
                 <td>
@@ -89,15 +88,15 @@
                     }
                 </td>
                 <td>
-                        @if (item.DueDate != null)
-                        {
-                            @String.Format("{0:yyyyMMdd}", item.DueDate)
-                        }
-                        else
-                        {
-                            <text>000</text>
-                        }
-                    </td>
+                    @if (item.DueDate != null)
+                    {
+                        @String.Format("{0:yyyyMMdd}", item.DueDate)
+                    }
+                    else
+                    {
+                        <text>000</text>
+                    }
+                </td>
                 <td>
                     @if (item.Fee != null)
                     {
@@ -109,16 +108,20 @@
                     }
                 </td>
                 <td class=" action-column">
-                    <a class="btn action view" href="Orders/Details/@item.OrderId">
-                        <img src="/img/icons/notepad.png" alt="View" title="View" width="12px"></a> 
-                    @*<a class="btn action update" href="#" onclick="showUpdateStatusModal(@item.OrderId,@item.OrderStatus)">
-                        <img src="/img/icons/arrow_bidirectional.png" alt="Update Status" title="Update Status" width="12px" /></a>*@
-                    @if (item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Delivered && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Returned && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.ToBeReturned)
-                    {
-                        <a class="btn action delete" href="#" onclick="cancelOrder(@item.OrderId);">
-                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Order" width="12px"/>
-                        </a>        
-                    }
+                    <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="Orders/Details/@item.OrderId">View details </a>
+                            </li>
+                            @if (item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Delivered && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.Returned && item.OrderStatus != (int)SMDH.Models.Statuses.OrderStatus.ToBeReturned)
+                            {
+                                <li><a href="#" onclick="cancelOrder(@item.OrderId);">Canceled
+                                </a></li>
+                            }
+                        </ul>
+                    </div>
                 </td>
             </tr>
         }
