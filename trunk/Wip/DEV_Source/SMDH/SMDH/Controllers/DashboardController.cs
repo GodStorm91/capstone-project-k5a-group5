@@ -8,7 +8,7 @@ using SMDH.Models;
 
 namespace SMDH.Controllers
 {
-    [Authorize(Roles="admin")]
+    [Authorize(Roles="Office Staff")]
     public class DashboardController : Controller
     {   
         //

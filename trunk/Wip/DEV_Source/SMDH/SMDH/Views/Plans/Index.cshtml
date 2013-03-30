@@ -159,13 +159,18 @@
                         j++
                     }
                 });
-                if (listdeliveryman.length > 0) {
-                    $('#btnAssign').attr('value', 'Reassign');
+                //                if (listdeliveryman.length > 0) {
+                //                    $('#btnAssign').attr('value', 'Reassign');
 
-                } else {
+                //                } else {
+                //                    $('#listbutton').html('<input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" />');
+                //                    $('#btnUnassign').addClass('hide');
+                //                }
+                if (listdeliveryman.length == 0) {
                     $('#listbutton').html('<input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" />');
                     $('#btnUnassign').addClass('hide');
                 }
+
                 $("form").removeData("validator");
                 $("form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse("form");
@@ -201,6 +206,17 @@
         });
 
     };
+
+    cancelPlan = function (planId) {
+        $.post("/Plans/Cancel", { id: planId }, function (data) {
+            if (data.success) {
+                $.blockUI();
+                window.location.reload();
+            } else {
+                bootbox.alert("Can't cancel plan");
+            }
+        });
+    }
 
     var PlanId = 0;
     function assign() {

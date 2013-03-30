@@ -143,6 +143,7 @@
     <Compile Include="Models\Metadata\ItemMetadata.cs" />
     <Compile Include="Models\Metadata\OrderMetadata.cs" />
     <Compile Include="Models\Metadata\RequestMetadata.cs" />
+    <Compile Include="Models\Metadata\UserInfoMetadata.cs" />
     <Compile Include="Models\mTsp\MTspHelper.cs" />
     <Compile Include="Models\mTsp\PointCollection.cs" />
     <Compile Include="Models\SMDH.designer.cs">

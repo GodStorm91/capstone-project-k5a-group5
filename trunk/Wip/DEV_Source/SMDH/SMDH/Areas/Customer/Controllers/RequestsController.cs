@@ -64,11 +64,11 @@ namespace SMDH.Areas.Customer.Controllers
             {
             }
 
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            //requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
-            requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
-            //ViewBag.Customer = userInfo.Customer.CompanyName;
-            ViewBag.Customer = "Test";
+            var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
+            //requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
+            ViewBag.Customer = userInfo.Customer.CompanyName;
+            //ViewBag.Customer = "Test";
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -101,14 +101,14 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ViewResult Details(int id)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             Request request = context.Requests.Single(o => o.RequestId == id);
-            //if (request.CustomerId == userInfo.CustomerId)
-            if (request.CustomerId == 1)
+            if (request.CustomerId == userInfo.CustomerId)
+            //if (request.CustomerId == 1)
             {
                 if (request != null)
                 {
-                    ViewBag.Customer = "Lazada";
+                    ViewBag.Customer = userInfo.Customer.CompanyName;
                     return View(request);
                 }
             }
@@ -339,10 +339,10 @@ namespace SMDH.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult Create()
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
 
-            //ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);
-            ViewBag.PossibleCollectionAddresses = context.CustomerAddresses.Where(ca => ca.IsActive && ca.CustomerId == 1);
+            ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);
+            ViewBag.PossibleCollectionAddresses = context.CustomerAddresses.Where(ca => ca.IsActive && ca.CustomerId == userInfo.CustomerId);
             return View();
         }
 
@@ -508,16 +508,16 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ActionResult AddOrders(int id)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             Request request = context.Requests.Single(o => o.RequestId == id);
-            //if (request.CustomerId == userInfo.CustomerId)
-            if (request.CustomerId == 1)
+            if (request.CustomerId == userInfo.CustomerId)
+            //if (request.CustomerId == 1)
             {
                 if (request != null)
                 {
-                    //ViewBag.Customer = userInfo.Customer.CompanyName;
-                    ViewBag.Customer = "Lazara";
-                    //if (request.Status != RequestStatus.Draft) return RedirectToAction("Index");
+                    ViewBag.Customer = userInfo.Customer.CompanyName;
+                    //ViewBag.Customer = "Lazara";
+                    if (request.Status != RequestStatus.Draft) return RedirectToAction("Index");
                     return View(request);
                 }
             }
@@ -530,10 +530,10 @@ namespace SMDH.Areas.Customer.Controllers
             try
             {
                 EFRequestsRepository requestRepo = new EFRequestsRepository();
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 Request request = context.Requests.Single(o => o.RequestId == id);
-                //if (request.CustomerId == userInfo.CustomerId)
-                if (request.CustomerId == 1)
+                if (request.CustomerId == userInfo.CustomerId)
+                //if (request.CustomerId == 1)
                 {
                     if (requestRepo.Confirm(request)) return Json(new { success = true, requestId = request.RequestId });
                 }

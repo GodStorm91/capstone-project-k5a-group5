@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SMDH.Areas.Customer.Controllers
 {
-    //[Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Customer")]
     public class CustomerDefaultController : Controller
     {
 

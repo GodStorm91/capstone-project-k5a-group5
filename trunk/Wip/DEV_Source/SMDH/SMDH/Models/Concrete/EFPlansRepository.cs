@@ -36,7 +36,50 @@ namespace SMDH.Models.Concrete
 
         public bool Cancel(Plan plan)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (plan.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                {
+                    if (plan.Status == (int)Statuses.CollectionPlanStatus.Finished || plan.Status == (int)Statuses.CollectionPlanStatus.Canceled) return false;
+                    List<int> requestIds = new List<int>();
+                    foreach (var cargo in plan.Cargos)
+                    {
+                        requestIds.Add(cargo.RequestId.Value);
+                    }
+
+                    var requestsTmp = context.Requests.Where(r => requestIds.Contains(r.RequestId));
+
+                    if (requestsTmp.Any(r => r.RequestStatus != (int)RequestStatus.PlannedForCollecting)) return false;
+
+                    var requests = requestsTmp.ToArray() ;
+                    EFRequestsRepository requestsRepo = new EFRequestsRepository();
+                    for (int i = 0; i < requests.Length; i++)
+                    {
+                        requestsRepo.RemoveFromPlan(requests[i]);
+                    }
+                    using (var myContext = new SMDHDataContext())
+                    {
+                        var myPlan = myContext.Plans.Single(p => p.PlanId == plan.PlanId);
+                        myPlan.Status = (int)Statuses.CollectionPlanStatus.Canceled;
+                        myPlan.CreatedDate = DateTime.Now;
+                        myContext.SubmitChanges();
+                    }
+                    
+                    return true;
+                }
+
+                if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                {
+                    return true;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }         
         }
 
         public bool MarkAsFinished(Plan plan, bool removeUnfinishedOrders)
