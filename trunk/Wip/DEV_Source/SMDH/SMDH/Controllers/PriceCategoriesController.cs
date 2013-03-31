@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.Mvc;
 using SMDH.Models;
 using SMDH.Models.Concrete;
@@ -39,12 +40,22 @@ namespace SMDH.Controllers
             return View();
         }
 
+        public ActionResult AddPriceCategory(int orderId)
+        {
+            PriceCategory pc = new PriceCategory();
+            pc.OrderId = orderId;
+            return View(pc);
+
+        }
+
         public ActionResult ConfirmCreate(PriceCategory pc)
         {
             try
             {
                 pc.EditDate = DateTime.Now;
                 //pc.Staff Staff Id goes here
+                var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                pc.UserId = userInfo.UserId;
                 context.PriceCategories.InsertOnSubmit(pc);                
                 context.SubmitChanges();
                 return Json(new { success = true });

@@ -32,7 +32,7 @@ namespace SMDH.Models
         {
             get
             {
-                return PriceCategories.Sum(o => o.Price).Value;
+                return PriceCategories.Sum(o => o.Price);
             }
         }        
 

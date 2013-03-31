@@ -2,6 +2,7 @@
 @using SMDH.Models.Statuses
 @using SMDH.Models
 @using System.Text.RegularExpressions;
+@using SMDH.Models.ViewModels;
 @{
     ViewBag.Title = "Approve Request";
     ViewBag.Heading = "Approve Request";
@@ -190,15 +191,67 @@
                                             </label>
                                         </div>
                                         <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                <input type="text" id="dueDate-picker" placeholder="Set Due Date" name="DueDate"
-                                                    class="datepicker">
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                <input type="text" placeholder="Set Fee VNĐ" name="Fee" />
-                                            </label>
+                                            <a href="#" onclick="addPrice(@order.OrderId)">
+                                                Add
+                                            </a>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            No.
+                                                        </th>
+                                                        <th>
+                                                            Last Modified Date
+                                                        </th>
+                                                        <th>
+                                                            Price Content
+                                                        </th>
+                                                        <th>
+                                                            Last Modified User
+                                                        </th>
+                                                        <th>
+                                                            Price
+                                                        </th>
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (order.PriceCategories.Count == 0)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                Not pricing this order yet.
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var priceCategory in order.PriceCategories)
+                                                        {
+                                                            PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                                                        <tr>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                @pcViewModel.EditDate
+                                                            </td>
+                                                            <td>
+                                                                @pcViewModel.PriceContent
+                                                            </td>
+                                                            <td>
+                                                                @pcViewModel.StaffName
+                                                            </td>
+                                                            <td>
+                                                                @pcViewModel.Price
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label" for="name">
@@ -588,6 +641,9 @@
 <div class="modal hide fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
 </div>
+<div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
 <!-- End Modal -->
 <script>
     //    var setupOrderTicket = function () {
@@ -748,4 +804,28 @@
     $(window).resize(function () {
         $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
     });
+
+    function addPrice(orderId) {        
+        //$('#editModal').html('');
+        $.ajax({
+            url: '/' + "PriceCategories" + '/AddPriceCategory'+"/",
+            type: 'POST',
+            data: {orderId: orderId},
+            dataType: 'html',
+            success: function (data) {
+                $('#createModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#createModal').modal();
+            }
+        });
+    }
 </script>

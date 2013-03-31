@@ -1,0 +1,31 @@
+﻿@model SMDH.Models.PriceCategory
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Add new Price Category</h3>
+</div>
+<div class="modal-body" style="height: 400px;">
+    @using (Html.BeginForm("ConfirmCreate", "PriceCategories", FormMethod.Post, new { id = "create-form", Class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            @Html.Partial("_CreateOrEdit", Model)
+        </fieldset>        
+    }
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+
+<script>
+    $('#btnCreate').click(function () {
+        $('#create-form').submit();
+    });
+</script>
+
