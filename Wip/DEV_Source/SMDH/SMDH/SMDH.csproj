@@ -137,6 +137,7 @@
     <Compile Include="Models\Concrete\EFPlansRepository.cs" />
     <Compile Include="Models\Concrete\EFProductsRepository.cs" />
     <Compile Include="Models\Concrete\EFRequestsRepository.cs" />
+    <Compile Include="Models\Metadata\PriceCategoryMetadata.cs" />
     <Compile Include="Models\Metadata\CustomerAddressMetadata.cs" />
     <Compile Include="Models\Metadata\CustomerMetadata.cs" />
     <Compile Include="Models\Metadata\HubMetadata.cs" />
@@ -1484,6 +1485,8 @@
     <Content Include="Views\Items\_CreateOrEdit.cshtml" />
     <Content Include="Views\Items\ItemTicket.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\PriceCategories\AddPriceCategory.cshtml" />
+    <Content Include="Views\PriceCategories\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

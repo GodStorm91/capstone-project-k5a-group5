@@ -16,10 +16,12 @@ namespace SMDH.Models.ViewModels
 
         public PriceCategoryViewModel(PriceCategory pc)
         {
-            Price = pc.Price.Value;
+            SMDHDataContext context = new SMDHDataContext();
+            Price = pc.Price;
             PriceContent = pc.PriceContent;
             EditDate = pc.EditDate.Value;
             PriceCategoryId = pc.PriceCategoryId;
+            StaffName = context.UserInfos.Single(us => us.UserId == pc.UserId).FullName;
         }
     }
 
