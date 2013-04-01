@@ -20,7 +20,7 @@
 <link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-timepicker.js" type="text/javascript"></script>
 <div class="requestDetails">
-    @* <div id="companyInfo" class="green-bordered">
+    @*<div id="companyInfo" class="green-bordered">
         <div style="clear: both;">
         </div>
         <div class="row-fluid" id="request-summary">
@@ -69,8 +69,6 @@
             </div>
         </div>
     </div>*@
-
-
 
     <div class="row-fluid">
         <div class="invoice">
@@ -132,7 +130,152 @@
             </table>
         </div>
     </div>
-    <div class="tabbable tabs-left" id="orders-items">
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="accordion1" class="accordion no-margin">
+                @foreach (var order in Model.Orders.Where(o => o.OrderStatus != (int)OrderStatus.Canceled))
+                {
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#order-@order.OrderId" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                <i class="icon-shopping-cart"></i>Order @order.OrderId </a>
+                        </div>
+                        <div class="accordion-body in collapse" id="order-@order.OrderId" style="height: auto;">
+                            <div class="accordion-inner">
+                                <div class="span6">
+                                    @if (order.OrderStatus == (int)OrderStatus.Rejected)
+                                    {
+                                        <div class="row-fluid" style="background: #000; color: #fff; text-align: center;">
+                                            Rejected
+                                        </div>
+                                    }
+                                    <div class="widget">
+                                        <div class="widget-body">
+                                            <form class="no-margin">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Receiver Name : @order.ReceiverName
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Receiver Phone : @order.ReceiverPhone
+                                                    </label>
+                                                    <label class="control-label" for="name">
+                                                        Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
+                                                        <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                                    </label>
+                                                    <label class="control-label" for="name">
+                                                        Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
+                                                        VNĐ
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Note :
+                                                @if (string.IsNullOrWhiteSpace(order.Note))
+                                                {
+                                                    <text>None</text>        
+                                                }
+                                                else
+                                                {
+                                                    @order.Note
+                                                }
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Delivery Address : @order.FullAddress
+                                                    </label>
+                                                </div>
+                                                @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                                                {
+                                                    <div class="form-actions no-margin">
+                                                        <a href="#" onclick="cancelOrder(@order.OrderId)" class="myToolTip btn action" rel="tooltip" title="Cancel Order"  role="button" class="deleteOrder btn action" data-toggle="modal">
+                                                            <img src="/img/icons2/cross.png" alt="Cancel Order" width="15">Cancel Order
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="widget">
+                                        <div class="widget-header">
+                                            <div class="title">
+                                                Items
+                                            </div>
+                                        </div>
+                                        <div class="widget-body">
+                                            @if (order.Items.Count == 0)
+                                            {
+                                                <li class="no-item">There is no item in this order.</li>
+                                            }
+                                            else
+                                            {
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name
+                                                            </th>
+                                                            <th>Weight
+                                                            </th>
+                                                            <th>Quantity
+                                                            </th>
+                                                            <th>Properties
+                                                            </th>
+                                                            <th>Note
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in order.Items)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @item.Name
+                                                                </td>
+                                                                <td>@item.Weight
+                                                                </td>
+                                                                <td>@item.Quantity
+                                                                </td>
+                                                                <td>
+                                                                    @if (!item.IsFragile && !item.HasHighValue)
+                                                                    { <text>None</text> }
+                                                                    @if (item.IsFragile)
+                                                                    {<span class="label label-success">Fragile</span><text>&nbsp;</text>}
+                                                                    @if (item.HasHighValue)
+                                                                    {<span class="label label-info">High Value</span><text>&nbsp;</text>}
+                                                                </td>
+                                                                <td>
+                                                                    @if (string.IsNullOrWhiteSpace(item.Note))
+                                                                    {
+                                                                        <text>None</text>        
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @item.Note
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @*    <div class="tabbable tabs-left" id="orders-items">
         <ul class="span7 nav nav-tabs" id="order-list">
             @foreach (var order in Model.Orders.Where(o => o.Status != OrderStatus.Canceled))
             {
@@ -331,9 +474,12 @@
                 </div>
             }
         </div>
-    </div>
+    </div>*@
 </div>
-<a href="/Request/" role="button" class="btn btn-primary pull-left" data-toggle="modal">View All Requests</a>
+<div class="row-fluid">
+    <div class="span12"><a href="/Request/" role="button" class="btn btn-primary pull-left" data-toggle="modal">View All Requests</a></div>
+</div>
+
 <!-- Begin Modal-->
 <div class="modal hide fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
