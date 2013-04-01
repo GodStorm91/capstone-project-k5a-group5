@@ -67,7 +67,7 @@
                     @(item.OrderPaymentType == null ? "None" : item.OrderPaymentType.Name)
                 </td>
                 <td>
-                    @Regex.Replace(item.Status.ToString(), "(\\B[A-Z])", " $1")
+                    @((OrderStatus)(item.OrderStatus))
                 </td>
                 <td>
                     @if (item.DueDate != null)
@@ -110,14 +110,28 @@
                     }
                 </td>
                 <td class=" action-column">
-                    <a class="btn action view" href="Orders/Details/@item.OrderId">
-                        <img src="/img/icons/notepad.png" alt="View" title="View" width="12px"></a>
-                    @if (item.Status == SMDH.Models.Statuses.OrderStatus.Draft || item.Status == SMDH.Models.Statuses.OrderStatus.Rejected)
-                    {
-                        <a class="btn action delete" href="#" onclick="cancelOrder(@item.OrderId);">
-                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel" width="12px"/>
-                        </a>        
-                    }
+                     <div class="btn-group">
+                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action 
+                                <span class="caret">
+                                </span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="Orders/Details/@item.OrderId">
+                                    View
+                                  </a>
+                                </li>
+                                @if (item.Status == SMDH.Models.Statuses.OrderStatus.Draft || item.Status == SMDH.Models.Statuses.OrderStatus.Rejected)
+                                {
+                                <li>
+                                  <a href="javascript:void(0)" onclick="cancelOrder(@item.OrderId);">
+                                    Canceled
+                                  </a>
+                                </li>
+                                    }
+                              </ul>
+                       </div>                             
                 </td>
             </tr>
         }

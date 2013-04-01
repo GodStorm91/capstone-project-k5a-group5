@@ -52,10 +52,10 @@
                     #@item.OrderId
                 </td>
                 <td>
-                    @*@String.Format("{0:dd/MM/yyyy hh:mm tt}", item.Request.RequestedDate)*@
+                    @(item.Request != null ? String.Format("{0:dd/MM/yyyy hh:mm tt}", item.Request.RequestedDate) : "None") 
                 </td>
                 <td>
-                    @*@item.Request.Customer.DisplayName*@
+                    @(item.Request != null ? item.Request.Customer.DisplayName : "None")
                 </td>
                 <td>
                     @item.FullAddress
@@ -70,7 +70,7 @@
                     @(item.OrderPaymentType == null ? "None" : item.OrderPaymentType.Name)
                 </td>
                 <td>
-                    @Regex.Replace(item.OrderStatus.ToString(), "(\\B[A-Z])", " $1")
+                    @((OrderStatus)(item.OrderStatus))
                     @if (item.OrderStatus == (int)OrderStatus.ToBeReturned)
                     {
                         <a class="btn btn-success btn-mini" href="#" onclick="markAsReturned(@item.OrderId)">
