@@ -237,11 +237,24 @@
         $('#Plans').click(function () {
             $('.plansubmenu').removeClass('hide');
             $('.configsubmenu').addClass('hide');
+
+            $(this).addClass('selected');
+            $('#Config').removeClass('selected');
         });
 
         $('#Config').click(function () {
             $('.configsubmenu').removeClass('hide');
             $('.plansubmenu').addClass('hide');
+
+            $('#Plans').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $('.top-nav').find('a').each(function () {
+            $(this).removeClass('selected');
+            $(this).click(function () {
+                $(this).addClass('selected');
+            });
         });
 
     </script>
