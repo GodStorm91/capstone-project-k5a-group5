@@ -73,7 +73,7 @@
     <div class="row-fluid">
         <div class="invoice">
             <div class="invoice-head">
-                <img src="img/logo-grey.png" alt="logo" class="logo">
+                <img src="/img/customer.jpg" alt="logo" class="logo">
                 <div class="invoice-info">
                     <span>Request Number: #@Model.RequestId</span>
                 </div>
@@ -82,8 +82,8 @@
                 <div class="from">
                     <h5>Customer: @Model.Customer.DisplayName
                     </h5>
-                    <span>Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
-                        @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
+                    <span style="width: 800px;">Collection Address: @Model.CustomerAddress.FullAddress</span>
+                    <span>Requested Date: @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
                 </div>
             </div>
             <table class="table table-bordered">
@@ -146,7 +146,7 @@
                                 <div class="span6">
                                     @if (order.OrderStatus == (int)OrderStatus.Rejected)
                                     {
-                                        <div class="row-fluid" style="background: #000; color: #fff; text-align: center;">
+                                        <div class="row-fluid" style="background: rgb(168, 49, 49); color: #fff; text-align: center;">
                                             Rejected
                                         </div>
                                     }
@@ -477,7 +477,7 @@
     </div>*@
 </div>
 <div class="row-fluid">
-    <div class="span12"><a href="/Request/" role="button" class="btn btn-primary pull-left" data-toggle="modal">View All Requests</a></div>
+    <div class="span12"><a href="/Requests/" role="button" class="btn btn-primary pull-left" data-toggle="modal">View All Requests</a></div>
 </div>
 
 <!-- Begin Modal-->
