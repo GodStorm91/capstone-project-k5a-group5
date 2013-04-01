@@ -64,11 +64,13 @@ namespace SMDH.Areas.Customer.Controllers
             {
             }
 
-            var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
-            //requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
-            ViewBag.Customer = userInfo.Customer.CompanyName;
-            //ViewBag.Customer = "Test";
+            requests = _repository.GetRequestsByStatuses(statuses);
+
+            //var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            //requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
+            ////requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
+            //ViewBag.Customer = userInfo.Customer.CompanyName;
+            ////ViewBag.Customer = "Test";
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -101,17 +103,17 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ViewResult Details(int id)
         {
-            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            //var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             Request request = context.Requests.Single(o => o.RequestId == id);
-            if (request.CustomerId == userInfo.CustomerId)
-            //if (request.CustomerId == 1)
-            {
-                if (request != null)
-                {
-                    ViewBag.Customer = userInfo.Customer.CompanyName;
+            //if (request.CustomerId == userInfo.CustomerId)
+            ////if (request.CustomerId == 1)
+            //{
+            //    if (request != null)
+            //    {
+            //        ViewBag.Customer = userInfo.Customer.CompanyName;
                     return View(request);
-                }
-            }
+            //    }
+            //}
             throw new HttpException(404, "Not found!");
         }
 
