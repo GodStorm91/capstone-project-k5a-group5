@@ -86,7 +86,11 @@ $primary-font-color: #ffffff;*/
 /*  Border Radius  */
 /*  Opacity  */
 /*  CSS  */
-
+.field-validation-error
+{
+    color:Red;
+    display:block;
+}
 /*loader*/
 .loadstate, .loadstate body {overflow:hidden}
 .loadstate body > * {visibility:hidden}

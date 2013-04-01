@@ -33,8 +33,7 @@
             </div>
             <div class="invoice-data-container">
                 <div class="from">
-                    <h5>
-                        Customer: @Model.Customer.DisplayName
+                    <h5>Customer: @Model.Customer.DisplayName
                     </h5>
                     <span>Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
                         @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
@@ -43,20 +42,15 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th style="width: 10%">
-                            Number of orders
+                        <th style="width: 10%">Number of orders
                         </th>
-                        <th style="width: 10%">
-                            Number of items
+                        <th style="width: 10%">Number of items
                         </th>
-                        <th style="width: 50%" class="hidden-phone">
-                            Total Fee
+                        <th style="width: 50%" class="hidden-phone">Total Fee
                         </th>
-                        <th style="width: 10%" class="hidden-phone">
-                            Status
+                        <th style="width: 10%" class="hidden-phone">Status
                         </th>
-                        <th style="width: 10%" class="hidden-phone">
-                            Note
+                        <th style="width: 10%" class="hidden-phone">Note
                         </th>
                     </tr>
                 </thead>
@@ -90,66 +84,6 @@
         </div>
     </div>
 </div>
-@*<div class="row-fluid">
-    <div class="span12">
-    </div>
-</div>
-<div id="companyInfo" class="span12">
-    <div style="clear: both;">
-    </div>
-    <div class="span3" style="width: 240px;">
-        <div class="widget-title">
-            <h5>
-                Request Number: #@Model.RequestId</h5>
-        </div>
-        <div class="widget-title">
-            <h5>
-                Customer: @Model.Customer.DisplayName</h5>
-        </div>
-        <div class="widget-title">
-            <h5>
-                Requested Date: @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</h5>
-        </div>
-        <div class="widget-title">
-            <h5>
-                Status:
-            </h5>
-            <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
-        </div>
-    </div>
-    <div class="span3">
-        <div class="widget-title">
-            <h5>
-                Number of orders: @Model.ValidOrders.Count</h5>
-        </div>
-        <div class="widget-title">
-            <h5>
-                Number of items: @Model.NumberOfItems</h5>
-        </div>
-        <div class="widget-title">
-            <h5>
-                Total fee: VNĐ</h5>
-        </div>
-    </div>
-    <div class="span5">
-        <div class="widget-title">
-            <h5>
-                Note:
-                @if (string.IsNullOrWhiteSpace(Model.Note))
-                {
-                    <text>None</text>
-                }
-                else
-                {
-                    <text>@Model.Note</text>
-                }</h5>
-        </div>
-        <div class="widget-title" style="height: 70px;">
-            <h5>
-                Collection Address: @Model.CustomerAddress.FullAddress</h5>
-        </div>
-    </div>
-</div>*@
 <div class="row-fluid">
     <div class="span12">
         <div id="accordion1" class="accordion no-margin">
@@ -172,102 +106,93 @@
                                 <div class="widget">
                                     <div class="widget-body">
                                         <form class="no-margin">
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Receiver Name : @order.ReceiverName
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Receiver Phone : @order.ReceiverPhone
-                                            </label>
-                                            <label class="control-label" for="name">
-                                                Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
-                                                <span class="label label-info">@order.OrderPaymentType.Name</span>
-                                            </label>
-                                            <label class="control-label" for="name">
-                                                Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
-                                                VNĐ
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <a href="#" onclick="addPrice(@order.OrderId)">Add </a>
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            No.
-                                                        </th>
-                                                        <th>
-                                                            Last Modified Date
-                                                        </th>
-                                                        <th>
-                                                            Price Content
-                                                        </th>
-                                                        <th>
-                                                            Last Modified User
-                                                        </th>
-                                                        <th>
-                                                            Price
-                                                        </th>
-                                                        <th>
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (order.PriceCategories.Count == 0)
-                                                    {
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Receiver Name : @order.ReceiverName
+                                                </label>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Receiver Phone : @order.ReceiverPhone
+                                                </label>
+                                                <label class="control-label" for="name">
+                                                    Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
+                                                    <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                                </label>
+                                                <label class="control-label" for="name">
+                                                    Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
+                                                    VNĐ
+                                                </label>
+                                            </div>
+                                            <div class="control-group">
+                                                <a href="#" onclick="addPrice(@order.OrderId)">Add </a>
+                                                <table class="table table-bordered">
+                                                    <thead>
                                                         <tr>
-                                                            <td colspan="6">
-                                                                Not pricing this order yet.
-                                                            </td>
+                                                            <th>No.
+                                                            </th>
+                                                            <th>Last Modified Date
+                                                            </th>
+                                                            <th>Price Content
+                                                            </th>
+                                                            <th>Last Modified User
+                                                            </th>
+                                                            <th>Price
+                                                            </th>
+                                                            <th>Action
+                                                            </th>
                                                         </tr>
-                                                        
-                                                    }
-                                                    else
-                                                    {
-                                                        foreach (var priceCategory in order.PriceCategories)
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (order.PriceCategories.Count == 0)
                                                         {
-                                                            PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
-                                                        <tr>
-                                                            <td>
-                                                            </td>
-                                                            <td>
-                                                                @pcViewModel.EditDate
-                                                            </td>
-                                                            <td>
-                                                                @pcViewModel.PriceContent
-                                                            </td>
-                                                            <td>
-                                                                @pcViewModel.StaffName
-                                                            </td>
-                                                            <td>
-                                                                @(String.Format("{0,12:N0}", pcViewModel.Price))
-                                                                VND
-                                                            </td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                                                        Action <span class="caret"></span>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit </a>
-                                                                        </li>
-                                                                        <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">
-                                                                            Canceled </a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td colspan="6">Not pricing this order yet.
+                                                                </td>
+                                                            </tr>
+                                                        
                                                         }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Note :
+                                                        else
+                                                        {
+                                                            foreach (var priceCategory in order.PriceCategories)
+                                                            {
+                                                                PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>
+                                                                    @pcViewModel.EditDate
+                                                                </td>
+                                                                <td>
+                                                                    @pcViewModel.PriceContent
+                                                                </td>
+                                                                <td>
+                                                                    @pcViewModel.StaffName
+                                                                </td>
+                                                                <td>
+                                                                    @(String.Format("{0,12:N0}", pcViewModel.Price))
+                                                                    VND
+                                                                </td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                                                            Action <span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu">
+                                                                            <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit </a>
+                                                                            </li>
+                                                                            <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">Canceled </a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Note :
                                                 @if (string.IsNullOrWhiteSpace(order.Note))
                                                 {
                                                     <text>None</text>        
@@ -276,35 +201,32 @@
                                                 {
                                                     @order.Note
                                                 }
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Delivery Address : @order.FullAddress
-                                            </label>
-                                        </div>
-                                        @if (order.OrderStatus != (int)OrderStatus.Rejected)
-                                        {
-                                            if (order.Fee == null)
-                                            {
-                                            <div class="form-actions no-margin">
-                                                <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn action myTooltip" title="Approve Order" data-toggle="modal">
-                                                    <span aria-hidden="true" class="icomoon-icon-thumbs-up-2"></span></a><a href="#" onclick="rejectOrder(@order.OrderId)" role="button" class="btn action deleteOrder myTooltip" title="Reject Order" data-toggle="modal">
-                                                        <span aria-hidden="true" class="icomoon-icon-thumbs-down"></span></a>
+                                                </label>
                                             </div>
-                                            }
-                                            else
-                                            {
-                                            <div class="form-actions no-margin">
-                                                <img src="/img/icons2/checkmark2.png" alt="Approved" title="Approved" class="myTooltip"
-                                                    width="14" style="margin-top: 5px;">
-                                                <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
-                                                    <img src="/img/icons2/delete.png" alt="Cancel Order" class="myTooltip" title="Disapprove Order"
-                                                        width="15">
-                                                </a>
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Delivery Address : @order.FullAddress
+                                                </label>
                                             </div>
+                                            @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                                            {
+                                                if (order.Fee == null)
+                                                {
+                                                <div class="form-actions no-margin">
+                                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">ApproveOrder
+                                                    </a><a href="#" onclick="rejectOrder(@order.OrderId)" role="button" style="margin-left:5px;" class="btn btn-mini btn-primary action deleteOrder myTooltip" title="Reject Order" data-toggle="modal">RejectOrder</a>
+                                                </div>
+                                                }
+                                                else
+                                                {
+                                                <div class="form-actions no-margin">
+                                                    <img src="/img/icons2/checkmark2.png" alt="Approved" title="Approved" class="myTooltip" style="margin-top: 5px;">
+                                                    <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
+                                                        <img src="/img/icons2/delete.png" alt="Cancel Order" class="myTooltip" title="Disapprove Order" />
+                                                    </a>
+                                                </div>
+                                                }
                                             }
-                                        }
                                         </form>
                                     </div>
                                 </div>
@@ -326,20 +248,15 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>
-                                                            Name
+                                                        <th>Name
                                                         </th>
-                                                        <th>
-                                                            Weight
+                                                        <th>Weight
                                                         </th>
-                                                        <th>
-                                                            Quantity
+                                                        <th>Quantity
                                                         </th>
-                                                        <th>
-                                                            Properties
+                                                        <th>Properties
                                                         </th>
-                                                        <th>
-                                                            Note
+                                                        <th>Note
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -639,13 +556,11 @@
     <div class="span12">
         @if (ViewBag.RequestApprovable)
         {
-            <a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(@Model.RequestId)">
-                Approve Request </a>
+            <a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(@Model.RequestId)">Approve Request </a>
         }
         else
         {
-            <a href="#" role="button" class="btn btn-inverse pull-right" data-toggle="modal" onclick="rejectRequest(@Model.RequestId)">
-                Reject Request </a>
+            <a href="#" role="button" class="btn btn-inverse pull-right" data-toggle="modal" onclick="rejectRequest(@Model.RequestId)">Reject Request </a>
         }
     </div>
 </div>

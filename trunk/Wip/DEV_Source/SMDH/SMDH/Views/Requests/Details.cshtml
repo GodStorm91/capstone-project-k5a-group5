@@ -20,7 +20,7 @@
 <link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/bootstrap-timepicker.js" type="text/javascript"></script>
 <div class="requestDetails">
-    <div id="companyInfo" class="green-bordered">
+    @* <div id="companyInfo" class="green-bordered">
         <div style="clear: both;">
         </div>
         <div class="row-fluid" id="request-summary">
@@ -68,6 +68,69 @@
                 </dl>
             </div>
         </div>
+    </div>*@
+
+
+
+    <div class="row-fluid">
+        <div class="invoice">
+            <div class="invoice-head">
+                <img src="img/logo-grey.png" alt="logo" class="logo">
+                <div class="invoice-info">
+                    <span>Request Number: #@Model.RequestId</span>
+                </div>
+            </div>
+            <div class="invoice-data-container">
+                <div class="from">
+                    <h5>Customer: @Model.Customer.DisplayName
+                    </h5>
+                    <span>Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
+                        @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 10%">Number of orders
+                        </th>
+                        <th style="width: 10%">Number of items
+                        </th>
+                        <th style="width: 50%" class="hidden-phone">Total Fee
+                        </th>
+                        <th style="width: 10%" class="hidden-phone">Status
+                        </th>
+                        <th style="width: 10%" class="hidden-phone">Note
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Model.ValidOrders.Count
+                        </td>
+                        <td>
+                            @Model.NumberOfItems
+                        </td>
+                        <td>
+                            @*@Model.TotalFee*@ VNĐ
+                        </td>
+                        <td>
+                            <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
+                        </td>
+                        <td>
+                            @if (string.IsNullOrWhiteSpace(Model.Note))
+                            {
+                                <text>None</text>
+                            }
+                            else
+                            {
+                                <text>@Model.Note</text>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="tabbable tabs-left" id="orders-items">
         <ul class="span7 nav nav-tabs" id="order-list">
@@ -80,8 +143,7 @@
                                 <div class="column">
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            <span class="myToolTip" rel="tooltip" title="Order Number"style="font-size: 15px;
-                                            color: #969696">#</span>
+                                            <span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px; color: #969696">#</span>
                                         </dt>
                                         <dd class="order-number">
                                             @order.OrderId</dd>
@@ -177,13 +239,12 @@
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt><span class="myToolTip" rel="tooltip" title="Receiver Address" style="font-size: 15px;
-                                            color: #969696">@@</span></dt>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Receiver Address" style="font-size: 15px; color: #969696">@@</span></dt>
                                         <dd class="full-address">
                                             @order.FullAddress</dd>
                                     </dl>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         @if (Model.Status == RequestStatus.New || Model.Status == RequestStatus.Approved || Model.Status == RequestStatus.PlannedForCollecting)
                         {
@@ -257,8 +318,8 @@
                                                 <dt>
                                                     <img src="/img/icons/notepencil32.png" class="myToolTip" rel="tooltip" title="Description"
                                                         width="15px" />
-                                                    <dd class="note">
-                                                        @item.Note</dd>
+                                                <dd class="note">
+                                                    @item.Note</dd>
                                             </dl>
                                         </div>
                                     </div>
@@ -272,8 +333,7 @@
         </div>
     </div>
 </div>
-<a href="/Request/" role="button" class="btn btn-primary pull-left" data-toggle="modal">
-    View All Requests</a>
+<a href="/Request/" role="button" class="btn btn-primary pull-left" data-toggle="modal">View All Requests</a>
 <!-- Begin Modal-->
 <div class="modal hide fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
