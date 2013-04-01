@@ -66,9 +66,16 @@ namespace SMDH.Controllers
             var plans = context.Plans.Where(p => p.PlanId != null);
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
-                var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
+                var startDate = DateTime.ParseExact(Request["startDate"].Trim(), "ddMMyyyy", null);
                 plans = plans.Where(p => p.CreatedDate >= startDate);
                 ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Request["endDate"]))
+            {
+                var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null).AddDays(1);
+                plans = plans.Where(o => o.CreatedDate <= endDate);
+                ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", endDate);
             }
             return View(plans);
         }

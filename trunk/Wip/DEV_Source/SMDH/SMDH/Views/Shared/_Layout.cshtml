@@ -136,7 +136,7 @@
       </a>
       <div class="btn-group">
         <button class="btn btn-primary">
-          User
+            @User.Identity.Name
         </button>
         <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
           <span class="caret">
@@ -149,12 +149,12 @@
             </a>
           </li>
           <li>
-            <a href="#">
-              Account Settings
+            <a href="/Account/ChangePassword">
+              Change Password
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/Account/LogOff">
               Logout
             </a>
           </li>
@@ -196,7 +196,7 @@
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                         </div>
                         Dashboard </a></li>
-                    <li><a href="#">
+                    <li><a href="/Plans">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                         </div>
                         Plans</a></li>
