@@ -58,7 +58,9 @@ namespace SMDH.Controllers
                 pc.UserId = userInfo.UserId;
                 context.PriceCategories.InsertOnSubmit(pc);                
                 context.SubmitChanges();
-                return Json(new { success = true });
+                var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
+
+                return RedirectToAction("ApproveOrders", "Requests", new { id = order.Request.RequestId });
             }
             catch (Exception)
             {
@@ -71,7 +73,7 @@ namespace SMDH.Controllers
         {
             try
             {
-                var pc = context.PriceCategories.Where(p => p.PriceCategoryId == id);
+                var pc = context.PriceCategories.Single(p => p.PriceCategoryId == id);
                 return View(pc);
             }
             catch (Exception)
@@ -85,10 +87,21 @@ namespace SMDH.Controllers
         {
             try
             {
-                var myPC = context.PriceCategories.Where(p => p.PriceCategoryId == pc.PriceCategoryId);
-                //code update goes here
-                context.SubmitChanges();
-                return Json(new { success = true });
+                using (var myContext = new SMDHDataContext())
+                {
+                    var myPc = myContext.PriceCategories.Single(p => p.PriceCategoryId == pc.PriceCategoryId);
+                    myPc.EditDate = DateTime.Now;
+                    myPc.Price = pc.Price;
+                    myPc.PriceContent = pc.PriceContent;
+                    //pc.Staff Staff Id goes here
+                    var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                    myPc.UserId = userInfo.UserId;
+                    myContext.SubmitChanges();
+                    var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
+
+                    return RedirectToAction("ApproveOrders","Requests",new {id = order.Request.RequestId});
+                }
+                
             }
             catch (Exception)
             {

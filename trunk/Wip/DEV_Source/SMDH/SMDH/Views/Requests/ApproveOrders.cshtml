@@ -191,9 +191,7 @@
                                             </label>
                                         </div>
                                         <div class="control-group">
-                                            <a href="#" onclick="addPrice(@order.OrderId)">
-                                                Add
-                                            </a>
+                                            <a href="#" onclick="addPrice(@order.OrderId)">Add </a>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -245,7 +243,21 @@
                                                                 @pcViewModel.StaffName
                                                             </td>
                                                             <td>
-                                                                @pcViewModel.Price
+                                                                @(String.Format("{0,12:N0}", pcViewModel.Price))
+                                                                VND
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                                                        Action <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit </a>
+                                                                        </li>
+                                                                        <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">
+                                                                            Canceled </a></li>
+                                                                    </ul>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         }
@@ -644,6 +656,8 @@
 <div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
 </div>
+<div class="modal hide fade" id="editModal">
+</div>
 <!-- End Modal -->
 <script>
     //    var setupOrderTicket = function () {
@@ -684,6 +698,29 @@
     //    });
 
     $('.datepicker').datepicker({ format: "dd/mm/yyyy" });
+
+    var editPrice = function (modelId) {
+        $('#createModal').html('');
+        $.ajax({
+            url: '/' + "PriceCategories" + '/Edit/' + modelId,
+            type: 'POST',
+            dataType: 'html',
+            success: function (data) {
+                $('#editModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#editModal').modal();
+            }
+        });
+    };
 
     var approveOrder = function (orderId) {
         form = $('#order-' + orderId + ' form');
@@ -805,12 +842,12 @@
         $('.order-ticket-info').css('width', $('.order-ticket:first-child').css('width'));
     });
 
-    function addPrice(orderId) {        
+    function addPrice(orderId) {
         //$('#editModal').html('');
         $.ajax({
-            url: '/' + "PriceCategories" + '/AddPriceCategory'+"/",
+            url: '/' + "PriceCategories" + '/AddPriceCategory' + "/",
             type: 'POST',
-            data: {orderId: orderId},
+            data: { orderId: orderId },
             dataType: 'html',
             success: function (data) {
                 $('#createModal').html(data);

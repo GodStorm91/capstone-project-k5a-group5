@@ -1487,6 +1487,7 @@
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\PriceCategories\AddPriceCategory.cshtml" />
     <Content Include="Views\PriceCategories\_CreateOrEdit.cshtml" />
+    <Content Include="Views\PriceCategories\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
