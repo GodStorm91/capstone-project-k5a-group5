@@ -90,7 +90,7 @@ namespace SMDH.Models
         public virtual ICollection<Request> Requests { get; set; }
 
         [DisplayName("User Infoes")]
-        public virtual ICollection<UserInfo> UserInfoes { get; set; }
+        public virtual ICollection<UserInfo> UserInfos { get; set; }
     }
 }
 

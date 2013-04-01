@@ -105,6 +105,7 @@
     <Compile Include="Controllers\HubCategoriesController.cs" />
     <Compile Include="Controllers\HubsController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\PriceCategoriesController.cs" />

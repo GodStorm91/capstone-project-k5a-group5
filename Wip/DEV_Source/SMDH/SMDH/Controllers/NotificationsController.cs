@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SMDH.Models;
-using SMDH.Models.Concrete;
 using SMDH.Models.Statuses;
+using SMDH.Models;
 using System.Web.Security;
 
-namespace SMDH.Areas.Customer.Controllers
+namespace SMDH.Controllers
 {
-    public partial class DashboardController : CustomerDefaultController
+    public class NotificationsController : Controller
     {
         SMDHDataContext context = new SMDHDataContext();
+        //
+        // GET: /Notifications/
 
-        public virtual ActionResult Index()
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult CheckNotification()
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
@@ -27,9 +33,7 @@ namespace SMDH.Areas.Customer.Controllers
             numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Pricing).Count());
             numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved).Count());
             numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Collected).Count());
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Canceled).Count());
-
-            ViewBag.NumberOfRequests = numberOfRequestsList;
+            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Canceled).Count());            
 
             var numberOfOrdersList = new List<int>();
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Draft).Count());
@@ -39,9 +43,10 @@ namespace SMDH.Areas.Customer.Controllers
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Delivering).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ToBeReturned).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Returned).Count());
-            ViewBag.NumberOfOrders = numberOfOrdersList;
+            
+            return Json(new {requests= numberOfRequestsList, orders= numberOfOrdersList});
 
-            return View();
         }
+
     }
 }

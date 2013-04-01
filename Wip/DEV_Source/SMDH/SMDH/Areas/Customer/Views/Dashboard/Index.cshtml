@@ -22,7 +22,7 @@
                             <a href="/Customer/Orders?&status=draft">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersNeedToApprove">
                                     Need To Approve(@ViewBag.NumberOfOrders[0])
                                 </div>
                             </a>
@@ -31,7 +31,7 @@
                             <a href="/Customer/Orders?&status=approved">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersApproved">
                                     Approved(@ViewBag.NumberOfOrders[1])
                                 </div>
                             </a>
@@ -40,7 +40,7 @@
                             <a href="/Customer/Orders?&status=rejected">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersRejected">
                                     Rejected(@ViewBag.NumberOfOrders[2])
                                 </div>
                             </a>
@@ -49,7 +49,7 @@
                             <a href="/Customer/Orders?status=plannedforcollecting">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersRequested">
                                     Requested(@ViewBag.NumberOfOrders[3])
                                 </div>
                             </a>
@@ -58,7 +58,7 @@
                             <a href="/Customer/Orders?&status=delivering">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersDelivering">
                                     Delivering(@ViewBag.NumberOfOrders[4])
                                 </div>
                             </a>
@@ -67,7 +67,7 @@
                             <a href="/Customer/Orders?&status=tobereturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersWaitingForReturn">
                                     Waiting For Return(@ViewBag.NumberOfOrders[5])
                                 </div>
                             </a>
@@ -76,7 +76,7 @@
                             <a href="/Customer/Orders?&status=returned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="OrdersReturned">
                                     Returned(@ViewBag.NumberOfOrders[6])
                                 </div>
                             </a>
@@ -102,7 +102,7 @@
                             <a href="/Customer/Requests?&status=new">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="RequestsWaitingForPrice">
                                     Waiting For Price(@ViewBag.NumberOfRequests[0])
                                 </div>
                             </a>
@@ -111,7 +111,7 @@
                             <a href="/Customer/Requests?&status=pricing">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="RequestsNeedToApprove">
                                     Need To Approved(@ViewBag.NumberOfRequests[1])
                                 </div>
                             </a>
@@ -120,7 +120,7 @@
                             <a href="/Customer/Requests?status=approved">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="RequestsApproved">
                                     Approved(@ViewBag.NumberOfRequests[2])
                                 </div>
                             </a>
@@ -129,7 +129,7 @@
                             <a href="/Customer/Requests?&status=collected">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="RequestsCollected">
                                     Collected(@ViewBag.NumberOfRequests[3])
                                 </div>
                             </a>
@@ -138,7 +138,7 @@
                             <a href="/Customer/Requests?status=canceled">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                                 </div>
-                                <div class="brand">
+                                <div class="brand" id="RequestsCanceled">
                                     Canceled(@ViewBag.NumberOfRequests[4])
                                 </div>
                             </a>
@@ -149,6 +149,40 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        checkNotifications();
+    });
+
+    function checkNotifications() {
+        $.post("/Notifications/CheckNotification", null, function (data, s) {
+                //showAlert(data.content, data.link, 5000);
+
+                //create Notifications widget
+                //document.getElementById("notificationBox").innerHTML = makeHtml(data); // "<ul><li>Con mat may</li></ul>"; //makeHtml();//<ul><li>Con mat may</li></ul>
+                updateDashboard(data.orders, data.requests)
+                //clearTimeout(timerId);            
+
+            checkNotifications();
+        })
+    }
+
+    function updateDashboard(orders, requests) {
+        $('#OrdersNeedToApprove').html("Need To Approve(" + orders[0] + ")");
+        $('#OrdersApproved').html("Approved(" + orders[1] + ")");
+        $('#OrdersRejected').html("Rejected(" + orders[2] + ")");
+        $('#OrdersRequested').html("Requested(" + orders[3] + ")");
+        $('#OrdersDelivering').html("Delivering(" + orders[4] + ")");
+        $('#OrdersWaitingForReturn').html("Waiting For Return(" + orders[5] + ")");
+        $('#OrdersReturned').html("Returned(" + orders[6] + ")");
+
+        $('#RequestsWaitingForPrice').html("Waiting For Price(" + requests[0] + ")");
+        $('#RequestsNeedToApprove').html("Need To Approved(" + requests[1] + ")");
+        $('#RequestsApproved').html("Approved(" + requests[2] + ")");
+        $('#RequestsCollected').html("Collected(" + requests[3] + ")");
+        $('#RequestsCanceled').html("Canceled(" + requests[4] + ")");
+    }
+</script>
 @*<div class="widget">
     <div class="widget-header">
         <div class="title">
