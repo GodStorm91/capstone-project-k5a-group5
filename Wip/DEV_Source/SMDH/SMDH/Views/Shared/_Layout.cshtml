@@ -131,72 +131,65 @@
     <div id="qLbar">
     </div>
     <header>
-      <a href="/Dashboard" class="logo">
-        <img src="/img/mylogo/logo4.png" style="height:95px;width:100px;margin-top: -15px;" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary">
-            @User.Identity.Name
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-            <a href="/Account/ChangePassword">
-              Change Password
-            </a>
-          </li>
-          <li>
-            <a href="/Account/LogOff">
-              Logout
-            </a>
-          </li>
+        <a href="/Dashboard" class="logo">
+            <img src="/img/mylogo/logo4.png" style="height: 95px; width: 100px; margin-top: -15px;" alt="logo" />
+        </a>
+        <div class="btn-group">
+            <button class="btn btn-primary">
+                @User.Identity.Name
+            </button>
+            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li>
+                    <a href="#">Edit Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="/Account/ChangePassword">Change Password
+                    </a>
+                </li>
+                <li>
+                    <a href="/Account/LogOff">Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <ul class="mini-nav">
+            <li>
+                <a href="#">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
+                    <span class="info-label badge badge-warning">3
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
+                    <span class="info-label badge badge-info">5
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <span class="info-label badge badge-success">9
+                    </span>
+                </a>
+            </li>
         </ul>
-      </div>
-      <ul class="mini-nav">
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
-            <span class="info-label badge badge-warning">
-              3
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
-            <span class="info-label badge badge-info">
-              5
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
-            <span class="info-label badge badge-success">
-              9
-            </span>
-          </a>
-        </li>
-      </ul>
-      
+
     </header>
     <div class="container-fluid">
         <div class="dashboard-container">
             <div class="top-nav">
                 <ul>
-                    <li><a href="/Dashboard" class="selected">
+                    <li><a href="/Dashboard">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                         </div>
                         Dashboard </a></li>
-                    <li><a href="/Plans">
+                    <li><a href="javascript:void(0)" id="Plans">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                         </div>
                         Plans</a></li>
@@ -212,60 +205,26 @@
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                         </div>
                         Customers </a></li>
-                    <li><a href="#">
+                    <li><a href="javascript:void(0)" id="Config">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
                         </div>
-                        Option Config</a></li>
+                        Config</a></li>
                 </ul>
                 <div class="clearfix">
                 </div>
             </div>
-            <div class="sub-nav">
+            <div class="hide plansubmenu sub-nav">
                 <ul>
-                    <li><a href="#" class="heading">Dashboard</a></li>
-                    <li><a href="#mailbox">Mailbox </a></li>
-                    <li><a href="#todo">ToDos </a></li>
-                    <li><a href="#chats">Chats </a></li>
-                    <li><a href="#notifications">Notifications </a></li>
+                    <li><a href="/Plans/Autoschedulecollectionplan">Collection Plan</a></li>
+                    <li><a href="/Plans/Autoscheduledeliveryplan">Delivery Plan </a></li>
                 </ul>
-                <div class="btn-group pull-right">
-                    <button class="btn btn-primary">
-                        Main Menu
-                    </button>
-                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="index.html" data-original-title="">Dashboard </a></li>
-                        <li><a href="#" data-original-title="">Forms </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/graphs.html" data-original-title="">
-                            Graphs </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/ui-elements.html" data-original-title="">
-                            UI Elements </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/icons.html" data-original-title="">
-                            Icons </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/tables.html" data-original-title="">
-                            Tables </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/media.html" data-original-title="">
-                            Media </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/calendar.html" data-original-title="">
-                            Calendar </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/typography.html" data-original-title="">
-                            Typography </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/edit-profile.html" data-original-title="">
-                            Edit Profile </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/invoice.html" data-original-title="">
-                            Invoice </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/login.html" data-original-title="">
-                            Login </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/404.html" data-original-title="">
-                            404 Page </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/500.html" data-original-title="">
-                            500 Page </a></li>
-                        <li><a href="http://wbpreview.com/previews/WB0375140/help.html" data-original-title="">
-                            Help </a></li>
-                    </ul>
-                </div>
+            </div>
+            <div class="hide configsubmenu sub-nav">
+                <ul>
+                    <li><a href="/Hubs/">Hubs</a></li>
+                    <li><a href="/District/">District</a></li>
+                    <li><a href="/CityProvince/">City/Province</a></li>
+                </ul>
             </div>
             <div class="dashboard-wrapper">
                 <div class="left-sidebar">
@@ -274,5 +233,17 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#Plans').click(function () {
+            $('.plansubmenu').removeClass('hide');
+            $('.configsubmenu').addClass('hide');
+        });
+
+        $('#Config').click(function () {
+            $('.configsubmenu').removeClass('hide');
+            $('.plansubmenu').addClass('hide');
+        });
+
+    </script>
 </body>
 </html>
