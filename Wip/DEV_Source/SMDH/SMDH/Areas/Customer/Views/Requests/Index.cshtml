@@ -22,36 +22,27 @@
 {          
     <div class="row-fluid">
         <div class="span10">
-@*            <div class="checkButtonStatus">
+            <div class="checkButtonStatus">
                 <div class="row-fluid">
                     <button type="button" class="btn btn-inverse pull-left" id="checkAll">
                         All</button>
                     <div class="btn-group pull-left" data-toggle="buttons-checkbox">
-                        <button type="button" class="sttDraft btn status" data-status="draft">
-                            Draft</button>
                         <button type="button" class="sttNew btn status" data-status="new">
                             New</button>
+                        <button type="button" class="sttPricing btn status" data-status="pricing">
+                            Pricing</button>
                         <button type="button" class="sttApproved btn status" data-status="approved">
                             Approved</button>
-                        <button type="button" class="sttPlanned btn status" data-status="planned">
-                            Planned For Collecting</button>
-
                         <button type="button" class="sttCollected btn status" data-status="collected">
                             Collected</button>
-
-                        <button type="button" class="sttFinished btn status" data-status="finished">
-                            Finished</button>
                         <button type="button" class="sttCanceled btn status" data-status="canceled">
                             Canceled</button>
-
                     </div>
-                    <button type="button" class="btn btn-inverse pull-left" id="checkNone">
-                        None</button>
                 </div>
-            </div>*@
-            <div id="dateFilterSelector" style="margin-top:10px;">
+            </div>
+            <div id="dateFilterSelector" style="margin-top: 10px;">
                 <div class="row-fluid bordered">
-                    <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
+                    <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
                         Requested Date: 
                     </div>
                     <div class="pull-left" data-date-format="dd/mm/yyyy">
@@ -64,7 +55,7 @@
                         <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter"
                             name="endDate">
                     </div>
-                    <div class="span3" style="height: 28px; position: relative;margin-left: 30px;line-height: 28px;">
+                    <div class="span3" style="height: 28px; position: relative; margin-left: 30px; line-height: 28px;">
                         <div style="position: absolute; bottom: 0; left: 0;">
                             <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
                             Disable Date Filter
@@ -74,8 +65,8 @@
             </div>
         </div>
         <div class="span2">
-          
-            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter" style="line-height:40px">Filter</a>
+
+            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter" style="line-height: 40px">Filter</a>
         </div>
     </div>
 }
@@ -86,8 +77,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
-        <h3 id="myModalLabels">
-            Update Request Status</h3>
+        <h3 id="myModalLabels">Update Request Status</h3>
     </div>
     <div class="modal-body">
         <select id="ddlStatus">
@@ -122,13 +112,13 @@
 <script>
     @foreach (var status in ViewBag.SelectedStatuses)
     {
-        if (status == (int)RequestStatus.Draft)
-        {
-            <text>$('.sttDraft').addClass('active');</text>
-        }
         if (status == (int)RequestStatus.New)
         {
             <text>$('.sttNew').addClass('active');</text>
+        }
+        if (status == (int)RequestStatus.Pricing)
+        {
+            <text>$('.sttPricing').addClass('active');</text>
         }
         if (status == (int)RequestStatus.Approved)
         {
@@ -152,11 +142,11 @@
         }
     }
 
-    @if(ViewBag.StartDate != null)
+    @if (ViewBag.StartDate != null)
     {
         <text>$('#startDateFilter').val("@ViewBag.StartDate")</text>
     }
-    @if(ViewBag.EndDate != null)
+    @if (ViewBag.EndDate != null)
     {
         <text>$('#endDateFilter').val("@ViewBag.EndDate")</text>
     }
@@ -181,24 +171,24 @@
         }
     }
 
-//    var showUpdateStatusModal = function (RequestId, currentStatus) {
-//        $('#ddlStatus option[value="' + currentStatus + '"]').attr('selected', 'selected');
-//        $('#updateStatusModal').modal();
+    //    var showUpdateStatusModal = function (RequestId, currentStatus) {
+    //        $('#ddlStatus option[value="' + currentStatus + '"]').attr('selected', 'selected');
+    //        $('#updateStatusModal').modal();
 
-//        $('#btnUpdateStatus').click(function () {
-//            updateRequestStatus(RequestId);
-//        });
-//    };
+    //        $('#btnUpdateStatus').click(function () {
+    //            updateRequestStatus(RequestId);
+    //        });
+    //    };
 
-//    var updateRequestStatus = function (RequestId) {
-//        var status = $('#ddlStatus option:selected').val();
-//        $.post('/Request/UpdateStatus/', { RequestId: RequestId, newStatus: status }, function (result) {
-//            if (result.success) {
-//                window.location = '/Request';
+    //    var updateRequestStatus = function (RequestId) {
+    //        var status = $('#ddlStatus option:selected').val();
+    //        $.post('/Request/UpdateStatus/', { RequestId: RequestId, newStatus: status }, function (result) {
+    //            if (result.success) {
+    //                window.location = '/Request';
 
-//            }
-//        });
-//    };
+    //            }
+    //        });
+    //    };
 
     var setupDataTable = function () {
         $('#main-table').dataTable({
@@ -214,12 +204,12 @@
                             null,
                             null,
                             null
-                        ],
+            ],
             "aaSorting": [[2, "asc"]]
         });
 
         $("div.tblBtnGroup").html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add</span></a>');
-        
+
         $("#btnNew").click(function () {
             $('#editModal').html('');
             $.ajax({
@@ -246,28 +236,28 @@
     };
 
     var selectedStatusIds = [1, 2, 4, 6];
-    var allStatus = [0, 1, 2, 4, 6, 8];
+    var allStatus = [1, 2, 6, 7, 10];
 
 
 
-//    $('.checkButtonStatus .status.btn').click(function () {
-//        //get status of current button that pressed
-//        var status = $(this).data('status-id');
-//        //checking if that status is exist in the array or not
-//        var result = in_array(selectedStatusIds, status);
-//        if (result == true) {
-//            var removeItem = status;
-//            //remove the value of status that was pressed again(mean not checked)
-//            selectedStatusIds = jQuery.grep(selectedStatusIds, function (value) {
-//                return value != removeItem;
-//            });
-//            //alert(selectedStatusIds);
-//        }
-//        else if (result == false) {
-//            //add it to the array
-//            selectedStatusIds.push(status);
-//        }
-//    });
+    //    $('.checkButtonStatus .status.btn').click(function () {
+    //        //get status of current button that pressed
+    //        var status = $(this).data('status-id');
+    //        //checking if that status is exist in the array or not
+    //        var result = in_array(selectedStatusIds, status);
+    //        if (result == true) {
+    //            var removeItem = status;
+    //            //remove the value of status that was pressed again(mean not checked)
+    //            selectedStatusIds = jQuery.grep(selectedStatusIds, function (value) {
+    //                return value != removeItem;
+    //            });
+    //            //alert(selectedStatusIds);
+    //        }
+    //        else if (result == false) {
+    //            //add it to the array
+    //            selectedStatusIds.push(status);
+    //        }
+    //    });
 
     $('#checkAll').click(function () {
         $('.checkButtonStatus .btn-group .btn.status').addClass("active");
@@ -280,20 +270,20 @@
 
     $('#statusFilter').submit(function () {
         urlParams = '';
-        $.each($('.checkButtonStatus .btn-group .btn.status'),function(index,btn){
-            if($(btn).hasClass('active')){
+        $.each($('.checkButtonStatus .btn-group .btn.status'), function (index, btn) {
+            if ($(btn).hasClass('active')) {
                 urlParams += '&status=' + $(btn).data('status');
-            }        
+            }
         });
-        if($('#startDateFilter').val() != ''){
+        if ($('#startDateFilter').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
             var dateParts = $('#startDateFilter').val().split("/");
-            urlParams += '&startDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+            urlParams += '&startDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
-        if($('#endDateFilter').val() != ''){
+        if ($('#endDateFilter').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
             var dateParts = $('#endDateFilter').val().split("/");
-            urlParams += '&endDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+            urlParams += '&endDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
         $.blockUI();
         window.location = '/Customer/Requests?' + urlParams;

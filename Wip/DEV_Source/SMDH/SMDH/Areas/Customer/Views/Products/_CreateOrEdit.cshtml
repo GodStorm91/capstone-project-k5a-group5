@@ -5,36 +5,8 @@
             Name
         </label>
         <div class="controls">
-            @Html.TextBoxFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name, new { placeholder="Name" })
             @Html.ValidationMessageFor(model => model.Name)
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">
-            Size
-        </label>
-        <div class="controls">
-            @Html.TextAreaFor(model => model.Size)
-            @Html.ValidationMessageFor(model => model.Size)
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">
-            Weight
-        </label>
-        <div class="controls">
-            @Html.TextAreaFor(model => model.ProductWeight)
-            @Html.ValidationMessageFor(model => model.ProductWeight)
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">
-            Price
-        </label>
-        <div class="controls">
-            @Html.TextAreaFor(model => model.ProductPrice)
-            @Html.ValidationMessageFor(model => model.ProductPrice)
         </div>
     </div>
     <div class="control-group">
@@ -42,7 +14,7 @@
             Image
         </label>
         <div class="controls">
-            @Html.TextAreaFor(model => model.ImageURL)
+            @Html.TextBoxFor(model => model.ImageURL)
             @Html.ValidationMessageFor(model => model.ImageURL)
         </div>
     </div>
@@ -51,8 +23,52 @@
             Category
         </label>
         <div class="controls">
-            @Html.TextAreaFor(model => model.ProductCategory)
+            @Html.TextBoxFor(model => model.ProductCategory, new { placeholder="Category" })
             @Html.ValidationMessageFor(model => model.ProductCategory)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Size
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Size, new { placeholder = "100 x 200 x 300 mm" })
+            @Html.ValidationMessageFor(model => model.Size)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Weight
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.ProductWeight, new { placeholder = "250g" })
+            @Html.ValidationMessageFor(model => model.ProductWeight)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Price
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.ProductPrice, new { placeholder = "Price" })
+            @Html.ValidationMessageFor(model => model.ProductPrice)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Description
+        </label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Active
+        </label>
+        <div class="controls">
+            @Html.CheckBoxFor(model => model.Active.Value)
         </div>
     </div>
 </div>
