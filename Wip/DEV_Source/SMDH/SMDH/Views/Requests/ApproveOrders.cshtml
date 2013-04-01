@@ -26,7 +26,7 @@
     <div class="row-fluid">
         <div class="invoice">
             <div class="invoice-head">
-                <img src="img/logo-grey.png" alt="logo" class="logo">
+                <img src="/img/customer.jpg" alt="logo" class="logo">
                 <div class="invoice-info">
                     <span>Request Number: #@Model.RequestId</span>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="from">
                     <h5>Customer: @Model.Customer.DisplayName
                     </h5>
-                    <span>Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
+                    <span style="width: 800px;">Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
                         @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
                 </div>
             </div>
