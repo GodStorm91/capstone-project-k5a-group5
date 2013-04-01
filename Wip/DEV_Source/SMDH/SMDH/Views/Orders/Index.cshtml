@@ -20,7 +20,7 @@
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
-@using (Html.BeginForm("RequestListByStatus", "Orders", FormMethod.Post, new { id = "statusFilter" }))
+@using (Html.BeginForm("Index", "Plans", FormMethod.Post, new { id = "statusFilter" }))
 { 
     <fieldset>
         <div class="row-fluid">
