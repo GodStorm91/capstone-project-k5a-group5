@@ -31,9 +31,9 @@
 
 @using (Html.BeginForm("RequestListByStatus", "Requests", FormMethod.Get, new { id = "statusFilter" }))
 {          
-<div class="row-fluid">       
-    <div class="span10">
-@*        <div class="checkButtonStatus">
+    <div class="row-fluid">
+        <div class="span10">
+            @*        <div class="checkButtonStatus">
             <div class="row-fluid">
                 <button type="button" class="btn btn-inverse pull-left" id="checkAll">
                     All</button>
@@ -49,46 +49,47 @@
                     None</button>
             </div>
         </div>*@
-        
-        <div id="dateFilterSelector">
-            <div class="row-fluid bordered">                             
-                         <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
-                          Date Range Input:
-                        </div>
-                        <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
-                          <div class="input-append">
+
+            <div id="dateFilterSelector">
+                <div class="row-fluid bordered">
+                    <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                        Date Range Input:
+                    </div>
+                    <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                        <div class="input-append">
                             @if (ViewBag.StartDate != null)
                             {
                                 <input type="text" name="report_range1" id="report_range1" class="report_range" value="@ViewBag.StartDate to @ViewBag.EndDate"/>                            
                             }
                             else
                             {
-                                <input type="text" name="report_range1" id="report_range1" class="report_range" placeholder="29/01/2013 to 31/01/2013"/>                            
+                                <input type="text" name="report_range1" id="report_range1" class="report_range" placeholder="29/01/2013 to 31/01/2013" />                            
                             }
 
-                            
-                            <span class="add-on btn report_range" style="display:none">
-                              <i class="icon-calendar">
-                              </i>
+
+                            <span class="add-on btn report_range" style="display: none">
+                                <i class="icon-calendar"></i>
                             </span>
-                          </div>                                         
-                          </div>
-                    <div class="span3" style="height: 28px; position: relative;margin-left: 30px;line-height: 28px;">
+                        </div>
+                    </div>
+                    @*                    <div class="span3" style="height: 28px; position: relative; margin-left: 30px; line-height: 28px;">
                         <div style="position: absolute; bottom: 0; left: 0;">
                             <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
                             Disable Date Filter
                         </div>
-                    </div>                                                        
-                
+                    </div>*@
+                    <div class="span3">
+                        <a href="/Plans/Index" class="btn btn-primary" id="filterall">All</a>
+                    </div>
+
+                </div>
             </div>
+
         </div>
-        
+        <div class="span2">
+            <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter">Filter</a>
+        </div>
     </div>
-    <div class="span2">
-        <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter">
-            Filter</a>
-    </div>
-</div>
 }
 <div id="divTable">
     @Html.Partial("PlansTable", Model)
@@ -143,15 +144,15 @@
     //    var requestsInPlans = JSON.parse(localStorage.getItem('requests'));
     var map, vectors, epsg900913 = new OpenLayers.Projection('EPSG:900913'), epsg4326 = new OpenLayers.Projection('EPSG:4326');
     var row = 0;
-//    $('td').click(function () {
-//        var col = $(this).parent().children().index($(this));
-//        row = $(this).parent().parent().children().index($(this).parent());
-//        alert('Row: ' + row + ', Column: ' + col);
-//    });
+    //    $('td').click(function () {
+    //        var col = $(this).parent().children().index($(this));
+    //        row = $(this).parent().parent().children().index($(this).parent());
+    //        alert('Row: ' + row + ', Column: ' + col);
+    //    });
 
-//    $('.table > tr').click(function () {
-//        alert("Clicked");
-//    });
+    //    $('.table > tr').click(function () {
+    //        alert("Clicked");
+    //    });
 
     edit = function (modelId) {
         $.ajax({
@@ -211,8 +212,8 @@
                     // if i use this instead of gmap then everything works.
                     var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
-				numZoomLevels: 20
-});
+				    numZoomLevels: 20
+				});
                     map.addLayer(gmap);
                     map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
                     show(0);
@@ -241,7 +242,8 @@
     }
 
     $(document).ready(function () {
-        $('#main-table').dataTable({ "aaSorting": [[1, "desc"]],
+        $('#main-table').dataTable({
+            "aaSorting": [[1, "desc"]],
             "aoColumns": [
 			null,
 			null,
@@ -249,7 +251,7 @@
 			null,
 			null,
             null
-		] 
+            ]
         });
     });
 
@@ -331,8 +333,8 @@
     function addMarker() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
-				numZoomLevels: 20
-});
+				    numZoomLevels: 20
+				});
         //clear if exists
         if (typeof markerslayer != 'undefined') {
             markerslayer.clearMarkers();
@@ -363,8 +365,8 @@
     function addDirection() {
         var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
-				numZoomLevels: 20
-});
+				    numZoomLevels: 20
+				});
         if (lineLayer != undefined) {
             lineLayer.removeAllFeatures();
         }
@@ -416,37 +418,37 @@
         return hexno;
     }
 
-//    $('#btnAssign').click(function () {
-//        alert("index");
-//        var checkBoxs = $("input[name=deliveryman]");
-//        var listdeliveryman = new Array();
-//        var listNotChooseDeliveryMan = new Array();
-//        var i = 0;
-//        var j = 0;
-//        $.each(checkBoxs, function () {
-//            if ($(this).is(":checked")) {
-//                listdeliveryman[i] = $(this).val();
-//                i++;
-//            } else {
-//                listNotChooseDeliveryMan[j] = $(this).val();
-//                j++
-//            }
-//        });
-//        if (listdeliveryman.length <= 0) {
-//            bootbox.alert('Please choose one or more deliveryman');
-//        } else {
-//            $.ajaxSettings.traditional = true;
-//            $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman: listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan }, function (result) {
-//                if (result.success) {
-//                    $.blockUI();
-//                    window.location.reload();
-//                } else {
-//                    bootbox.alert('Unable to assign. Please refresh and try again.');
-//                }
-//            });
-//        }
+    //    $('#btnAssign').click(function () {
+    //        alert("index");
+    //        var checkBoxs = $("input[name=deliveryman]");
+    //        var listdeliveryman = new Array();
+    //        var listNotChooseDeliveryMan = new Array();
+    //        var i = 0;
+    //        var j = 0;
+    //        $.each(checkBoxs, function () {
+    //            if ($(this).is(":checked")) {
+    //                listdeliveryman[i] = $(this).val();
+    //                i++;
+    //            } else {
+    //                listNotChooseDeliveryMan[j] = $(this).val();
+    //                j++
+    //            }
+    //        });
+    //        if (listdeliveryman.length <= 0) {
+    //            bootbox.alert('Please choose one or more deliveryman');
+    //        } else {
+    //            $.ajaxSettings.traditional = true;
+    //            $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman: listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan }, function (result) {
+    //                if (result.success) {
+    //                    $.blockUI();
+    //                    window.location.reload();
+    //                } else {
+    //                    bootbox.alert('Unable to assign. Please refresh and try again.');
+    //                }
+    //            });
+    //        }
 
-//    });
+    //    });
 
     //    $('#checkAll').click(function () {
     //        $('.checkButtonStatus .btn-group .btn.status').addClass("active");
@@ -491,41 +493,41 @@
         if ($('#report_range1').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
             var dateRangeParts = $('#report_range1').val().split("to");
-            var dateParts = dateRangeParts[0].split("/");            
+            var dateParts = dateRangeParts[0].split("/");
             urlParams += '&startDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
-             if ($('#endDateFilter').val() != '') {
-                        //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
-                 var dateRangeParts = $('#report_range1').val().split("to");
-                 var dateParts = dateRangeParts[1].split("/");
-                 urlParams += '&endDate=' + dateParts[0] + dateParts[1] + dateParts[2];
+        if ($('#endDateFilter').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_range1').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
+            urlParams += '&endDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
         $.blockUI();
         window.location = '/Plans/Index?' + urlParams;
         return false;
     });
 
-        function in_array(array, id) {
-            for (var i = 0; i < array.length; i++) {
-                if (array[i] == id) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function toggleStatus() {
-            if ($('#toggleElement').is(':checked')) {
-                $('#report_range1').attr('readonly', 'readonly');
-                $('#btnFilter').attr('disabled', 'disabled');                
-            }
-            else {
-                $('#report_range1').removeAttr('readonly');
-                $('#btnFilter').removeAttr('disabled');                
+    function in_array(array, id) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == id) {
+                return true;
             }
         }
+        return false;
+    }
 
-        $('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
+    function toggleStatus() {
+        if ($('#toggleElement').is(':checked')) {
+            $('#report_range1').attr('readonly', 'readonly');
+            $('#btnFilter').attr('disabled', 'disabled');
+        }
+        else {
+            $('#report_range1').removeAttr('readonly');
+            $('#btnFilter').removeAttr('disabled');
+        }
+    }
+
+    $('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
 
     //    var showUpdateStatusModal = function (deliveryPlanId, currentStatus) {
     //        $('#ddlStatus option[value="' + currentStatus + '"]').attr('selected', 'selected');
@@ -544,54 +546,54 @@
 
     //            }
     //        });
-        //    }; 
+    //    }; 
 
-        $('.report_range').daterangepicker({
-            ranges: {
-                'Today': ['today', 'today'],
-                'Yesterday': ['yesterday', 'yesterday'],
-                'Last 7 Days': [Date.today().add({
-                    days: -6
-                }), 'today'],
-                'Last 30 Days': [Date.today().add({
-                    days: -29
-                }), 'today'],
-                'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
-                'Last Month': [Date.today().moveToFirstDayOfMonth().add({
-                    months: -1
-                }), Date.today().moveToFirstDayOfMonth().add({
-                    days: -1
-                })]
-            },
-            opens: 'right',
-            format: 'dd/MM/yyyy',
-            separator: ' to ',
-            startDate: Date.today().add({
+    $('.report_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                days: -6
+            }), 'today'],
+            'Last 30 Days': [Date.today().add({
                 days: -29
-            }),
-            endDate: Date.today(),
-            minDate: '01/01/2012',
-            maxDate: '31/12/2013',
-            locale: {
-                applyLabel: 'Submit',
-                fromLabel: 'From',
-                toLabel: 'To',
-                customRangeLabel: 'Custom Range',
-                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                firstDay: 1
-            },
-            showWeekNumbers: true,
-            buttonClasses: ['btn-danger']
+            }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                months: -1
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })]
         },
-
-      function (start, end) {
-          $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
-      });
-
-        //Set the initial state of the picker label
-        $('.report_range span').html(Date.today().add({
+        opens: 'right',
+        format: 'dd/MM/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
             days: -29
-        }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '31/12/2013',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+  function (start, end) {
+      $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+  });
+
+    //Set the initial state of the picker label
+    $('.report_range span').html(Date.today().add({
+        days: -29
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 
 </script>

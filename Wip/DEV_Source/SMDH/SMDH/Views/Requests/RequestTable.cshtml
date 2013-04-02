@@ -27,9 +27,6 @@
             <th>
                 Status
             </th>
-            <th>
-                Note
-            </th>
             <th class="tbl-action-col">
                 Action
             </th>
@@ -68,10 +65,32 @@
                     @item.CustomerAddress.FullAddress
                 </td>
                 <td style="min-width: 65px;">
-                    @((RequestStatus)item.RequestStatus)
-                </td>
-                <td>
-                    @item.Note
+                    @if (item.Status == (int)RequestStatus.Draft)
+                    {
+                        <span class="label label-info">Draft</span>
+                    }
+                    else if (item.RequestStatus == (int)RequestStatus.New)
+                    {
+                        <span class="label label-info">New</span>
+                    }
+                    else if (item.RequestStatus == (int)RequestStatus.Pricing)
+                    {
+                        <span class="label label-important">Pricing</span>
+                    }
+                    else if (item.RequestStatus == (int)RequestStatus.Approved)
+                    {
+                        <span class="label label-success">Approved</span>
+                    }
+                    else if (item.RequestStatus == (int)RequestStatus.Collected)
+                    {
+                        <span class="label label-success">Collected</span>
+                    }
+                    else if (item.RequestStatus == (int)RequestStatus.Canceled)
+                    {
+                        <span class="label label-danger">Canceled</span>
+                    }
+
+                   @* @((RequestStatus)item.RequestStatus)*@
                 </td>
                 <td class="action-column"@if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.Draft)
                                          {<text>style="min-wid"</text>}>
