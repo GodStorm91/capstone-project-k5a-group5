@@ -73,7 +73,8 @@ namespace SMDH.Controllers
 
             if (!string.IsNullOrWhiteSpace(Request["endDate"]))
             {
-                var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null).AddDays(1);
+                //var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null).AddDays(1);
+                var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null);
                 plans = plans.Where(o => o.CreatedDate <= endDate);
                 ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", endDate);
             }
