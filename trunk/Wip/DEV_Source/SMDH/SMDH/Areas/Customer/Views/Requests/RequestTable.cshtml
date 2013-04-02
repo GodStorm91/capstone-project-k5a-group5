@@ -24,6 +24,9 @@
             <th>
                 Note
             </th>
+            <th>
+                Price
+            </th>
             <th class="tbl-action-col">
                 Action
             </th>
@@ -41,23 +44,12 @@
                     {
                         @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.RequestedDate)
                     }
-                </td>
+                </td>              
                 <td>
-                    @if (item.RequestedDate != null)
-                    {
-                        @String.Format("{0:yyyyMMddHHmm}", item.RequestedDate)
-                    }
-                    else
-                    {
-                        <text>000</text>
-                    }
+                    @item.Orders.Count
+                </td>                
+                <td>@item.CustomerAddress.FullAddress
                 </td>
-                <td>
-                    @item.ValidOrders.Count
-                </td>
-                @*</td>
-                <td>@item.CollectionAddress
-                </td>*@
                 <td style="min-width: 65px;">
                     @Regex.Replace(item.Status.ToString(), "(\\B[A-Z])", " $1")
                     @if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
@@ -76,16 +68,47 @@
                         <text>None</text>
                     }
                 </td>
-                <td class="action-column"@if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
-                                         {<text>style="min-wid"</text>}>
-                    <a class="btn action view" href="/Customer/Requests/Details/@item.RequestId">
-                        <img src="/img/icons/notepad.png" alt="View" title="View" width="15px"></a>
-                    @if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
-                    {
-                        <a class="btn action delete" href="#" onclick="cancelRequest(@item.RequestId);">
-                            <img src="/img/icons2/cross.png" alt="Cancel" title="Cancel Request" width="15px" />
-                        </a> 
-                    }
+                <td>
+                     @(String.Format("{0,12:N0}", item.Orders.Sum(o => o.Fee))) VND
+                </td>
+                <td>
+                     <div class="btn-group">
+                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action 
+                                <span class="caret">
+                                </span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="/Customer/Requests/Details/@item.RequestId" >
+                                    View
+                                  </a>
+                                </li>
+                            @if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
+                            {
+                                <li>
+                                    <a class="btn action delete" href="#" onclick="cancelRequest(@item.RequestId);">
+                                        Cancel
+                                    </a> 
+                                </li>
+                            }              
+
+                            @if (item.Status == SMDH.Models.Statuses.RequestStatus.Pricing)
+                            {
+                                <li>
+                                    <a href="#" onclick="approveRequest(@item.RequestId);">
+                                        Approve
+                                    </a> 
+                                </li>
+                                
+                                <li>
+                                    <a href="#" onclick="rejectRequest(@item.RequestId);">
+                                        Reject for Repricing
+                                    </a> 
+                                </li>
+                            }              
+                     </ul>
+                 </div>        
                 </td>
             </tr>
         }
