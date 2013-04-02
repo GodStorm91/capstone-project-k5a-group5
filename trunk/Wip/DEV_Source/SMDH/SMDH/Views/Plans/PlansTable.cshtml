@@ -8,23 +8,17 @@
 <table id="main-table" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>
-                Plan No.
+            <th>Plan No.
             </th>
-            <th>
-                Modified Date
-            </th>            
-            <th>
-                Plantype
+            <th>Modified Date
             </th>
-            <th>
-                Plan Status
+            <th>Plantype
             </th>
-            <th>
-                Plan Length
+            <th>Plan Status
             </th>
-            <th>
-                Action
+            <th>Plan Length
+            </th>
+            <th>Action
             </th>
         </tr>
     </thead>
@@ -35,12 +29,11 @@
             {
                 case (int)PlanTypes.CollectionPlan:
             <tr class="success">
-                <td>
-                    #@item.PlanId
+                <td>#@item.PlanId
                 </td>
                 <td>
                     @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
-                </td>                
+                </td>
                 <td>
                     @((PlanTypes)item.PlanTypeId)
                 </td>
@@ -48,18 +41,21 @@
                     @if (item.Status == (int)PlanStatus.Assigned)
                     {
                         <span class="label label-info">Assigned</span>
-                    }else if (item.Status == (int)PlanStatus.New)
+                    }
+                    else if (item.Status == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
-                    }else if (item.Status == (int)PlanStatus.Finished)
+                    }
+                    else if (item.Status == (int)PlanStatus.Finished)
                     {
-                           <span class="label label-success">Finished</span>
-                     }else if (item.Status == (int)PlanStatus.Canceled)
+                        <span class="label label-success">Finished</span>
+                    }
+                    else if (item.Status == (int)PlanStatus.Canceled)
                     {
                         <span class="label label-important">Canceled</span>
                     }
                 </td>
-              
+
                 @*                <td>
                     @if (item.Status > 1)
                     {
@@ -81,36 +77,23 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <div class="btn-group">
-                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                Action 
-                                <span class="caret">
-                                </span>
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li>
-                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                                    Edit
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
-                                    Canceled
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>                   
+
+                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                    </a>
+
+                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                    </a>
+
                 </td>
             </tr>
-                                                                              break;
+                    break;
                 case (int)PlanTypes.DeliveryPlan:
             <tr class="info">
-                <td>
-                    #@item.PlanId
+                <td>#@item.PlanId
                 </td>
                 <td>
                     @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
-                </td>                
+                </td>
                 <td>
                     @((PlanTypes)item.PlanTypeId)
                 </td>
@@ -127,7 +110,7 @@
                     {
                         <span class="label label-important">Canceled</span>
                     }
-                </td>                
+                </td>
                 @*                <td>
                     @if (item.Status > 1)
                     {
@@ -149,41 +132,26 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <div class="btn-group">
-                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                Action 
-                                <span class="caret">
-                                </span>
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li>
-                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                                    Edit
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
-                                    Canceled
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>                   
+                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                    </a>
+
+                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                    </a>
                 </td>
             </tr>
-                                                                              break;
+                    break;
                 case (int)PlanTypes.ReturnedPlan:
             <tr class="warning">
-                <td>
-                    #@item.PlanId
+                <td>#@item.PlanId
                 </td>
                 <td>
                     @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
-                </td>                
+                </td>
                 <td>
                     @((PlanTypes)item.PlanTypeId)
                 </td>
                 <td>
-                   @* @if (item.Status == (int)PlanStatus.Assigned)
+                    @* @if (item.Status == (int)PlanStatus.Assigned)
                     {
                         <span class="label label-info">Assigned</span>
                     }else
@@ -191,7 +159,7 @@
                         <span class="label label-danger">Not Assigned yet</span>
                     }*@
                 </td>
-               
+
                 @*                <td>
                     @if (item.Status > 1)
                     {
@@ -213,28 +181,14 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-           <div class="btn-group">
-                              <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                Action 
-                                <span class="caret">
-                                </span>
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li>
-                                  <a href="javascript:void(0)" onclick="edit(@item.PlanId)">
-                                    Edit
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" onclick="cancelPlan(@item.PlanId)">
-                                    Canceled
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>                   
+                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                    </a>
+
+                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                    </a>
                 </td>
             </tr>
-                                                                                    break;
+                    break;
             }
 
         }
