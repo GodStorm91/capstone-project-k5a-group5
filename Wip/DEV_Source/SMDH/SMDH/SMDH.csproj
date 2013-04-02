@@ -109,6 +109,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\PriceCategoriesController.cs" />
+    <Compile Include="Controllers\PriceTagController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\WardController.cs" />
@@ -1489,6 +1490,9 @@
     <Content Include="Views\PriceCategories\AddPriceCategory.cshtml" />
     <Content Include="Views\PriceCategories\_CreateOrEdit.cshtml" />
     <Content Include="Views\PriceCategories\Edit.cshtml" />
+    <Content Include="Views\PriceTag\Index.cshtml" />
+    <Content Include="Views\PriceTag\Create.cshtml" />
+    <Content Include="Views\PriceTag\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
