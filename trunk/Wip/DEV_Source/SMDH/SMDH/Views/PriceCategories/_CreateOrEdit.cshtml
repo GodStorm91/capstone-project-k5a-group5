@@ -8,8 +8,7 @@
             @Html.HiddenFor(model => model.OrderId)
         </div>
         <div class="controls">
-            @Html.TextAreaFor(model => model.PriceContent)
-            @Html.ValidationMessageFor(model => model.PriceContent)
+            @Html.DropDownList("PriceTagId", ViewBag.PriceTags as SelectList, "-- Choose a price tag to Add --", new { id = "ddlPriceTag", Class = "chzn-select", name = "pricetag" })
         </div>
     </div>
     <div class="control-group">
@@ -17,8 +16,15 @@
             Price
         </label>
         <div class="controls">
-            @Html.TextBoxFor(model => model.Price)
+            @Html.TextBoxFor(model => model.Price, new { id="txtPrice", disabled = "disabled" })
             @Html.ValidationMessageFor(model => model.Price)
         </div>
     </div>   
 </div>
+<script type="text/javascript">
+    $("#ddlPriceTag").change(function () {
+        $.post("/PriceTag/GetPriceByPriceTagId/" + $("#ddlPriceTag").val(), function (data) {
+            $('#txtPrice').val(data.price);
+        });
+    });
+</script>

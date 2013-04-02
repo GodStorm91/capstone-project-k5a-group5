@@ -37,6 +37,7 @@ namespace SMDH.Controllers
         public ActionResult Create()
         {
             //return view here
+            
             return View();
         }
 
@@ -44,6 +45,7 @@ namespace SMDH.Controllers
         {
             PriceCategory pc = new PriceCategory();
             pc.OrderId = orderId;
+            ViewBag.PriceTags = new SelectList(context.PriceTags.ToArray(), "PriceTagId", "PriceTagContent");
             return View(pc);
 
         }
@@ -56,6 +58,9 @@ namespace SMDH.Controllers
                 //pc.Staff Staff Id goes here
                 var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 pc.UserId = userInfo.UserId;
+                var priceTagInfo = context.PriceTags.Single(pt => pt.PriceTagId == pc.PriceTagId);
+                pc.PriceContent = priceTagInfo.PriceTagContent;
+                pc.Price = priceTagInfo.Price;
                 context.PriceCategories.InsertOnSubmit(pc);                
                 context.SubmitChanges();
                 var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
