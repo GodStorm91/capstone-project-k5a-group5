@@ -1,0 +1,21 @@
+﻿@model SMDH.Models.PriceTag
+<div class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">
+            Price Content
+        </label>        
+        <div class="controls">
+            @Html.TextAreaFor(model => model.PriceTagContent)
+            @Html.ValidationMessageFor(model => model.PriceTagContent)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Price
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+    </div>   
+</div>
