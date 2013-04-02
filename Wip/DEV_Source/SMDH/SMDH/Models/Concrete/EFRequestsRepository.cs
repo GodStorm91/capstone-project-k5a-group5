@@ -170,7 +170,7 @@ namespace SMDH.Models.Concrete
                 if (request.RequestStatus != (int)RequestStatus.New) return false;
                 var validOrders = ValidOrders(request);
                 if (validOrders.Where(o => o.OrderStatus != (int)OrderStatus.Approved).Count() > 0) return false;
-                request.RequestStatus = (int)RequestStatus.Approved;
+                request.RequestStatus = (int)RequestStatus.Pricing;
                 context.SubmitChanges();
                 return true;
             }

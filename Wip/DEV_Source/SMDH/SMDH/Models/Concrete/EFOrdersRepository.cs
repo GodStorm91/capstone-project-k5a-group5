@@ -190,13 +190,14 @@ namespace SMDH.Models.Concrete
         }
 
 
-        public bool Approve(Order order, DateTime dueDate, int fee)
+        public bool Approve(Order order)
         {
             try
             {
-                if (order.OrderStatus != (int)OrderStatus.New) return false;
-                order.DueDate = dueDate;
-                order.Fee = fee;
+                if (order.OrderStatus != (int)OrderStatus.New) return false;  
+                //check condition if exist pricecategory for this order
+                if (order.PriceCategories.Count == 0) return false;
+                order.Fee = (int)order.PriceCategories.Sum(r => r.Price);
                 order.OrderStatus = (int)OrderStatus.Approved;
                 context.SubmitChanges();
                 return true;

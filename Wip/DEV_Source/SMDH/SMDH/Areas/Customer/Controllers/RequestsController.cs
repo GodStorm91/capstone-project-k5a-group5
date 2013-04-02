@@ -66,10 +66,10 @@ namespace SMDH.Areas.Customer.Controllers
 
             requests = _repository.GetRequestsByStatuses(statuses);
 
-            //var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            //requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
+            var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
             ////requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
-            //ViewBag.Customer = userInfo.Customer.CompanyName;
+            ViewBag.Customer = userInfo.Customer.CompanyName;
             ////ViewBag.Customer = "Test";
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
@@ -563,6 +563,24 @@ namespace SMDH.Areas.Customer.Controllers
             }
             catch (Exception)
             {
+                return Json(new { success = false });
+            }
+        }
+
+       
+        public ActionResult Approve(int id)
+        {
+            try
+            {
+                var request = context.Requests.Single(r => r.RequestId == id);
+                request.RequestStatus = (int)RequestStatus.Approved;
+                request.ApprovedDate = DateTime.Now;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+
                 return Json(new { success = false });
             }
         }

@@ -268,6 +268,7 @@ namespace SMDH.Controllers
             if (request.RequestStatus != (int)RequestStatus.New) return RedirectToAction("Index");
             var unapprovedOrders = _repository.ValidOrders(request).Where(o => o.OrderStatus != (int)OrderStatus.Approved).ToList();
             ViewBag.RequestApprovable = unapprovedOrders.Count == 0 ? true : false;
+            ViewBag.TotalFee = request.ValidOrders.Sum(p => p.Fee);
             return View(request);
         }
     }

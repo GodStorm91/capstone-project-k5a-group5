@@ -24,7 +24,7 @@ namespace SMDH.Models.Abstract
         Order ConfirmEdit(Order order);
          bool Cancel(Order order);
          bool Cancel(Order order, bool commit);
-         bool Approve(Order order, DateTime dueDate, int fee);
+         bool Approve(Order order);
          bool Reject(Order order);
          bool CustomerCancel(Order order);
          bool CustomerCancel(Order order, bool commit);

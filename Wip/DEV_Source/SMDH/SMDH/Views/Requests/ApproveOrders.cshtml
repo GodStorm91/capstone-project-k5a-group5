@@ -63,7 +63,7 @@
                             @Model.NumberOfItems
                         </td>
                         <td>
-                            @*@Model.TotalFee*@ VNĐ
+                             @(String.Format("{0,12:N0}",ViewBag.TotalFee)) VNĐ
                         </td>
                         <td>
                             <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
@@ -154,8 +154,10 @@
                                                         }
                                                         else
                                                         {
+                                                            decimal totalPrice = 0;
                                                             foreach (var priceCategory in order.PriceCategories)
                                                             {
+                                                                totalPrice += priceCategory.Price;
                                                                 PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
                                                             <tr>
                                                                 <td></td>
@@ -186,6 +188,9 @@
                                                                 </td>
                                                             </tr>
                                                             }
+                                                            <tr>
+                                                                <td colspan="6">Total Price: @(String.Format("{0,12:N0}", totalPrice)) VND</td>
+                                                            </tr>
                                                         }
                                                     </tbody>
                                                 </table>
@@ -210,7 +215,7 @@
                                             </div>
                                             @if (order.OrderStatus != (int)OrderStatus.Rejected)
                                             {
-                                                if (order.Fee == null)
+                                                if (order.OrderStatus == (int)OrderStatus.New)
                                                 {
                                                 <div class="form-actions no-margin">
                                                     <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">ApproveOrder
@@ -220,9 +225,9 @@
                                                 else
                                                 {
                                                 <div class="form-actions no-margin">
-                                                    <img src="/img/icons2/checkmark2.png" alt="Approved" title="Approved" class="myTooltip" style="margin-top: 5px;">
+                                                    <img src="/img/icons2/checkmark2.png" width="20" height="15" alt="Approved" title="Approved" class="myTooltip" style="margin-top: 5px;">
                                                     <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
-                                                        <img src="/img/icons2/delete.png" alt="Cancel Order" class="myTooltip" title="Disapprove Order" />
+                                                        <img src="/img/icons2/delete.png"  width="20" height="15" alt="Cancel Order" class="myTooltip" title="Disapprove Order" />
                                                     </a>
                                                 </div>
                                                 }
@@ -639,16 +644,17 @@
 
     var approveOrder = function (orderId) {
         form = $('#order-' + orderId + ' form');
+        var myStr = form.attr("action");
         $.ajax({
             type: 'POST',
-            url: form.attr("action"),
+            url: "/Orders/Approve?OrderId=" + orderId,
             data: form.serialize(),
             success: function (result) {
                 if (result.success) {
                     $.blockUI();
                     window.location.reload();
                 } else {
-                    bootbox.alert('Please check the due date and fee again.');
+                    bootbox.alert('Please check the due date and fee again.');                    
                 }
             },
             async: false

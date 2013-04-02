@@ -97,8 +97,9 @@ namespace SMDH.Controllers
                     var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                     myPc.UserId = userInfo.UserId;
                     myContext.SubmitChanges();
-                    var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
-
+                    var order = myContext.Orders.Single(o => o.OrderId == pc.OrderId);
+                    order.Fee = (int)order.PriceCategories.Sum(p => p.Price);
+                    myContext.SubmitChanges();
                     return RedirectToAction("ApproveOrders","Requests",new {id = order.Request.RequestId});
                 }
                 

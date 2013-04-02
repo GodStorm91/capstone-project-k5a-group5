@@ -210,16 +210,17 @@ namespace SMDH.Controllers
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(Request["OrderId"]) ||
-                    string.IsNullOrWhiteSpace(Request["Fee"]) ||
-                    string.IsNullOrWhiteSpace(Request["DueDate"]))
+                if (string.IsNullOrWhiteSpace(Request["OrderId"]) //||
+                    //string.IsNullOrWhiteSpace(Request["Fee"]) ||
+                    //string.IsNullOrWhiteSpace(Request["DueDate"])
+                    )
                 {
                     return Json(new { success = false });
                 }
                 var order = _repository.Find(int.Parse(Request["OrderId"]));
-                var dueDate = DateTime.ParseExact(Request["DueDate"], "dd/MM/yyyy", null);
-                var fee = int.Parse(Request["Fee"]);
-                if (_repository.Approve(order, dueDate, fee))
+                //var dueDate = DateTime.ParseExact(Request["DueDate"], "dd/MM/yyyy", null);
+                //var fee = int.Parse(Request["Fee"]);
+                if (_repository.Approve(order))
                 {
                     var orderDetails = new OrderViewModel(order);
                     return Json(new { success = true, order = orderDetails });
