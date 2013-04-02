@@ -37,7 +37,7 @@ namespace SMDH.Models.Concrete
         public bool Remove(int productID)
         {
             var product = Find(productID);
-            context.Products.DeleteOnSubmit(product);
+            product.Active = false;
             context.SubmitChanges();
             return true;
         }
@@ -46,6 +46,7 @@ namespace SMDH.Models.Concrete
         {
             product.CustomerId = 1;
             product.IsPermanent = true;
+            product.Active = true;
             context.Products.InsertOnSubmit(product);
             context.SubmitChanges();
             return true;
@@ -59,6 +60,8 @@ namespace SMDH.Models.Concrete
             pro.ProductWeight = product.ProductWeight;
             pro.ProductPrice = product.ProductPrice;
             pro.ImageURL = product.ImageURL;
+            pro.Active = product.Active;
+            pro.Description = product.Description;
             context.SubmitChanges();
             return true;
         }
