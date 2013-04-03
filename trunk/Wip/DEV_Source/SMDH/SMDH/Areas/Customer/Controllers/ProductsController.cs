@@ -24,7 +24,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ViewResult Index()
         {
             var product = new List<Product>();
-            product = _repository.Products.Where(p => p.IsPermanent == true && p.Active == true).ToList();
+            product = _repository.Products.Where(p => p.IsPermanent == true).ToList();
             return View(product);
         }
 

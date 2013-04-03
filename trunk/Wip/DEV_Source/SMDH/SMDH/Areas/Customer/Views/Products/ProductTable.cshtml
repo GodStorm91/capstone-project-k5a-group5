@@ -27,6 +27,9 @@
             <th>
                 Description
             </th>
+            <th>
+                Enable
+            </th>
             <th class="tbl-action-col">
                 Action
             </th>
@@ -55,10 +58,20 @@
                 </td>
                 <td>@item.Description
                 </td>
+                <td>
+                    @if (item.Active == true)
+                    { 
+                        <input type="checkbox" checked="checked" disabled/>
+                    }
+                    else
+                    { 
+                    <input type="checkbox" disabled/>
+                    }
+                </td>
                 <td class="action-column">
                     <a class="update btn action" href="javascript:void(0)" onclick="edit(@item.ProductId)">
                         <i class="icon-pencil" title="edit"></i></a><a class="btn action delete" href="#" onclick="deleteItemManagement(@item.ProductId);">
-                            <i class="icon-pause" title="disable"></i></a>
+                            <i class="icon-remove" title="disable"></i></a>
                 </td>
             </tr>
         }
@@ -66,14 +79,14 @@
 </table>
 <script type="text/javascript">
     var deleteItemManagement = function (productID) {
-        bootbox.confirm("Are you sure to disable this product?", function (result) {
+        bootbox.confirm("Are you sure to delete this product?", function (result) {
             if (result) {
                 $.post('/Customer/Products/Remove/' + productID, function (result) {
                     if (result.success) {
                         $.blockUI();
                         window.location.reload();
                     } else {
-                        bootbox.alert('Failed to cancel this product.');
+                        bootbox.alert('This product can not delete.');
                     }
                 });
             }
