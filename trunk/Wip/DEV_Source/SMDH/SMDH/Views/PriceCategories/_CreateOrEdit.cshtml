@@ -5,7 +5,7 @@
             Price Content
         </label>
         <div class="controls">
-            @Html.HiddenFor(model => model.OrderId)
+            @Html.HiddenFor(model => model.OrderId, new { id="orderId" })
         </div>
         <div class="controls">
             @Html.DropDownList("PriceTagId", ViewBag.PriceTags as SelectList, "-- Choose a price tag to Add --", new { id = "ddlPriceTag", Class = "chzn-select", name = "pricetag" })

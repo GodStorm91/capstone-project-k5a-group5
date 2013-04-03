@@ -26,9 +26,9 @@ namespace SMDH.Controllers
         {
             var priceCategories = context.PriceCategories.Where(pc => pc.OrderId == orderId);
             List<PriceCategoryViewModel> result = new List<PriceCategoryViewModel>();
-            for (int i = 0; i < priceCategories.Count(); i++)
+            foreach (var pc in priceCategories)
             {
-                result.Add(new PriceCategoryViewModel(priceCategories.ElementAt(i)));
+                result.Add(new PriceCategoryViewModel(pc));
             }
             return Json(new { data = result });
             
@@ -45,6 +45,8 @@ namespace SMDH.Controllers
         {
             PriceCategory pc = new PriceCategory();
             pc.OrderId = orderId;
+            var order = context.Orders.Single(o => o.OrderId == orderId);
+            ViewBag.Order = order;
             ViewBag.PriceTags = new SelectList(context.PriceTags.ToArray(), "PriceTagId", "PriceTagContent");
             return View(pc);
 
@@ -74,11 +76,39 @@ namespace SMDH.Controllers
             }
         }
 
+
+        public ActionResult ConfirmCreateAjax(int priceTagId, int orderId)
+        {
+            try
+            {
+                var pc = new PriceCategory();
+                pc.OrderId = orderId;
+                pc.PriceTagId = priceTagId;
+
+                var priceTagInfo = context.PriceTags.Single(pt => pt.PriceTagId == pc.PriceTagId);
+                pc.PriceContent = priceTagInfo.PriceTagContent;
+                pc.Price = priceTagInfo.Price;
+                pc.EditDate = DateTime.Now;
+                //pc.Staff Staff Id goes here
+                var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                pc.UserId = userInfo.UserId;
+                context.PriceCategories.InsertOnSubmit(pc);
+                context.SubmitChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });                
+            }
+        }
+
         public ActionResult Edit(int id)
         {
             try
             {
                 var pc = context.PriceCategories.Single(p => p.PriceCategoryId == id);
+                ViewBag.PriceTags = new SelectList(context.PriceTags.ToArray(), "PriceTagId", "PriceTagContent");
                 return View(pc);
             }
             catch (Exception)
@@ -96,8 +126,9 @@ namespace SMDH.Controllers
                 {
                     var myPc = myContext.PriceCategories.Single(p => p.PriceCategoryId == pc.PriceCategoryId);
                     myPc.EditDate = DateTime.Now;
-                    myPc.Price = pc.Price;
-                    myPc.PriceContent = pc.PriceContent;
+                    var priceTagInfo = context.PriceTags.Single(pt => pt.PriceTagId == pc.PriceTagId);
+                    myPc.Price = priceTagInfo.Price;                    
+                    myPc.PriceContent = priceTagInfo.PriceTagContent;
                     //pc.Staff Staff Id goes here
                     var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                     myPc.UserId = userInfo.UserId;
@@ -108,6 +139,27 @@ namespace SMDH.Controllers
                     return RedirectToAction("ApproveOrders","Requests",new {id = order.Request.RequestId});
                 }
                 
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        public ActionResult GetPriceCategoriesFromOrderId(int id)
+        {
+            try
+            {
+                var pcs = context.PriceCategories.Where(pc => pc.OrderId == id);
+                List<PriceCategoryViewModel> result = new List<PriceCategoryViewModel>();
+                foreach (var pc in pcs)
+                {
+                    result.Add(new PriceCategoryViewModel(pc));
+                }
+
+                return Json( result );
+
             }
             catch (Exception)
             {
