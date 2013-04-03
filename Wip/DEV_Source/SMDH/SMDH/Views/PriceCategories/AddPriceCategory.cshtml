@@ -1,7 +1,16 @@
 ﻿@model SMDH.Models.PriceCategory
+@using SMDH.Models.ViewModels
 @{
     Layout = null;
 }
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/select2.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="/js/accounting.js" type="text/javascript"></script>
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         ×</button>
@@ -16,16 +25,173 @@
             @Html.Partial("_CreateOrEdit", Model)
         </fieldset>        
     }
-</div>
-<div class="modal-footer">
     <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <div id="tableContainer">
+    <table class="table table-bordered" id="tblData">
+        <thead>
+            <tr>
+                <th>
+                    No.
+                </th>
+                <th>
+                    Last Modified Date
+                </th>
+                <th>
+                    Price Content
+                </th>
+                <th>
+                    Last Modified User
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Order.PriceCategories.Count == 0)
+            {
+                <tr>
+                    <td colspan="6">
+                        Not pricing this order yet.
+                    </td>
+                </tr>
+                                                        
+            }
+            else
+            {
+                decimal totalPrice = 0;
+                foreach (var priceCategory in ViewBag.Order.PriceCategories)
+                {
+                    totalPrice += priceCategory.Price;
+                    PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        @pcViewModel.EditDateString
+                    </td>
+                    <td>
+                        @pcViewModel.PriceContent
+                    </td>
+                    <td>
+                        @pcViewModel.StaffName
+                    </td>
+                    <td>
+                        @(String.Format("{0,12:N0}", pcViewModel.Price))
+                        VND
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit
+                                </a></li>
+                                <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">
+                                    Canceled </a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td colspan="6">
+                        Total Price: @(String.Format("{0,12:N0}", totalPrice))
+                        VND
+                    </td>
+                </tr>      
+
+            }
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="modal-footer">    
     <button class="btn" data-dismiss="modal" aria-hidden="true">
         Cancel</button>
 </div>
-
 <script>
-    $('#btnCreate').click(function () {
-        $('#create-form').submit();
+    $(document).ready(function () {
+        //$('#tblData').dataTable();
     });
-</script>
+    $('#btnCreate').click(function (event) {
+        alert("clicked");
 
+        $.post("/PriceCategories/ConfirmCreateAjax", { priceTagId: $('#ddlPriceTag').val(), orderId: $('#orderId').val() }, function (result) {
+            if (result.success) {
+                $.post('/PriceCategories/GetPriceCategoriesFromOrder', { orderId: $('#orderId').val() }, function (json) {
+                    var strTable = '<table class="table table-bordered" id="tblData">   <thead>       <tr>' +
+                                '<th>' +
+                                    'No.' +
+                     '           </th>' +
+                                '<th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
+                                '<th>' +
+                                  'Price Content' +
+                                '</th>' +
+                                '<th>' +
+                                   'Last Modified User' +
+                                '</th>' +
+                                '<th>' +
+                                    'Price' +
+                                '</th>' +
+                                '<th>' +
+                                    'Action' +
+                                '</th>' +
+                           '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var totalPrice = 0;
+                    for (var i = 0; i < json.data.length; i++) {
+                        totalPrice += json.data[i].Price;
+                        strTable += '<tr>' +
+                                    '<td>' +
+                                    '</td>' +
+                                    '<td>' +
+                                    json.data[i].EditDateString +
+                                     '</td>' +
+                                     '<td>' +
+                                    json.data[i].PriceContent +
+                                      '</td>' +
+                                        '<td>' +
+                                    json.data[i].StaffName +
+                                        '</td>' +
+                                        '<td>' +
+                                        json.data[i].PriceString + ' VND' +
+                                        '</td>' +
+                                '<td>' +
+                        '<div class="btn-group">' +
+                            '<button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">' +
+                                'Action <span class="caret"></span>' +
+                            '</button>' +
+                            '<ul class="dropdown-menu">' +
+                                '<li><a href="javascript:void(0)" onclick="editPrice(' + json.data[i].PriceCategoryId + ')">Edit' +
+                                '</a></li>' +
+                                '<li><a href="javascript:void(0)" onclick="cancelPrice(' + json.data[i].PriceCategoryId + ')">' +
+                                    'Canceled </a></li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</td>' +
+                     '</tr>';
+                    }
+
+                    strTable += '<tr>' +
+                        '<td colspan="6">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                     '</tr>';
+
+                    $('#tableContainer').html(strTable);
+                    alert("table:" + strTable);
+                });
+            } else {
+                bootbox.alert("Can't add price");
+            }
+        });
+        return false;
+    });
+    
+</script>

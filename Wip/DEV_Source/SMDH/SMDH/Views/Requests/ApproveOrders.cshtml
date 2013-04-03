@@ -138,9 +138,7 @@
                                                             <th>Last Modified User
                                                             </th>
                                                             <th>Price
-                                                            </th>
-                                                            <th>Action
-                                                            </th>
+                                                            </th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -162,7 +160,7 @@
                                                             <tr>
                                                                 <td></td>
                                                                 <td>
-                                                                    @pcViewModel.EditDate
+                                                                    @pcViewModel.EditDateString
                                                                 </td>
                                                                 <td>
                                                                     @pcViewModel.PriceContent
@@ -173,19 +171,7 @@
                                                                 <td>
                                                                     @(String.Format("{0,12:N0}", pcViewModel.Price))
                                                                     VND
-                                                                </td>
-                                                                <td>
-                                                                    <div class="btn-group">
-                                                                        <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                                                            Action <span class="caret"></span>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit </a>
-                                                                            </li>
-                                                                            <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">Canceled </a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
+                                                                </td>                                                                
                                                             </tr>
                                                             }
                                                             <tr>

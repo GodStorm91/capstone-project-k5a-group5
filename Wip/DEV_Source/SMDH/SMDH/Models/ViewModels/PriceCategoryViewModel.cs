@@ -13,6 +13,8 @@ namespace SMDH.Models.ViewModels
         public string StaffName { get; set; }
         public DateTime EditDate { get; set; }
         public int PriceCategoryId { get; set; }
+        public string EditDateString { get; set; }
+        public string PriceString { get; set; }
 
         public PriceCategoryViewModel(PriceCategory pc)
         {
@@ -20,6 +22,8 @@ namespace SMDH.Models.ViewModels
             Price = pc.Price;
             PriceContent = pc.PriceContent;
             EditDate = pc.EditDate.Value;
+            EditDateString = string.Format("{0:dd/MM/yyyy}", pc.EditDate.Value);
+            PriceString = string.Format("{0,12:N0}", pc.Price);
             PriceCategoryId = pc.PriceCategoryId;
             StaffName = context.UserInfos.Single(us => us.UserId == pc.UserId).FullName;
         }
