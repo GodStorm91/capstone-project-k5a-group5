@@ -185,7 +185,7 @@
         <div class="dashboard-container">
             <div class="top-nav">
                 <ul>
-                    <li><a href="/Dashboard">
+                    <li><a href="/Dashboard" id="DashboardMN">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                         </div>
                         Dashboard </a></li>
@@ -193,15 +193,15 @@
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                         </div>
                         Plans</a></li>
-                    <li><a href="/Requests">
+                    <li><a href="/Requests" id="RequestsMN">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
                         </div>
                         Requests </a></li>
-                    <li><a href="/Orders">
+                    <li><a href="/Orders" id="OrdersMN">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
                         </div>
                         Orders </a></li>
-                    <li><a href="/Customers">
+                    <li><a href="/Customers" id="CustomersMN">
                         <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                         </div>
                         Customers </a></li>
@@ -258,6 +258,19 @@
             });
         });
 
+        var url = $(location).attr('href');
+        if (url.indexOf("Dashboard") >= 0) {
+            $('#DashboardMN').addClass('selected');
+        }
+        if (url.indexOf("Requests") >= 0) {
+            $('#RequestsMN').addClass('selected');
+        }
+        if (url.indexOf("Orders") >= 0) {
+            $('#OrdersMN').addClass('selected');
+        }
+        if (url.indexOf("Customers") >= 0) {
+            $('#CustomersMN').addClass('selected');
+        }
     </script>
 </body>
 </html>
