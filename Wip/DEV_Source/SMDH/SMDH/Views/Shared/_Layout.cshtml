@@ -258,7 +258,7 @@
             });
         });
 
-        var url = $(location).attr('href');
+        var url = $(location).attr('href').split('/')[3];
         if (url.indexOf("Dashboard") >= 0) {
             $('#DashboardMN').addClass('selected');
         }
