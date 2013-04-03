@@ -37,7 +37,7 @@ namespace SMDH.Models.Concrete
         public bool Remove(int productID)
         {
             var product = Find(productID);
-            product.Active = false;
+            context.Products.DeleteOnSubmit(product);
             context.SubmitChanges();
             return true;
         }
