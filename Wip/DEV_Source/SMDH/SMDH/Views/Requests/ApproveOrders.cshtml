@@ -63,7 +63,7 @@
                             @Model.NumberOfItems
                         </td>
                         <td>
-                             @(String.Format("{0,12:N0}",ViewBag.TotalFee)) VNĐ
+                            @(String.Format("{0,12:N0}", ViewBag.TotalFee)) VNĐ
                         </td>
                         <td>
                             <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
@@ -204,7 +204,7 @@
                                                 if (order.OrderStatus == (int)OrderStatus.New)
                                                 {
                                                 <div class="form-actions no-margin">
-                                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order   </a>                                                 
+                                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order   </a>
                                                 </div>
                                                 }
                                                 else
@@ -212,7 +212,7 @@
                                                 <div class="form-actions no-margin">
                                                     <img src="/img/icons2/checkmark2.png" width="20" height="15" alt="Approved" title="Approved" class="myTooltip" style="margin-top: 5px;">
                                                     <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
-                                                        <img src="/img/icons2/delete.png"  width="20" height="15" alt="Cancel Order" class="myTooltip" title="Disapprove Order" />
+                                                        <img src="/img/icons2/delete.png" width="20" height="15" alt="Cancel Order" class="myTooltip" title="Disapprove Order" />
                                                     </a>
                                                 </div>
                                                 }
@@ -639,7 +639,7 @@
                     $.blockUI();
                     window.location.reload();
                 } else {
-                    bootbox.alert('Please check the due date and fee again.');                    
+                    bootbox.alert('Please check the due date and fee again.');
                 }
             },
             async: false
