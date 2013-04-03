@@ -271,6 +271,12 @@
         if (url.indexOf("Customers") >= 0) {
             $('#CustomersMN').addClass('selected');
         }
+        if (url.indexOf("Plans") >= 0) {
+            $('#Plans').addClass('selected');
+        }
+        if (url.indexOf("Hubs") >= 0 || url.indexOf("District") >= 0 || url.indexOf("CityProvince") >= 0 || url.indexOf("PriceTag") >= 0) {
+            $('#Config').addClass('selected');
+        }
     </script>
 </body>
 </html>
