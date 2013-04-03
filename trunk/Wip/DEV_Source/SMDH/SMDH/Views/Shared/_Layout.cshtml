@@ -262,10 +262,10 @@
         if (url.indexOf("Dashboard") >= 0) {
             $('#DashboardMN').addClass('selected');
         }
-        if (url.indexOf("Requests") >= 0) {
+        if (url.indexOf("Requests") >= 0 && url.indexOf("Order") < 0) {
             $('#RequestsMN').addClass('selected');
         }
-        if (url.indexOf("Orders") >= 0) {
+        if (url.indexOf("Orders" ) >= 0 && url.indexOf("Request") < 0) {
             $('#OrdersMN').addClass('selected');
         }
         if (url.indexOf("Customers") >= 0) {

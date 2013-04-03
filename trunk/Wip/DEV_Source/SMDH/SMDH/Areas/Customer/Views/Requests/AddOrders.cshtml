@@ -16,7 +16,7 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script src="/js/customer-side-order-item-ticket.js" type="text/javascript"></script>
 <div class="requestDetails" id="addOrders">
-    <div id="companyInfo" class="green-bordered">
+    @*    <div id="companyInfo" class="green-bordered">
         <div class="pull-left">
             <strong>Request Number: &nbsp;&nbsp;</strong>#@Model.RequestId
         </div>
@@ -31,16 +31,243 @@
                 <text>@Model.Note</text>
             }
         </div>
-        @*        <div class="pull-left">
-            <strong>Collection Address: &nbsp;&nbsp;</strong>@Model.CustomerAddress.FullAddress
-        </div>*@
         <div style="clear: both;">
         </div>
+    </div>*@
+    <div class="row-fluid">
+        <div class="invoice">
+            <div class="invoice-head">
+                <img src="/img/customer.jpg" alt="logo" class="logo">
+                <div class="invoice-info">
+                    <span>Request Number: #@Model.RequestId</span>
+                </div>
+            </div>
+            <div class="invoice-data-container">
+                <div class="from">
+                    <h5>Customer: @Model.Customer.DisplayName
+                    </h5>
+                    <span style="width: 800px;">Collection Address: @Model.CustomerAddress.FullAddress</span><span>Requested Date:
+                        @string.Format("{0:dd/MM/yyyy hh:mm tt}", Model.RequestedDate)</span>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 10%">Number of orders
+                        </th>
+                        <th style="width: 10%">Number of items
+                        </th>
+                        <th style="width: 50%" class="hidden-phone">Total Fee
+                        </th>
+                        <th style="width: 10%" class="hidden-phone">Status
+                        </th>
+                        <th style="width: 10%" class="hidden-phone">Note
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Model.ValidOrders.Count
+                        </td>
+                        <td>
+                            @Model.NumberOfItems
+                        </td>
+                        <td>
+                            @(String.Format("{0,12:N0}", ViewBag.TotalFee)) VNĐ
+                        </td>
+                        <td>
+                            <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
+                        </td>
+                        <td>
+                            @if (string.IsNullOrWhiteSpace(Model.Note))
+                            {
+                                <text>None</text>
+                            }
+                            else
+                            {
+                                <text>@Model.Note</text>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="tabbable tabs-left" id="orders-items">
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="accordion1" class="accordion no-margin">
+                @foreach (var order in Model.Orders.Where(o => o.Status != OrderStatus.Canceled))
+                {
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#order-@order.OrderId" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                <i class="icon-shopping-cart"></i>Order @order.OrderId </a>
+                        </div>
+                        <div class="accordion-body in collapse" id="order-@order.OrderId" style="height: auto;">
+                            <div class="accordion-inner">
+                                <div class="span6">
+                                    @if (order.OrderStatus == (int)OrderStatus.Rejected)
+                                    {
+                                        <div class="row-fluid" style="background: #000; color: #fff; text-align: center;">
+                                            Rejected
+                                        </div>
+                                    }
+                                    <div class="widget">
+                                        <div class="widget-body">
+                                            <form class="no-margin">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
+                                                        <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                                    </label>
+                                                    <label class="control-label" for="name">
+                                                        Receiver Address : @order.
+                                                    </label>
+
+                                                    <label class="control-label" for="name">
+                                                        Receiver Phone : @order.ReceiverPhone
+                                                    </label>
+                                                    <label class="control-label" for="name">
+                                                        Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
+                                                        VNĐ
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Note :
+                                                @if (string.IsNullOrWhiteSpace(order.Note))
+                                                {
+                                                    <text>None</text>        
+                                                }
+                                                else
+                                                {
+                                                    @order.Note
+                                                }
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Delivery Address : @order.FullAddress
+                                                    </label>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="name">
+                                                        Order Status : @order.OrderStatus
+                                                    </label>
+                                                </div>
+                                                @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                                                {
+                                                    if (order.OrderStatus == (int)OrderStatus.New)
+                                                    {
+                                                    <div class="form-actions no-margin">
+                                                        <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order   </a>
+                                                    </div>
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="form-actions no-margin">
+                                                        <a href="#" onclick="cancelOrder(@order.OrderId)" role="button" class="deleteOrder btn action" data-toggle="modal" class="myToolTip" rel="tooltip" title="Cancel Order">
+                                                            <img src="/img/icons2/cross.png" alt="Cancel Order" width="15">
+                                                        </a><a href="#" onclick="editOrder(@order.OrderId)" role="button" class="editOrder btn action" data-toggle="modal" class="myToolTip" rel="tooltip" title="Edit Order">
+                                                            <img src="/img/icons2/pencil.png" alt="Edit Order" width="15">
+                                                        </a><a href="#" onclick="createItemFor(@order.OrderId)" role="button" class="createItem btn action" data-toggle="modal" class="myToolTip" rel="tooltip" title="Add New Item">
+                                                            <img src="/img/icons2/add.png" alt="Add New Item" width="15" />
+                                                        </a>
+                                                    </div>
+                                                    }
+                                                }
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="widget">
+                                        <div class="widget-header">
+                                            <div class="title">
+                                                Items
+                                            </div>
+                                        </div>
+                                        <div class="widget-body">
+                                            @if (order.Items.Count == 0)
+                                            {
+                                                <li class="no-item">There is no item in this order.</li>
+                                            }
+                                            else
+                                            {
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name
+                                                            </th>
+                                                            <th>Weight
+                                                            </th>
+                                                            <th>Quantity
+                                                            </th>
+                                                            <th>Properties
+                                                            </th>
+                                                            <th>Note
+                                                            </th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in order.Items)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @item.Name
+                                                                </td>
+                                                                <td>@item.Weight
+                                                                </td>
+                                                                <td>@item.Quantity
+                                                                </td>
+                                                                <td>
+                                                                    @if (!item.IsFragile && !item.HasHighValue)
+                                                                    { <text>None</text> }
+                                                                    @if (item.IsFragile)
+                                                                    {<span class="label label-success">Fragile</span><text>&nbsp;</text>}
+                                                                    @if (item.HasHighValue)
+                                                                    {<span class="label label-info">High Value</span><text>&nbsp;</text>}
+                                                                </td>
+                                                                <td>
+                                                                    @if (string.IsNullOrWhiteSpace(item.Note))
+                                                                    {
+                                                                        <text>None</text>        
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @item.Note
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" onclick="cancelItem(@item.ItemId)" role="button" class="deleteItem btn action" data-toggle="modal">
+                                                                        <img src="/img/icons2/cross.png" alt="Delete" title="Delete" width="15">
+                                                                    </a><a href="#" onclick="editItem(@item.ItemId)" role="button" class="editItem btn action" data-toggle="modal">
+                                                                        <img src="/img/icons2/pencil.png" alt="Edit" title="Edit" width="15">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @*<div class="tabbable tabs-left" id="orders-items">
         <div class="span7" style="margin-bottom: 3px;">
-            <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openCreateOrderModal(@Model.RequestId)">
-                Add new Order</a></div>
+            <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openCreateOrderModal(@Model.RequestId)">Add new Order</a>
+        </div>
         <ul class="span7 nav nav-tabs" id="order-list">
             @foreach (var order in Model.Orders.Where(o => o.Status != OrderStatus.Canceled))
             {
@@ -57,24 +284,21 @@
                             <div class="row-fluid">
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
-                                            color: #969696">#</span> </dt>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px; color: #969696">#</span> </dt>
                                         <dd class="order-number">
                                             @order.OrderId</dd>
                                     </dl>
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
-                                            color: #969696">#</span> </dt>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px; color: #969696">#</span> </dt>
                                         <dd class="order-number">
                                             @order.DeliveryOptionId</dd>
                                     </dl>
                                 </div>
                                 <div class="column">
                                     <dl class="dl-horizontal">
-                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px;
-                                            color: #969696">#</span> </dt>
+                                        <dt><span class="myToolTip" rel="tooltip" title="Order Number" style="font-size: 15px; color: #969696">#</span> </dt>
                                         <dd class="order-number">
                                             @order.OrderPaymentTypeId</dd>
                                     </dl>
@@ -230,16 +454,16 @@
                                                 </dd>
                                                 <dt>
                                                     <img src="/img/icons/notepencil32.png" title="Description" width="15px" />
-                                                    <dd class="note">
-                                                        @if (string.IsNullOrWhiteSpace(item.Note))
-                                                        {
-                                                            <text>None</text>
-                                                        }
-                                                        else
-                                                        {
-                                                            @item.Note
-                                                        }
-                                                    </dd>
+                                                <dd class="note">
+                                                    @if (string.IsNullOrWhiteSpace(item.Note))
+                                                    {
+                                                        <text>None</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Note
+                                                    }
+                                                </dd>
                                             </dl>
                                         </div>
                                         <div class="ticket-btn-group">
@@ -258,10 +482,16 @@
                 </div>
             }
         </div>
-    </div>
+    </div>*@
 </div>
-<a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal"
+<div class="row-fluid">
+    <div class="span12">
+        <a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal"
     onclick="submitRequest(@Model.RequestId)">Submit Request</a>
+    </div>
+
+</div>
+
 <!-- Begin Modal-->
 <div class="modal hide fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
