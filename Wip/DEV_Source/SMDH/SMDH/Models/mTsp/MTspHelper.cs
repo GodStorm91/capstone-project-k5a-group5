@@ -44,12 +44,17 @@ using OsmSharp.Osm.Routing.Core.TSP.Genetic;
 using OsmSharp.Routing.Core.Route;
 using OsmSharp.Routing.Core.Graph.DynamicGraph.PreProcessed;
 using SMDH.Models.mTsp;
+using SMDH.Models.ViewModels;
 
 namespace SMDH.Models.mTsp
 {
     public static class MTspHelper
     {
         private static SMDHDataContext context = new SMDHDataContext();
+
+        public static List<List<RequestViewModel>> requestsLists;
+
+        public static List<List<OrderViewModel>> ordersLists;
         
         public static List<List<GeoCoordinate>> segmentsLists;
 
@@ -137,10 +142,12 @@ namespace SMDH.Models.mTsp
             _points = new List<GeoCoordinate>();
         }
 
-        public static void solveTsp(List<GeoCoordinate> points, int numPlans)
+        public static void solveTsp(List<GeoCoordinate> points, int numPlans, List<List<RequestViewModel>> listRequestViewModel = null, List<List<OrderViewModel>> listOrderViewModel = null)
         {
             _points = points;
             _numCluster = numPlans;
+            requestsLists = new List<List<RequestViewModel>>();
+            ordersLists = new List<List<OrderViewModel>>();
             List<List<GeoCoordinate>> listGeo = new List<List<GeoCoordinate>>(_numCluster);
             segmentsLists = new List<List<GeoCoordinate>>(_numCluster);
             waypointLists = new List<List<GeoCoordinate>>(_numCluster);
@@ -160,7 +167,7 @@ namespace SMDH.Models.mTsp
                 PointCollection collection = allClusters[i];
                 //list
                 List<GeoCoordinate> pointsList = new List<GeoCoordinate>();
-                List<GeoCoordinate> pointsList2 = new List<GeoCoordinate>();
+                List<GeoCoordinate> pointsList2 = new List<GeoCoordinate>();                
                 waypointLists.Add(pointsList);
                 //Add Tiktak Headquarters to Route
                 var headquarter = context.Hubs.Single(o=> o.HubId == 1);
@@ -171,12 +178,18 @@ namespace SMDH.Models.mTsp
                     pointsList2.Add(_points[collection[j].Id]);
                     
                 }                
+                if (listRequestViewModel == null)
+                {
+                    doTspCalculation(pointsList2, VehicleEnum.Car, segmentsLists.ElementAt(i), waypointLists.ElementAt(i), null, listOrderViewModel.ElementAt(i));
+                }else
+                {
+                    doTspCalculation(pointsList2, VehicleEnum.Car, segmentsLists.ElementAt(i), waypointLists.ElementAt(i), listRequestViewModel.ElementAt(i), null);
+                }
                 
-                doTspCalculation(pointsList2, VehicleEnum.Car,segmentsLists.ElementAt(i), waypointLists.ElementAt(i));
             }
         }
 
-        public static string doTspCalculation(List<GeoCoordinate> points, VehicleEnum vehicle, List<GeoCoordinate> segments, List<GeoCoordinate> waypoints)
+        public static string doTspCalculation(List<GeoCoordinate> points, VehicleEnum vehicle, List<GeoCoordinate> segments, List<GeoCoordinate> waypoints, List<RequestViewModel> listRequest, List<OrderViewModel> listOrder)
         {
             _waypoints = new List<GeoCoordinate>();
 
@@ -197,8 +210,8 @@ namespace SMDH.Models.mTsp
             }
             //Start to solve
             RouterTSPGenetic<RouterPoint> tsp_solver = new RouterTSPGenetic<RouterPoint>(router);
-            OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car, resolvedPoints.ToArray());
-
+            OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car, resolvedPoints.ToArray(),0,true);
+         
             //double totalTime = 0;
             //double totalDistance = 0;
             //int order = 0;          
@@ -235,10 +248,68 @@ namespace SMDH.Models.mTsp
             planDistanceLists.Add(tempDistance);
             planTimeLists.Add(tempTime);
 
-            waypoints.RemoveAt(waypoints.Count - 1);            
+            waypoints.RemoveAt(waypoints.Count - 1);
+            List<RequestViewModel> requestListToAdd = new List<RequestViewModel>();
+            List<OrderViewModel> orderListToAdd = new List<OrderViewModel>();
+            for (int i = 1; i < waypoints.Count; i++)
+            {
+                if (listRequest != null)
+                {
+                    requestListToAdd.Add(GetNearestRequestPoint(waypoints[i], listRequest));
+                }
+                else
+                {
+                    orderListToAdd.Add(GetNearestOrderPoint(waypoints[i], listOrder));
+                }
+            }
+
+            if (listRequest != null)
+            {
+                requestsLists.Add(requestListToAdd);
+            }
+            else
+            {
+                ordersLists.Add(orderListToAdd);
+            }
             byte[] streamByte = tsp.SaveToByteArray();
             string tempString = System.Text.Encoding.Default.GetString(streamByte);
             return tempString;
+        }
+
+        private static RequestViewModel GetNearestRequestPoint(GeoCoordinate point , List<RequestViewModel> listRequest)
+        {
+            double distance = double.MaxValue;
+            RequestViewModel result = null;
+            for (int i = 0; i < listRequest.Count; i++)
+            {
+                double tmpDistance = Math.Pow(((double)listRequest.ElementAt(i).Latitude.Value - point.Latitude), 2) + 
+                                        Math.Pow(((double)listRequest.ElementAt(i).Longitude.Value - point.Longitude), 2);
+                if (tmpDistance < distance)
+                {
+                    distance = tmpDistance;
+                    result = new RequestViewModel(context.Requests.Single(r => r.RequestId == listRequest.ElementAt(i).RequestId));
+                }
+            }
+
+            return result;
+        }
+
+        private static OrderViewModel GetNearestOrderPoint(GeoCoordinate point, List<OrderViewModel> listOrder)
+        {
+            double distance = double.MaxValue;
+            OrderViewModel result = null;
+            for (int i = 0; i < listOrder.Count; i++)
+            {
+                double tmpDistance = Math.Pow(((double)listOrder.ElementAt(i).Latitude.Value - point.Latitude), 2) +
+                                        Math.Pow(((double)listOrder.ElementAt(i).Longitude.Value - point.Longitude), 2);
+                if (tmpDistance < distance)
+                {
+                    distance = tmpDistance;
+                    result = new OrderViewModel(context.Orders.Single(r => r.OrderId == listOrder.ElementAt(i).OrderId));
+                }
+            }
+
+            return result;
         }
 
         //Perform Kmeans with the given points
