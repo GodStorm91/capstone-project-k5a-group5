@@ -1,0 +1,35 @@
+@model SMDH.Models.CustomerAddress
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>CustomerAddress</legend>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">@Model.Address</div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">@Model.IsActive</div>
+
+    <div class="display-label">Note</div>
+    <div class="display-field">@Model.Note</div>
+
+    <div class="display-label">Requests</div>
+    <div class="display-field">@(Model.Requests == null ? "None" : Model.Requests.Count.ToString())</div>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Customer).ToString()</div>
+
+    <div class="display-label">Ward</div>
+    <div class="display-field">@(Model.Ward == null ? "None" : Model.Ward.Name)</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CustomerAddressId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

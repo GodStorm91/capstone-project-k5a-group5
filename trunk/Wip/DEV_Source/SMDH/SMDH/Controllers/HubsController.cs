@@ -21,6 +21,7 @@ namespace SMDH.Controllers
 
         public ViewResult Index()
         {
+            ViewBag.PossibleHubCategory = new SelectList(context.HubCategories.Where(h => h.isActive).ToArray(), "HubCategoryId", "HubName");
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.PossibleDistricts = new SelectList(new List<District>());
             ViewBag.PossibleCustomers = context.Customers.Where(c => c.IsActive);
@@ -44,6 +45,7 @@ namespace SMDH.Controllers
         [HttpPost]
         public ActionResult Create()
         {
+            ViewBag.PossibleHubCategory = new SelectList(context.HubCategories.Where(h => h.isActive).ToArray(), "HubCategoryId", "HubName");
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.PossibleDistricts = new SelectList(new List<District>());
             ViewBag.PossibleWards = new SelectList(new List<Ward>());
@@ -76,7 +78,7 @@ namespace SMDH.Controllers
         public ActionResult Edit(int id)
         {
             var hub = context.Hubs.Single(o=> o.HubId == id);
-
+            ViewBag.PossibleHubCategory = new SelectList(context.HubCategories.Where(h => h.isActive).ToArray(), "HubCategoryId", "HubName",hub.HubCategory.HubCategoryId);
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name", hub.District.CityProvinceId);
             ViewBag.PossibleDistricts = new SelectList(hub.District.CityProvince.Districts.Where(d => d.IsActive).ToArray(), "DistrictId", "Name", hub.DistrictId);
             ViewBag.PossibleWards = new SelectList(hub.District.Wards.Where(w => w.IsActive).ToArray(), "WardId", "Name", hub.WardId);
@@ -175,7 +177,7 @@ namespace SMDH.Controllers
             try
             {
                 var hub = context.Hubs.Single(o=> o.HubId == id);
-                //if (hub.UpdateLocation(context, latitude, longitude)) return Json(new { success = true });
+                if (hub.UpdateLocation(context, latitude, longitude)) return Json(new { success = true });
                 return Json(new { success = false });
             }
             catch (Exception e)
