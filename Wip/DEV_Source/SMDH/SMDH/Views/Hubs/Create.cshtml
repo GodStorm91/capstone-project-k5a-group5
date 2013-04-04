@@ -1,0 +1,52 @@
+@model SMDH.Models.Hub
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        Create New Hub</h3>
+</div>
+<div class="modal-body" style="height:400px;">
+    <fieldset>
+        <div>
+            @using (Html.BeginForm("ConfirmCreate", "Hubs", FormMethod.Post, new { id = "hub-create-form", }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.Partial("_CreateOrEdit", Model)
+                
+            }
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <input id="btnCreate" type="submit" class="btn btn-primary" value="Create" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+<script type="text/javascript">
+    $("#hub-create-form").submit(function () {
+        var success = false;
+        if ($(this).valid()) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
+                success: function (result) {
+                    success = result.success;
+                    if (success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                },
+                async: false
+            });
+        }
+        return false;
+    });
+
+    $('#btnCreate').click(function () {
+        $("#hub-create-form").submit();
+    });
+</script>
