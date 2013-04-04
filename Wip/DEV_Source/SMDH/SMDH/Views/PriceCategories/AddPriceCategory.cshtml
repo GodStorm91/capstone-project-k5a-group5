@@ -44,10 +44,7 @@
                 </th>
                 <th>
                     Price
-                </th>
-                <th>
-                    Action
-                </th>
+                </th>               
             </tr>
         </thead>
         <tbody>
@@ -83,19 +80,7 @@
                         @(String.Format("{0,12:N0}", pcViewModel.Price))
                         VND
                     </td>
-                    <td>
-                        <div class="btn-group">
-                            <button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)" onclick="editPrice(@pcViewModel.PriceCategoryId)">Edit
-                                </a></li>
-                                <li><a href="javascript:void(0)" onclick="cancelPrice(@pcViewModel.PriceCategoryId)">
-                                    Canceled </a></li>
-                            </ul>
-                        </div>
-                    </td>
+                    
                 </tr>
                 }
                 <tr>
@@ -119,8 +104,10 @@
         //$('#tblData').dataTable();
     });
     $('#btnCreate').click(function (event) {
-        alert("clicked");
-
+        if ($('#ddlPriceTag').val() == '') {
+            bootbox.alert("Please choose a price tag!");
+            return;
+        }
         $.post("/PriceCategories/ConfirmCreateAjax", { priceTagId: $('#ddlPriceTag').val(), orderId: $('#orderId').val() }, function (result) {
             if (result.success) {
                 $.post('/PriceCategories/GetPriceCategoriesFromOrder', { orderId: $('#orderId').val() }, function (json) {
@@ -140,8 +127,27 @@
                                 '<th>' +
                                     'Price' +
                                 '</th>' +
+                           '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var strTable2 = '<table class="table table-bordered" id="tblData">   <thead>       <tr>' +
                                 '<th>' +
-                                    'Action' +
+                                    'No.' +
+                     '           </th>' +
+                                '<th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
+                                '<th>' +
+                                  'Price Content' +
+                                '</th>' +
+                                '<th>' +
+                                   'Last Modified User' +
+                                '</th>' +
+                                '<th>' +
+                                    'Price' +
+                                '</th>' +
+                                '<th>' +
+                                'Action' +
                                 '</th>' +
                            '</tr>' +
                         '</thead>' +
@@ -164,28 +170,39 @@
                                         '<td>' +
                                         json.data[i].PriceString + ' VND' +
                                         '</td>' +
-                                '<td>' +
-                        '<div class="btn-group">' +
-                            '<button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">' +
-                                'Action <span class="caret"></span>' +
-                            '</button>' +
-                            '<ul class="dropdown-menu">' +
-                                '<li><a href="javascript:void(0)" onclick="editPrice(' + json.data[i].PriceCategoryId + ')">Edit' +
-                                '</a></li>' +
-                                '<li><a href="javascript:void(0)" onclick="cancelPrice(' + json.data[i].PriceCategoryId + ')">' +
-                                    'Canceled </a></li>' +
-                            '</ul>' +
-                        '</div>' +
-                    '</td>' +
+                     '</tr>';
+
+                        strTable2 += '<tr>' +
+                                    '<td>' +
+                                    '</td>' +
+                                    '<td>' +
+                                    json.data[i].EditDateString +
+                                     '</td>' +
+                                     '<td>' +
+                                    json.data[i].PriceContent +
+                                      '</td>' +
+                                        '<td>' +
+                                    json.data[i].StaffName +
+                                        '</td>' +
+                                        '<td>' +
+                                        json.data[i].PriceString + ' VND' +
+                                        '</td>' +
+                                        '<td>' + "<a href='javascript:void(0)' class='btn btn-mini btn-primary' onclick='editPrice(" + json.data[i].PriceCategoryId + ")'><i class='icon-pencil'></i>Edit" +
+                    "</a>" + '</td>' +
                      '</tr>';
                     }
 
                     strTable += '<tr>' +
+                        '<td colspan="5">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                     '</tr>';
+
+                    strTable2 += '<tr>' +
                         '<td colspan="6">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
                      '</tr>';
 
                     $('#tableContainer').html(strTable);
-                    alert("table:" + strTable);
+                    $('#priceCategoryTbl' + $('#orderId').val()).html(strTable2);
+
                 });
             } else {
                 bootbox.alert("Can't add price");
