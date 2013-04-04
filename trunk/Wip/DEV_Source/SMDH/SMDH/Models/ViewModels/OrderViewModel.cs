@@ -7,6 +7,7 @@ using SMDH.Models.Concrete;
 using SMDH.Models;
 using SMDH.Models.Utilities;
 using System.Text.RegularExpressions;
+using SMDH.Models.Statuses;
 namespace SMDH.Models.ViewModels
 {
     public class OrderViewModel
@@ -37,13 +38,15 @@ namespace SMDH.Models.ViewModels
         public List<ItemViewModel> Items { get; set; }
         public string DeliverAddress { get; set; }
         public string Customer { get; set; }
+        public string AmountToBeCollectedString { get; set; }
 
         public OrderViewModel(Order order)
         {
+            var context = new SMDHDataContext();
             EFHubsRepository hubRepo = new EFHubsRepository();
             OrderId = order.OrderId;
             ItemNo = order.Items.Count;
-            RequestId = order.RequestId.Value;
+            RequestId = !order.RequestId.HasValue ? -1 : order.RequestId.Value;
             DeliveryOption = order.DeliveryOption.Name;
             OrderPaymentType = order.OrderPaymentType.Name;
             DueDate = new DateViewModel(order.DueDate);
@@ -55,14 +58,14 @@ namespace SMDH.Models.ViewModels
             Latitude = order.Latitude;
             Longitude = order.Longitude;
             Fee = order.Fee;
-            Status = Regex.Replace(order.Status.ToString(), "(\\B[A-Z])", " $1");
+            Status = ((OrderStatus)order.OrderStatus).ToString();
             AmountToBeCollected = order.AmountToBeCollectedFromReceiver;
             Amount = order.AmountToBeCollectedFromReceiver.ToString("N0");
             Note = order.Note;
             DueDateString = String.Format("{0:dd-MM-yyyy hh:mm tt}", DueDate);
             CreatedDate = string.Format("{0:dd/MM/yyyy HH:mm:ss}", order.CreatedDate);
             DeliverAddress = order.HubId != null ? hubRepo.Find(order.HubId.Value).Address : ReceiverAddress;
-            Customer = order.Request.Customer.DisplayName;
+            Customer = !order.RequestId.HasValue ? context.Customers.Single(c=> c.CustomerId == order.CustomerId).DisplayName : order.Request.Customer.DisplayName;
             //AddressFromWard = AddressHelper.GetAddressFromWard(order);
         }
 
@@ -92,7 +95,7 @@ namespace SMDH.Models.ViewModels
             System.TimeSpan diff = System.DateTime.Now.Subtract(DateTime.Parse(CreatedDate, new System.Globalization.CultureInfo("fr-FR", false)));
             WeightedScore = (float)(weightedDateScore * diff.Days + weightedDeliveryTypeScore);
             DeliverAddress = order.HubId != null ? order.Hub.FullAddress : ReceiverAddress;
-            Customer = order.Request.Customer.DisplayName;
+            Customer = order.Request.Customer.DisplayName;            
         }
     }
 }

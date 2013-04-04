@@ -215,6 +215,8 @@
     <Content Include="Buyer\Home\js\maruti.js" />
     <Content Include="css\application.css" />
     <Content Include="css\base.css" />
+    <Content Include="css\bluemoonmain.css" />
+    <Content Include="css\bluemoonstyle.css" />
     <Content Include="css\bootstrap-responsive.css" />
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap-wysihtml5.css" />
@@ -248,6 +250,7 @@
     <Content Include="css\fonts\silkcons.svg" />
     <Content Include="css\fonts\typicons.svg" />
     <Content Include="css\fonts\wpzoom.svg" />
+    <Content Include="css\FooterSlider.css" />
     <Content Include="css\forms.css" />
     <Content Include="css\fullcalendar.css" />
     <Content Include="css\gallery\adipoli.css" />
@@ -317,7 +320,9 @@
     <Content Include="css\timepicker.css" />
     <Content Include="css\ui-lightness\jquery-ui.css" />
     <Content Include="css\unicorn.grey.css" />
+    <Content Include="css\unicorn.login.css" />
     <Content Include="css\unicorn.main.css" />
+    <Content Include="css\uniform.css" />
     <Content Include="css\utopia-dark.css" />
     <Content Include="css\utopia-responsive.css" />
     <Content Include="css\utopia-white.css" />
@@ -979,6 +984,7 @@
     <Content Include="js\bootbox.min.js" />
     <Content Include="js\bootstrap-alert.js" />
     <Content Include="js\bootstrap-carousel.js" />
+    <Content Include="js\bootstrap-collapse.js" />
     <Content Include="js\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap-timepicker.js" />
@@ -1000,6 +1006,8 @@
     <Content Include="js\dataTables.bootstrap.js" />
     <Content Include="js\dataTables.editor.bootstrap.js" />
     <Content Include="js\dataTables.editor.js" />
+    <Content Include="js\date-picker\date.js" />
+    <Content Include="js\date-picker\daterangepicker.js" />
     <Content Include="js\date.format.js" />
     <Content Include="js\date.js" />
     <Content Include="js\default.js" />
@@ -1386,6 +1394,8 @@
     <Content Include="Areas\Buyer\Views\Home\Congratulations.cshtml" />
     <Content Include="Areas\Customer\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Buyer\Views\Home\ConfirmCreateOrder.cshtml" />
+    <Content Include="Areas\Buyer\Views\Home\ViewInformationOrder.cshtml" />
+    <Content Include="Areas\Buyer\Views\Home\ViewOrderDetails.cshtml" />
     <None Include="Areas\Customer\css\Open Notebook.onetoc2" />
     <None Include="Areas\Customer\js\Open Notebook.onetoc2" />
     <Content Include="Areas\Customer\Views\_ViewStart.cshtml">
