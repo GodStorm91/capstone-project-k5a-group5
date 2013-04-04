@@ -854,10 +854,10 @@ namespace SMDH.Controllers
 
                 //Solve mTsp;
                 MTspHelper.initialize();
-                MTspHelper.solveTsp(pointList, planNumber);
+                MTspHelper.solveTsp(pointList, planNumber,returnList,null);
             }
 
-            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
+            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.requestsLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
         }
 
         public ActionResult EditAutoScheduleCollectionPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
@@ -1183,10 +1183,10 @@ namespace SMDH.Controllers
 
                 //Solve mTsp;
                 MTspHelper.initialize();
-                MTspHelper.solveTsp(pointList, planNumber);
+                MTspHelper.solveTsp(pointList, planNumber,null, returnList);
             }
 
-            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = returnList, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
+            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.ordersLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
         }
 
 
