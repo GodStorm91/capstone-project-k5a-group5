@@ -265,7 +265,12 @@
                 var icon = new Array();
                 position[j] = wpt[i][j].location;
                 var size = new OpenLayers.Size(21, 25);
-                var image = "/img/markers/Numbers/red0"+ j +".png";
+                var image = "";
+                if (j <= 9) {
+                    image = "/img/markers/Numbers/red0" + j + ".png";
+                } else {
+                    image = "/img/markers/Numbers/red" + j + ".png";
+                }
                 if (j == 0) {
                     image = "/img/markers/home.png";
                 }
