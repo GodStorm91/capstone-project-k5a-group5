@@ -18,6 +18,11 @@
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="/js/date.js" type="text/javascript"></script>
 <script src="/js/accounting.js" type="text/javascript"></script>
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date-picker/date.js" type="text/javascript"></script>
+<script src="/js/date-picker/daterangepicker.js" type="text/javascript"></script>
+<link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 @using (Html.BeginForm("RequestListByStatus", "Request", FormMethod.Post, new { id = "statusFilter" }))
 {          
     <div class="row-fluid">
@@ -43,25 +48,30 @@
             <div id="dateFilterSelector" style="margin-top: 10px;">
                 <div class="row-fluid bordered">
                     <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
-                        Requested Date: 
+                        Date Range Input:
                     </div>
-                    <div class="pull-left" data-date-format="dd/mm/yyyy">
-                        From
-                        <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter"
-                            name="startDate"><br />
-                    </div>
-                    <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left: 30px;">
-                        To
-                        <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter"
-                            name="endDate">
-                    </div>
-                    <div class="span3" style="height: 28px; position: relative; margin-left: 30px; line-height: 28px;">
-                        <div style="position: absolute; bottom: 0; left: 0;">
-                            <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
-                            Disable Date Filter
+                    <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                        <div class="input-append">
+                            @if (ViewBag.StartDate != null)
+                            {
+                                <input type="text" name="report_range1" id="report_range1" class="report_range" value="@ViewBag.StartDate to @ViewBag.EndDate"/>                            
+                            }
+                            else
+                            {
+                                <input type="text" name="report_range1" id="report_range1" class="report_range" placeholder="29/01/2013 to 31/01/2013" />                            
+                            }
+
+
+                            <span class="add-on btn report_range" style="display: none">
+                                <i class="icon-calendar"></i>
+                            </span>
                         </div>
                     </div>
+                    <div class="span3">
+                        <a href="/Customer/Requests/Index" class="btn btn-primary" id="filterall">All</a>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="span2">
@@ -275,14 +285,16 @@
                 urlParams += '&status=' + $(btn).data('status');
             }
         });
-        if ($('#startDateFilter').val() != '') {
+        if ($('#report_range1').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
-            var dateParts = $('#startDateFilter').val().split("/");
+            var dateRangeParts = $('#report_range1').val().split("to");
+            var dateParts = dateRangeParts[0].split("/");
             urlParams += '&startDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
         if ($('#endDateFilter').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
-            var dateParts = $('#endDateFilter').val().split("/");
+            var dateRangeParts = $('#report_range1').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
             urlParams += '&endDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
         $.blockUI();
@@ -305,13 +317,13 @@
         });
     };
 
-    var approveRequest = function (requestId){
+    var approveRequest = function (requestId) {
         alert("call approve");
-        $.post('/Customer/Requests/Approve/' + requestId, function (result){
-            if (result.success){
+        $.post('/Customer/Requests/Approve/' + requestId, function (result) {
+            if (result.success) {
                 $.blockUI();
                 window.location.reload();
-            }else{
+            } else {
                 bootbox.alert('Failed to approve this request.');
             }
         });
@@ -321,4 +333,52 @@
         setupDataTable();
         $('.datepicker').datepicker({ format: "dd/mm/yyyy" });
     });
+
+    $('.report_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                days: -6
+            }), 'today'],
+            'Last 30 Days': [Date.today().add({
+                days: -29
+            }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                months: -1
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })]
+        },
+        opens: 'right',
+        format: 'dd/MM/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
+            days: -29
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '31/12/2013',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+  function (start, end) {
+      $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+  });
+
+    //Set the initial state of the picker label
+    $('.report_range span').html(Date.today().add({
+        days: -29
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 </script>
