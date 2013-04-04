@@ -14,8 +14,6 @@
                 Requested Date
             </th>
             <th>
-            </th>
-            <th>
                 Customer
             </th>
             <th>
@@ -43,16 +41,6 @@
                     @if (item.RequestedDate != null)
                     {
                         @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.RequestedDate)
-                    }
-                </td>
-                <td>
-                    @if (item.RequestedDate != null)
-                    {
-                        @String.Format("{0:yyyyMMddHHmm}", item.RequestedDate)
-                    }
-                    else
-                    {
-                        <text>000</text>
                     }
                 </td>
                 <td>

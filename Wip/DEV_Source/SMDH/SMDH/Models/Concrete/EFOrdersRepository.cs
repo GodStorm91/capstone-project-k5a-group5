@@ -408,7 +408,7 @@ namespace SMDH.Models.Concrete
 
         public List<Order> GetOrdersByStatuses(List<int> statuses)
         {
-            return context.Orders.Where(o => statuses.Contains(o.OrderStatus)).ToList();
+            return context.Orders.Where(o => statuses.Contains(o.OrderStatus) && o.RequestId != null).ToList();
         }
 
         public bool ConfirmSave(Order order)

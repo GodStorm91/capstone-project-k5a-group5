@@ -74,15 +74,15 @@ namespace SMDH.Areas.Customer.Controllers
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
-                var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
+                var startDate = DateTime.ParseExact(Request["startDate"].Trim(), "ddMMyyyy", null);
                 requests = requests.Where(r => r.RequestedDate >= startDate).ToList();
                 ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
             }
             if (!string.IsNullOrWhiteSpace(Request["endDate"]))
             {
-                var endDate = DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null).AddDays(1);
+                var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null);
                 requests = requests.Where(r => r.RequestedDate <= endDate).ToList();
-                ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", DateTime.ParseExact(Request["endDate"], "ddMMyyyy", null));
+                ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", endDate);
             }
 
             ViewBag.SelectedStatuses = statuses;

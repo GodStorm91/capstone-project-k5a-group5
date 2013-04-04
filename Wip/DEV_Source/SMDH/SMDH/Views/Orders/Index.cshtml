@@ -20,6 +20,10 @@
 <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="/js/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date-picker/date.js" type="text/javascript"></script>
+<script src="/js/date-picker/daterangepicker.js" type="text/javascript"></script>
+<link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 @using (Html.BeginForm("Index", "Plans", FormMethod.Post, new { id = "statusFilter" }))
 { 
     <fieldset>
@@ -27,7 +31,7 @@
             <div class="span10">
                 <div class="checkButtonStatus">
                     <div class="row-fluid">
-                        <div class="btn-group pull-left" data-toggle="buttons-checkbox" style="white-space:normal">                            
+                        <div class="btn-group pull-left" data-toggle="buttons-checkbox" style="white-space: normal">
                             <button type="button" class="btn btn-inverse pull-left" id="checkAll">
                                 All</button>
                             <button type="button" class="sttDraft btn status" data-status="draft">
@@ -64,32 +68,37 @@
                         </div>
                     </div>
                 </div>
-                <div id="dateFilterSelector" style="margin-top:10px;">
+                <div id="dateFilterSelector" style="margin-top: 10px;">
                     <div class="row-fluid bordered">
-                        <div class="pull-left" style="line-height: 40px;margin-right: 10px;font-weight: bold;">
-                            Requested Date: 
+                        <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                            Date Range Input:
                         </div>
-                        <div class="pull-left" data-date-format="dd/mm/yyyy">
-                            From
-                            <input class="datepicker input-small" size="16" type="text" value="" id="startDateFilter"
-                                name="startDate"><br />
-                        </div>
-                        <div class="pull-left" data-date-format="dd/mm/yyyy" style="margin-left: 30px;">
-                            To
-                            <input class="datepicker input-small" size="16" type="text" value="" id="endDateFilter"
-                                name="endDate">
-                        </div>
-                        <div class="span3" style="height: 28px; position: relative;margin-left: 30px;line-height: 28px;">
-                            <div style="position: absolute; bottom: 0; left: 0;">
-                                <input id="toggleElement" type="checkbox" name="toggle" onchange="toggleStatus()" />
-                                Disable Date Filter
+                        <div class="pull-left" style="line-height: 40px; margin-right: 10px; font-weight: bold;">
+                            <div class="input-append">
+                                @if (ViewBag.StartDate != null)
+                                {
+                                    <input type="text" name="report_range1" id="report_range1" class="report_range" value="@ViewBag.StartDate to @ViewBag.EndDate"/>                            
+                                }
+                                else
+                                {
+                                    <input type="text" name="report_range1" id="report_range1" class="report_range" placeholder="29/01/2013 to 31/01/2013" />                            
+                                }
+
+
+                                <span class="add-on btn report_range" style="display: none">
+                                    <i class="icon-calendar"></i>
+                                </span>
                             </div>
                         </div>
+                        <div class="span3">
+                            <a href="/Orders/Index" class="btn btn-primary" id="filterall">All</a>
+                        </div>
                     </div>
+
                 </div>
             </div>
             <div class="span2">
-                <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter"style="line-height: 40px;">Filter</a>
+                <a class="btn btn-primary" onclick="$(this).closest('form').submit()" id="btnFilter" style="line-height: 40px;">Filter</a>
             </div>
         </div>
     </fieldset>
@@ -102,8 +111,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
-        <h3 id="myModalLabel">
-            Update Orders Status</h3>
+        <h3 id="myModalLabel">Update Orders Status</h3>
     </div>
     <div class="modal-body">
         <select id="ddlStatus">
@@ -150,7 +158,7 @@
         if (status == (int)OrderStatus.Collected)
         {
             <text>$('.sttCollected').addClass('active');</text>
-        }        
+        }
         if (status == (int)OrderStatus.ToBeReturned)
         {
             <text>$('.sttToBeReturned').addClass('active');</text>
@@ -162,7 +170,7 @@
         if (status == (int)OrderStatus.Delivered)
         {
             <text>$('.sttDelivered').addClass('active');</text>
-        }        
+        }
         if (status == (int)OrderStatus.Returned)
         {
             <text>$('.sttReturned').addClass('active');</text>
@@ -177,11 +185,11 @@
         }
     }
     
-    @if(ViewBag.StartDate != null)
+    @if (ViewBag.StartDate != null)
     {
         <text>$('#startDateFilter').val("@ViewBag.StartDate")</text>
     }
-    @if(ViewBag.EndDate != null)
+    @if (ViewBag.EndDate != null)
     {
         <text>$('#endDateFilter').val("@ViewBag.EndDate")</text>
     }
@@ -218,42 +226,44 @@
         selectedStatusIds = new Array();
     });
 
-//    $('#statusFilter').submit(function () {
-//        $.ajaxSettings.traditional = true;
-//        $.ajax({
-//            type: 'POST',
-//            url: '/Orders/RequestListByStatus/',
-//            data: {
-//                selectedStatusIds: selectedStatusIds,
-//                startDate: $('#startDateFilter').val(),
-//                endDate: $('#endDateFilter').val()
-//            },
-//            success: function (result) {
-//                $('#divTable').html(result);
-//                //$('#main-table').dataTable();
-//                setupCrud('Orders')
-//            },
-//            async: false
-//        });
-//        return false;
-//    });
+    //    $('#statusFilter').submit(function () {
+    //        $.ajaxSettings.traditional = true;
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: '/Orders/RequestListByStatus/',
+    //            data: {
+    //                selectedStatusIds: selectedStatusIds,
+    //                startDate: $('#startDateFilter').val(),
+    //                endDate: $('#endDateFilter').val()
+    //            },
+    //            success: function (result) {
+    //                $('#divTable').html(result);
+    //                //$('#main-table').dataTable();
+    //                setupCrud('Orders')
+    //            },
+    //            async: false
+    //        });
+    //        return false;
+    //    });
 
     $('#statusFilter').submit(function () {
         urlParams = '';
-        $.each($('.checkButtonStatus .btn-group .btn.status'),function(index,btn){
-            if($(btn).hasClass('active')){
+        $.each($('.checkButtonStatus .btn-group .btn.status'), function (index, btn) {
+            if ($(btn).hasClass('active')) {
                 urlParams += '&status=' + $(btn).data('status');
-            }        
+            }
         });
-        if($('#startDateFilter').val() != ''){
+        if ($('#report_range1').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
-            var dateParts = $('#startDateFilter').val().split("/");
-            urlParams += '&startDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+            var dateRangeParts = $('#report_range1').val().split("to");
+            var dateParts = dateRangeParts[0].split("/");
+            urlParams += '&startDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
-        if($('#endDateFilter').val() != ''){
+        if ($('#endDateFilter').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
-            var dateParts = $('#endDateFilter').val().split("/");
-            urlParams += '&endDate=' + dateParts[0] + dateParts[1]+ dateParts[2];
+            var dateRangeParts = $('#report_range1').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
+            urlParams += '&endDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
         $.blockUI();
         window.location = '/Orders?' + urlParams;
@@ -279,7 +289,7 @@
         }
     }
 
-    $('.datepicker').datepicker({ format: "dd/mm/yyyy" });
+    //$('.datepicker').datepicker({ format: "dd/mm/yyyy" });
 
     var showUpdateStatusModal = function (OrderId, currentStatus) {
         $('#ddlStatus option[value="' + currentStatus + '"]').attr('selected', 'selected');
@@ -338,16 +348,16 @@
                             { "bVisible": false },
                             null,
                             null
-                        ],
+            ],
             "aaSorting": [[9, "asc"]]
         });
     };
 
-    var markAsReturned = function(orderId){
-        bootbox.confirm('Mark this order as returned?',function(confirmed){
-            if(confirmed){
-                $.post('Orders/MarkAsReturned/' + orderId, function(result){
-                    if(result.success){
+    var markAsReturned = function (orderId) {
+        bootbox.confirm('Mark this order as returned?', function (confirmed) {
+            if (confirmed) {
+                $.post('Orders/MarkAsReturned/' + orderId, function (result) {
+                    if (result.success) {
                         $.blockUI();
                         window.location.reload();
                     }
@@ -355,4 +365,52 @@
             }
         });
     };
+
+    $('.report_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                days: -6
+            }), 'today'],
+            'Last 30 Days': [Date.today().add({
+                days: -29
+            }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                months: -1
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })]
+        },
+        opens: 'right',
+        format: 'dd/MM/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
+            days: -29
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '31/12/2013',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+  function (start, end) {
+      $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+  });
+
+    //Set the initial state of the picker label
+    $('.report_range span').html(Date.today().add({
+        days: -29
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 </script>
