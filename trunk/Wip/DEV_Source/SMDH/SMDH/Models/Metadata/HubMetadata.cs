@@ -38,6 +38,10 @@ namespace SMDH.Models
         [Required]
         public int HubId { get; set; }
 
+        [DisplayName("Name")]
+        [Required]
+        public int Name { get; set; }
+
         [DisplayName("Address")]
         [Required]
         [MaxLength(255)]
