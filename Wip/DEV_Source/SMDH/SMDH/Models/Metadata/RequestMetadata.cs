@@ -120,8 +120,8 @@ namespace SMDH.Models
         [DisplayName("Note")]
         public string Note { get; set; }
 
-        [DisplayName("Collection Plan")]
-        public virtual Plan Plan { get; set; }
+        //[DisplayName("Collection Plan")]
+        //public virtual Plan Plan { get; set; }
 
         [DisplayName("Customer")]
         public virtual Customer Customer { get; set; }
