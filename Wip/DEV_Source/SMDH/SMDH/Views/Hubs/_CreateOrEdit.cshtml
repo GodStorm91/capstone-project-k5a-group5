@@ -16,9 +16,9 @@
             Hub Category <span style="color: Red">*</span>
         </label>
         <div class="controls">
-            @Html.DropDownList("HubCategory", ViewBag.PossibleHubCategory as SelectList, "-- Choose a hub category --",
+            @Html.DropDownListFor(model => model.HubCategoryId, ViewBag.PossibleHubCategory as SelectList, "-- Choose a Hub Category --",
                 new { id = "ddlHubCategory", Class = "chzn-select" })
-            @Html.ValidationMessage("HubCategory")
+            @Html.ValidationMessage("HubsCategory")
             <script>
                 $('#ddlHubCategory').attr('data-val-required', 'The Hub Category is required.');
                 $('#ddlHubCategory').attr('data-val', 'true')
