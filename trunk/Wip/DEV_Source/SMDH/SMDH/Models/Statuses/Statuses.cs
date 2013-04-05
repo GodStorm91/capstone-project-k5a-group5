@@ -14,7 +14,8 @@ namespace SMDH.Models.Statuses
         Collected = 6,//using
         Pricing = 7,//using
         Finished = 8,
-        Canceled = 10//using
+        RePricing = 9,
+        Canceled = 10//using        
     }
 
     public enum OrderStatus

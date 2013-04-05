@@ -118,15 +118,19 @@ namespace SMDH.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConfirmCreate(HttpPostedFileBase excelFile)
+        public ActionResult ConfirmCreate(int collectionAddressId,string note, HttpPostedFileBase excelFile)
         {
             try
             {
                 var request = new Request
                 {
-                    CustomerId = 1,
-                    CollectionAddressId = 1,
-                    RequestStatus = 0
+                    CustomerId = context.UserInfos.Single(uf => uf.UserId == 
+                        (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey).CustomerId.Value,                    
+                    RequestStatus = (int)RequestStatus.Draft,
+                    CreatedByUserId = (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey,
+                    CollectionAddressId = collectionAddressId,
+                    Note = note
+
                 };
                 if (_repository.Create(request))
                 {                    
@@ -338,13 +342,11 @@ namespace SMDH.Areas.Customer.Controllers
         //    return Json(new { success = false });
         //}
 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult Create()
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-
-            ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);
-            ViewBag.PossibleCollectionAddresses = context.CustomerAddresses.Where(ca => ca.IsActive && ca.CustomerId == userInfo.CustomerId);
+            ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);            
             return View();
         }
 
