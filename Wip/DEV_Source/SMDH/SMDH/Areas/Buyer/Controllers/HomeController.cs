@@ -102,7 +102,14 @@ namespace SMDH.Areas.Buyer.Controllers
                 return Json(new { success = false });
                 throw;
             }
-        }        
+        }
+
+        public ActionResult GetNearestHubFromLatLong(double latitude, double longitude)
+        {
+            EFHubsRepository hubRepo = new EFHubsRepository();
+            HubViewModel nearestHub = hubRepo.GetNearestHub(latitude, longitude);
+            return Json(new { lat = latitude, lon = longitude, nearestHub = nearestHub });
+        }
        
         public ActionResult GetLatitudeAndLongitudeFromAddress(string address)
         {
@@ -140,7 +147,7 @@ namespace SMDH.Areas.Buyer.Controllers
         [HttpPost]
         public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList, string pricesList, string receiverName, string receiverAddress,
             int receiverAddressWardId, int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
-            int toBeCollectedAmount, int customerId, int hubId = -1)
+             int customerId, int hubId = -1)
         {
             EFOrdersRepository _repository = new EFOrdersRepository();
             EFItemsRepository itemRepo = new EFItemsRepository();
@@ -148,6 +155,11 @@ namespace SMDH.Areas.Buyer.Controllers
             int[] itemsListArr = parseStringToList(itemsList);
             int[] quantitiesListArr = parseStringToList(quantitiesList);
             int[] priceListArr = parseStringToList(pricesList);
+            int toBeCollectedAmount = 0;
+            for (int i = 0; i < itemsListArr.Length; i++)
+            {
+                toBeCollectedAmount += context.Products.Single(p => p.ProductId == itemsListArr[i]).ProductPrice.Value * quantitiesListArr[i];
+            }
             order.AmountToBeCollectedFromReceiver = toBeCollectedAmount;
             order.DeliveryTypeId = deliveryType;
             order.ReceiverAddress = receiverAddress;
@@ -185,7 +197,10 @@ namespace SMDH.Areas.Buyer.Controllers
                     item.Price = priceListArr[i];
                     item.ProductId = itemsListArr[i];
                     item.Quantity = quantitiesListArr[i];
-
+                    item.Name = context.Products.Single(p => p.ProductId == itemsListArr[i]).Name;
+                    item.Size = context.Products.Single(p => p.ProductId == itemsListArr[i]).Size;
+                    item.Weight = context.Products.Single(p => p.ProductId == itemsListArr[i]).ProductWeight;
+                    
                     if (!itemRepo.Add(item))
                     {
                         return View("Error");

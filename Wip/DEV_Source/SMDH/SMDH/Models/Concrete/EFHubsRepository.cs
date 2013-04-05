@@ -13,7 +13,7 @@ namespace SMDH.Models.Concrete
 
         public HubViewModel GetNearestHub(double lat, double lon)
         {
-            List<Hub> listHub = context.Hubs.Where(o => o.IsActive == true).ToList();
+            List<Hub> listHub = context.Hubs.Where(o => o.IsActive == true && o.HubCategoryId != null).ToList();
             Hub minHub = null;
             double distance = double.MaxValue;
 

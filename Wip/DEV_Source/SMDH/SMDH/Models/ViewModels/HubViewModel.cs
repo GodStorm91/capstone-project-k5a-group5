@@ -34,7 +34,7 @@ namespace SMDH.Models.ViewModels
             DistrictId = hub.DistrictId;
             WardName = hub.Ward.Name;
             DistrictName = hub.District.Name;
-            //HubCategoryId = hub.HubCategoryId!=null ? -1 : (int)hub.HubCategoryId;
+            HubCategoryId = hub.HubCategoryId==null ? -1 : (int)hub.HubCategoryId;
             Address = hub.Address;
         }
     }
