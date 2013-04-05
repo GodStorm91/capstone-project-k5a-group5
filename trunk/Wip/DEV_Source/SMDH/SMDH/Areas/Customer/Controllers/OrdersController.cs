@@ -73,11 +73,11 @@ namespace SMDH.Areas.Customer.Controllers
             {
             }
 
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            //orders = context.Orders.Where(o => o.Request.CustomerId == userInfo.CustomerId
-            //                                && statuses.Contains(o.OrderStatus)).ToList();
-            orders = context.Orders.Where(o => o.Request.CustomerId == 1//userInfo.CustomerId
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            orders = context.Orders.Where(o => o.Request.CustomerId == userInfo.CustomerId
                                             && statuses.Contains(o.OrderStatus)).ToList();
+            //orders = context.Orders.Where(o => o.Request.CustomerId == 1//userInfo.CustomerId
+            //                                && statuses.Contains(o.OrderStatus)).ToList();
             ViewBag.Customer = "Test company";//userInfo.Customer.CompanyName;
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
@@ -103,10 +103,10 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ViewResult Details(int id)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var order = context.Orders.Find(id);
             var order = context.Orders.Single(o=> o.OrderId == id);
-            //if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
             ViewBag.Items = context.Items.Where(i => i.OrderId == id).ToList();
 
@@ -118,10 +118,10 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ActionResult Create(int requestId)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var request = context.Requests.Find(requestId);
             var request = context.Requests.Single( o=> o.RequestId == requestId);
-            //if (request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            if (request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.PossibleDistricts = new SelectList(new List<District>());
@@ -140,11 +140,11 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var request = context.Requests.Single(r => r.RequestId == order.RequestId);
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
-                //if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Customer Test";//userInfo.Customer.CompanyName;
+                if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 
                 if (orderRepo.AddToRequest(request, order))
                 {
@@ -167,11 +167,11 @@ namespace SMDH.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult Edit(int id)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var order = context.Orders.Find(id);
             var order = context.Orders.Single(o=>o.OrderId == 1);
-            //if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
-            ViewBag.Customer = "Test Company";// userInfo.Customer.CompanyName;
+            if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            ViewBag.Customer = userInfo.Customer.CompanyName;
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name", order.District.CityProvinceId);
             ViewBag.PossibleDistricts = new SelectList(order.District.CityProvince.Districts.Where(d => d.IsActive), "DistrictId", "Name", order.ReceiverAddressDistrictId);
             ViewBag.PossibleWards = new SelectList(order.District.Wards.Where(w => w.IsActive), "WardId", "Name", order.ReceiverAddressWardId);
@@ -188,10 +188,10 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var request = context.Requests.Single(r => r.RequestId == order.RequestId);
-                //if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
+                if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 if (ModelState.IsValid)
                 {
                     //context.Entry(order).State = EntityState.Modified;
@@ -298,10 +298,10 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var order = context.Orders.Single(o=> o.OrderId == id);
-                //if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Test company";//userInfo.Customer.CompanyName;
+                if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
 
                 if (orderRepo.CustomerCancel(order))

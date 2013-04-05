@@ -74,119 +74,29 @@
                 }
             }
 
-            function changeHubCategoriesHandler() {
-                var items = '<option value="-1">-- All Locations --</option>';
-                $('#ddlHub').html(items);
-                $('#ddlHub').trigger("change");
-                var hubId = -1;
-                var hubLists = null;
-                if (arguments[0]) {
-                    hubId = arguments[0];
-                }
-                var id = $('#ddlHubCategories option:selected').val();
-                if (id == '') id = -1;
-                //alert(id);
-                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-                    items = '<option value="-1">-- All Locagions --</option>';
-                    $.each(data, function (i, hub) {
-                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
-                        //alert(hub.HubId);
-                    });
-                    $('#ddlHub').html(items);
-                    $('#ddlHub').trigger("liszt:updated");
-                    $('#ddlHub').val(hubId);
-
-                    if (hubId == -1) {
-                        clearOverlays();
-                        addMarkerForMultipleHub(data);
-                    }
-
-                });
-
-            }
-
-            $("#ddlHubCategories").change(function () {
-                changeHubCategoriesHandler();
-            });
-
-            $("#ddlHub").change(function () {
-                //CLEAR MOI OVERLAYS
-                clearOverlays();
-
-                //DROP LAI Pins + tu focus den pin da co
-                var id = $('#ddlHub option:selected').val();
-                $.getJSON('/Hubs/Find/' + id, function (data) {
-                    var content = "Name : " + data.Name + "<br>" +
-                          "Dia chi:" + data.Address;
-                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
-                });
-            });
-
-            $("#ddlCityProvince").change(function () {
-                var items = '<option value="-1">-- All Districts --</option>';
-                $('#ddlDistrict').html(items);
-                $('#ddlDistrict').trigger("change");
-                var id = $('#ddlCityProvince option:selected').val();
-
-                if (id == '') id = -1;
-                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
-                    items = '<option value="-1">-- All Districts --</option>';
-                    $.each(data, function (i, district) {
-                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
-                    });
-                    $('#ddlDistrict').html(items);
-                    $('#ddlDistrict').trigger("liszt:updated");
-                });
-            });
-
-            $("#ddlDistrict").change(function () {
-                var items = '<option value="-1">-- All Wards --</option>';
-                $('#ddlWard').html(items);
-                $('#ddlWard').trigger("change");
-                var id = $('#ddlDistrict option:selected').val();
-                if (id == '') id = -1;
-                $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
-                    items = '<option value="-1">-- All Wards --</option>';
-                    $.each(data, function (i, ward) {
-                        items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
-                    });
-                    $('#ddlWard').html(items);
-                });
-            });
-
-            $('#address').blur(function () {
-                findLocation();
-            });
-
-            function clearOverlays() {
-                if (hubsMarkerArray.length > 0) {
-                    for (var i = 0; i < hubsMarkerArray.length; i++) {
-                        hubsMarkerArray[i].setMap(null);
-                    }
-                }
-            }
+            
 
 
-            function findLocation() {
-                var address = $('#address').val();
-                if (address.length == 0) return;
-                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
-                    var content = "Name : " + data.nearestHub.Name + "<br>" +
-                          "Dia chi:" + data.nearestHub.Address;
+//            function findLocation() {
+//                var address = $('#address').val();
+//                if (address.length == 0) return;
+//                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
+//                    var content = "Name : " + data.nearestHub.Name + "<br>" +
+//                          "Dia chi:" + data.nearestHub.Address;
 
-                    addMarkerHouse(data.lat, data.lon);
-                    localStorage.setItem('HomeLat', data.lat);
-                    localStorage.setItem('HomeLon', data.lon);
-                    //alert(data.HubId);
-                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
-                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
-                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
-                    var id = 8
-                    id = data.nearestHub.HubId;
-                    //alert(id);
-                    changeHubCategoriesHandler(id);
-                });
-            }
+//                    addMarkerHouse(data.lat, data.lon);
+//                    localStorage.setItem('HomeLat', data.lat);
+//                    localStorage.setItem('HomeLon', data.lon);
+//                    //alert(data.HubId);
+//                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+//                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+//                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+//                    var id = 8
+//                    id = data.nearestHub.HubId;
+//                    //alert(id);
+//                    changeHubCategoriesHandler(id);
+//                });
+//            }
 
             $().ready(function () {
                 $('#optionsRadios2').trigger("click");
@@ -396,19 +306,49 @@ body {
             infowindow.open(goMap);
 
         }
-        function findLocation(tag) {
+
+        function findLocation() {
+            var address = $('#address').val();
+            if (address != "") {
+                if (address.indexOf("HCM") == -1 && address.indexOf("Hồ Chí Minh") == -1) {
+                    address += ", Hồ Chí Minh";
+                }
+            }
+            if (address.length == 0) return;
             var geocoder = new google.maps.Geocoder();
-            var address = $(tag).val() + ", Ho Chi Minh, Viet Nam";
             geocoder.geocode({ 'address': address }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    goMap.setZoom(18);
-                    goMap.setCenter(results[0].geometry.location);
-                    goMap.panTo(results[0]);
+                    var latitude = results[0].geometry.location.lat();
+                    var longitude = results[0].geometry.location.lng();
+                    addMarkerHouse(latitude, longitude);
+                    localStorage.setItem('HomeLat', latitude);
+                    localStorage.setItem('HomeLon', longitude);
+
+                    //if radio is Hub then load the nearest hub
+                    if ($('#optionsRadios2').is(":checked")) {
+                        $.post("/Buyer/Home/GetNearestHubFromLatLong", { latitude: latitude, longitude: longitude }, function (data) {
+                            addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+                            setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
+                            $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
+                            $('#HubDistrictId').val(data.nearestHub.DistrictId);
+                            $('#HubWardId').val(data.nearestHub.WardId);
+                            $('#HubLatitude').val(data.nearestHub.Latitude);
+                            $('#HubLongitude').val(data.nearestHub.Longitude);
+                            var id = 8;
+                            id = data.nearestHub.HubId;
+                            changeHubCategoriesHandler(id);
+
+                        });
+                    }
+
                 } else {
-                    alert("Geocoder failed due to: " + status);
+                    bootbox.alert("Sorry we can find your address please try again! Or click on map to set location by Manual!");
                 }
             });
+
+
         }
+     
         function addMarkerHouse(lat, long) {
             var myLatLng = new google.maps.LatLng(lat, long);
             currentHouse = new google.maps.Marker(
@@ -435,7 +375,7 @@ body {
                 infowindow.setContent(contentString);
                 infowindow.open(goMap, currentHub);
             });
-
+            hubsMarkerArray.push(currentHub);
             return currentHub;
         }
 
@@ -484,15 +424,16 @@ body {
 
             }); 
 
-            //alert("can append");
-            createFormInformation();
-            //alert("form can submit");
+            alert("can append");
+            createFormInformation(1);
+            alert("form can submit");
+            alert($('#toBeSubmit').val());
             $('#toBeSubmit').submit();
-            $('#checkForm').submit();
+            //$('#checkForm').submit();
         }
 
         function createFormInformation(wardId) {
-            $('#toBeSubmit').remove();
+            //$('#toBeSubmit').remove();
             var customerId = $("<input>").attr("type", "hidden").attr("name", "customerId").val(getURLParameter("customerId"));
             var itemsList = $("<input>").attr("type", "hidden").attr("name", "itemsList").val(itemIdArray.toString());
             var quantitiesList = $("<input>").attr("type", "hidden").attr("name", "quantitiesList").val(quantityArray.toString());
@@ -503,7 +444,7 @@ body {
             if (wardId != undefined) {
                 var receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val(wardId);
             }
-            
+           
             var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val("#ddlDistrict");
             var receiverEmail = $("<input>").attr("type", "hidden").attr("name", "receiverEmail").val($('#email').val());
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
@@ -516,6 +457,14 @@ body {
             var latitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val(localStorage.getItem('HomeLat'));
             var longitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val(localStorage.getItem('HomeLon'));
             //alert("After Home Lat");
+
+            if ($('#optionsRadios2').is(":checked")) {
+                alert("HubDistrictId:" + $('#HubDistrictId').val());
+                receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($('#HubDistrictId').val());
+                receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val($('#HubWardId').val());
+                latitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val($('#HubLongitude').val());
+                longitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val($('#HubLatitude').val());
+            }
 
             $('#toBeSubmit').append($(itemsList));
             $('#toBeSubmit').append($(quantitiesList));
@@ -552,6 +501,7 @@ body {
                     bootbox.alert("You should have at least one item in your cart to submit orders");
                     return;
                 }
+                alert("submit form");
                 $('#toBeSubmit').submit();
             }
         });
@@ -559,23 +509,7 @@ body {
         function getURLParameter(name) {
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
         }
-    </script>
-    <script type="text/javascript">
-        var deleteItemManagement = function (itemID) {
-            bootbox.confirm("Are you sure to cancel this request?", function (result) {
-                if (result) {
-                    $.post('/Customer/ItemManagement/Remove/' + itemID, function (result) {
-                        if (result.success) {
-                            $.blockUI();
-                            window.location.reload();
-                        } else {
-                            bootbox.alert('Failed to cancel this request.');
-                        }
-                    });
-                }
-            });
-        };
-    </script>
+    </script>   
     <style type="text/css">
         #checkForm label.error {
 	        margin-left: 10px;
@@ -597,16 +531,16 @@ body {
     </style>
     <script type="text/javascript">
         var totalPrice = 0;
-        function DiChuyen(iamgeUrl, des) {
-            $('#noi_dung img').attr('src', iamgeUrl);
-            $('#noi_dung .des').text(des);
-            e = window.even || event;
-            s = document.getElementById("noi_dung");
-//            alert("clgt");
-            s.style.top = e.clientY + 'px';
-            s.style.visibility = 'visible';
-//            document.title = e.clientX + ':' + e.clientY;
-        }
+//        function DiChuyen(iamgeUrl, des) {
+//            $('#noi_dung img').attr('src', iamgeUrl);
+//            $('#noi_dung .des').text(des);
+//            e = window.even || event;
+//            s = document.getElementById("noi_dung");
+////            alert("clgt");
+//            s.style.top = e.clientY + 'px';
+//            s.style.visibility = 'visible';
+////            document.title = e.clientX + ':' + e.clientY;
+//        }
         function addCart(tag) {
             var tem = $(tag).parent().parent();
             var inputFiled = tem.children("td").children("input");
@@ -712,6 +646,12 @@ body {
     </script>
 </head>
 <body onload="initialize()">
+    <input type="hidden" id="HubDistrictId" />
+    <input type="hidden" id="HubWardId" />
+    <input type="hidden" id="HubCityId" />
+    <input type="hidden" id="HubLatitude" />
+    <input type="hidden" id="HubLongitude" />
+
     <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
     </form>
     <div class="container" style="margin-left:120px;">
@@ -782,7 +722,7 @@ body {
                                                     <tr align=center>
                                                         <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
                                                         <td valign=middle style="width:100px;">
-                                                            <img width ="40px" height="30px"src="@item.ImageURL"onmouseover="DiChuyen('@item.ImageURL','@item.Name')" onmouseout="noi_dung.style.visibility='hidden';"/>
+                                                            @*<img width ="40px" height="30px"src="@item.ImageURL"onmouseover="DiChuyen('@item.ImageURL','@item.Name')" onmouseout="noi_dung.style.visibility='hidden';"/>*@
                                                         </td>
                                                         <td style="width:100px">@item.Name
                                                         </td>
@@ -935,7 +875,7 @@ body {
                                             <label class="control-label" for="address">
                                                 Address(*)</label>
                                             <div class="controls">
-                                                <input name="address" type="text" id="address" onchange="findLocation(this)" />
+                                                <input name="address" type="text" id="address" />                                                 
                                             </div>
                                         </div>
                                        
@@ -1022,6 +962,7 @@ body {
                 if (arguments[0]) {
                     hubId = arguments[0];
                 }
+                alert(hubId);
                 var id = $('#ddlHubCategories option:selected').val();
                 if (id == '') id = -1;
                 //alert(id);
@@ -1052,24 +993,7 @@ body {
                 changeHubCategoriesHandler();
             });
 
-            $("#ddlHub").change(function () {
-                //CLEAR MOI OVERLAYS
-                clearOverlays();
-
-                //DROP LAI Pins + tu focus den pin da co
-                var id = $('#ddlHub option:selected').val();
-                var hubDistrictId;
-                var hubWardId;
-                $.getJSON('/Hubs/Find/' + id, function (data) {
-                    var content = "Name : " + data.Name + "<br>" +
-                          "Dia chi:" + data.Address;
-                    //change dropdownlist value to match the value in HUb
-                    $('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
-                    $('#ddlCityProvince').trigger("change",[data.DistrictId, data.WardId, data.WardName]);
-                    //$('#ddlWard').val(hubWardId);
-                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
-                });
-            });
+            
 
             $("#ddlCityProvince").change(function (event, districtId, wardId, wardName) {
                 var items = '<option value="-1">-- All Districts --</option>';
@@ -1090,6 +1014,94 @@ body {
                         //append information to form for submitting ?
                         $('#txtWard').val(wardName);
                     }
+                    $('#ddlDistrict').trigger("liszt:updated");
+                });
+            });      
+
+//            function changeHubCategoriesHandler() {
+//                var items = '<option value="-1">-- All Locations --</option>';
+//                $('#ddlHub').html(items);
+//                $('#ddlHub').trigger("change");
+//                var hubId = -1;
+//                var hubLists = null;
+//                if (arguments[0]) {
+//                    hubId = arguments[0];
+//                }
+//                var id = $('#ddlHubCategories option:selected').val();
+//                if (id == '') id = -1;
+//                alert("Hub CategoriesId :   " + id);
+//                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
+//                    items = '<option value="-1">-- All Locagions --</option>';
+//                    $.each(data, function (i, hub) {
+//                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
+//                        //alert(hub.HubId);
+//                    });
+//                    $('#ddlHub').html(items);
+//                    $('#ddlHub').trigger("liszt:updated");
+//                    $('#ddlHub').val(hubId);
+
+//                    if (hubId == -1) {
+//                        alert("Clear overlays");
+//                        clearOverlays();
+//                        addMarkerForMultipleHub(data);
+//                    }
+
+//                });
+
+//            }
+
+            $("#ddlHubCategories").change(function () {
+                changeHubCategoriesHandler();
+            });
+
+            $("#ddlHub").change(function () {
+                removeMarkerHub();
+                alert("changed : " + $('#ddlHub option:selected').val());
+                //CLEAR MOI OVERLAYS
+                clearOverlays();
+
+                //DROP LAI Pins + tu focus den pin da co
+                //neu chon ddlHub la load All (id = -1)                
+                var id = $('#ddlHub option:selected').val();
+
+                if (id == -1) {
+                    var hubCategoryId = $('#ddlHubCategories option:selected').val();
+                    $.getJSON("/HubCategories/GetHubsByHubCategory/" + hubCategoryId, function (data) {
+                        addMarkerForMultipleHub(data);
+                    });
+                } else {
+                    $.getJSON('/Hubs/Find/' + id, function (data) {
+                        alert(data);
+                        var content = "Name : " + data.Name + "<br>" +
+                          "Dia chi:" + data.Address;
+                        $('#HubDistrictId').val(data.DistrictId);
+                        $('#HubWardId').val(data.WardId);
+                        $('#HubLatitude').val(data.Latitude);
+                        $('#HubLongitude').val(data.Longitude);
+                        //change dropdownlist value to match the value in HUb
+                        //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
+                        //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
+                        //$('#ddlWard').val(hubWardId);
+                        addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                    });
+                }
+
+            });
+
+
+            $("#ddlCityProvince").change(function () {
+                var items = '<option value="-1">-- All Districts --</option>';
+                $('#ddlDistrict').html(items);
+                $('#ddlDistrict').trigger("change");
+                var id = $('#ddlCityProvince option:selected').val();
+
+                if (id == '') id = -1;
+                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+                    items = '<option value="-1">-- All Districts --</option>';
+                    $.each(data, function (i, district) {
+                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
+                    });
+                    $('#ddlDistrict').html(items);
                     $('#ddlDistrict').trigger("liszt:updated");
                 });
             });
@@ -1119,48 +1131,8 @@ body {
                         hubsMarkerArray[i].setMap(null);
                     }
                 }
-            }
-
-
-            function findLocation() {
-                var address = $('#address').val();
-                if (address != "") {
-                    if (address.indexOf("HCM") == -1 && address.indexOf("Hồ Chí Minh") == -1) {
-                        address += ", Hồ Chí Minh";
-                    }
-                }
-                if (address.length == 0) return;
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    alert(address);
-                    alert("status is: " + status);
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var latitude = results[0].geometry.location.lat();
-                        var longitude = results[0].geometry.location.lng();
-                        alert(latitude);
-                    } else {
-                        bootbox.alert("Sorry we can find your address please try again! Or click on map to set location by Manual!");
-                    }
-                }); 
-
-//                $.post("/Buyer/Home/GetLatitudeAndLongitudeFromAddress", { address: address }, function (data) {
-//                    var content = "Name : " + data.nearestHub.Name + "<br>" +
-//                          "Dia chi:" + data.nearestHub.Address;
-
-//                    addMarkerHouse(data.lat, data.lon);
-//                    localStorage.setItem('HomeLat', data.lat);
-//                    localStorage.setItem('HomeLon', data.lon);
-//                    //alert(data.HubId);
-//                    addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
-//                    setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
-//                    $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
-//                    var id = 8
-//                    id = data.nearestHub.HubId;
-//                    //alert(id);
-//                    changeHubCategoriesHandler(id);
-//                });
-            }          
-
+            }        
+            
         </script>
 </body>
 </html>
