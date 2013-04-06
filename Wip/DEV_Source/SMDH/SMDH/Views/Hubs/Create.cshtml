@@ -5,10 +5,9 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         ×</button>
-    <h3 id="myModalLabel">
-        Create New Hub</h3>
+    <h3 id="myModalLabel">Create New Hub</h3>
 </div>
-<div class="modal-body" style="height:400px;">
+<div class="modal-body" style="height: 400px;">
     <fieldset>
         <div>
             @using (Html.BeginForm("ConfirmCreate", "Hubs", FormMethod.Post, new { id = "hub-create-form", }))
@@ -49,4 +48,86 @@
     $('#btnCreate').click(function () {
         $("#hub-create-form").submit();
     });
+</script>
+<script>
+    var map;
+    var geocoder;
+    var marker;
+
+    function initialize() {
+        var latlng = new google.maps.LatLng(10.892648, 106.641541);
+        var myOptions = {
+            zoom: 16,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("latlongmap"),
+            myOptions);
+        geocoder = new google.maps.Geocoder();
+        marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
+
+        document.getElementById("lat").value = "10.892648";
+        document.getElementById("lng").value = "106.641541";
+
+        map.streetViewControl = false;
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            marker.setPosition(event.latLng);
+
+            var yeri = event.latLng;
+            document.getElementById('lat').value = yeri.lat().toFixed(6);
+            document.getElementById('lng').value = yeri.lng().toFixed(6);
+        });
+
+
+        google.maps.event.addListener(map, 'mousemove', function (event) {
+            var yeri = event.latLng;
+            document.getElementById("mlat").value = yeri.lat().toFixed(6);
+            document.getElementById("mlong").value = yeri.lng().toFixed(6);
+        });
+
+    }
+
+    function codeAddress() {
+        var address = document.getElementById("Address").value;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                document.getElementById('lat').value = results[0].geometry.location.lat().toFixed(6);
+                document.getElementById('lng').value = results[0].geometry.location.lng().toFixed(6);
+                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + " , " +
+                    +results[0].geometry.location.lng().toFixed(6) + ")";
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: latlong
+                });
+
+                marker.setPosition(results[0].geometry.location);
+                map.setZoom(16);
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(map, marker);
+                });
+
+            } else {
+                alert("Lat and long cannot be found.");
+            }
+        });
+    }
+
+    $('#createModal').on('shown', function () {
+        initialize();
+    });
+
+    //$(document).ready(function () {
+    //    //$("#Address").keyup(function (event) {
+    //    //    if (event.keyCode == 13) {
+    //    //        codeAddress();
+    //    //    }
+    //    //});
+    //    initialize();
+    //});
 </script>
