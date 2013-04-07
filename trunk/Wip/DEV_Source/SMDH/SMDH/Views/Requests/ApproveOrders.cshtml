@@ -106,108 +106,120 @@
                                 <div class="widget">
                                     <div class="widget-body">
                                         <form class="no-margin">
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Receiver Name : @order.ReceiverName
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Receiver Phone : @order.ReceiverPhone
-                                            </label>
-                                            <label class="control-label" for="name">
-                                                Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
-                                                <span class="label label-info">@order.OrderPaymentType.Name</span>
-                                            </label>
-                                            <label class="control-label" for="name">
-                                                Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
-                                                VNĐ
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <a href="#" onclick="addPrice(@order.OrderId)">Add </a>
-                                            <div id="priceCategoryTbl@(order.OrderId)">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>
-                                                                No.
-                                                            </th>
-                                                            <th>
-                                                                Last Modified Date
-                                                            </th>
-                                                            <th>
-                                                                Price Content
-                                                            </th>
-                                                            <th>
-                                                                Last Modified User
-                                                            </th>
-                                                            <th>
-                                                                Price
-                                                            </th>
-                                                            @if (order.OrderStatus != (int)OrderStatus.Approved)
-                                                            {
-                                                                <td>
-                                                                    Action
-                                                                </td>
-                                                            }
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (order.PriceCategories.Count == 0)
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Receiver Name : @order.ReceiverName
+                                                </label>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Receiver Phone : @order.ReceiverPhone
+                                                </label>
+                                                <label class="control-label" for="name">
+                                                    Properties : <span class="label label-success">@order.DeliveryOption.Name</span>
+                                                    <span class="label label-info">@order.OrderPaymentType.Name</span>
+                                                </label>
+                                                <label class="control-label" for="name">
+                                                    Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
+                                                    VNĐ
+                                                </label>
+                                                <label class="control-label" for="name">
+                                                    @if (order.PriceCategories.Count == 0)
+                                                    {
+                                                        @:Total Price: <label class="label label-important">Not pricing this order yet.</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        decimal totalPrice = 0;
+                                                        foreach (var priceCategory in order.PriceCategories)
                                                         {
-                                                            <tr>
-                                                                <td colspan="6">
-                                                                    Not pricing this order yet.
-                                                                </td>
-                                                            </tr>
-                                                        
+                                                            totalPrice += priceCategory.Price;
+                                                            PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
                                                         }
-                                                        else
-                                                        {
-                                                            decimal totalPrice = 0;
-                                                            foreach (var priceCategory in order.PriceCategories)
-                                                            {
-                                                                totalPrice += priceCategory.Price;
-                                                                PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                                                        @:Total Price: @(String.Format("{0,12:N0}", totalPrice)) VND
+                                                      
+                                                    }
+
+                                                </label>
+                                            </div>
+                                            @*<div class="control-group">
+                                                <div id="priceCategoryTbl@(order.OrderId)">
+                                                    <table class="table table-bordered">
+                                                        <thead>
                                                             <tr>
-                                                                <td></td>
-                                                                <td>
-                                                                    @pcViewModel.EditDateString
-                                                                </td>
-                                                                <td>
-                                                                    @pcViewModel.PriceContent
-                                                                </td>
-                                                                <td>
-                                                                    @pcViewModel.StaffName
-                                                                </td>
-                                                                <td>
-                                                                    @(String.Format("{0,12:N0}", pcViewModel.Price))
-                                                                    VND
-                                                                </td>
+                                                                <th>No.
+                                                                </th>
+
+                                                                <th>Price Content
+                                                                </th>
+                                                                <th>Price
+                                                                </th>
+                                                                <th>Last Modified Date
+                                                                </th>
+                                                                <th>Last Modified User
+                                                                </th>
+
                                                                 @if (order.OrderStatus != (int)OrderStatus.Approved)
                                                                 {
-                                                                    <td>
-                                                                        <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="editPrice(@pcViewModel.PriceCategoryId)">
-                                                                            <i class="icon-pencil"></i>Edit </a>
+                                                                    <td>Action
                                                                     </td>
                                                                 }
                                                             </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (order.PriceCategories.Count == 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="6">Not pricing this order yet.
+                                                                    </td>
+                                                                </tr>
+                                                        
                                                             }
-                                                            <tr>
-                                                                <td colspan="6">
-                                                                    Total Price: @(String.Format("{0,12:N0}", totalPrice))
-                                                                    VND
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Note :
+                                                            else
+                                                            {
+                                                                decimal totalPrice = 0;
+                                                                foreach (var priceCategory in order.PriceCategories)
+                                                                {
+                                                                    totalPrice += priceCategory.Price;
+                                                                    PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                                                                <tr>
+                                                                    <td></td>
+
+                                                                    <td>
+                                                                        @pcViewModel.PriceContent
+                                                                    </td>
+                                                                    <td>
+                                                                        @(String.Format("{0,12:N0}", pcViewModel.Price))
+                                                                        VND
+                                                                    </td>
+                                                                    <td>
+                                                                        @pcViewModel.StaffName
+                                                                    </td>
+                                                                    <td>
+                                                                        @pcViewModel.EditDateString
+                                                                    </td>
+                                                                    @if (order.OrderStatus != (int)OrderStatus.Approved)
+                                                                    {
+                                                                        <td>
+                                                                            <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="editPrice(@pcViewModel.PriceCategoryId)">
+                                                                                <i class="icon-pencil"></i>Edit </a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                                }
+                                                                <tr>
+                                                                    <td colspan="6">Total Price: @(String.Format("{0,12:N0}", totalPrice))
+                                                                        VND
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>*@
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Note :
                                                 @if (string.IsNullOrWhiteSpace(order.Note))
                                                 {
                                                     <text>None</text>        
@@ -216,34 +228,34 @@
                                                 {
                                                     @order.Note
                                                 }
-                                            </label>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="name">
-                                                Delivery Address : @order.FullAddress
-                                            </label>
-                                        </div>
-                                        @if (order.OrderStatus != (int)OrderStatus.Rejected)
-                                        {
-                                            if (order.OrderStatus == (int)OrderStatus.New)
-                                            {
-                                            <div class="form-actions no-margin">
-                                                <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">
-                                                    Approve Order </a>
+                                                </label>
                                             </div>
-                                            }
-                                            else
-                                            {
-                                            <div class="form-actions no-margin">
-                                                <img src="/img/icons2/checkmark2.png" width="20" height="15" alt="Approved" title="Approved"
-                                                    class="myTooltip" style="margin-top: 5px;">
-                                                <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
-                                                    <img src="/img/icons2/delete.png" width="20" height="15" alt="Cancel Order" class="myTooltip"
-                                                        title="Disapprove Order" />
-                                                </a>
+                                            <div class="control-group">
+                                                <label class="control-label" for="name">
+                                                    Delivery Address : @order.FullAddress
+                                                </label>
                                             </div>
+                                            @if (order.OrderStatus != (int)OrderStatus.Rejected)
+                                            {
+                                                if (order.OrderStatus == (int)OrderStatus.New)
+                                                {
+                                                <div class="form-actions no-margin">
+                                                    <a class="btn btn-mini btn-primary" href="#" onclick="addPrice(@order.OrderId)">Detail </a>
+                                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order </a>
+                                                </div>
+                                                }
+                                                else
+                                                {
+                                                <div class="form-actions no-margin">
+                                                    <img src="/img/icons2/checkmark2.png" width="20" height="15" alt="Approved" title="Approved"
+                                                        class="myTooltip" style="margin-top: 5px;">
+                                                    <a href="#" onclick="disapproveOrder(@order.OrderId)" role="button" class="btn action disapproveOrder" data-toggle="modal">
+                                                        <img src="/img/icons2/delete.png" width="20" height="15" alt="Cancel Order" class="myTooltip"
+                                                            title="Disapprove Order" />
+                                                    </a>
+                                                </div>
+                                                }
                                             }
-                                        }
                                         </form>
                                     </div>
                                 </div>
@@ -265,20 +277,15 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>
-                                                            Name
+                                                        <th>Name
                                                         </th>
-                                                        <th>
-                                                            Weight
+                                                        <th>Weight
                                                         </th>
-                                                        <th>
-                                                            Quantity
+                                                        <th>Quantity
                                                         </th>
-                                                        <th>
-                                                            Properties
+                                                        <th>Properties
                                                         </th>
-                                                        <th>
-                                                            Note
+                                                        <th>Note
                                                         </th>
                                                     </tr>
                                                 </thead>

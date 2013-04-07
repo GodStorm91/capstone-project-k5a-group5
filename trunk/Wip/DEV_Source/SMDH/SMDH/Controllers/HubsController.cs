@@ -95,6 +95,11 @@ namespace SMDH.Controllers
             {
                 GoogleMapsHelper.UpdateMapLocation(context, hub, false);
                 //context.(hub).State = EntityState.Modified;
+                var edithub = context.Hubs.Single(h => h.HubId == hub.HubId);
+                edithub.WardId = hub.WardId;
+                edithub.DistrictId = hub.DistrictId;
+                edithub.HubCategoryId = hub.HubCategoryId;
+                edithub.Address = hub.Address;
                 context.SubmitChanges();
                 return Json(new { success = true });
             }

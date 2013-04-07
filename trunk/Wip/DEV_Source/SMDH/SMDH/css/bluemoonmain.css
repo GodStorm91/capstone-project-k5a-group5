@@ -6498,7 +6498,7 @@ header {
       margin-top: 8px;
       text-align: right; }
       .invoice .invoice-head .invoice-info span {
-        color: #ed6d49;
+        /*color: #ed6d49;*/
         font-weight: bold;
         font-size: 12px;
         float: right;
@@ -6516,7 +6516,7 @@ header {
         margin: 0 0 10px 0;
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7); }
       .invoice .invoice-data-container .from span {
-        color: #ef8060;
+        /*color: #ef8060;*/
         display: block;
         font-size: 12px;
         margin-bottom: 3px; }
