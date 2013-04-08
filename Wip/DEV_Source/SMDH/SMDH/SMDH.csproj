@@ -1417,6 +1417,7 @@
     <Content Include="Areas\Customer\Views\Orders\OrderTicket.cshtml" />
     <Content Include="Areas\Customer\Views\Orders\SetFeeAndDueDate.cshtml" />
     <Content Include="Areas\Customer\Views\Orders\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Customer\Views\Orders\AddExistingOrders.cshtml" />
     <None Include="Areas\Hub\css\Open Notebook.onetoc2" />
     <None Include="Areas\Hub\js\Open Notebook.onetoc2" />
     <Content Include="Areas\Hub\Views\Dashboard\Index.cshtml" />

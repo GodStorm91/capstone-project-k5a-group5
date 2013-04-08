@@ -168,7 +168,8 @@ namespace SMDH.Models.Concrete
                 {
                     context.Items.DeleteOnSubmit(itemsArray[i]);
                 }
-                context.Orders.DeleteOnSubmit(order);
+                var myOrder = context.Orders.Single(o => o.OrderId == order.OrderId);
+                context.Orders.DeleteOnSubmit(myOrder);
                 if (commit) context.SubmitChanges();
                 return true;
             }
@@ -252,13 +253,15 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                if (order.OrderStatus != (int)OrderStatus.Draft &&
-                    order.OrderStatus != (int)OrderStatus.Rejected)
+                if (order.OrderStatus == (int)OrderStatus.Draft ||
+                    order.OrderStatus == (int)OrderStatus.New)
+                    
                 {
-                    return false;
+                    return Delete(order, commit);
                 }
 
-                return Delete(order, commit);
+                return false;
+                
             }
             catch (Exception)
             {
