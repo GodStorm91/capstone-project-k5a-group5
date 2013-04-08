@@ -87,7 +87,7 @@
                             @if (item.Status == SMDH.Models.Statuses.RequestStatus.Draft)
                             {
                                 <li>
-                                    <a class="btn action delete" href="#" onclick="cancelRequest(@item.RequestId);">
+                                    <a href="#" onclick="cancelRequest(@item.RequestId);">
                                         Cancel
                                     </a> 
                                 </li>
@@ -105,7 +105,12 @@
                                     <a href="#" onclick="rejectRequest(@item.RequestId);">
                                         Reject for Repricing
                                     </a> 
-                                </li>
+                                </li>     
+                                <li>
+                                    <a href="#" onclick="cancelRequest(@item.RequestId);">
+                                        Cancel
+                                    </a> 
+                                </li>                           
                             }              
                      </ul>
                  </div>        

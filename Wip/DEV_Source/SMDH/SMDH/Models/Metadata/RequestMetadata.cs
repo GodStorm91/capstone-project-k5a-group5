@@ -63,6 +63,12 @@ namespace SMDH.Models
                         validOrderStatuses.Add((int)OrderStatus.ToBeReturned);
                         validOrderStatuses.Add((int)OrderStatus.Returned);
                         break;
+                    case Statuses.RequestStatus.RePricing:
+                        validOrderStatuses.Add((int)OrderStatus.New);
+                        validOrderStatuses.Add((int)OrderStatus.Requested);
+                        validOrderStatuses.Add((int)OrderStatus.Approved);
+                        validOrderStatuses.Add((int)OrderStatus.Rejected);
+                        break;
                 }
                 return Orders.Where(o => validOrderStatuses.Contains(o.OrderStatus)).ToList();
             }

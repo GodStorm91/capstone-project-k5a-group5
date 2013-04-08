@@ -30,6 +30,7 @@ namespace SMDH.Models.Statuses
         ToBeReturned = 7,
         PlannedForDelivering = 8,
         Delivering = 9, // at hub
+        Requested = 10,
         Delivered = 11, //at hub
         Returned = 12,
         WaitingForReturn = 13, //at hub

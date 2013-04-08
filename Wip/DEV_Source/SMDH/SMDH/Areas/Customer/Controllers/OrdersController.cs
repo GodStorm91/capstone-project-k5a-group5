@@ -378,7 +378,9 @@ namespace SMDH.Areas.Customer.Controllers
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://maps.googleapis.com/maps/api/geocode/json?address="
              + address + "&sensor=false");
-
+                request.Proxy = WebRequest.DefaultWebProxy;
+                request.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
+                request.Proxy.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 double latitude;
                 double longitude;

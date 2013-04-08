@@ -162,7 +162,7 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                if (order.Request.RequestStatus != (int)RequestStatus.Draft) return false;
+                if (!(order.Request.RequestStatus == (int)RequestStatus.Draft || order.Request.RequestStatus == (int)RequestStatus.Pricing)) return false;
                 var itemsArray = order.Items.ToArray();
                 for (var i = 0; i < itemsArray.Length; i++)
                 {

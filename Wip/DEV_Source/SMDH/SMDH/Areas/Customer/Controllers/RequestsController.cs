@@ -601,6 +601,23 @@ namespace SMDH.Areas.Customer.Controllers
             return Json(new { success = true });
         }
 
+        public ActionResult RejectForRepricing(int id)
+        {
+            try
+            {
+                var request = context.Requests.Single(r => r.RequestId == id);
+                request.RequestStatus = (int)RequestStatus.RePricing;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+            
+        }
+
         private int[] parseStringToList(string input)
         {
             string[] splitArr = input.Split(',');
