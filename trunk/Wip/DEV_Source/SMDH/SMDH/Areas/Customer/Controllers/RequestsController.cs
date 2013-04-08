@@ -568,7 +568,6 @@ namespace SMDH.Areas.Customer.Controllers
                 return Json(new { success = false });
             }
         }
-
        
         public ActionResult Approve(int id)
         {
@@ -585,6 +584,33 @@ namespace SMDH.Areas.Customer.Controllers
 
                 return Json(new { success = false });
             }
+        }
+
+        public ActionResult AddExistingOrdersToRequest(int requestId, string orderStringList)
+        {
+            int[] orderIds = parseStringToList(orderStringList);
+            var request = context.Requests.Single(o => o.RequestId == requestId);
+            for (int i = 0; i < orderIds.Length; i++)
+            {
+                var order = context.Orders.Single(o => o.OrderId == orderIds[i]);
+                order.RequestId = requestId;
+            }
+
+            context.SubmitChanges();
+
+            return Json(new { success = true });
+        }
+
+        private int[] parseStringToList(string input)
+        {
+            string[] splitArr = input.Split(',');
+            int[] resultArray = new int[splitArr.Length];
+            for (int i = 0; i < splitArr.Length; i++)
+            {
+                resultArray[i] = int.Parse(splitArr[i]);
+            }
+
+            return resultArray;
         }
     }
 }

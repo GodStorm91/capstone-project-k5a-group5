@@ -19,6 +19,10 @@
          <div class="span7" style="margin-bottom: 3px;">
             <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openCreateOrderModal(@Model.RequestId)">Add new Order</a>
         </div>
+
+           <div class="span7" style="margin-bottom: 3px;">
+            <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openAddExistingOrderModal(@Model.RequestId)">Add Existing Order</a>
+        </div>
        
     @*    <div id="companyInfo" class="green-bordered">
         <div class="pull-left">
@@ -135,7 +139,7 @@
                                                         <span class="label label-info">@order.OrderPaymentType.Name</span>
                                                     </label>
                                                     <label class="control-label" for="name">
-                                                        Receiver Address : @order.
+                                                        Receiver Address : @order.FullAddress
                                                     </label>
 
                                                     <label class="control-label" for="name">
@@ -159,14 +163,14 @@
                                                 }
                                                     </label>
                                                 </div>
-                                                <div class="control-group">
+                                               @* <div class="control-group">
                                                     <label class="control-label" for="name">
                                                         Delivery Address : @order.FullAddress
                                                     </label>
-                                                </div>
+                                                </div>*@
                                                 <div class="control-group">
                                                     <label class="control-label" for="name">
-                                                        Order Status : @order.OrderStatus
+                                                        Order Status : @((OrderStatus)order.OrderStatus)
                                                     </label>
                                                 </div>
                                                 @if (order.OrderStatus != (int)OrderStatus.Rejected)
@@ -174,7 +178,7 @@
                                                     if (order.OrderStatus == (int)OrderStatus.New)
                                                     {
                                                     <div class="form-actions no-margin">
-                                                        <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order   </a>
+                                                        <a href="#" onclick="removeFromRequest(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Remove from Request   </a>
                                                     </div>
                                                     }
                                                     else
@@ -512,10 +516,34 @@
 <script>
     setupOrderTicket();
 
+    var removeFromRequest = function (orderId) {
+        $.post("/Customer/Orders/RemoveFromRequest", { orderId: orderId }, function (data) {
+            if (data.success) {
+                window.location.reload()
+            } else {
+                bootbox.alert("Can't not remove order from request");
+            }
+        });
+    }
+
+    var openAddExistingOrderModal = function (requestId) {
+        $.post('/Customer/Orders/AddExistingOrders', { requestId: requestId }, function (data) {
+            $('#mainModal').html(data);
+            refreshValidation();
+            $('.editor-field').keypress(function (e) {
+                if (e.which == 13) {
+                    $(this).parents('form').submit();
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#mainModal').modal();
+        });
+    }
+
     var openCreateOrderModal = function (requestId) {
         $.post('/Customer/Orders/Create/', { requestId: requestId }, function (data) {
-            $('#mainModal').html(data);
-            alert('ddlCityProvince' + $('#ddlCityProvince'));
+            $('#mainModal').html(data);            
             refreshValidation();
             $('.editor-field').keypress(function (e) {
                 if (e.which == 13) {
@@ -529,11 +557,12 @@
     };
 
     var submitRequest = function (id) {
-        if ($('#order-list > li').length == 0) {
+        if ($('#accordion1 .accordion-group').length == 0) {
             bootbox.alert('No order added yet');
             return;
         }
-        if ($('#tab-items .tab-pane .no-item').length) {
+        alert($('.widget-body .no-item').length);
+        if ($('.widget-body .no-item').length > 0) {
             bootbox.alert('One or more orders contain no item.');
             return;
         }

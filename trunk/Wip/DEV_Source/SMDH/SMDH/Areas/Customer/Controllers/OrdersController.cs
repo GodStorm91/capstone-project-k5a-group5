@@ -10,6 +10,10 @@ using SMDH.Models;
 using SMDH.Models.Statuses;
 using SMDH.Models.Concrete;
 using SMDH.Models.ViewModels;
+using System.Net;
+using SMDH.Helpers;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace SMDH.Areas.Customer.Controllers
 {
@@ -142,6 +146,8 @@ namespace SMDH.Areas.Customer.Controllers
             {
                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var request = context.Requests.Single(r => r.RequestId == order.RequestId);
+                order.OrderStatus = (int)OrderStatus.New;
+                GetLatitudeAndLongitudeFromAddress(order);
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
                 if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
                 ViewBag.Customer = userInfo.Customer.CompanyName;
@@ -168,8 +174,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult Edit(int id)
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            //var order = context.Orders.Find(id);
-            var order = context.Orders.Single(o=>o.OrderId == 1);
+            var order = context.Orders.Single(o => o.OrderId == id);            
             if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = userInfo.Customer.CompanyName;
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name", order.District.CityProvinceId);
@@ -187,15 +192,18 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult ConfirmEdit(Order order)
         {
             try
-            {
+            {                
                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var myOrder = context.Orders.Single(o => order.OrderId == o.OrderId);
+                GetLatitudeAndLongitudeFromAddress(order);
+                deepCopy(myOrder, order);
                 var request = context.Requests.Single(r => r.RequestId == order.RequestId);
                 if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
                 ViewBag.Customer = userInfo.Customer.CompanyName;
                 if (ModelState.IsValid)
                 {
                     //context.Entry(order).State = EntityState.Modified;
-                    //context.SaveChanges();
+                    //context.SaveChanges();                    
                     context.SubmitChanges();
                     var myContext = new SMDHDataContext();
                     order = myContext.Orders.Single(o => o.OrderId == order.OrderId);
@@ -207,6 +215,22 @@ namespace SMDH.Areas.Customer.Controllers
             catch (Exception)
             {
                 return Json(new { success = false });
+            }
+        }
+
+        public ActionResult RemoveFromRequest(int orderId)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == orderId);
+                order.RequestId = null;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
             }
         }
 
@@ -316,11 +340,69 @@ namespace SMDH.Areas.Customer.Controllers
             }
         }
 
+        
+        public ActionResult AddExistingOrders(int requestId)
+        {
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            ViewBag.RequestId = requestId;
+            var orders = context.Orders.Where(o => o.OrderStatus == (int)OrderStatus.New && o.CustomerId == userInfo.CustomerId.Value && o.RequestId == null);
+            return View(orders);
+        }
+
 
         //public ActionResult Browse()
         //{
         //    return View(context.Orders.ToList());
         //}
+        public void deepCopy(Order order1, Order order2)
+        {
+            order1.ReceiverAddress = order2.ReceiverAddress;
+            order1.ReceiverAddressDistrictId = order2.ReceiverAddressDistrictId;
+            order1.ReceiverAddressWardId = order2.ReceiverAddressWardId;
+            order1.AmountToBeCollectedFromReceiver = order2.AmountToBeCollectedFromReceiver;
+            order1.DeliveryOptionId = order2.DeliveryOptionId;
+            order1.DeliveryTypeId = order2.DeliveryTypeId;
+            order1.Note = order2.Note;
+            order1.ReceiverPhone = order2.ReceiverPhone;
+            order1.ReceiverName = order2.ReceiverName;
+            order1.Latitude = order2.Latitude;
+            order1.Longitude = order2.Longitude;
+        }
 
+        public ActionResult GetLatitudeAndLongitudeFromAddress(Order order)
+        {
+            var address = order.ReceiverAddress + ", Ho Chi Minh, Viet Nam";
+            try
+            {
+                //order.ReceiverAddress += ", Ho Chi Minh, Viet Nam";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://maps.googleapis.com/maps/api/geocode/json?address="
+             + address + "&sensor=false");
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                double latitude;
+                double longitude;
+                EFHubsRepository hubRepo = new EFHubsRepository();
+                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    RootObject locationInfo = JsonConvert.DeserializeObject<RootObject>(result);
+                    latitude = locationInfo.results[0].geometry.location.lat;
+                    longitude = locationInfo.results[0].geometry.location.lng;
+
+                }
+
+                order.Latitude = (decimal)latitude;
+                order.Longitude = (decimal)longitude;
+                HubViewModel nearestHub = hubRepo.GetNearestHub(latitude, longitude);
+
+                return Json(new { lat = latitude, lon = longitude, nearestHub = nearestHub });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

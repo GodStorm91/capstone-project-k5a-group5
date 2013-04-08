@@ -316,6 +316,7 @@ var setupOrderEditForm = function () {
 
 var setupItemCreateForm = function () {
     $('#item-create-form').submit(function () {
+        //alert($(this).valid());
         if ($(this).valid()) {
             $.ajax({
                 type: 'POST',

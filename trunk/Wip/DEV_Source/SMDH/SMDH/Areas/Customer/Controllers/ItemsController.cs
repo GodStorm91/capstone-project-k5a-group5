@@ -41,11 +41,11 @@ namespace SMDH.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult Create(int orderId)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             var order = context.Orders.Single(o=> o.OrderId == orderId);
-            //if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
-            //ViewBag.Customer = userInfo.Customer.CompanyName;
-            ViewBag.Customer = "Test ";
+            if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            ViewBag.Customer = userInfo.Customer.CompanyName;
+            //ViewBag.Customer = "Test ";
             ViewBag.OrderId = orderId;
             return View();
         }
@@ -58,19 +58,19 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var order = context.Orders.Single(i => i.OrderId == item.OrderId);
-                //if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
                 EFProductsRepository productRepo = new EFProductsRepository();
 
                 //Create new product to save this 
                 Product pro = new Product();
                 pro.Name = item.Name;
                 pro.ProductPrice = item.Price / item.Quantity;
-                pro.CustomerId = 1;
+                pro.CustomerId = userInfo.CustomerId.Value;
                 productRepo.Create(pro);
                 item.ProductId = pro.ProductId;
-                //ViewBag.Customer = userInfo.Customer.CompanyName;
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 ViewBag.Customer = "Test comp";
                 
                 if (ModelState.IsValid)
@@ -107,10 +107,10 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ActionResult Edit(int id)
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single( r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             var item = context.Items.Single(i => i.ItemId == id);
-            //if (item.Order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
-            ViewBag.Customer = "Test";//userInfo.Customer.CompanyName;
+            if (item.Order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            ViewBag.Customer = userInfo.Customer.CompanyName;
             return View(item);
         }
 
@@ -122,10 +122,12 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single( r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var order = context.Orders.Single(o=> o.OrderId == item.OrderId);
-                //if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Test";//userInfo.Customer.CompanyName;
+                var myItem = context.Items.Single(i => i.ItemId == item.ItemId);
+                DeepCopy(myItem, item);
+                if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 if (ModelState.IsValid)
                 {
                     //context.Entry(item).State = EntityState.Modified;
@@ -206,10 +208,10 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var item = context.Items.Single( i=> i.ItemId == id);
-                //if (item.Order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Test";//userInfo.Customer.CompanyName;
+                if (item.Order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
 
                 context.Items.DeleteOnSubmit(item);
                 context.SubmitChanges();
@@ -220,6 +222,18 @@ namespace SMDH.Areas.Customer.Controllers
             {
                 return Json(new { success = false });
             }
+        }
+
+        private void DeepCopy(Item item1, Item item2)
+        {
+            item1.Name = item2.Name;
+            item1.Note = item2.Note;
+            item1.Price = item2.Price;
+            item1.HasHighValue = item2.HasHighValue;
+            item1.IsFragile = item2.IsFragile;
+            item1.Quantity = item2.Quantity;
+            item1.Size = item2.Size;
+            item1.Weight = item2.Weight;            
         }
     }
 }
