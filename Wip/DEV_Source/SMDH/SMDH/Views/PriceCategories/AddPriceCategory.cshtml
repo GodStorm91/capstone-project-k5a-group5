@@ -109,7 +109,6 @@
                                 '<th>' +
                                     'No.' +
                      '           </th>' +
-
                                  '<th>' +
                                     'Price' +
                                 '</th>' +
@@ -156,7 +155,6 @@
                         strTable += '<tr>' +
                                     '<td>' +
                                     '</td>' +
-
                                     '<td>' +
                                         json.data[i].PriceString + ' VND' +
                                         '</td>' +
@@ -217,8 +215,116 @@
     var deletepriceCateogory = function (pricecategoryID) {
         $.post('/PriceCategories/Remove/' + pricecategoryID, function (result) {
             if (result.success) {
-                $.blockUI();
-                window.location.reload();
+                $.post('/PriceCategories/GetPriceCategoriesFromOrder', { orderId: $('#orderId').val() }, function (json) {
+                    var strTable = '<table class="table table-bordered" id="tblData">   <thead>       <tr>' +
+                                '<th>' +
+                                    'No.' +
+                     '           </th>' +
+                                 '<th>' +
+                                    'Price' +
+                                '</th>' +
+                                '<th>' +
+                                  'Price Content' +
+                                '</th>' +
+                                '<th>' +
+                                   'Last Modified User' +
+                                '</th>' +
+                                 '<th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
+                                 '<th>' +
+                                   'Action' +
+                                 '</th>' +
+                           '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var strTable2 = '<table class="table table-bordered" id="tblData">   <thead>       <tr>' +
+                                '<th>' +
+                                    'No.' +
+                     '           </th>' +
+                                 '<th>' +
+                                    'Price' +
+                                '</th>' +
+                                '<th>' +
+                                  'Price Content' +
+                                '</th>' +
+                                '<th>' +
+                                   'Last Modified User' +
+                                '</th>' +
+                                '<th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
+                                '<th>' +
+                                'Action' +
+                                '</th>' +
+                           '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var totalPrice = 0;
+                    for (var i = 0; i < json.data.length; i++) {
+                        totalPrice += json.data[i].Price;
+                        if (totalPrice == "$0.00") {
+                            strTable += '<tr>' +
+                                        '<td colspan="6">Not pricing this order yet.' +
+                                        '</td>' +
+                                        '</tr>';
+                        } else {
+                            strTable += '<tr>' +
+                                        '<td>' +
+                                        '</td>' +
+                                        '<td>' +
+                                            json.data[i].PriceString + ' VND' +
+                                            '</td>' +
+                                         '<td>' +
+                                        json.data[i].PriceContent +
+                                          '</td>' +
+                                            '<td>' +
+                                        json.data[i].StaffName +
+                                            '</td>' +
+                                        '<td>' +
+                                        json.data[i].EditDateString +
+                                         '</td>' +
+                                         '<td>' +
+                                        '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' +
+                                         '</td>' +
+                                        '</tr>';
+
+                            strTable2 += '<tr>' +
+                                        '<td>' +
+                                        '</td>' +
+                                         '<td>' +
+                                            json.data[i].PriceString + ' VND' +
+                                            '</td>' +
+                                         '<td>' +
+                                        json.data[i].PriceContent +
+                                          '</td>' +
+                                            '<td>' +
+                                        json.data[i].StaffName +
+                                            '</td>' +
+                                        '<td>' +
+                                        json.data[i].EditDateString +
+                                         '</td>' +
+                                            '<td>' + "<a href='javascript:void(0)' class='btn btn-mini btn-primary' onclick='editPrice(" + json.data[i].PriceCategoryId + ")'><i class='icon-pencil'></i>Edit" +
+                        "</a>" + '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' + + '</td>' +
+                         '</tr>';
+                        }
+
+                    }
+
+                    strTable += '<tr>' +
+                        '<td colspan="5">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                     '</tr>';
+
+                    strTable2 += '<tr>' +
+                        '<td colspan="6">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                     '</tr>';
+
+                    $('#tableContainer').html(strTable);
+                    //$('#priceCategoryTbl' + $('#orderId').val()).html(strTable2);                    
+                    $('#totalPriceOrder' + $('#orderId').val()).html("Total Price: " + accounting.formatNumber(totalPrice) + " VND");
+
+                });
+
             } else {
                 bootbox.alert('This price category can not delete.');
             }
