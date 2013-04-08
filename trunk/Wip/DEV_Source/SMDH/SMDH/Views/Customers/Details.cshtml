@@ -14,39 +14,39 @@
 <div class="customer-details">
     <div class="row-fluid">
         <div class="customer-information green-bordered span5">
-            <h2>
+            <h4>
                 Customer Information 
                 <a class="edit btn action" href="#editCustomerInfoModal" data-toggle="modal"style="margin-left:20px;">
-                    <img src="/img/icons/pencil.png" alt="Edit" title="Edit" width="18px" /></a>                    
-                <a class="btn action delete" href="#" onclick="deleteCustomer(@Model.CustomerId)" title="Delete Customer" style="margin-left:20px;">
-                    <img src="/img/icons2/cross.png" alt="Delete Customer"></a>
-            </h2>
+                    <i class="icon icon-pencil"></i></a>                    
+                <a class="btn action delete" href="#" onclick="deleteCustomer(@Model.CustomerId)" title="Delete Customer">
+                    <i class="icon icon-remove"></i></a>
+            </h4>
             <dl class="dl-horizontal">
-                <dt>Company Name:</dt>
-                <dd id="CompanyName">@Model.CompanyName</dd>
-                <dt>Display Name:</dt>
-                <dd id="DisplayName">@Model.DisplayName</dd>
-                <dt>Phone Number:</dt>
-                <dd id="PhoneNumber">@Model.PhoneNumber</dd>
-                <dt>Current Contract Code:</dt>
-                <dd id="CurrentContractCode">@Model.CurrentContractCode</dd>
-                <dt>Note:</dt>
-                <dd id="Note">
-                    @if (!string.IsNullOrWhiteSpace(Model.Note))
+                <dt>Company Name: @Model.CompanyName</dt>
+                <dd id="CompanyName"></dd>
+                <dt>Display Name: @Model.DisplayName</dt>
+                <dd id="DisplayName"></dd>
+                <dt>Phone Number: @Model.PhoneNumber</dt>
+                <dd id="PhoneNumber"></dd>
+                <dt>Current Contract Code: @Model.CurrentContractCode</dt>
+                <dd id="CurrentContractCode"></dd>
+                <dt>Note: @if (!string.IsNullOrWhiteSpace(Model.Note))
                     {
                         @Model.Note
                     }
                     else
                     {
                         <text>None</text>
-                    }
+                    }</dt>
+                <dd id="Note">
+                    
                 </dd>
             </dl>
         </div>
         <div class="tables span7">
             <div class="customer-addresses green-bordered">
-                <h2>
-                    Addresses</h2>
+                <h4>
+                    Addresses</h4>
                 <div id="address-table-div">
                     @{
                         Html.RenderPartial("AddressTable", Model.CustomerAddresses.Where(ca => ca.IsActive));
@@ -57,8 +57,8 @@
     </div>
     <div class="row-fluid">
         <div class="customer-contacts green-bordered">
-            <h2>
-                Contacts</h2>
+            <h4>
+                Contacts</h4>
             <div id="contact-table-div">
                 @{
                     Html.RenderPartial("ContactTable", Model.Contacts.Where(c => c.IsActive));
