@@ -4,6 +4,7 @@
     ViewBag.Title = "Order Details";
     ViewBag.Heading = "Order Details";
 }
+
 <div class="order-details">
     <div class="green-bordered order-info">
         <div class="row-fluid">
@@ -73,6 +74,7 @@
     </div>
     <h3>
         Items</h3>
+        
     <table class="table table-striped table-bordered" id="main-table">
         <thead>
             <tr>
@@ -94,6 +96,7 @@
             </tr>
         </thead>
         <tbody>
+
             @foreach (var item in ViewBag.Items)
             {
                 <tr>

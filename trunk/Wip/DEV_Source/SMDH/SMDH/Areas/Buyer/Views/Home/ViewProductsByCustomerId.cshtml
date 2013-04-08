@@ -59,7 +59,7 @@
             }
             
             function prev() {
-                if (slideCounter == 2) {
+                if (slideCounter > 1) {
                     $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat");
                     slideCounter--;
                     $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat");
@@ -67,13 +67,13 @@
             }
 
             function next() {
-                if (slideCounter == 1) {
+                if (slideCounter < 3) {
                     $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat");
                     slideCounter++;
                     $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat");
                 }
             }
-
+          
             
 
 
@@ -237,7 +237,14 @@ body {
     background: transparent url(/images/step_over.png) center right no-repeat; 
 }
 .steps li.step a:hover { background: transparent url(/images/step_over.png) center right no-repeat; }
+
+
 .steps li.step-3 a:hover { background-position: center left; }
+
+.table tr:hover
+{
+
+}
 </style>
     <script type="text/javascript">
         
@@ -525,7 +532,8 @@ body {
             z-index: 100;
             border: 1px ridge #0000FF;
             padding: 10px;
-            width: 500px;
+            width: 200px;
+            height: 150px;
             text-align: justify;
         }
     </style>
@@ -540,6 +548,20 @@ body {
 //            s.style.top = e.clientY + 'px';
 //            s.style.visibility = 'visible';
 ////            document.title = e.clientX + ':' + e.clientY;
+        //        }
+
+        function showMouseOver(iamgeUrl, des) {
+            $('#noi_dung img').attr('src', iamgeUrl);
+                        $('#noi_dung .des').text(des);
+                        e = window.even || event;
+                        s = document.getElementById("noi_dung");
+                        s.style.top = e.clientY + 'px';
+                        s.style.visibility = 'visible';
+        }
+
+//        function showMouseOut() {
+//            var notice = document.getElementById("notice");
+//            notice.innerHTML = 'mouse out detected';
 //        }
         function addCart(tag) {
             var tem = $(tag).parent().parent();
@@ -609,24 +631,24 @@ body {
             return !isNaN(floatN) && isFinite(n) && floatN > 0
       && floatN % 1 == 0;
         }
-        function checkPhone(tag) {
-            //            var tem = $(tag);
-            //            var patt1 = /^\d{10,13}$/;
-            //            // alert($(tag).val());
-            //            if (!patt1.test($(tag).val())) {
-            //                alert("invalid!Phone must be number!!!");
-            //                $(tag).focus();
-            //            }
-        }
-        function checkEmail(tag) {
-            //                    var tem = $(tag);
-            //                    var patt1 = 
-            //                    // alert($(tag).val());
-            //                    if (!patt1.test($(tag).val())) {
-            //                        alert("sai");
-            //                        $(tag).focus();
-            //                    }
-        }
+//        function checkPhone(tag) {
+//                        var tem = $(tag);
+//                        var patt1 = /^\d{10,13}$/;
+//                        // alert($(tag).val());
+//                        if (!patt1.test($(tag).val())) {
+//                            alert("invalid!Phone must be number!!!");
+//                            $(tag).focus();
+//                        }
+//        }
+//        function checkEmail(tag) {
+//                                var tem = $(tag);
+//                                var patt1 = 
+//                                // alert($(tag).val());
+//                                if (!patt1.test($(tag).val())) {
+//                                    alert("sai");
+//                                    $(tag).focus();
+//                                }
+//        }
         $('#btnBuy').live("click", function () {
             var buyArray = new Array();
             $('.buy_tr').each(function (index) {
@@ -658,16 +680,19 @@ body {
 	<div class="steps">
   	<ul>
     	<li class="step step-1">
-      	<a "carousel-control right" href="#myCarousel" data-slide="pre" onclick="pre()"><strong>Step 1</strong><br />Some random text that describes the step</a>
+      	<a  href="#"><strong>Step 1</strong><br />Some random text that describes the step</a>
       </li>
       <li class="step step-2">
-      	<a "carousel-control right" href="#myCarousel" data-slide="next" onclick="next()"><strong>Step 2</strong><br />Some random text that describes the step</a>
+      	<a  href="#"><strong>Step 2</strong><br />Some random text that describes the step</a>
       </li>
       <li class="step step-3">
-      	<a href="http://jamestombs.co.uk"><strong>Step 3</strong><br />Some random text that describes the step</a>
+      	<a href="#"><strong>Step 3</strong><br />Some random text that describes the step</a>
       </li>
     </ul>
   </div>
+</div>
+<div id="noi_dung" style="margin-left: 60px;margin-top: -10px;"> 
+			<img src="" width="100px" height="150px"/><br/><div class="des"></div>
 </div>
     <div id="myCarousel" class="carousel slide">
         <!-- Carousel items -->
@@ -722,7 +747,7 @@ body {
                                                     <tr align=center>
                                                         <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
                                                         <td valign=middle style="width:100px;">
-                                                            @*<img width ="40px" height="30px"src="@item.ImageURL"onmouseover="DiChuyen('@item.ImageURL','@item.Name')" onmouseout="noi_dung.style.visibility='hidden';"/>*@
+                                                            <img width ="40px" height="30px"src="@item.ImageURL"onmouseover="showMouseOver('@item.ImageURL','@item.Description')" onmouseout="noi_dung.style.visibility='hidden';"/>
                                                         </td>
                                                         <td style="width:100px">@item.Name
                                                         </td>
@@ -781,6 +806,9 @@ body {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div style="margin-top: 470px;margin-left:930px;">
+                            <a class="btn btn-link" href="#myCarousel" data-slide="next" onclick="next()">Next</a>
                         </div>
                     </div>
                 </div>
@@ -867,10 +895,7 @@ body {
                                         </ul>-->
                                                     </div>*@
                                             </div>
-                                        </div>
-                                        
-                                        
-                                        
+                                        </div>          
                                         <div class="control-group">
                                             <label class="control-label" for="address">
                                                 Address(*)</label>
@@ -893,15 +918,11 @@ body {
                                             <div class="controls">
                                                 @Html.DropDownList("Hub", ViewBag.Hubs as SelectList, "-- Choose a Hub --", new { id = "ddlHub", Class = "chzn-select" })
                                             </div>
-                                        </div>
-                                        
+                                        </div>                       
                                         <div style="margin-left: 350px;">
                                             
                                             <button type="button" class="btn-success btn-large" style="width:100px;" onclick="submitInfo()">
-                                                OK</button>
-                                           
-                                            
-                                           
+                                                OK</button>                       
                                         </div>
                                         </form>
                                     </div>
@@ -921,13 +942,16 @@ body {
                                 </div>
                             </div>
                         </div>
+                        <div style="margin-top:520px;margin-left:900px;">            
+                            <a class="btn btn-link" href="#myCarousel" data-slide="prev" onclick="prev()">Back</a>            
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- Carousel nav -->
-            <a class="carousel-control left" href="#myCarousel" data-slide="prev" onclick="prev()">&lsaquo;</a>
+           @* <a class="carousel-control left" href="#myCarousel" data-slide="prev" onclick="prev()">&lsaquo;</a>
             <a class="carousel-control right" href="#myCarousel" data-slide="next" onclick="next()">&rsaquo;</a>
-        </div>       
+        </div>       *@
         <script>
             function triggerResize() {                
                 //google.maps.event.trigger(goMap, "resize");
