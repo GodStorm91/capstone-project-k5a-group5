@@ -16,14 +16,10 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script src="/js/customer-side-order-item-ticket.js" type="text/javascript"></script>
 <div class="requestDetails" id="addOrders">
-         <div class="span7" style="margin-bottom: 3px;">
-            <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openCreateOrderModal(@Model.RequestId)">Add new Order</a>
-        </div>
-
-           <div class="span7" style="margin-bottom: 3px;">
-            <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openAddExistingOrderModal(@Model.RequestId)">Add Existing Order</a>
-        </div>
-       
+    <div class="row-fluid" style="margin-bottom:10px;">
+        <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openCreateOrderModal(@Model.RequestId)">Add new Order</a>
+        <a href="javascript:void(0)" role="button" class="btn btn-success" data-toggle="modal" onclick="openAddExistingOrderModal(@Model.RequestId)">Add Existing Order</a>
+    </div>
     @*    <div id="companyInfo" class="green-bordered">
         <div class="pull-left">
             <strong>Request Number: &nbsp;&nbsp;</strong>#@Model.RequestId
@@ -83,14 +79,15 @@
                             @Model.NumberOfItems
                         </td>
                         <td>
-                        @if (ViewBag.TotalFee != null)
-                        {
-                              <span class="label label-success"> @(String.Format("{0,12:N0}", ViewBag.TotalFee)) VNĐ </span>
-                        }else
-                        {
-                             <span class="label label-danger"> 0 VND</span>   
-                        }
-                         
+                            @if (ViewBag.TotalFee != null)
+                            {
+                                <span class="label label-success">@(String.Format("{0,12:N0}", ViewBag.TotalFee)) VNĐ </span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">0 VND</span>   
+                            }
+
                         </td>
                         <td>
                             <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
@@ -163,7 +160,7 @@
                                                 }
                                                     </label>
                                                 </div>
-                                               @* <div class="control-group">
+                                                @* <div class="control-group">
                                                     <label class="control-label" for="name">
                                                         Delivery Address : @order.FullAddress
                                                     </label>
@@ -544,7 +541,7 @@
 
     var openCreateOrderModal = function (requestId) {
         $.post('/Customer/Orders/Create/', { requestId: requestId }, function (data) {
-            $('#mainModal').html(data);            
+            $('#mainModal').html(data);
             refreshValidation();
             $('.editor-field').keypress(function (e) {
                 if (e.which == 13) {

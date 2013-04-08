@@ -292,7 +292,7 @@
             var dateParts = dateRangeParts[0].split("/");
             urlParams += '&startDate=' + dateParts[0] + dateParts[1] + dateParts[2];
         }
-        if ($('#endDateFilter').val() != '') {
+        if ($('#report_range1').val() != '') {
             //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
             var dateRangeParts = $('#report_range1').val().split("to");
             var dateParts = dateRangeParts[1].split("/");
