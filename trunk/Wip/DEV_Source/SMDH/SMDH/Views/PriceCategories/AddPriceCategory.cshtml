@@ -14,8 +14,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
         ×</button>
-    <h3 id="myModalLabel">
-        Add new Price Category</h3>
+    <h3 id="myModalLabel">Add new Price Category</h3>
 </div>
 <div class="modal-body" style="height: 400px;">
     @using (Html.BeginForm("ConfirmCreate", "PriceCategories", FormMethod.Post, new { id = "create-form", Class = "form-horizontal", enctype = "multipart/form-data" }))
@@ -27,75 +26,70 @@
     }
     <input id="btnCreate" type="submit" class="btn btn-primary" value="Add" />
     <div id="tableContainer">
-    <table class="table table-bordered" id="tblData">
-        <thead>
-            <tr>
-                <th>
-                    No.
-                </th>
-                <th>
-                    Last Modified Date
-                </th>
-                <th>
-                    Price Content
-                </th>
-                <th>
-                    Last Modified User
-                </th>
-                <th>
-                    Price
-                </th>               
-            </tr>
-        </thead>
-        <tbody>
-            @if (ViewBag.Order.PriceCategories.Count == 0)
-            {
+        <table class="table table-bordered" id="tblData">
+            <thead>
                 <tr>
-                    <td colspan="6">
-                        Not pricing this order yet.
-                    </td>
+                    <th>No.
+                    </th>
+                    <th>Price Content
+                    </th>
+                    <th>Price
+                    </th>
+                    <th>Last Modified User
+                    </th>
+                    <th>Last Modified Date
+                    </th>
+                    <th>Action</th>
                 </tr>
-                                                        
-            }
-            else
-            {
-                decimal totalPrice = 0;
-                foreach (var priceCategory in ViewBag.Order.PriceCategories)
+            </thead>
+            <tbody>
+                @if (ViewBag.Order.PriceCategories.Count == 0)
                 {
-                    totalPrice += priceCategory.Price;
-                    PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        @pcViewModel.EditDateString
-                    </td>
-                    <td>
-                        @pcViewModel.PriceContent
-                    </td>
-                    <td>
-                        @pcViewModel.StaffName
-                    </td>
-                    <td>
-                        @(String.Format("{0,12:N0}", pcViewModel.Price))
-                        VND
-                    </td>
-                    
-                </tr>
+                    <tr>
+                        <td colspan="6">Not pricing this order yet.
+                        </td>
+                    </tr>
+                                                        
                 }
-                <tr>
-                    <td colspan="6">
-                        Total Price: @(String.Format("{0,12:N0}", totalPrice))
-                        VND
-                    </td>
-                </tr>      
+                else
+                {
+                    decimal totalPrice = 0;
+                    foreach (var priceCategory in ViewBag.Order.PriceCategories)
+                    {
+                        totalPrice += priceCategory.Price;
+                        PriceCategoryViewModel pcViewModel = new PriceCategoryViewModel(priceCategory);
+                    <tr>
+                        <td></td>
+                        <td>
+                            @pcViewModel.PriceContent
+                        </td>
+                        <td>
+                            @(String.Format("{0,12:N0}", pcViewModel.Price))
+                            VND
+                        </td>
+                        <td>
+                            @pcViewModel.StaffName
+                        </td>
+                        <td>
+                            @pcViewModel.EditDateString
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="deletepriceCateogory(@pcViewModel.PriceCategoryId)"><i class="icon-remove"></i></a>
+                        </td>
+                    </tr>
+                    }
+                    <tr>
+                        <td colspan="6">Total Price: @(String.Format("{0,12:N0}", totalPrice))
+                            VND
+                        </td>
+                    </tr>      
 
-            }
-        </tbody>
-    </table>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-<div class="modal-footer">    
+<div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">
         Cancel</button>
 </div>
@@ -115,18 +109,22 @@
                                 '<th>' +
                                     'No.' +
                      '           </th>' +
-                                '<th>' +
-                                   'Last Modified Date' +
-                                 '</th>' +
+
+                                 '<th>' +
+                                    'Price' +
+                                '</th>' +
                                 '<th>' +
                                   'Price Content' +
                                 '</th>' +
                                 '<th>' +
                                    'Last Modified User' +
                                 '</th>' +
-                                '<th>' +
-                                    'Price' +
-                                '</th>' +
+                                 '<th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
+                                 '<th>' +
+                                   'Action' +
+                                 '</th>' +
                            '</tr>' +
                         '</thead>' +
                         '<tbody>';
@@ -134,9 +132,9 @@
                                 '<th>' +
                                     'No.' +
                      '           </th>' +
-                                '<th>' +
-                                   'Last Modified Date' +
-                                 '</th>' +
+                                 '<th>' +
+                                    'Price' +
+                                '</th>' +
                                 '<th>' +
                                   'Price Content' +
                                 '</th>' +
@@ -144,8 +142,8 @@
                                    'Last Modified User' +
                                 '</th>' +
                                 '<th>' +
-                                    'Price' +
-                                '</th>' +
+                                   'Last Modified Date' +
+                                 '</th>' +
                                 '<th>' +
                                 'Action' +
                                 '</th>' +
@@ -158,37 +156,41 @@
                         strTable += '<tr>' +
                                     '<td>' +
                                     '</td>' +
+
                                     '<td>' +
-                                    json.data[i].EditDateString +
-                                     '</td>' +
+                                        json.data[i].PriceString + ' VND' +
+                                        '</td>' +
                                      '<td>' +
                                     json.data[i].PriceContent +
                                       '</td>' +
                                         '<td>' +
                                     json.data[i].StaffName +
                                         '</td>' +
-                                        '<td>' +
-                                        json.data[i].PriceString + ' VND' +
-                                        '</td>' +
-                     '</tr>';
+                                    '<td>' +
+                                    json.data[i].EditDateString +
+                                     '</td>' +
+                                     '<td>' +
+                                    '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' +
+                                     '</td>' +
+                                    '</tr>';
 
                         strTable2 += '<tr>' +
                                     '<td>' +
                                     '</td>' +
-                                    '<td>' +
-                                    json.data[i].EditDateString +
-                                     '</td>' +
+                                     '<td>' +
+                                        json.data[i].PriceString + ' VND' +
+                                        '</td>' +
                                      '<td>' +
                                     json.data[i].PriceContent +
                                       '</td>' +
                                         '<td>' +
                                     json.data[i].StaffName +
                                         '</td>' +
-                                        '<td>' +
-                                        json.data[i].PriceString + ' VND' +
-                                        '</td>' +
+                                    '<td>' +
+                                    json.data[i].EditDateString +
+                                     '</td>' +
                                         '<td>' + "<a href='javascript:void(0)' class='btn btn-mini btn-primary' onclick='editPrice(" + json.data[i].PriceCategoryId + ")'><i class='icon-pencil'></i>Edit" +
-                    "</a>" + '</td>' +
+                    "</a>" + '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' + + '</td>' +
                      '</tr>';
                     }
 
@@ -211,5 +213,16 @@
         });
         return false;
     });
-    
+
+    var deletepriceCateogory = function (pricecategoryID) {
+        $.post('/PriceCategories/Remove/' + pricecategoryID, function (result) {
+            if (result.success) {
+                $.blockUI();
+                window.location.reload();
+            } else {
+                bootbox.alert('This price category can not delete.');
+            }
+        });
+    };
+
 </script>

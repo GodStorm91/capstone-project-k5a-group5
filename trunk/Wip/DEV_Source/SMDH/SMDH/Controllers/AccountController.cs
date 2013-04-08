@@ -113,54 +113,22 @@ namespace SMDH.Controllers
                     }
                     else
                     {
-                        var checkDeliveryStaff = Request["deliveryStaff"];
+                        var checkHubStaff = Request["hubStaff"];
                         var checkOfficeStaff = Request["officeStaff"];
                         var checkAdmin = Request["admin"];
                         //Delivery Staff
-                        if (checkDeliveryStaff != null)
+                        if (checkHubStaff != null)
                         {
                             //DeliveryStaff deliveryStaff = new DeliveryStaff();
                             //if (user != null && user.ProviderUserKey != null) deliveryStaff.UserId = (Guid)user.ProviderUserKey;
                             //deliveryStaff.DeliveryStaffStatus = 1;
                             //deliveryStaff.IsActive = true;
                             //context.DeliveryStaffs.Add(deliveryStaff);
-                            if (checkOfficeStaff == null && checkAdmin == null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
-                            }
-                            else if (checkOfficeStaff != null && checkAdmin == null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
-                                Roles.AddUserToRole(model.UserName, "Office Staff");
-                            }
-                            else if (checkOfficeStaff != null && checkAdmin != null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
-                                Roles.AddUserToRole(model.UserName, "Office Staff");
-                                Roles.AddUserToRole(model.UserName, "Admin");
-                            }
-                            else if (checkOfficeStaff == null && checkAdmin != null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
-                                Roles.AddUserToRole(model.UserName, "Admin");
-                            }
-
+                            Roles.AddUserToRole(model.UserName, "Hub");
                         }
                         else
                         {
-                            if (checkOfficeStaff != null && checkAdmin == null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Office Staff");
-                            }
-                            else if (checkOfficeStaff == null && checkAdmin != null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Admin");
-                            }
-                            else if (checkOfficeStaff != null && checkAdmin != null)
-                            {
-                                Roles.AddUserToRole(model.UserName, "Admin");
-                                Roles.AddUserToRole(model.UserName, "Office Staff");
-                            }
+                            Roles.AddUserToRole(model.UserName, "Office Staff");
                         }
                     }
                     context.SubmitChanges();
