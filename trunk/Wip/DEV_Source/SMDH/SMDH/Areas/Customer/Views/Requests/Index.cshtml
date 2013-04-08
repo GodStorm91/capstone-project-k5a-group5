@@ -318,6 +318,21 @@
         });
     };
 
+    var rejectRequest = function (requestId) {
+        bootbox.confirm("Are you sure to reject this request for repricing ?", function(result){
+            if (result){
+                $.post("/Customer/Requests/RejectForRepricing/" + requestId, function (result){
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Failed to reject this request.');
+                    }
+                });
+            }
+        });
+    }
+
     var approveRequest = function (requestId) {
         alert("call approve");
         $.post('/Customer/Requests/Approve/' + requestId, function (result) {

@@ -527,6 +527,7 @@
     }
 
     var openAddExistingOrderModal = function (requestId) {
+        alert(requestId);
         $.post('/Customer/Orders/AddExistingOrders', { requestId: requestId }, function (data) {
             $('#mainModal').html(data);
             refreshValidation();

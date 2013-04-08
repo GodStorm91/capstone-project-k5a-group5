@@ -57,9 +57,9 @@
                     {
                         <span class="label label-info">Draft</span>
                     }
-                    else if (item.RequestStatus == (int)RequestStatus.New)
+                    else if (item.RequestStatus == (int)RequestStatus.New || item.RequestStatus == (int)RequestStatus.RePricing)
                     {
-                        <span class="label label-info">New</span>
+                        <span class="label label-info">@((RequestStatus)(item.RequestStatus))</span>
                     }
                     else if (item.RequestStatus == (int)RequestStatus.Pricing)
                     {
@@ -103,7 +103,7 @@
                                     Edit</a>   
                                 </li>
                             }
-                            @if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.New)
+                            @if (item.RequestStatus == (int)SMDH.Models.Statuses.RequestStatus.New || item.RequestStatus == (int)RequestStatus.RePricing)
                             {
                                 <li><a href="/Requests/ApproveOrders/@item.RequestId">
                                     Approve Orders</a>   

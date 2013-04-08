@@ -55,6 +55,8 @@ namespace SMDH.Controllers
                                     break;
                                 case "canceled": statuses.Add((int)RequestStatus.Canceled);
                                     break;
+                                case "repricing": statuses.Add((int)RequestStatus.RePricing);
+                                    break;
                             }
                         }
                     }
@@ -179,7 +181,7 @@ namespace SMDH.Controllers
         public ActionResult Approve(int id)
         {
             var request = _repository.Find(id);
-            if (request.RequestStatus !=(int) RequestStatus.New) return Json(new { success = false });
+            if (!(request.RequestStatus ==(int) RequestStatus.New || request.RequestStatus == (int) RequestStatus.RePricing)) return Json(new { success = false });
             if (_repository.Approve(request))
             {
                 return Json(new { success = true });
@@ -265,7 +267,7 @@ namespace SMDH.Controllers
         public ActionResult ApproveOrders(int id)
         {
             var request = _repository.Find(id);
-            if (request.RequestStatus != (int)RequestStatus.New) return RedirectToAction("Index");
+            if (!(request.RequestStatus == (int)RequestStatus.New || request.RequestStatus == (int)RequestStatus.RePricing)) return RedirectToAction("Index");
             var unapprovedOrders = _repository.ValidOrders(request).Where(o => o.OrderStatus != (int)OrderStatus.Approved).ToList();
             ViewBag.RequestApprovable = unapprovedOrders.Count == 0 ? true : false;
             ViewBag.TotalFee = request.ValidOrders.Sum(p => p.Fee);

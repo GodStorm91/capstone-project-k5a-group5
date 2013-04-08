@@ -32,11 +32,12 @@ namespace SMDH.Models.Concrete
             {
                 case (int)Statuses.RequestStatus.Draft:
                         validOrderStatuses.Add((int)OrderStatus.Draft);
-                        validOrderStatuses.Add((int)OrderStatus.Approved);
+                        validOrderStatuses.Add((int)OrderStatus.New);
                         validOrderStatuses.Add((int)OrderStatus.Rejected);
                         break;
                     case (int)Statuses.RequestStatus.New:
                         validOrderStatuses.Add((int)OrderStatus.New);
+                        validOrderStatuses.Add((int)OrderStatus.Requested);
                         validOrderStatuses.Add((int)OrderStatus.Approved);
                         validOrderStatuses.Add((int)OrderStatus.Rejected);
                         break;
@@ -61,6 +62,12 @@ namespace SMDH.Models.Concrete
                         validOrderStatuses.Add((int)OrderStatus.Canceled);
                         validOrderStatuses.Add((int)OrderStatus.ToBeReturned);
                         validOrderStatuses.Add((int)OrderStatus.Returned);
+                        break;
+                    case (int)Statuses.RequestStatus.RePricing:
+                        validOrderStatuses.Add((int)OrderStatus.New);
+                        validOrderStatuses.Add((int)OrderStatus.Requested);
+                        validOrderStatuses.Add((int)OrderStatus.Approved);
+                        validOrderStatuses.Add((int)OrderStatus.Rejected);
                         break;
             }
             return request.Orders.Where(o => validOrderStatuses.Contains(o.OrderStatus)).ToList(); ;
@@ -144,9 +151,9 @@ namespace SMDH.Models.Concrete
                     request = myContext.Requests.Single(rq => rq.RequestId == request.RequestId);
                     if (request.RequestStatus != (int)RequestStatus.Draft) return false;
                     var validOrders = ValidOrders(request);
-                    foreach (var validOrder in validOrders.Where(o => o.OrderStatus == (int)OrderStatus.Draft))
+                    foreach (var validOrder in validOrders.Where(o => o.OrderStatus == (int)OrderStatus.Draft || o.OrderStatus == (int)OrderStatus.New))
                     {
-                        validOrder.OrderStatus = (int)OrderStatus.New;
+                        validOrder.OrderStatus = (int)OrderStatus.Requested;
                     }
 
                     request.RequestStatus = (int)RequestStatus.New;
@@ -167,7 +174,7 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                if (request.RequestStatus != (int)RequestStatus.New) return false;
+                if (!(request.RequestStatus == (int)RequestStatus.New ||request.RequestStatus == (int)RequestStatus.RePricing)) return false;
                 var validOrders = ValidOrders(request);
                 if (validOrders.Where(o => o.OrderStatus != (int)OrderStatus.Approved).Count() > 0) return false;
                 request.RequestStatus = (int)RequestStatus.Pricing;
@@ -235,8 +242,15 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                if (request.RequestStatus != (int)RequestStatus.Draft) return false;
-                return Delete(request, commit);
+                if (request.RequestStatus == (int)RequestStatus.Draft || request.RequestStatus == (int)RequestStatus.Pricing)
+                {
+                    return Delete(request, commit);
+                }
+                else
+                {
+                    return false;
+                }
+                
             }
             catch (Exception)
             {
@@ -265,11 +279,12 @@ namespace SMDH.Models.Concrete
             try
             {
                 var orderRepo = new EFOrdersRepository();
-                if (request.RequestStatus != (int)RequestStatus.Draft) return false;
+                if (!(request.RequestStatus == (int)RequestStatus.Draft || request.RequestStatus == (int)RequestStatus.Pricing)) return false;
                 var ordersArray = request.Orders.ToArray();
                 for (var i = 0; i < ordersArray.Length; i++)
                 {
-                    if (!orderRepo.Delete(ordersArray[i], false)) return false;
+                    //if (!orderRepo.Delete(ordersArray[i], false)) return false;
+                    ordersArray[i].OrderStatus = (int)OrderStatus.New;
                 }
 
                 context.Requests.DeleteOnSubmit(request);
