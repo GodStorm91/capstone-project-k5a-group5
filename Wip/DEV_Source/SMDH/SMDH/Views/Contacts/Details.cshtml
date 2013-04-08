@@ -1,0 +1,38 @@
+@model SMDH.Models.Contact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Contact</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">@Model.Title</div>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">Position</div>
+    <div class="display-field">@Model.Position</div>
+
+    <div class="display-label">EmailAddress</div>
+    <div class="display-field">@Model.EmailAddress</div>
+
+    <div class="display-label">PhoneNumber</div>
+    <div class="display-field">@Model.PhoneNumber</div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">@Model.IsActive</div>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Customer).ToString()</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ContactId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
