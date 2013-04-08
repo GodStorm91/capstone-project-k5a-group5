@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+//using SMDH.Mailers;
 using SMDH.Models;
+using Mvc.Mailer;
 
 namespace SMDH.Controllers
 {
     public class AccountController : Controller
     {
-
+        SMDHDataContext context = new SMDHDataContext();
         //
         // GET: /Account/LogOn
-        
+
         public virtual ActionResult LogOn()
         {
             var roles = Roles.GetRolesForUser(User.Identity.Name).ToList();
@@ -70,6 +74,7 @@ namespace SMDH.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.PossibleCustomers = context.Customers.ToList();
             return View();
         }
 
@@ -79,25 +84,119 @@ namespace SMDH.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                if (ModelState.IsValid)
+                {
+                    // Attempt to register the user
+                    MembershipCreateStatus createStatus;
 
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    //string newPass = Membership.GeneratePassword(8, 0);
+                    string newPass = "1234567";
+                    var user = Membership.CreateUser(model.UserName, newPass, model.Email, null, null, true, null, out createStatus);
+
+                    var fullName = Request["FullName"];
+                    if (string.IsNullOrWhiteSpace(fullName)) return RedirectToAction("Register");
+                    var usertype = Request["Type"];
+
+                    UserInfo userInfo = new UserInfo();
+                    if (user != null && user.ProviderUserKey != null) userInfo.UserId = (Guid)user.ProviderUserKey;
+                    userInfo.FullName = fullName;
+                    context.UserInfos.InsertOnSubmit(userInfo);
+
+
+                    if (usertype == "Customer")
+                    {
+                        var customer = Request["customer"];
+                        userInfo.CustomerId = int.Parse(customer);
+                        Roles.AddUserToRole(model.UserName, "Customer");
+                    }
+                    else
+                    {
+                        var checkDeliveryStaff = Request["deliveryStaff"];
+                        var checkOfficeStaff = Request["officeStaff"];
+                        var checkAdmin = Request["admin"];
+                        //Delivery Staff
+                        if (checkDeliveryStaff != null)
+                        {
+                            //DeliveryStaff deliveryStaff = new DeliveryStaff();
+                            //if (user != null && user.ProviderUserKey != null) deliveryStaff.UserId = (Guid)user.ProviderUserKey;
+                            //deliveryStaff.DeliveryStaffStatus = 1;
+                            //deliveryStaff.IsActive = true;
+                            //context.DeliveryStaffs.Add(deliveryStaff);
+                            if (checkOfficeStaff == null && checkAdmin == null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
+                            }
+                            else if (checkOfficeStaff != null && checkAdmin == null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
+                                Roles.AddUserToRole(model.UserName, "Office Staff");
+                            }
+                            else if (checkOfficeStaff != null && checkAdmin != null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
+                                Roles.AddUserToRole(model.UserName, "Office Staff");
+                                Roles.AddUserToRole(model.UserName, "Admin");
+                            }
+                            else if (checkOfficeStaff == null && checkAdmin != null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Delivery Staff");
+                                Roles.AddUserToRole(model.UserName, "Admin");
+                            }
+
+                        }
+                        else
+                        {
+                            if (checkOfficeStaff != null && checkAdmin == null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Office Staff");
+                            }
+                            else if (checkOfficeStaff == null && checkAdmin != null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Admin");
+                            }
+                            else if (checkOfficeStaff != null && checkAdmin != null)
+                            {
+                                Roles.AddUserToRole(model.UserName, "Admin");
+                                Roles.AddUserToRole(model.UserName, "Office Staff");
+                            }
+                        }
+                    }
+                    context.SubmitChanges();
+
+                    //var client = new SmtpClientWrapper();
+
+
+                    //client.SendCompleted += (sender, e) =>
+                    //{
+                    //    if (e.Error != null || e.Cancelled)
+                    //    {
+                    //        // Handle Error
+                    //    }
+
+                    //    //Use e.UserState
+                    //};
+
+                    //UserMailer.PasswordReset(model.UserName, newPass, model.Email).SendAsync(null, client);
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
+
+                // If we got this far, something failed, redisplay form
+                return RedirectToAction("Register");
             }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            catch (Exception)
+            {
+                return RedirectToAction("Register");
+            }
         }
 
         //
