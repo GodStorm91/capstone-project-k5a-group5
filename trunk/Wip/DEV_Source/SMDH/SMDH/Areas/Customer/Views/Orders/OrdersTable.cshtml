@@ -11,7 +11,7 @@
                 Order No.
             </th>
             <th>
-                Requested Date
+                Created Date
             </th>
             <th>
                 Receiver Address
@@ -27,12 +27,7 @@
             </th>
             <th>
                 Status
-            </th>
-            <th>
-                Due Date
-            </th>
-            <th>
-            </th>
+            </th>                      
             <th>
                 Fee
             </th>
@@ -52,13 +47,13 @@
                     #@item.OrderId
                 </td>
                 <td>
-                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.Request.RequestedDate)
+                    @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.CreatedDate)
                 </td>
                 <td>
                     @item.FullAddress
                 </td>
                 <td>
-                    @item.AmountToBeCollectedFromReceiver
+                    @String.Format("{0:N2}",(item.AmountToBeCollectedFromReceiver))
                 </td>
                 <td>
                     @(item.DeliveryOption == null ? "None" : item.DeliveryOption.Name)
@@ -68,27 +63,7 @@
                 </td>
                 <td>
                     @((OrderStatus)(item.OrderStatus))
-                </td>
-                <td>
-                    @if (item.DueDate != null)
-                    {
-                        @String.Format("{0:dd/MM/yyyy hh:mm tt}", item.DueDate)
-                    }
-                    else
-                    {
-                        <span class="label label-important">Not set yet</span><text>&nbsp;</text>
-                    }
-                </td>
-                <td>
-                        @if (item.DueDate != null)
-                        {
-                            @String.Format("{0:yyyyMMddHHmm}", item.DueDate)
-                        }
-                        else
-                        {
-                            <text>000</text>
-                        }
-                    </td>
+                </td>                
                 <td>
                     @if (item.Fee != null)
                     {
@@ -124,12 +99,17 @@
                                 </li>
                                 @if (item.Status == SMDH.Models.Statuses.OrderStatus.Draft || item.Status == SMDH.Models.Statuses.OrderStatus.Rejected)
                                 {
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="approveOrder(@item.OrderId);">
+                                    Approve Order
+                                  </a>
+                                </li>
                                 <li>
                                   <a href="javascript:void(0)" onclick="cancelOrder(@item.OrderId);">
                                     Canceled
                                   </a>
-                                </li>
-                                    }
+                                </li>                                    
+                                }
                               </ul>
                        </div>                             
                 </td>

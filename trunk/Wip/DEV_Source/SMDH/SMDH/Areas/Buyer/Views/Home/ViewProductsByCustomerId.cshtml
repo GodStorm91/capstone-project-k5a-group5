@@ -451,8 +451,9 @@ body {
             if (wardId != undefined) {
                 var receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val(wardId);
             }
-           
-            var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val("#ddlDistrict");
+
+            var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($("#ddlDistrict").val());
+            alert($("#ddlDistrict").val());
             var receiverEmail = $("<input>").attr("type", "hidden").attr("name", "receiverEmail").val($('#email').val());
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
             var deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("1");
@@ -464,13 +465,14 @@ body {
             var latitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val(localStorage.getItem('HomeLat'));
             var longitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val(localStorage.getItem('HomeLon'));
             //alert("After Home Lat");
-
+            alert($('#HubAddress').val());
             if ($('#optionsRadios2').is(":checked")) {
-                alert("HubDistrictId:" + $('#HubDistrictId').val());
+                receiverAddress = $("<input>").attr("type", "hidden").attr("name", "receiverAddress").val($('#HubAddress').val());
                 receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($('#HubDistrictId').val());
                 receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val($('#HubWardId').val());
                 latitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val($('#HubLongitude').val());
                 longitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val($('#HubLatitude').val());
+                deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("2");
             }
 
             $('#toBeSubmit').append($(itemsList));
@@ -673,6 +675,7 @@ body {
     <input type="hidden" id="HubCityId" />
     <input type="hidden" id="HubLatitude" />
     <input type="hidden" id="HubLongitude" />
+    <input type="hidden" id="HubAddress" />
 
     <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
     </form>
@@ -1102,6 +1105,7 @@ body {
                         $('#HubWardId').val(data.WardId);
                         $('#HubLatitude').val(data.Latitude);
                         $('#HubLongitude').val(data.Longitude);
+                        $('#HubAddress').val(data.Address);                        
                         //change dropdownlist value to match the value in HUb
                         //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
                         //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);

@@ -15,6 +15,8 @@ namespace SMDH.Controllers
 
         private IRequestRepository _repository;
 
+        private SMDHDataContext context = new SMDHDataContext();
+
         public RequestsController(IRequestRepository requestRepository)
         {
             _repository = requestRepository;
@@ -268,10 +270,32 @@ namespace SMDH.Controllers
         {
             var request = _repository.Find(id);
             if (!(request.RequestStatus == (int)RequestStatus.New || request.RequestStatus == (int)RequestStatus.RePricing)) return RedirectToAction("Index");
-            var unapprovedOrders = _repository.ValidOrders(request).Where(o => o.OrderStatus != (int)OrderStatus.Approved).ToList();
+            var unapprovedOrders = _repository.ValidOrders(request).Where(o => o.PriceCategories.Count == 0).ToList();
             ViewBag.RequestApprovable = unapprovedOrders.Count == 0 ? true : false;
             ViewBag.TotalFee = request.ValidOrders.Sum(p => p.Fee);
             return View(request);
+        }
+
+        public ActionResult ApproveForAcceptPrice(int id)
+        {
+            try
+            {
+                var request = context.Requests.Single(r => r.RequestId == id);
+                request.RequestStatus = (int)RequestStatus.Pricing;
+                request.PricedDate = DateTime.Now;
+                foreach (var order in request.Orders)
+                {
+                    order.Fee = order.PriceCategories.Sum(p => p.PriceTag.Price);
+                }
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }           
+            
         }
     }
 }

@@ -62,7 +62,7 @@
                         <td>
                             @Model.NumberOfItems
                         </td>
-                        <td>
+                        <td id="requestTotalPrice">
                             @(String.Format("{0,12:N0}", ViewBag.TotalFee)) VNĐ
                         </td>
                         <td>
@@ -123,7 +123,7 @@
                                                     Amount to collect : @(String.Format("{0,12:N0}", order.AmountToBeCollectedFromReceiver))
                                                     VNĐ
                                                 </label>
-                                                <label class="control-label" for="name">
+                                                <label class="control-label" for="name" id="totalPriceOrder@(order.OrderId)">
                                                     @if (order.PriceCategories.Count == 0)
                                                     {
                                                         @:Total Price: <label class="label label-important">Not pricing this order yet.</label>
@@ -237,14 +237,14 @@
                                             </div>
                                             @if (order.OrderStatus != (int)OrderStatus.Rejected)
                                             {
-                                                if (order.OrderStatus == (int)OrderStatus.New)
+                                                if ( order.OrderStatus == (int)OrderStatus.Requested)
                                                 {
                                                 <div class="form-actions no-margin">
                                                     <a class="btn btn-mini btn-primary" href="#" onclick="addPrice(@order.OrderId)">Detail </a>
-                                                    <a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order </a>
+                                                    @*<a href="#" onclick="approveOrder(@order.OrderId)" role="button" class="btn btn-mini btn-primary" title="Approve Order" data-toggle="modal">Approve Order </a>*@
                                                 </div>
                                                 }
-                                                else
+                                               @* else
                                                 {
                                                 <div class="form-actions no-margin">
                                                     <img src="/img/icons2/checkmark2.png" width="20" height="15" alt="Approved" title="Approved"
@@ -254,7 +254,7 @@
                                                             title="Disapprove Order" />
                                                     </a>
                                                 </div>
-                                                }
+                                                }*@
                                             }
                                         </form>
                                     </div>
@@ -699,7 +699,7 @@
     };
 
     var approveRequest = function (requestId) {
-        $.post('/Requests/Approve/' + requestId, function (result) {
+        $.post('/Requests/ApproveForAcceptPrice/' + requestId, function (result) {
             if (result.success) {
                 $.blockUI();
                 window.location = '/Requests/';

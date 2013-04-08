@@ -110,7 +110,7 @@
                             @Model.NumberOfItems
                         </td>
                         <td>
-                            @*@Model.TotalFee*@ VNĐ
+                            @(String.Format("{0,12:N0}",Model.TotalFee)) VNĐ
                         </td>
                         <td>
                             <h5 class="label label-warning">@((RequestStatus)Model.RequestStatus)</h5>
