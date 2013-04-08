@@ -278,17 +278,24 @@ namespace SMDH.Models.Concrete
         {
             try
             {
+                var newContext = new SMDHDataContext();
+                request = newContext.Requests.Single(r => r.RequestId == request.RequestId);
                 var orderRepo = new EFOrdersRepository();
                 if (!(request.RequestStatus == (int)RequestStatus.Draft || request.RequestStatus == (int)RequestStatus.Pricing)) return false;
-                var ordersArray = request.Orders.ToArray();
-                for (var i = 0; i < ordersArray.Length; i++)
+                
+                
+                foreach(var order in request.Orders)
                 {
                     //if (!orderRepo.Delete(ordersArray[i], false)) return false;
-                    ordersArray[i].OrderStatus = (int)OrderStatus.New;
-                }
+                    order.OrderStatus = (int)OrderStatus.New;
+                    order.Fee = null;
+                    order.RequestId = null;
+                    
+                    newContext.PriceCategories.DeleteAllOnSubmit(order.PriceCategories);                 
+                }                
 
-                context.Requests.DeleteOnSubmit(request);
-                if (commit) context.SubmitChanges();
+                newContext.Requests.DeleteOnSubmit(request);
+                if (commit) newContext.SubmitChanges();
                 return true;
             }
             catch (Exception)

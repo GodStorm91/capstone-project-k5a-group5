@@ -172,7 +172,7 @@ namespace SMDH.Areas.Buyer.Controllers
             order.Longitude = longitude;
             order.DeliveryOptionId = 1;
             order.OrderPaymentTypeId = 1;
-            order.OrderStatus = (int)OrderStatus.New;
+            order.OrderStatus = (int)OrderStatus.Draft;
             order.CustomerId = customerId;
             order.CreatedDate = DateTime.Now;
             if (hubId != -1)

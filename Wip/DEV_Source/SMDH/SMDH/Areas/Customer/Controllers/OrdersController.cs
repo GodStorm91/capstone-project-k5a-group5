@@ -78,7 +78,7 @@ namespace SMDH.Areas.Customer.Controllers
             }
 
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            orders = context.Orders.Where(o => o.Request.CustomerId == userInfo.CustomerId
+            orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId
                                             && statuses.Contains(o.OrderStatus)).ToList();
             //orders = context.Orders.Where(o => o.Request.CustomerId == 1//userInfo.CustomerId
             //                                && statuses.Contains(o.OrderStatus)).ToList();
@@ -340,6 +340,21 @@ namespace SMDH.Areas.Customer.Controllers
             }
         }
 
+        public ActionResult CustomerApprove(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                order.OrderStatus = (int)OrderStatus.New;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
         
         public ActionResult AddExistingOrders(int requestId)
         {
@@ -378,9 +393,9 @@ namespace SMDH.Areas.Customer.Controllers
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://maps.googleapis.com/maps/api/geocode/json?address="
              + address + "&sensor=false");
-                request.Proxy = WebRequest.DefaultWebProxy;
-                request.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
-                request.Proxy.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
+                //request.Proxy = WebRequest.DefaultWebProxy;
+                //request.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
+                //request.Proxy.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 double latitude;
                 double longitude;

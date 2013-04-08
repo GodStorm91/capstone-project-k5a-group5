@@ -470,9 +470,7 @@
                             null,
                             null,
                             { "iDataSort": 8 },
-                            { "bVisible": false },
-                            null,
-                            null,
+                            { "bVisible": false },                                                   
                             null
             ],
             "aaSorting": [[8, "asc"]]
@@ -491,6 +489,19 @@
             }
         });
     };
+
+    var approveOrder = function (orderId) {
+      bootbox.confirm('Approve this order ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/CustomerApprove/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
 
     $('.report_range').daterangepicker({
         ranges: {

@@ -201,7 +201,8 @@
                      '</tr>';
 
                     $('#tableContainer').html(strTable);
-                    $('#priceCategoryTbl' + $('#orderId').val()).html(strTable2);
+                    //$('#priceCategoryTbl' + $('#orderId').val()).html(strTable2);                    
+                    $('#totalPriceOrder' + $('#orderId').val()).html("Total Price: " + accounting.formatNumber(totalPrice) + " VND");
 
                 });
             } else {
