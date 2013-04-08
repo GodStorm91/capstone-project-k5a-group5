@@ -10,7 +10,7 @@
     function validateCheckBox() {
         if ($("#staff").attr("checked")) {
             if ($("input[type=checkbox]:checked").length == 0) {
-                bootbox.alert("You have to choose at least one role: Admin, Office Staff or Delivery Staff");
+                bootbox.alert("You have to choose one role: Office Staff or Hub Staff");
                 return false;
             }
             return true;
@@ -70,22 +70,16 @@
                 </label>
             </div>
             <fieldset id="checkArray">
-                <div class="hide" id="admin">
-                    <label class="checkbox">
-                        <input type="checkbox" name="admin" id="adminCheck" value="3">
-                        Admin
-                    </label>
-                </div>
                 <div class="hide" id="officeStaff">
                     <label class="checkbox">
-                        <input type="checkbox" name="officeStaff" id="officeStaffCheck" value="2">
+                        <input type="checkbox" checked name="officeStaff" id="officeStaffCheck" value="2">
                         Office Staff
                     </label>
                 </div>
-                <div class="hide" id="deliveryStaff">
+                <div class="hide" id="hubStaff">
                     <label class="checkbox">
-                        <input type="checkbox" name="deliveryStaff" id="deliveryStaffCheck" value="1">
-                        Delivery Staff
+                        <input type="checkbox" name="hubStaff" id="hubStaffCheck" value="1">
+                        Hub Staff
                     </label>
                 </div>
             </fieldset>
@@ -111,7 +105,7 @@
         $('#officeStaff').hide();
         $('#admin').hide();
         $('#listCustomer').show();
-        $("#deliveryStaffCheck").prop("checked", false);
+        $("#hubStaffCheck").prop("checked", false);
         $("#officeStaffCheck").prop("checked", false);
         $("#adminCheck").prop("checked", false);
     });
@@ -119,10 +113,9 @@
     $('#staff').click(function () {
         //$("#deliveryStaffCheck").prop("checked", true);
         $('#listCustomer').hide();
-        $('#deliveryStaff').show();
+        $('#hubStaff').show();
         $('#officeStaff').show();
         $('#admin').show();
-
     });
 
     //    $(function () {

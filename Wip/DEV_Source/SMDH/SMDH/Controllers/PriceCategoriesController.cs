@@ -31,13 +31,13 @@ namespace SMDH.Controllers
                 result.Add(new PriceCategoryViewModel(pc));
             }
             return Json(new { data = result });
-            
+
         }
 
         public ActionResult Create()
         {
             //return view here
-            
+
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace SMDH.Controllers
                 var priceTagInfo = context.PriceTags.Single(pt => pt.PriceTagId == pc.PriceTagId);
                 pc.PriceContent = priceTagInfo.PriceTagContent;
                 pc.Price = priceTagInfo.Price;
-                context.PriceCategories.InsertOnSubmit(pc);                
+                context.PriceCategories.InsertOnSubmit(pc);
                 context.SubmitChanges();
                 var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
 
@@ -99,7 +99,7 @@ namespace SMDH.Controllers
             }
             catch (Exception)
             {
-                return Json(new { success = false });                
+                return Json(new { success = false });
             }
         }
 
@@ -113,7 +113,7 @@ namespace SMDH.Controllers
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -127,20 +127,20 @@ namespace SMDH.Controllers
                     var myPc = myContext.PriceCategories.Single(p => p.PriceCategoryId == pc.PriceCategoryId);
                     myPc.EditDate = DateTime.Now;
                     var priceTagInfo = context.PriceTags.Single(pt => pt.PriceTagId == pc.PriceTagId);
-                    myPc.Price = priceTagInfo.Price;                    
+                    myPc.Price = priceTagInfo.Price;
                     myPc.PriceContent = priceTagInfo.PriceTagContent;
                     //pc.Staff Staff Id goes here
                     var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                     myPc.UserId = userInfo.UserId;
                     myContext.SubmitChanges();
-                    var order = myContext.Orders.Single(o => o.OrderId == pc.OrderId);                    
-                    return RedirectToAction("ApproveOrders","Requests",new {id = order.Request.RequestId});
+                    var order = myContext.Orders.Single(o => o.OrderId == pc.OrderId);
+                    return RedirectToAction("ApproveOrders", "Requests", new { id = order.Request.RequestId });
                 }
-                
+
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -156,13 +156,29 @@ namespace SMDH.Controllers
                     result.Add(new PriceCategoryViewModel(pc));
                 }
 
-                return Json( result );
+                return Json(result);
 
             }
             catch (Exception)
             {
-                
+
                 throw;
+            }
+        }
+
+        public ActionResult Remove(int id)
+        {
+            try
+            {
+                var pcs = context.PriceCategories.Single(pc => pc.PriceCategoryId == id);
+                context.PriceCategories.DeleteOnSubmit(pcs);
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                throw;
+                return Json(new { success = false });
             }
         }
 
