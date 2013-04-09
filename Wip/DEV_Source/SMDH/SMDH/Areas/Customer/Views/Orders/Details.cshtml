@@ -11,14 +11,14 @@
                 <dl class="dl-horizontal">
                     <dt>Customer: </dt>
                     <dd>
-                        @Model.Request.Customer.DisplayName</dd>
-                    <dt>Requested Date: </dt>
+                        @ViewBag.Customer</dd>
+                    <dt>Created Date: </dt>
                     <dd>
-                        @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.Request.RequestedDate)
+                        @String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.CreatedDate  )
                     </dd>
                     <dt>Amount To Collect: </dt>
                     <dd>
-                        @Model.AmountToBeCollectedFromReceiver VNĐ</dd>
+                        @String.Format("{0:N0}", Model.AmountToBeCollectedFromReceiver) VNĐ</dd>
                     <dt>Fee: </dt>
                     <dd>
                         @if (Model.Fee != null)

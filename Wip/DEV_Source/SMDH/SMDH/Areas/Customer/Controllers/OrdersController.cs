@@ -110,8 +110,8 @@ namespace SMDH.Areas.Customer.Controllers
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var order = context.Orders.Find(id);
             var order = context.Orders.Single(o=> o.OrderId == id);
-            if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
-            ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
+            if (order.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
+            ViewBag.Customer = userInfo.Customer.CompanyName;
             ViewBag.Items = context.Items.Where(i => i.OrderId == id).ToList();
 
             return View(order);
@@ -395,9 +395,9 @@ namespace SMDH.Areas.Customer.Controllers
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://maps.googleapis.com/maps/api/geocode/json?address="
              + address + "&sensor=false");
-                //request.Proxy = WebRequest.DefaultWebProxy;
-                //request.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
-                //request.Proxy.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
+                request.Proxy = WebRequest.DefaultWebProxy;
+                request.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
+                request.Proxy.Credentials = new NetworkCredential("nhvkhanh", "1qazXSW@", "LUXOFT");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 double latitude;
                 double longitude;

@@ -56,8 +56,9 @@ namespace SMDH.Areas.Buyer.Controllers
 
         public ActionResult ViewOrderDetails(string txtPasscode)
         {
+
             var order = context.Orders.Single(o => o.Passcode == txtPasscode);
-            ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
+            ViewBag.Customer = context.Customers.Single(c => c.CustomerId == order.CustomerId).DisplayName;
             ViewBag.Items = context.Items.Where(i => i.OrderId == order.OrderId).ToList();
             OrderViewModel orderView = new OrderViewModel(order);
             return View(orderView);
@@ -70,6 +71,8 @@ namespace SMDH.Areas.Buyer.Controllers
             ViewBag.HubCategories = new SelectList(context.HubCategories.Where(o => o.isActive).ToArray(), "HubCategoryId", "HubName");
             ViewBag.Hub = new SelectList( new List<SMDH.Models.Hub>());
             ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
+            ViewBag.DeliveryOption = new SelectList(context.DeliveryOptions.Where(d => d.IsActive).ToArray(), "DeliveryOptionId", "Name");
+            ViewBag.OrderPaymentType = new SelectList(context.OrderPaymentTypes.Where(o => o.IsActive).ToArray(), "OrderPaymentTypeId", "Name");
             ViewBag.District = new SelectList(new List<District>());
             ViewBag.Ward = new SelectList(new List<Ward>());
             ViewBag.Items = products;
