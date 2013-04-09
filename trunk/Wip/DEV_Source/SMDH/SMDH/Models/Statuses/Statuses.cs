@@ -80,6 +80,12 @@ namespace SMDH.Models.Statuses
         Return = 12
     }
 
+    public enum DeliveryTypeId
+    {
+        Direct = 1,
+        Buffer = 2
+    }
+
     //public enum ItemStatus
     //{
     //    New = 1,

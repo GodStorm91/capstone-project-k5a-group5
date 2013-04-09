@@ -147,6 +147,8 @@ namespace SMDH.Areas.Customer.Controllers
                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var request = context.Requests.Single(r => r.RequestId == order.RequestId);
                 order.OrderStatus = (int)OrderStatus.New;
+                order.CreatedDate = DateTime.Now;
+                order.CustomerId = userInfo.CustomerId;
                 GetLatitudeAndLongitudeFromAddress(order);
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
                 if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });

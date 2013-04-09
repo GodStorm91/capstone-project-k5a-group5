@@ -1381,11 +1381,119 @@ namespace SMDH.Controllers
             }
             else if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
             {
-                return Json(new { success = true });
+                if (_repository.MarkDeliveryPlanFinished(plan))
+                {
+                    return Json(new { success = true });
+                }
+                
             }
 
             return Json(new { success = false });
         }
+
+        public ActionResult Details_ForEdit(int id)
+        {
+            
+            Plan plans = context.Plans.Single(o => o.PlanId == id);
+            if (plans != null)
+            {
+                try
+                {
+                    var deliveryStaffs = from d in context.DeliveryMens
+                                         select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status };
+                    if (plans.Status == 1)
+                    {
+                        var listDelivery = new List<DeliveryMen>();
+                        foreach (var delivery in deliveryStaffs)
+                        {
+                            listDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+                        }
+                        ViewBag.PossibleDeliveryStaffs = listDelivery;
+                    }
+                    else
+                    {
+                        var assignedStaff = (from d in context.DeliveryMens
+                                             join dm in context.DeliveryMenInPlans on d.DeliveryMenId equals dm.DeliveryMenId
+                                             join p in context.Plans on dm.PlanId equals p.PlanId
+                                             where p.PlanId == id
+                                             select new { d.DeliveryMenId, d.FirstName, d.LastName, d.Status }).Distinct();
+
+                        int[] listAssignedStaffIds = new int[assignedStaff.Count()];
+
+                        for (int i = 0; i < listAssignedStaffIds.Length; i++)
+                        {
+                            listAssignedStaffIds[i] = assignedStaff.ToList().ElementAt(i).DeliveryMenId;
+                        }
+
+                        deliveryStaffs = deliveryStaffs.Where(d => !listAssignedStaffIds.Contains(d.DeliveryMenId));
+
+                        var listDelivery = new List<DeliveryMen>();
+                        var assignDelivery = new List<DeliveryMen>();
+                        foreach (var delivery in deliveryStaffs)
+                        {
+                            listDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+                        }
+                        foreach (var delivery in assignedStaff)
+                        {
+                            assignDelivery.Add(new DeliveryMen { DeliveryMenId = delivery.DeliveryMenId, FirstName = delivery.FirstName, LastName = delivery.LastName });
+                        }
+                        ViewBag.Assignto = assignDelivery;
+                        ViewBag.PossibleDeliveryStaffs = listDelivery;
+                        //ViewBag.AssignTo =
+                        //    AccountHelper.GetName(assignedStaff.UserId);
+                        //Get Request Details in here                       
+
+                    }
+                    if (plans.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                    {
+                        var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
+                        int[] requestIds = new int[cargoesInPlan.Count()];
+                        int i = 0;
+                        foreach (var cargo in cargoesInPlan)
+                        {
+                            requestIds[i] = cargo.RequestId.Value;
+                            i++;
+                        }
+
+                        var requests = context.Requests.Where(r => requestIds.Contains(r.RequestId)).ToList();
+                        List<RequestViewModel> resultList = new List<RequestViewModel>();
+                        for (i = 0; i < requests.Count; i++)
+                        {
+                            resultList.Add(new RequestViewModel(requests.ElementAt(i)));
+                        }
+                        ViewBag.RequestDetails = resultList;
+                    }
+                    else if (plans.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                    {
+                        var cargoesInPlan = context.Cargos.Where(c => c.PlanId == plans.PlanId);
+                        int[] orderIds = new int[cargoesInPlan.Count()];
+                        int i = 0;
+                        foreach (var cargo in cargoesInPlan)
+                        {
+                            orderIds[i] = cargo.OrderId.Value;
+                            i++;
+                        }
+
+                        var requests = context.Orders.Where(r => orderIds.Contains(r.OrderId)).ToList();
+                        List<OrderViewModel> resultList = new List<OrderViewModel>();
+                        for (i = 0; i < requests.Count; i++)
+                        {
+                            resultList.Add(new OrderViewModel(requests.ElementAt(i)));
+                        }
+                        ViewBag.RequestDetails = resultList;
+                    }
+                    return View(plans);
+                }
+                catch (Exception e)
+                {
+                    return View("Error");
+                    //throw new HttpException(500, "Error!");
+                }
+            }
+
+            throw new HttpException(404, "Not found!");
+        }
+        
 
         //public ActionResult
     }
