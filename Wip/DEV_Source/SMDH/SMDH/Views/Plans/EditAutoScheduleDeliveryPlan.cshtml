@@ -185,6 +185,12 @@
         </div>
     </div>
 </div>
+<div class="row-fluid">
+    <div class="span12">
+        <button class="btn btn-primary" id="btnSave">
+            Save</button>
+    </div>
+</div>
 @*<div class="span12">
     <div class="widget-box">
         <div class="widget-title">
@@ -207,12 +213,6 @@
         </div>
     </div>
 </div>*@
-<div class="row-fluid">
-    <div class="span12">
-        <button class="btn btn-primary" id="btnSave">
-            Save</button>
-    </div>
-</div>
 <div class="row-fluid">
     <div class="span12">
         <div class="span4">
@@ -337,7 +337,7 @@
 				    numZoomLevels: 20
 				});
         map.addLayer(gmap);
-        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+        map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 18);
         show(0);
     }
     initialize();
@@ -347,17 +347,15 @@
             $(this).css('background-color', '#F5F5F5');
         })
         $('#plan-' + id).css('background-color', '#f2dede');
-        alert(id);
+        //(id);
         var j = 0;
         var waypointsArr = new Array();
         waypointsArr.length = 0;
         var lats = new Array();
         var lons = new Array();
-        alert(waypoints[id].length);
         $.each(waypoints[id], function (index, waypoint) {
             lats[j] = waypoint.Latitude;
             lons[j] = waypoint.Longitude;
-            alert(waypoint.Latitude + " " + waypoint.Longitude);
             waypointsArr.push({
                 location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
             });
@@ -426,7 +424,7 @@
             createLatsLons(data.waypoints, data.segments);
             addMarker();
             addDirection();
-            map.setCenter(wpt[0][0].location, 16);
+            map.setCenter(wpt[0][0].location, 18);
             $.unblockUI();
             e.preventDefault();
             return false;
@@ -454,7 +452,7 @@
                     createLatsLons(result.waypoints, result.segments);
                     addMarker();
                     addDirection();
-                    map.setCenter(wpt[0][0].location, 16);
+                    map.setCenter(wpt[0][0].location, 18);
                     $.unblockUI();
                 }
             });
@@ -764,6 +762,10 @@
         //alert(someValue);
         //alert("in click");
         var testItems = new Object();
+        var segmentsLatitudeList = new Array();
+        var segmentsLongitudeList = new Array();
+        var waypointsLongitudeList = new Array();
+        var waypointsLatitudeList = new Array();
         testItems.Entrys = new Array();
 
         $.each(requestsInPlans, function (index, requests) {
@@ -772,7 +774,26 @@
                 listRequest.push(request.OrderId);
             });
 
-            testItems.Entrys[index] = new Object({ Id: index, listRequests: listRequest, Distance: distanceList[index] });
+            segmentsLongitudeList = new Array();
+            segmentsLatitudeList = new Array();
+            alert("Segment length" + segments[index].length);
+            $.each(segments[index], function (indexj, segment) {
+                segmentsLongitudeList.push(segment.Longitude);
+                segmentsLatitudeList.push(segment.Latitude);
+            });
+
+            waypointsLatitudeList = new Array();
+            waypointsLongitudeList = new Array();
+            $.each(waypoints[index], function (indexj, waypoint) {
+                waypointsLongitudeList.push(waypoint.Longitude);
+                waypointsLatitudeList.push(waypoint.Latitude);
+            });
+
+            testItems.Entrys[index] = new Object({
+                Id: index, listRequests: listRequest, Distance: distanceList[index],
+                WaypointsLongitudeList: waypointsLongitudeList, WaypointsLatitudeList: waypointsLatitudeList,
+                SegmentsLongitudeList: segmentsLongitudeList, SegmentsLatitudeList: segmentsLatitudeList
+            });
         });
         var json = $.toJSON(testItems);
         //alert(json)

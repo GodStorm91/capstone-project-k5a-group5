@@ -66,7 +66,7 @@ namespace SMDH.Models.ViewModels
             CreatedDate = string.Format("{0:dd/MM/yyyy HH:mm:ss}", order.CreatedDate);
             DeliverAddress = order.HubId != null ? hubRepo.Find(order.HubId.Value).Address : ReceiverAddress;
             Customer = !order.RequestId.HasValue ? context.Customers.Single(c=> c.CustomerId == order.CustomerId).DisplayName : order.Request.Customer.DisplayName;
-            //AddressFromWard = AddressHelper.GetAddressFromWard(order);
+            AddressFromWard = AddressHelper.GetAddressFromWard(order);
         }
 
         public OrderViewModel(Order order, double weightedDeliveryTypeScore, double weightedDateScore)

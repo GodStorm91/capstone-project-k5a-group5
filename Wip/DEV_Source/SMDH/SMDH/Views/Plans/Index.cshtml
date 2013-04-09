@@ -156,7 +156,7 @@
 
     edit = function (modelId) {
         $.ajax({
-            url: '/Plans/Details/' + modelId,
+            url: '/Plans/Details_ForEdit/' + modelId,
             type: 'POST',
             dataType: 'html',
             success: function (data) {

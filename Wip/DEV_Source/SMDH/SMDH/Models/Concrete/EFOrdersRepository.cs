@@ -460,6 +460,30 @@ namespace SMDH.Models.Concrete
                 throw;
             }
         }
+
+        public bool MarkOrderAsFinished(Order order)
+        {
+            try
+            {
+                if (order.DeliveryTypeId == (int)DeliveryTypeId.Buffer)
+                {
+                    order.OrderStatus = (int)OrderStatus.Delivering;
+                }
+                else
+                {
+                    order.OrderStatus = (int)OrderStatus.Delivered;
+                }
+
+                context.SubmitChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
     }
 
 }

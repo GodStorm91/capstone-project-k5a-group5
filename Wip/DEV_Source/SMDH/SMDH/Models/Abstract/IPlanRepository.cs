@@ -28,6 +28,8 @@ namespace SMDH.Models.Abstract
         bool CreateDeliveryPlan(Plan plan, int[] orderIds);
 
         bool MarkCollectionPlanFinished(Plan plan);
+
+        bool MarkDeliveryPlanFinished(Plan plan);
       
     }
 }

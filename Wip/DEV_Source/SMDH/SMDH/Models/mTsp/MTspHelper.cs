@@ -83,6 +83,8 @@ namespace SMDH.Models.mTsp
         /// </summary>
         private static GeoCoordinate _latest_location;
 
+        private static bool[] _flagArr;
+
         /// <summary>
         /// Holds the point that we click
         /// </summary>
@@ -251,6 +253,23 @@ namespace SMDH.Models.mTsp
             waypoints.RemoveAt(waypoints.Count - 1);
             List<RequestViewModel> requestListToAdd = new List<RequestViewModel>();
             List<OrderViewModel> orderListToAdd = new List<OrderViewModel>();
+            if (listRequest != null)
+            {
+                _flagArr = new bool[listRequest.Count];
+                for (int i = 0; i < _flagArr.Length; i++)
+                {
+                    _flagArr[i] = false;
+                }
+            }
+            else
+            {
+                _flagArr = new bool[listOrder.Count];
+                for (int i = 0; i < _flagArr.Length; i++)
+                {
+                    _flagArr[i] = false;
+                }
+            }
+                
             for (int i = 1; i < waypoints.Count; i++)
             {
                 if (listRequest != null)
@@ -280,16 +299,20 @@ namespace SMDH.Models.mTsp
         {
             double distance = double.MaxValue;
             RequestViewModel result = null;
+            int j = 0;
             for (int i = 0; i < listRequest.Count; i++)
             {
                 double tmpDistance = Math.Pow(((double)listRequest.ElementAt(i).Latitude.Value - point.Latitude), 2) + 
                                         Math.Pow(((double)listRequest.ElementAt(i).Longitude.Value - point.Longitude), 2);
-                if (tmpDistance < distance)
+                if (tmpDistance < distance && !_flagArr[i])
                 {
                     distance = tmpDistance;
                     result = new RequestViewModel(context.Requests.Single(r => r.RequestId == listRequest.ElementAt(i).RequestId));
+                    j = i;
                 }
             }
+
+            _flagArr[j] = true;
 
             return result;
         }
@@ -298,16 +321,21 @@ namespace SMDH.Models.mTsp
         {
             double distance = double.MaxValue;
             OrderViewModel result = null;
+            int j = 0;
             for (int i = 0; i < listOrder.Count; i++)
             {
                 double tmpDistance = Math.Pow(((double)listOrder.ElementAt(i).Latitude.Value - point.Latitude), 2) +
                                         Math.Pow(((double)listOrder.ElementAt(i).Longitude.Value - point.Longitude), 2);
-                if (tmpDistance < distance)
+                if (tmpDistance < distance && !_flagArr[i])
                 {
                     distance = tmpDistance;
                     result = new OrderViewModel(context.Orders.Single(r => r.OrderId == listOrder.ElementAt(i).OrderId));
+                    j = i;
+                    
                 }
             }
+
+            _flagArr[j] = true;
 
             return result;
         }
