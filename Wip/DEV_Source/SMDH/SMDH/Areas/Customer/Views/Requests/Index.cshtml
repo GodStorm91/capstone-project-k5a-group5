@@ -118,6 +118,8 @@
 <!-- Begin "Edit" Modal -->
 <div class="modal hide fade" id="editModal">
 </div>
+<div class="modal hide fade" id="noteModal">
+</div>
 <!-- End "Edit" Modal -->
 <script>
     @foreach (var status in ViewBag.SelectedStatuses)
@@ -319,18 +321,39 @@
     };
 
     var rejectRequest = function (requestId) {
-        bootbox.confirm("Are you sure to reject this request for repricing ?", function(result){
-            if (result){
-                $.post("/Customer/Requests/RejectForRepricing/" + requestId, function (result){
-                    if (result.success) {
-                        $.blockUI();
-                        window.location.reload();
-                    } else {
-                        bootbox.alert('Failed to reject this request.');
+        $('#noteModal').html('');
+        $.ajax({
+            url: '/Customer/Requests/Note?requestid=' + requestId,
+            type: 'POST',
+            dataType: 'html',
+            success: function (data) {
+                $('#noteModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
                     }
                 });
+                $('#noteModal').modal();
             }
         });
+
+        //bootbox.confirm("Are you sure to reject this request for repricing ?", function (result) {
+        //    if (result) {
+        //        $.post("/Customer/Requests/RejectForRepricing/" + requestId, function (result) {
+        //            if (result.success) {
+        //                $.blockUI();
+        //                window.location.reload();
+        //            } else {
+        //                bootbox.alert('Failed to reject this request.');
+        //            }
+        //        });
+        //    }
+        //});
     }
 
     var approveRequest = function (requestId) {

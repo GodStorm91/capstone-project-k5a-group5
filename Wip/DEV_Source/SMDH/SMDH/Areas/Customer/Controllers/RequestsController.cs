@@ -719,5 +719,32 @@ namespace SMDH.Areas.Customer.Controllers
 
             return resultArray;
         }
+
+        [HttpPost]
+        public ActionResult Note(int requestid)
+        {
+            var request = context.Requests.Single(r => r.RequestId == requestid);
+            return View(request);
+        }
+        [HttpPost]
+        public ActionResult SendNote(Request rq)
+        {
+            try
+            {
+                var request = context.Requests.Single(r => r.RequestId == rq.RequestId);
+                if (ModelState.IsValid)
+                {
+                    request.Note += "Customer: " + rq.Note + "<br/>";
+                    context.SubmitChanges();
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+
+        }
     }
 }
