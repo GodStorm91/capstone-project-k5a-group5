@@ -30,6 +30,7 @@ namespace SMDH.Areas.Customer.Controllers
             var requests = new List<Request>();
             var statuses = new List<int>();
             statuses.Add((int)RequestStatus.New);
+            statuses.Add((int)RequestStatus.Draft);
             statuses.Add((int)RequestStatus.Pricing);
             statuses.Add((int)RequestStatus.Approved);
             statuses.Add((int)RequestStatus.Collected);
@@ -54,6 +55,8 @@ namespace SMDH.Areas.Customer.Controllers
                                 case "collected": statuses.Add((int)RequestStatus.Collected);
                                     break;
                                 case "canceled": statuses.Add((int)RequestStatus.Canceled);
+                                    break;
+                                case "draft":  statuses.Add((int)RequestStatus.Draft);
                                     break;
                             }
                         }
@@ -576,6 +579,11 @@ namespace SMDH.Areas.Customer.Controllers
                 var request = context.Requests.Single(r => r.RequestId == id);
                 request.RequestStatus = (int)RequestStatus.Approved;
                 request.ApprovedDate = DateTime.Now;
+                foreach (var order in request.ValidOrders)
+                {
+                    order.ApprovedDate = DateTime.Now;
+                    order.OrderStatus = (int)OrderStatus.Approved;
+                }
                 context.SubmitChanges();
                 return Json(new { success = true });
             }

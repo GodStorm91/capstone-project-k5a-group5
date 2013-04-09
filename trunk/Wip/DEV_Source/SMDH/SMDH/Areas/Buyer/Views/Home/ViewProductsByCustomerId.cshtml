@@ -99,82 +99,7 @@
 //            }
 
             $().ready(function () {
-                $('#optionsRadios2').trigger("click");
-                $("#checkForm").validate({
-                    rules: {
-                        email: {
-                            required: true,
-                            email: true
-                        },
-                        phone: {
-                            digits: true,
-                            minlength: 10,
-                            maxlength: 12,
-                            required: true
-                        },
-                        name: "required",
-                        CityProvinceId: {
-                            min: 0,
-                            required: true
-                        },
-                        DistrictId: {
-                            min: 0,
-                            required: true
-                        },
-                        //                        Ward: {
-                        //                            min: 0,
-                        //                            required: true
-                        //                        },
-                        HubCategory: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        Hub: {
-                            min: 0,
-                            required: "#optionsRadios2:checked"
-                        },
-                        address: {
-                            required: "#optionsRadios1:checked"
-                        }
-
-                    },
-                    messages: {
-                        email: {
-                            email: "Wrong Email",
-                            required: "Required"
-                        },
-                        phone: {
-                            digits: "Wrong format",
-                            minlength: "Minimum is 10",
-                            maxlength: "Maximum is 12",
-                            required: "Required"
-                        },
-                        name: "Required",
-                        CityProvinceId: {
-                            min: "Required",
-                            required: "Required"
-                        },
-                        DistrictId: {
-                            min: "Required",
-                            required: "Required"
-                        },
-                        //                        Ward: {
-                        //                            required: "Please choose ward",
-                        //                            min: "Please choose ward"
-                        //                        },
-                        Hub: {
-                            required: "Required",
-                            min: "Required"
-                        },
-                        HubCategory: {
-                            required: "Required",
-                            min: "Required"
-                        },
-                        address: "Required"
-
-                    }
-                });
-
+                $('#optionsRadios2').trigger("click");               
 
             });           
 
@@ -339,8 +264,10 @@ body {
                             $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
                             $('#HubDistrictId').val(data.nearestHub.DistrictId);
                             $('#HubWardId').val(data.nearestHub.WardId);
+                            $('#HubAddress').val(data.nearestHub.Address);        
                             $('#HubLatitude').val(data.nearestHub.Latitude);
                             $('#HubLongitude').val(data.nearestHub.Longitude);
+                            $('#HubAddressLabel').html(data.nearestHub.Address);        
                             var id = 8;
                             id = data.nearestHub.HubId;
                             changeHubCategoriesHandler(id);
@@ -420,6 +347,81 @@ body {
         var quantityArray = new Array();
         var amountArray = new Array();
         function submitInfo() {
+            $("#checkForm").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        digits: true,
+                        minlength: 10,
+                        maxlength: 12,
+                        required: true
+                    },
+                    name: "required",
+                    CityProvinceId: {
+                        min: 0,
+                        required: true
+                    },
+                    DistrictId: {
+                        min: 0,
+                        required: true
+                    },
+                    //                        Ward: {
+                    //                            min: 0,
+                    //                            required: true
+                    //                        },
+                    HubCategory: {
+                        min: 0,
+                        required: "#optionsRadios2:checked"
+                    },
+                    Hub: {
+                        min: 0,
+                        required: "#optionsRadios2:checked"
+                    },
+                    address: {
+                        required: "#optionsRadios1:checked"
+                    }
+
+                },
+                messages: {
+                    email: {
+                        email: "Wrong Email",
+                        required: "Required"
+                    },
+                    phone: {
+                        digits: "Wrong format",
+                        minlength: "Minimum is 10",
+                        maxlength: "Maximum is 12",
+                        required: "Required"
+                    },
+                    name: "Required",
+                    CityProvinceId: {
+                        min: "Required",
+                        required: "Required"
+                    },
+                    DistrictId: {
+                        min: "Required",
+                        required: "Required"
+                    },
+                    //                        Ward: {
+                    //                            required: "Please choose ward",
+                    //                            min: "Please choose ward"
+                    //                        },
+                    Hub: {
+                        required: "Required",
+                        min: "Required"
+                    },
+                    HubCategory: {
+                        required: "Required",
+                        min: "Required"
+                    },
+                    address: "Required"
+
+                }
+            });
+
             $('.buy_tr').each(function (index) {
                 var id = $(this).children("input[type=hidden]").val();
                 //alert(id);
@@ -430,12 +432,11 @@ body {
                 amountArray[index] = $("#amount" + id).text();
 
             }); 
-
-            alert("can append");
+            //alert("can append");
             createFormInformation(1);
-            alert("form can submit");
-            alert($('#toBeSubmit').val());
-            $('#toBeSubmit').submit();
+            //alert("form can submit");
+            //alert($('#toBeSubmit').val());
+            //$('#toBeSubmit').submit();
             //$('#checkForm').submit();
         }
 
@@ -453,7 +454,7 @@ body {
             }
 
             var receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($("#ddlDistrict").val());
-            alert($("#ddlDistrict").val());
+            //alert($("#ddlDistrict").val());
             var receiverEmail = $("<input>").attr("type", "hidden").attr("name", "receiverEmail").val($('#email').val());
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
             var deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("1");
@@ -465,7 +466,7 @@ body {
             var latitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val(localStorage.getItem('HomeLat'));
             var longitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val(localStorage.getItem('HomeLon'));
             //alert("After Home Lat");
-            alert($('#HubAddress').val());
+            //alert($('#HubAddress').val());
             if ($('#optionsRadios2').is(":checked")) {
                 receiverAddress = $("<input>").attr("type", "hidden").attr("name", "receiverAddress").val($('#HubAddress').val());
                 receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($('#HubDistrictId').val());
@@ -510,7 +511,7 @@ body {
                     bootbox.alert("You should have at least one item in your cart to submit orders");
                     return;
                 }
-                alert("submit form");
+                //alert("submit form");
                 $('#toBeSubmit').submit();
             }
         });
@@ -898,7 +899,23 @@ body {
                                         </ul>-->
                                                     </div>*@
                                             </div>
-                                        </div>          
+                                        </div>  
+                                        
+                                        <div class="control-group">
+                                            <label class="control-label" for="city">
+                                                Delivery Option</label>
+                                            <div class="controls">                                                
+                                                @Html.DropDownList("DeliveryOption", ViewBag.DeliveryOption as SelectList, "-- Choose a Delivery Option --", new { id = "ddlDeliveryOption", Class = "chzn-select", name = "DeliveryOption" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="city">
+                                                Payment Type</label>
+                                            <div class="controls">
+                                                @Html.DropDownList("OrderPaymentTypeId", ViewBag.OrderPaymentType as SelectList, "-- Choose a Payment Type --", new { id = "ddlOrderPaymentType", Class = "chzn-select", name = "OrderPaymentType" })
+                                            </div>
+                                        </div>
+                                                
                                         <div class="control-group">
                                             <label class="control-label" for="address">
                                                 Address(*)</label>
@@ -910,6 +927,7 @@ body {
                                         
                                         <div class="hubtype hide control-group" name="">
                                             <label class="control-label" for="allHubs">
+                                                Shop Category
                                             </label>
                                             <div class="controls">
                                                 @Html.DropDownList("HubCategory", ViewBag.HubCategories as SelectList, "-- Choose a Hub Type --", new { id = "ddlHubCategories", Class = "chzn-select" })
@@ -921,6 +939,8 @@ body {
                                             <div class="controls">
                                                 @Html.DropDownList("Hub", ViewBag.Hubs as SelectList, "-- Choose a Hub --", new { id = "ddlHub", Class = "chzn-select" })
                                             </div>
+                                            <label class="control-label" id="HubAddressLabel">
+                                            </label>
                                         </div>                       
                                         <div style="margin-left: 350px;">
                                             
@@ -1105,7 +1125,8 @@ body {
                         $('#HubWardId').val(data.WardId);
                         $('#HubLatitude').val(data.Latitude);
                         $('#HubLongitude').val(data.Longitude);
-                        $('#HubAddress').val(data.Address);                        
+                        $('#HubAddress').val(data.Address);
+                        $('#HubAddressLabel').html(data.Address);
                         //change dropdownlist value to match the value in HUb
                         //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
                         //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);

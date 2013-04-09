@@ -48,6 +48,7 @@ namespace SMDH.Controllers
             var order = context.Orders.Single(o => o.OrderId == orderId);
             ViewBag.Order = order;
             ViewBag.PriceTags = new SelectList(context.PriceTags.ToArray(), "PriceTagId", "PriceTagContent");
+            ViewBag.RequestId = order.RequestId;
             return View(pc);
 
         }
@@ -95,7 +96,16 @@ namespace SMDH.Controllers
                 context.PriceCategories.InsertOnSubmit(pc);
                 context.SubmitChanges();
 
-                return Json(new { success = true });
+                //Check if all request of order contains price
+                var myOrder = context.Orders.Single(o => o.OrderId == orderId);
+                var request = myOrder.Request;
+                bool canBeApproveForCustomerApprove = true;
+                foreach (var order in request.ValidOrders)
+                {
+                    canBeApproveForCustomerApprove &= (order.PriceCategories.Count != 0);
+                }
+
+                return Json(new { success = true, canBeApprove = canBeApproveForCustomerApprove });
             }
             catch (Exception)
             {
@@ -169,16 +179,26 @@ namespace SMDH.Controllers
         public ActionResult Remove(int id)
         {
             try
-            {
+            {                
                 var pcs = context.PriceCategories.Single(pc => pc.PriceCategoryId == id);
+                int orderId = pcs.OrderId.Value;
                 context.PriceCategories.DeleteOnSubmit(pcs);
                 context.SubmitChanges();
-                return Json(new { success = true });
+                //Check if all request of order contains price
+                var myOrder = context.Orders.Single(o => o.OrderId == orderId);
+                var request = myOrder.Request;
+                bool canBeApproveForCustomerApprove = true;
+                foreach (var order in request.ValidOrders)
+                {
+                    canBeApproveForCustomerApprove &= (order.PriceCategories.Count != 0);
+                }
+
+                return Json(new { success = true, canBeApprove = canBeApproveForCustomerApprove });                
             }
             catch (Exception)
             {
                 throw;
-                return Json(new { success = false });
+                return Json(new { success = false, canBeApprove = false });
             }
         }
 

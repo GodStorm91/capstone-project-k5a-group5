@@ -9,7 +9,7 @@ using System.Web.Routing;
 using System.Web.Security;
 //using SMDH.Mailers;
 using SMDH.Models;
-using Mvc.Mailer;
+//using Mvc.Mailer;
 
 namespace SMDH.Controllers
 {

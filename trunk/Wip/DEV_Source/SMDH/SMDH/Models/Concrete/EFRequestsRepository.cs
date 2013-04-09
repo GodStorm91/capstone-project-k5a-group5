@@ -43,6 +43,8 @@ namespace SMDH.Models.Concrete
                         break;
                     case (int)Statuses.RequestStatus.Approved:
                         validOrderStatuses.Add((int)OrderStatus.Approved);
+                        validOrderStatuses.Add((int)OrderStatus.New);
+                        validOrderStatuses.Add((int)OrderStatus.Requested);
                         break;
                     case (int)Statuses.RequestStatus.PlannedForCollecting:
                         validOrderStatuses.Add((int)OrderStatus.PlannedForCollecting);
