@@ -1,0 +1,42 @@
+﻿@model SMDH.Models.Request
+@{
+    Layout = null;
+}
+
+<div class="modal-body" style="height: 400px;">
+    @using (Html.BeginForm("SendNote", "Requests", FormMethod.Post, new { id = "note-form", Enctype = "multipart/form-data", Class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="control-group">
+            <label class="control-label">
+                Note
+            </label>
+            <div class="controls">
+                @Html.HiddenFor(model => model.RequestId)
+                @Html.TextAreaFor(model => model.Note)
+                @Html.ValidationMessageFor(model => model.Note)
+            </div>
+        </div>
+        
+    }
+</div>
+<div class="modal-footer">
+    <input id="btnSubmit" type="submit" class="btn btn-primary" value="Submit" />
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Cancel</button>
+</div>
+
+<script>
+    $('#btnSubmit').click(function () {
+        $('#note-form').submit();
+        $.post("/Customer/Requests/RejectForRepricing/" + @Model.RequestId, function (result) {
+            if (result.success) {
+                $.blockUI();
+                window.location.reload();
+            } else {
+                bootbox.alert('Failed to reject this request.');
+            }
+        });
+    });
+</script>
+
