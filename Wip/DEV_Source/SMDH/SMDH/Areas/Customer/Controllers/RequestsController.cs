@@ -23,6 +23,88 @@ namespace SMDH.Areas.Customer.Controllers
         {
             _repository = requestRepository;
         }
+
+        public ActionResult AddOrderToRequest(int customerId, int requestId)
+        {
+            EFProductsRepository productrepository = new EFProductsRepository();
+            var products = productrepository.GetProductsByCustomerId(customerId);
+            ViewBag.CompanyInfo = context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
+            ViewBag.HubCategories = new SelectList(context.HubCategories.Where(o => o.isActive).ToArray(), "HubCategoryId", "HubName");
+            ViewBag.Hub = new SelectList(new List<SMDH.Models.Hub>());
+            ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
+            ViewBag.District = new SelectList(new List<District>());
+            ViewBag.Ward = new SelectList(new List<Ward>());
+            ViewBag.Items = products;
+            ViewBag.RequestId = requestId;
+            return View(products);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList, string pricesList, string receiverName, string receiverAddress,
+            int receiverAddressWardId, int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
+             int customerId, int requestId, int hubId = -1)
+        {
+            EFOrdersRepository _repository = new EFOrdersRepository();
+            EFItemsRepository itemRepo = new EFItemsRepository();
+            Order order = new Order();
+            int[] itemsListArr = parseStringToList(itemsList);
+            int[] quantitiesListArr = parseStringToList(quantitiesList);
+            int[] priceListArr = parseStringToList(pricesList);
+            int toBeCollectedAmount = 0;
+            for (int i = 0; i < itemsListArr.Length; i++)
+            {
+                toBeCollectedAmount += context.Products.Single(p => p.ProductId == itemsListArr[i]).ProductPrice.Value * quantitiesListArr[i];
+            }
+            order.AmountToBeCollectedFromReceiver = toBeCollectedAmount;
+            order.DeliveryTypeId = deliveryType;
+            order.ReceiverAddress = receiverAddress;
+            order.ReceiverAddressDistrictId = receiverAddressDistrictId;
+            order.ReceiverAddressWardId = receiverAddressWardId;
+            order.ReceiverMail = receiverEmail;
+            order.ReceiverPhone = receiverPhone;
+            order.ReceiverName = receiverName;
+            order.Latitude = latitude;
+            order.Longitude = longitude;
+            order.DeliveryOptionId = 1;
+            order.OrderPaymentTypeId = 1;
+            order.OrderStatus = (int)OrderStatus.New;
+            order.CustomerId = customerId;
+            order.CreatedDate = DateTime.Now;
+            if (hubId != -1)
+            {
+                order.HubId = hubId;
+            }
+
+
+            //user want to deliver to Hub so a passcode must be generated
+            if (hubId != -1)
+            {
+                string passCode = Utilities.Utilities.CreateRandomPassword(7);
+                order.Passcode = passCode;
+            }
+
+            if (_repository.ConfirmAdd(order))
+            {
+                for (int i = 0; i < itemsListArr.Length; i++)
+                {
+                    Item item = new Item();
+                    item.OrderId = order.OrderId;
+                    item.Price = priceListArr[i];
+                    item.ProductId = itemsListArr[i];
+                    item.Quantity = quantitiesListArr[i];
+                    item.Name = context.Products.Single(p => p.ProductId == itemsListArr[i]).Name;
+                    item.Size = context.Products.Single(p => p.ProductId == itemsListArr[i]).Size;
+                    item.Weight = context.Products.Single(p => p.ProductId == itemsListArr[i]).ProductWeight;
+
+                    if (!itemRepo.Add(item))
+                    {
+                        return RedirectToAction("AddOrders/" + requestId);
+                    }
+                }
+            }
+            return RedirectToAction("AddOrders/" + requestId);
+            //return View(order);
+        }
         //
         // GET: /CRCustomer/
         public ViewResult Index()
@@ -56,7 +138,7 @@ namespace SMDH.Areas.Customer.Controllers
                                     break;
                                 case "canceled": statuses.Add((int)RequestStatus.Canceled);
                                     break;
-                                case "draft":  statuses.Add((int)RequestStatus.Draft);
+                                case "draft": statuses.Add((int)RequestStatus.Draft);
                                     break;
                             }
                         }
@@ -114,21 +196,21 @@ namespace SMDH.Areas.Customer.Controllers
             //    if (request != null)
             //    {
             //        ViewBag.Customer = userInfo.Customer.CompanyName;
-                    return View(request);
+            return View(request);
             //    }
             //}
             throw new HttpException(404, "Not found!");
         }
 
         [HttpPost]
-        public ActionResult ConfirmCreate(int collectionAddressId,string note, HttpPostedFileBase excelFile)
+        public ActionResult ConfirmCreate(int collectionAddressId, string note, HttpPostedFileBase excelFile)
         {
             try
             {
                 var request = new Request
                 {
-                    CustomerId = context.UserInfos.Single(uf => uf.UserId == 
-                        (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey).CustomerId.Value,                    
+                    CustomerId = context.UserInfos.Single(uf => uf.UserId ==
+                        (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey).CustomerId.Value,
                     RequestStatus = (int)RequestStatus.Draft,
                     CreatedByUserId = (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey,
                     CollectionAddressId = collectionAddressId,
@@ -136,7 +218,7 @@ namespace SMDH.Areas.Customer.Controllers
 
                 };
                 if (_repository.Create(request))
-                {                    
+                {
                     if (excelFile != null)
                     {
                         string savedFileName = "~/Excel/" + excelFile.FileName;
@@ -234,7 +316,7 @@ namespace SMDH.Areas.Customer.Controllers
 
                                             if (string.IsNullOrEmpty(name) == false && string.IsNullOrEmpty(quantity) == false
                                                 && string.IsNullOrEmpty(isFragile) == false && string.IsNullOrEmpty(hasHighValue) == false
-                                                && string.IsNullOrEmpty(size) == false && string.IsNullOrEmpty(weight) == false && string.IsNullOrEmpty(category) == false && string.IsNullOrEmpty(price) == false) 
+                                                && string.IsNullOrEmpty(size) == false && string.IsNullOrEmpty(weight) == false && string.IsNullOrEmpty(category) == false && string.IsNullOrEmpty(price) == false)
                                             {
                                                 Product product = new Product();
                                                 product.ProductCategory = category;
@@ -349,7 +431,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult Create()
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);            
+            ViewBag.PossibleCollectionAddresses = userInfo.Customer.CustomerAddresses.Where(ca => ca.IsActive);
             return View();
         }
 
@@ -571,7 +653,7 @@ namespace SMDH.Areas.Customer.Controllers
                 return Json(new { success = false });
             }
         }
-       
+
         public ActionResult Approve(int id)
         {
             try
@@ -623,7 +705,7 @@ namespace SMDH.Areas.Customer.Controllers
                 return Json(new { success = false });
                 throw;
             }
-            
+
         }
 
         private int[] parseStringToList(string input)
