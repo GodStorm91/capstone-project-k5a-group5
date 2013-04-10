@@ -60,6 +60,8 @@ namespace SMDH.Models.Concrete
             pro.ProductWeight = product.ProductWeight;
             pro.ProductPrice = product.ProductPrice;
             pro.ImageURL = product.ImageURL;
+            pro.ProductCategory = product.ProductCategory;
+            pro.IsPermanent = product.IsPermanent;
             pro.Active = product.Active;
             pro.Description = product.Description;
             context.SubmitChanges();

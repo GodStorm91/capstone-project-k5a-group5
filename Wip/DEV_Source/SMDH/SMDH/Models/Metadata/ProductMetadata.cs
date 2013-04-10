@@ -41,7 +41,6 @@ namespace SMDH.Models
         public int CustomerId { get; set; }
 
         [DisplayName("IsPermanent")]
-        [Required(ErrorMessage = "The IsPermanent of Product is required.")]
         public bool IsPermanent { get; set; }
 
         [DisplayName("ImageURL")]
@@ -51,7 +50,6 @@ namespace SMDH.Models
         public string Description { get; set; }
 
         [DisplayName("Is Active")]
-        [Required]
         public bool Active { get; set; }	
     }
 }

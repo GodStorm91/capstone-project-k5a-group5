@@ -5,7 +5,7 @@
             Name
         </label>
         <div class="controls">
-            @Html.TextBoxFor(model => model.Name, new { placeholder="Name" })
+            @Html.TextBoxFor(model => model.Name, new { placeholder = "Name" })
             @Html.ValidationMessageFor(model => model.Name)
         </div>
     </div>
@@ -23,7 +23,7 @@
             Category
         </label>
         <div class="controls">
-            @Html.TextBoxFor(model => model.ProductCategory, new { placeholder="Category" })
+            @Html.TextBoxFor(model => model.ProductCategory, new { placeholder = "Category" })
             @Html.ValidationMessageFor(model => model.ProductCategory)
         </div>
     </div>
@@ -65,10 +65,20 @@
     </div>
     <div class="control-group">
         <label class="control-label">
+            IsPermanent
+        </label>
+        <div class="controls">
+            @Html.CheckBoxFor(model => model.IsPermanent)
+            @Html.ValidationMessageFor(model => model.IsPermanent)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
             Active
         </label>
         <div class="controls">
             @Html.CheckBoxFor(model => model.Active)
+            @Html.ValidationMessageFor(model => model.Active)
         </div>
     </div>
 </div>
