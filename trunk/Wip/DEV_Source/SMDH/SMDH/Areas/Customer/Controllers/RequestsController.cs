@@ -727,22 +727,22 @@ namespace SMDH.Areas.Customer.Controllers
             return View(request);
         }
         [HttpPost]
-        public ActionResult SendNote(Request rq)
+        public ActionResult SendNote(Request rq, FormCollection formvalues)
         {
             try
             {
                 var request = context.Requests.Single(r => r.RequestId == rq.RequestId);
                 if (ModelState.IsValid)
                 {
-                    request.Note += "Customer: " + rq.Note + "<br/>";
+                    request.Note = formvalues["note"];
                     context.SubmitChanges();
-                    return Json(new { success = true });
+                    return RedirectToAction("Index", "Dashboard");
                 }
-                return Json(new { success = false });
+                return RedirectToAction("Index", "Dashboard");
             }
             catch (Exception e)
             {
-                return Json(new { success = false });
+                return RedirectToAction("Index", "Dashboard");
             }
 
         }
