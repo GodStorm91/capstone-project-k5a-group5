@@ -1493,6 +1493,31 @@ namespace SMDH.Controllers
 
             throw new HttpException(404, "Not found!");
         }
+
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                var plan = context.Plans.Single(p => p.PlanId == id);
+                List<int> orders = new List<int>();
+                if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                {
+                    foreach (var cargo in plan.Cargos)
+                    {
+                        orders.Add(cargo.OrderId.Value);
+                    }
+
+                    var ordersList = context.Orders.Where(o => orders.ToArray().Contains(o.OrderId));
+                    return View(ordersList);
+                }
+                return View();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
         
 
         //public ActionResult

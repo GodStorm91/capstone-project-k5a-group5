@@ -350,6 +350,19 @@ namespace SMDH.Controllers
             }
         }
 
+        public ActionResult MarkOrderAsReturned(int id)
+        {
+            var order = _repository.Find(id);
+            if (!_repository.MarkAsReturned(order))
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
+        }
+
         private int[] parseStringToList(string input)
         {
             string[] splitArr = input.Split(',');

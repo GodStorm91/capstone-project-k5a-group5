@@ -77,13 +77,14 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-
-                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                    <a href="/Plans/Edit/@item.PlanId" class="btn btn-mini btn-primary"><i class="icon-pencil"></i>Edit
                     </a>
 
                     <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
                     </a>
 
+                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View
+                    </a>
                 </td>
             </tr>
                     break;
@@ -132,10 +133,13 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                    <a href="/Plans/Edit/@item.PlanId" class="btn btn-mini btn-primary"><i class="icon-pencil"></i>Edit
                     </a>
 
                     <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                    </a>
+
+                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View
                     </a>
                 </td>
             </tr>

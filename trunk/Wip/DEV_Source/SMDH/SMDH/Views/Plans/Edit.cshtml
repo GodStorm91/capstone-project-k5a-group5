@@ -1,0 +1,9 @@
+﻿@model IEnumerable<SMDH.Models.Order>
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<div id="divTable">
+    @Html.Partial("OrdersTable", Model)
+</div>
