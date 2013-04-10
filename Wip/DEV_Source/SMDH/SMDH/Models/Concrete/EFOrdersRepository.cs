@@ -277,7 +277,22 @@ namespace SMDH.Models.Concrete
 
         public bool MarkAsReturned(Order order)
         {
-            throw new NotImplementedException();
+            try
+            {
+                order = context.Orders.Single(o => order.OrderStatus == o.OrderStatus);
+                if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
+                {
+                    order.OrderStatus = (int)OrderStatus.Returned;
+                }
+
+                context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
 
         public bool MarkAsDelivered(Order order)
@@ -447,6 +462,8 @@ namespace SMDH.Models.Concrete
             {
                 foreach (var order in orders)
                 {
+                    var myOrder = context.Orders.Single(o => o.OrderId == order.OrderId);
+                    myOrder.OrderStatus = (int)OrderStatus.PlannedForDelivering;
                     if (!AddToPlan(plan, order, false)) return false;
                 }
 
@@ -484,6 +501,8 @@ namespace SMDH.Models.Concrete
                 throw;
             }
         }
+
+      
     }
 
 }

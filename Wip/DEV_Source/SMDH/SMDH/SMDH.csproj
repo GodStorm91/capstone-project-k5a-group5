@@ -1505,6 +1505,8 @@
     <Content Include="Views\PriceTag\Create.cshtml" />
     <Content Include="Views\PriceTag\_CreateOrEdit.cshtml" />
     <Content Include="Views\Plans\Details_ForEdit.cshtml" />
+    <Content Include="Views\Plans\Edit.cshtml" />
+    <Content Include="Views\Plans\OrdersTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
