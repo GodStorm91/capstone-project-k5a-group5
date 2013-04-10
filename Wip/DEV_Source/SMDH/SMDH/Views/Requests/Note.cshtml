@@ -12,9 +12,10 @@
                 Note
             </label>
             <div class="controls">
-                @Html.HiddenFor(model => model.RequestId)
+                <input type="text" name="note" id="note" />
+@*                @Html.HiddenFor(model => model.RequestId)
                 @Html.TextAreaFor(model => model.Note)
-                @Html.ValidationMessageFor(model => model.Note)
+                @Html.ValidationMessageFor(model => model.Note)*@
             </div>
         </div>
         

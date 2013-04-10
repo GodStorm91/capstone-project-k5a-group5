@@ -3,7 +3,7 @@
     Layout = null;
 }
 
-<div class="modal-body" style="height: 400px;">
+<div class="modal-body" style="height: 35px;overflow:hidden;">
     @using (Html.BeginForm("SendNote", "Requests", FormMethod.Post, new { id = "note-form", Enctype = "multipart/form-data", Class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
@@ -12,16 +12,17 @@
                 Note
             </label>
             <div class="controls">
+                <textarea id="note" name="note"></textarea>
                 @Html.HiddenFor(model => model.RequestId)
-                @Html.TextAreaFor(model => model.Note)
-                @Html.ValidationMessageFor(model => model.Note)
+                @* @Html.TextAreaFor(model => model.Note)
+                @Html.ValidationMessageFor(model => model.Note)*@
             </div>
         </div>
         
     }
 </div>
 <div class="modal-footer">
-    <input id="btnSubmit" type="submit" class="btn btn-primary" value="Submit" />
+    <input id="btnSubmit" type="submit" class="btn btn-primary" value="Reject" />
     <button class="btn" data-dismiss="modal" aria-hidden="true">
         Cancel</button>
 </div>

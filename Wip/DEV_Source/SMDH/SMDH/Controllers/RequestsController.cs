@@ -124,7 +124,7 @@ namespace SMDH.Controllers
                     {
 
                     }
-                   
+
                 }
                 return View("CreateSuccessful");
             }
@@ -183,7 +183,7 @@ namespace SMDH.Controllers
         public ActionResult Approve(int id)
         {
             var request = _repository.Find(id);
-            if (!(request.RequestStatus ==(int) RequestStatus.New || request.RequestStatus == (int) RequestStatus.RePricing)) return Json(new { success = false });
+            if (!(request.RequestStatus == (int)RequestStatus.New || request.RequestStatus == (int)RequestStatus.RePricing)) return Json(new { success = false });
             if (_repository.Approve(request))
             {
                 return Json(new { success = true });
@@ -294,8 +294,34 @@ namespace SMDH.Controllers
             {
                 return Json(new { success = false });
                 throw;
-            }           
-            
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Note(int requestid)
+        {
+            var request = context.Requests.Single(r => r.RequestId == requestid);
+            return View(request);
+        }
+        [HttpPost]
+        public ActionResult SendNote(Request rq)
+        {
+            try
+            {
+                var request = context.Requests.Single(r => r.RequestId == rq.RequestId);
+                if (ModelState.IsValid)
+                {
+                    request.Note += "Tiktak: " + rq.Note + "<br/>";
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false });
+            }
+
         }
     }
 }

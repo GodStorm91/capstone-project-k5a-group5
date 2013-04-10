@@ -207,9 +207,9 @@
                     $('#totalPriceOrder' + $('#orderId').val()).html("Total Price: " + accounting.formatNumber(totalPrice) + " VND");
 
                     if (data.canBeApprove) {
-                        $('#groupBtn').html('<a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(' + $('#requestId').val() + ')">Approve Request </a>')
-                    } else {
                         $('#groupBtn').html('<a href="#" role="button" class="btn btn-inverse pull-right" data-toggle="modal" onclick="rejectRequest(' + $('#requestId').val() + ')">Reject Request </a>')
+                    } else {
+                        $('#groupBtn').html('<a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(' + $('#requestId').val() + ')">Approve Request </a>')
                     }
 
                 });
@@ -331,7 +331,7 @@
                     //$('#priceCategoryTbl' + $('#orderId').val()).html(strTable2);                    
                     $('#totalPriceOrder' + $('#orderId').val()).html("Total Price: " + accounting.formatNumber(totalPrice) + " VND");
                     if (data.canBeApprove) {
-                        $('#groupBtn').html('<a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(' + $('#requestId').val() +')">Approve Request </a>')
+                        $('#groupBtn').html('<a href="#" role="button" class="btn btn-primary pull-right" data-toggle="modal" onclick="approveRequest(' + $('#requestId').val() + ')">Approve Request </a>')
                     } else {
                         $('#groupBtn').html('<a href="#" role="button" class="btn btn-inverse pull-right" data-toggle="modal" onclick="rejectRequest(' + $('#requestId').val() + ')">Reject Request </a>')
                     }
@@ -342,6 +342,6 @@
                 bootbox.alert('This price category can not delete.');
             }
         });
-    };   
+    };
 
 </script>
