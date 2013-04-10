@@ -34,6 +34,7 @@ namespace SMDH.Models.Abstract
          bool MarkAsDelivered(Order order);
          bool MarkAsDelivered(Order order, bool commit);
          bool MarkOrderAsFinished(Order order);
+         bool MarkAsReturnedReducePrice(Order order);
          bool AddToPlan(Plan plan, Order order, bool commit);
          bool AddToPlan(Plan plan, Order order);
          bool RemoveFromPlan(Plan plan, Order order);

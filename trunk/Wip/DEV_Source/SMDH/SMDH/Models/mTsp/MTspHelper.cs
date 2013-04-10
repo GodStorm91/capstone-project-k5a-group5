@@ -240,9 +240,9 @@ namespace SMDH.Models.mTsp
             double tempDistance = 0;
             for (int i = 0; i < waypoints.Count - 1; i++)
             {
-                RouterPoint rpoint1 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, waypoints[i]);
-                RouterPoint rpoint2 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, waypoints[i + 1]);
-                OsmSharpRoute tempRoute = router.Calculate(OsmSharp.Routing.Core.VehicleEnum.Pedestrian, rpoint1, rpoint2);
+                RouterPoint rpoint1 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i]);
+                RouterPoint rpoint2 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i + 1]);
+                OsmSharpRoute tempRoute = router.Calculate(OsmSharp.Routing.Core.VehicleEnum.Car, rpoint1, rpoint2);
                 tempTime += tempRoute.TotalTime;
                 tempDistance += tempRoute.TotalDistance;                
             }

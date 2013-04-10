@@ -53,7 +53,19 @@
                     @String.Format("{0:N0}",item.AmountToBeCollectedFromReceiver) VNĐ
                 </td>                               
                 <td>
-                    <span class="label label-info">@((OrderStatus)(item.OrderStatus))</span>
+                    @if (item.OrderStatus == (int)OrderStatus.Returned)
+                    {
+                        <span class="label label-danger">@((OrderStatus)(item.OrderStatus))</span>
+                    }
+                    else if (item.OrderStatus == (int)OrderStatus.Delivered || item.OrderStatus == (int)OrderStatus.Delivering)
+                    {
+                        <span class="label label-success">@((OrderStatus)(item.OrderStatus))</span>
+                    }
+                    else
+                    {
+                        <span class="label label-info">@((OrderStatus)(item.OrderStatus))</span>
+                    }
+                    
                    @* @if (item.OrderStatus == (int)OrderStatus.ToBeReturned)
                     {
                         <a class="btn btn-success btn-mini" href="#" onclick="markAsReturned(@item.OrderId)">
@@ -72,12 +84,21 @@
                 </td>
                 <td class=" action-column">
                     
-                    @if (!(item.OrderStatus == (int)OrderStatus.Delivering || item.OrderStatus == (int)OrderStatus.Delivered))
+                    @if (!(item.OrderStatus == (int)OrderStatus.Delivering || item.OrderStatus == (int)OrderStatus.Delivered) &&
+                        item.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                     {
-                        <a href="#" class="btn btn-mini btn-danger" onclick="cancelOrder(@item.OrderId)"><i class="icon-remove"></i>Canceled
+                        <a href="#" class="btn btn-mini btn-danger" onclick="cancelOrder(@item.OrderId)"><i class="icon-remove"></i>Returned
                     </a>
-                        <a href="/Orders/MarkOrderAsFinished/@item.OrderId" class="btn btn-mini btn-success" onclick="markOrderAsFinished(@item.OrderId)"><i class="icon-search"></i>Mark As Finished
+                        <a href="#" class="btn btn-mini btn-success" onclick="markOrderAsFinished(@item.OrderId)"><i class="icon-search"></i>Finished
                     </a>
+                    }
+                    
+                    @if (item.OrderStatus == (int)OrderStatus.Returned)
+                    {
+                        <a href="#" class="btn btn-mini btn-info" onclick="editPrice(@item.OrderId)"><i class="icon-wrench"></i>Edit Price
+                        </a>
+                        <a href="#" class="btn btn-mini btn-success" onclick="approvePrice(@item.OrderId)"><i class="icon-ok-sign"></i>Approve Price
+                        </a>
                     }
                     
                 </td>
@@ -87,7 +108,17 @@
 </table>
 <script type="text/javascript">
     var cancelOrder = function (orderId) {
-        $.post("/Orders/MarkOrderAsReturned", { orderId: orderId }, function (data) {
+        $.post("/Orders/MarkOrderAsReturned", { id: orderId }, function (data) {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                bootbox.alert("Can't cancel order!");
+            }
+        });
+    }
+
+    var approvePrice = function (orderId) {
+        $.post("/Orders/MarkOrderAsReturnedReducePrice", { id: orderId }, function (data) {
             if (data.success) {
                 window.location.reload();
             } else {
@@ -97,7 +128,7 @@
     }
 
     var markOrderAsFinished = function (orderId) {
-        $.post("/Orders/MarkOrderAsFinished/", { orderId: orderId }, function (data) {
+        $.post("/Orders/MarkOrderAsFinished/", { id: orderId }, function (data) {
             if (data.success) {
                 window.location.reload();
             } else {
@@ -105,6 +136,24 @@
             }
         });
     }
+
+    var editPrice = function (modelId) {
+        $('#createModal').html('');
+        $.post('/' + "PriceCategories" + '/AddPriceCategory/', { orderId: modelId }, function (data) {
+            $('#editModal').html(data);
+            $("form").removeData("validator");
+            $("form").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse("form");
+            $('.editor-field').keypress(function (e) {
+                if (e.which == 13) {
+                    $(this).parents('form').submit();
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            $('#editModal').modal();
+        });
+    };
 
     
 </script>

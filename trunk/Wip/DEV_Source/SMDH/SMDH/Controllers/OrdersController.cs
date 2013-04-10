@@ -363,6 +363,19 @@ namespace SMDH.Controllers
             }
         }
 
+        public ActionResult MarkOrderAsReturnedReducePrice(int id)
+        {
+            var order = _repository.Find(id);
+            if (!_repository.MarkAsReturnedReducePrice(order))
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
+        }
+
         private int[] parseStringToList(string input)
         {
             string[] splitArr = input.Split(',');

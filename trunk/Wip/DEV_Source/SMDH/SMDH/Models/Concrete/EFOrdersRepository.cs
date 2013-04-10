@@ -279,7 +279,7 @@ namespace SMDH.Models.Concrete
         {
             try
             {
-                order = context.Orders.Single(o => order.OrderStatus == o.OrderStatus);
+                order = context.Orders.Single(o => order.OrderId == o.OrderId);
                 if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                 {
                     order.OrderStatus = (int)OrderStatus.Returned;
@@ -493,6 +493,43 @@ namespace SMDH.Models.Concrete
 
                 context.SubmitChanges();
 
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
+        public bool MarkAsReturnedReducePrice(Order order)
+        {
+            try
+            {
+                if (order.OrderStatus == (int)OrderStatus.Returned)
+                {
+                    order.OrderStatus = (int)OrderStatus.ReturnedReducePrice; 
+                    context.SubmitChanges();
+                    return true;
+                }
+
+                return false;
+               
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
+        public bool UpdateOrderFee(int orderId)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == orderId);
+                order.Fee = (int)order.PriceCategories.Sum(p => p.Price);
+                context.SubmitChanges();
                 return true;
             }
             catch (Exception)

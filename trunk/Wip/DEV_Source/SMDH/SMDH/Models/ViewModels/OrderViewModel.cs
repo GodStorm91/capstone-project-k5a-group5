@@ -44,6 +44,7 @@ namespace SMDH.Models.ViewModels
         {
             var context = new SMDHDataContext();
             EFHubsRepository hubRepo = new EFHubsRepository();
+            
             OrderId = order.OrderId;
             ItemNo = order.Items.Count;
             RequestId = !order.RequestId.HasValue ? -1 : order.RequestId.Value;
@@ -64,7 +65,7 @@ namespace SMDH.Models.ViewModels
             Note = order.Note;
             DueDateString = String.Format("{0:dd-MM-yyyy hh:mm tt}", DueDate);
             CreatedDate = string.Format("{0:dd/MM/yyyy HH:mm:ss}", order.CreatedDate);
-            DeliverAddress = order.HubId != null ? hubRepo.Find(order.HubId.Value).Address : ReceiverAddress;
+            DeliverAddress = order.HubId != null ? AddressHelper.GetFullAddress(context.Hubs.Single(h => h.HubId == order.HubId)) : ReceiverAddress;
             Customer = !order.RequestId.HasValue ? context.Customers.Single(c=> c.CustomerId == order.CustomerId).DisplayName : order.Request.Customer.DisplayName;
             AddressFromWard = AddressHelper.GetAddressFromWard(order);
         }

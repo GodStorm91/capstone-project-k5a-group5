@@ -30,6 +30,8 @@ namespace SMDH.Models.Abstract
         bool MarkCollectionPlanFinished(Plan plan);
 
         bool MarkDeliveryPlanFinished(Plan plan);
+
+        bool MarkAsReturned(Plan plan);
       
     }
 }

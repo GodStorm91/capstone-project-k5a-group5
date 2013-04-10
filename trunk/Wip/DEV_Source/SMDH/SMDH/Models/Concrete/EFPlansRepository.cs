@@ -227,6 +227,7 @@ namespace SMDH.Models.Concrete
                         else if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                         {
                             order.OrderStatus = (int)OrderStatus.Delivered; //Mark this status as Delivered
+                            order.DeliveryDate = DateTime.Now;
                         }                     
                     
                     }
@@ -240,6 +241,27 @@ namespace SMDH.Models.Concrete
             {
                 return false;
             }
+        }
+
+        public bool MarkAsReturned(Plan plan)
+        {
+            plan = context.Plans.Single(p => p.PlanId == plan.PlanId);
+            if (plan.Status != (int)Statuses.DeliveryPlanStatus.Assigned) return false;
+
+            foreach (var cargo in plan.Cargos)
+            {
+
+                var order = cargo.Order;                
+                if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
+                {
+                    order.OrderStatus = (int)OrderStatus.Returned; //Mark this status as Delivered                    
+                }
+
+            }
+            plan.Status = (int)PlanStatus.Finished;
+            plan.CreatedDate = DateTime.Now;
+            context.SubmitChanges();
+            return true;
         }
     }
 }
