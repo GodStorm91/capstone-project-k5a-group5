@@ -35,6 +35,7 @@ namespace SMDH.Models.Statuses
         Returned = 12,
         WaitingForReturn = 13, //at hub
         DeliveringToHub = 14, // at hub
+        ReturnedReducePrice = 16,
         Expired = 15
     }
 

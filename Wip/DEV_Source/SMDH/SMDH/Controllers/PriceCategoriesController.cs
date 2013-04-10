@@ -184,6 +184,11 @@ namespace SMDH.Controllers
                 int orderId = pcs.OrderId.Value;
                 context.PriceCategories.DeleteOnSubmit(pcs);
                 context.SubmitChanges();
+                EFOrdersRepository orderRepo = new EFOrdersRepository();
+                if (!orderRepo.UpdateOrderFee(orderId))
+                {
+                    return Json(new { success = false, canBeApprove = false });
+                }
                 //Check if all request of order contains price
                 var myOrder = context.Orders.Single(o => o.OrderId == orderId);
                 var request = myOrder.Request;
@@ -197,8 +202,8 @@ namespace SMDH.Controllers
             }
             catch (Exception)
             {
-                throw;
                 return Json(new { success = false, canBeApprove = false });
+                throw;                
             }
         }
 

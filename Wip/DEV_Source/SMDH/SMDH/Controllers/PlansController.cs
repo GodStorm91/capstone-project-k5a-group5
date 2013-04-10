@@ -1391,6 +1391,24 @@ namespace SMDH.Controllers
             return Json(new { success = false });
         }
 
+        public ActionResult MarkAsReturned(int planId)
+        {
+            var plan = context.Plans.Single(p => p.PlanId == planId);
+            if (plan.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+            {
+                if (_repository.MarkAsReturned(plan))
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+
+            return Json(new { success = false });
+        }
+
         public ActionResult Details_ForEdit(int id)
         {
             
@@ -1508,6 +1526,7 @@ namespace SMDH.Controllers
                     }
 
                     var ordersList = context.Orders.Where(o => orders.ToArray().Contains(o.OrderId));
+                    ViewBag.PlanId = id;
                     return View(ordersList);
                 }
                 return View();
