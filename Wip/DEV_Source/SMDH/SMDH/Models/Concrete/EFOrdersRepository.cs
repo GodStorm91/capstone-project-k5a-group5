@@ -485,6 +485,7 @@ namespace SMDH.Models.Concrete
                 if (order.DeliveryTypeId == (int)DeliveryTypeId.Buffer)
                 {
                     order.OrderStatus = (int)OrderStatus.Delivering;
+                    order.DueDate = DateTime.Now.AddDays(7);
                 }
                 else
                 {
@@ -530,6 +531,36 @@ namespace SMDH.Models.Concrete
                 var order = context.Orders.Single(o => o.OrderId == orderId);
                 order.Fee = (int)order.PriceCategories.Sum(p => p.Price);
                 context.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
+        public bool ChangeOrderStatus(Order order)
+        {
+            try
+            {
+                if (order.OrderStatus == (int)OrderStatus.ReDeliverRequest)
+                {
+                    order.OrderStatus = (int)OrderStatus.RePricingApproveRequest;
+                }
+
+                if (order.OrderStatus == (int)OrderStatus.CustomerExtend)
+                {
+                    order.OrderStatus = (int)OrderStatus.Delivering;
+                }
+
+                if (order.OrderStatus == (int)OrderStatus.Returned)
+                {
+                    order.OrderStatus = (int)OrderStatus.ReturnedReducePrice;
+                }
+
+                context.SubmitChanges();
+
                 return true;
             }
             catch (Exception)

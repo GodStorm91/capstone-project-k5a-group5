@@ -36,6 +36,10 @@ namespace SMDH.Models.Statuses
         WaitingForReturn = 13, //at hub
         DeliveringToHub = 14, // at hub
         ReturnedReducePrice = 16,
+        CustomerExtend = 17,
+        ReDeliverRequest = 18,
+        ConfirmReturned = 19,
+        RePricingApproveRequest = 20,
         Expired = 15
     }
 

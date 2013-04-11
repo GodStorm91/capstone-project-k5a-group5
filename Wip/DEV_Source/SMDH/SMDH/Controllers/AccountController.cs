@@ -22,7 +22,7 @@ namespace SMDH.Controllers
         public virtual ActionResult LogOn()
         {
             var roles = Roles.GetRolesForUser(User.Identity.Name).ToList();
-            if (roles.Contains("Hub")) return Redirect("/Hub/");
+            if (roles.Contains("Hub")) return Redirect("/Hub/Dashboard");
             if (roles.Contains("Customer")) return Redirect("/Customer/Dashboard");
             if (roles.Contains("Office Staff")) return RedirectToAction("Index", "Dashboard");
             return View();

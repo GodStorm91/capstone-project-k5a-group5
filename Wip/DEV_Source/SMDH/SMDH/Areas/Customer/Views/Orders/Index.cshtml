@@ -503,6 +503,58 @@
         });
     }
 
+    var extendTime = function (orderId){
+        bootbox.confirm('Extend time this order ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/ExtendTime/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    var getOrderBack = function (orderId){
+        bootbox.confirm('Get back this order ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/GetOrderBack/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    var requestReDeliver = function (orderId){
+        bootbox.confirm('Request redeliver this order ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/RequestReDeliver/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    var confirmReturned = function (orderId){
+        bootbox.confirm('Confirm return this order ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/ConfirmReturned/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
     $('.report_range').daterangepicker({
         ranges: {
             'Today': ['today', 'today'],

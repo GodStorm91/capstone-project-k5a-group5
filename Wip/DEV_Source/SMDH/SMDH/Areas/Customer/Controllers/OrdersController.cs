@@ -68,6 +68,10 @@ namespace SMDH.Areas.Customer.Controllers
                                     break;
                                 case "rejected": statuses.Add((int)OrderStatus.Rejected);
                                     break;
+                                case "returnedreduceprice": statuses.Add((int)OrderStatus.ReturnedReducePrice);
+                                    break;
+                                case "expired": statuses.Add((int)OrderStatus.Expired);
+                                    break;
                             }
                         }
                     }
@@ -366,6 +370,74 @@ namespace SMDH.Areas.Customer.Controllers
             return View(orders);
         }
 
+        public ActionResult ExtendTime(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.Expired) return Json(new { success = false }) ;
+                order.OrderStatus = (int)OrderStatus.CustomerExtend;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+
+        public ActionResult GetOrderBack(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.Expired) return Json(new { success = false });
+                order.OrderStatus = (int)OrderStatus.WaitingForReturn;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult RequestReDeliver(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.ReturnedReducePrice) return Json(new { success = false });
+                order.OrderStatus = (int)OrderStatus.ReDeliverRequest;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult ConfirmReturned(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.ReturnedReducePrice) return Json(new { success = false });
+                order.OrderStatus = (int)OrderStatus.ConfirmReturned;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
 
         //public ActionResult Browse()
         //{
