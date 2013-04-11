@@ -7,6 +7,7 @@ using SMDH.Models.Abstract;
 using SMDH.Models;
 using SMDH.Models.ViewModels;
 using SMDH.Models.Statuses;
+using System.Web.Security;
 
 namespace SMDH.Areas.Customer.Controllers
 {
@@ -18,24 +19,27 @@ namespace SMDH.Areas.Customer.Controllers
         {
             _repository = productRepository;
         }
+
+        SMDHDataContext context = new SMDHDataContext();
         //
         // GET: /Customer/Products/
 
         public ViewResult Index()
         {
             var product = new List<Product>();
-            product = _repository.Products.Where(p => p.IsPermanent == true).ToList();
+            product = _repository.Products.Where(p => p.IsPermanent == true).OrderByDescending(p=>p.ProductId).ToList();
             return View(product);
         }
 
         [HttpPost]
         public ActionResult ConfirmCreate(Product product)
         {
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.Create(product);
+                    _repository.Create(product,userInfo.CustomerId.Value);
                     return RedirectToAction("Index");
                 }
             }

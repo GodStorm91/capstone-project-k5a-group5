@@ -42,9 +42,9 @@ namespace SMDH.Models.Concrete
             return true;
         }
 
-        public bool Create(Product product)
+        public bool Create(Product product, int customerid)
         {
-            product.CustomerId = 1;
+            product.CustomerId = customerid;
             product.IsPermanent = true;
             product.Active = true;
             context.Products.InsertOnSubmit(product);
@@ -61,7 +61,6 @@ namespace SMDH.Models.Concrete
             pro.ProductPrice = product.ProductPrice;
             pro.ImageURL = product.ImageURL;
             pro.ProductCategory = product.ProductCategory;
-            pro.IsPermanent = product.IsPermanent;
             pro.Active = product.Active;
             pro.Description = product.Description;
             context.SubmitChanges();
