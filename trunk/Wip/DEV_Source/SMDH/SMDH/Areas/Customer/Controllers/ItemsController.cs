@@ -68,7 +68,7 @@ namespace SMDH.Areas.Customer.Controllers
                 pro.Name = item.Name;
                 pro.ProductPrice = item.Price / item.Quantity;
                 pro.CustomerId = userInfo.CustomerId.Value;
-                productRepo.Create(pro);
+                productRepo.Create(pro,userInfo.CustomerId.Value);
                 item.ProductId = pro.ProductId;
                 ViewBag.Customer = userInfo.Customer.CompanyName;
                 ViewBag.Customer = "Test comp";

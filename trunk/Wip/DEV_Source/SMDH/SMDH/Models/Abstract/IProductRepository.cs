@@ -17,7 +17,7 @@ namespace SMDH.Models.Abstract
         Product Find(int productId);
 
         bool Remove(int productId);
-        bool Create(Product product);
+        bool Create(Product product,int customerid);
         bool Edit(Product product);
 
         List<Product> GetProductsByCustomerId(int customerId);
