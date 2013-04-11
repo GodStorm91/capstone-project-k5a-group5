@@ -17,10 +17,10 @@ namespace SMDH.Areas.Hub.Controllers
 
         public virtual ActionResult Index()
         {
-            //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             ////var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
             //----------------------------------------
-            List<Order> orders = context.Orders.Where(o => o.HubId== 1).ToList();
+            List<Order> orders = context.Orders.Where(o => o.HubId== userInfo.HubId).ToList();
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -43,7 +43,7 @@ namespace SMDH.Areas.Hub.Controllers
             //numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Collected).Count());
 
             //ViewBag.NumberOfRequests = numberOfRequestsList;
-            List<Order> listorders = context.Orders.Where(o => o.HubId == 1).ToList();
+            List<Order> listorders = context.Orders.Where(o => o.HubId == userInfo.HubId).ToList();
             var numberOfOrdersList = new List<int>
                 {
                     listorders.Count(o => o.OrderStatus == (int) HubStatus.SendingToHub),
@@ -107,8 +107,8 @@ namespace SMDH.Areas.Hub.Controllers
             //                amount = o.AmountToBeCollectedFromReceiver,
             //                duedate = o.DueDate
             //             }).Distinct().ToList();
-
-            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == 1); 
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.SendingToHub && o.HubId == userInfo.HubId); 
             
             foreach (var r in researchlist)
             {
@@ -131,7 +131,8 @@ namespace SMDH.Areas.Hub.Controllers
             //                  amount = o.AmountToBeCollectedFromReceiver,
             //                  duedate = o.DueDate
             //              }).Distinct().ToList();
-            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.InHub && o.HubId == 1);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.InHub && o.HubId == userInfo.HubId);
 
             foreach (var r in researchlist)
             {
@@ -154,8 +155,8 @@ namespace SMDH.Areas.Hub.Controllers
             //                  duedate = o.DueDate,
             //                  deliverydate = o.DeliveryDate
             //              }).Distinct().ToList();
-
-            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Delivered && o.HubId == 1);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Delivered && o.HubId == userInfo.HubId);
 
             foreach (var r in researchlist)
             {
@@ -177,7 +178,8 @@ namespace SMDH.Areas.Hub.Controllers
             //                  itemno = o.Items.Count,
             //                  duedate = o.DueDate
             //              }).Distinct().ToList();
-            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == 1);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.WaitingForReturn && o.HubId == userInfo.HubId);
 
             foreach (var r in researchlist)
             {
@@ -199,7 +201,8 @@ namespace SMDH.Areas.Hub.Controllers
             //                  itemno = o.Items.Count,
             //                  collecteddate = o.CollectedDate
             //              }).Distinct().ToList();
-            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Return && o.HubId == 1);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var researchlist = context.Orders.Where(o => o.OrderStatus == (int)HubStatus.Return && o.HubId == userInfo.HubId);
 
             foreach (var r in researchlist)
             {

@@ -289,6 +289,8 @@
                 '<div class="span2" style="margin-top:20px;">' +
                 '<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
                         'Customer Received</button>' +
+                '<button class="btn btn-danger" id="btnReject" style="width: 100%;" onclick="markAsWaitingReturn(' + data.result.OrderId + ')">' +
+                        'Customer Rejected</button>' +
                 '</div>';
 
                 $('#txtResultTable').html(resulttable);

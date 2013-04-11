@@ -1527,6 +1527,7 @@ namespace SMDH.Controllers
 
                     var ordersList = context.Orders.Where(o => orders.ToArray().Contains(o.OrderId));
                     ViewBag.PlanId = id;
+                    ViewBag.Plan = plan;
                     return View(ordersList);
                 }
                 return View();

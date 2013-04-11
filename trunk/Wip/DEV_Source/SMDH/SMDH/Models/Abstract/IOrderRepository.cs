@@ -44,6 +44,7 @@ namespace SMDH.Models.Abstract
          bool BackToDraft(Order order, bool commit);
          bool DisApprove(Order order);
          bool ConfirmAdd(Order order);
+         bool ChangeOrderStatus(Order order);
          List<Order> GetOrdersByStatuses(List<int> statuses);
 
         //Plan

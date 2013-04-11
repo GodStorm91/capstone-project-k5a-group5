@@ -37,11 +37,11 @@
                             </a>
                         </div>
                         <div class="metro-nav-block nav-block-blue double">
-                            <a href="/Customer/Orders?&status=rejected">
+                            <a href="/Customer/Orders?&status=returnedreduceprice&status=expired">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe000;">
                                 </div>
                                 <div class="brand" id="OrdersRejected">
-                                    Rejected(@ViewBag.NumberOfOrders[2])
+                                    Returned / Expired(@ViewBag.NumberOfOrders[2])
                                 </div>
                             </a>
                         </div>
@@ -170,7 +170,7 @@
     function updateDashboard(orders, requests) {
         $('#OrdersNeedToApprove').html("Need To Approve(" + orders[0] + ")");
         $('#OrdersApproved').html("Approved(" + orders[1] + ")");
-        $('#OrdersRejected').html("Rejected(" + orders[2] + ")");
+        $('#OrdersRejected').html("Returned / Expired (" + orders[2] + ")");
         $('#OrdersRequested').html("Requested(" + orders[3] + ")");
         $('#OrdersDelivering').html("Delivering(" + orders[4] + ")");
         $('#OrdersWaitingForReturn').html("Waiting For Return(" + orders[5] + ")");

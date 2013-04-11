@@ -136,6 +136,9 @@
             Cancel</button>
     </div>
 </div>
+<div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
 <script type="text/javascript">
     @foreach (var status in ViewBag.SelectedStatuses)
     {
@@ -365,6 +368,29 @@
             }
         });
     };
+
+    var pricingOrder = function (orderId) {
+         $.ajax({
+            url: '/' + "PriceCategories" + '/AddPriceCategory' + "/",
+            type: 'POST',
+            data: { orderId: orderId },
+            dataType: 'html',
+            success: function (data) {
+                $('#createModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#createModal').modal();
+            }
+        });
+    }
 
     $('.report_range').daterangepicker({
         ranges: {

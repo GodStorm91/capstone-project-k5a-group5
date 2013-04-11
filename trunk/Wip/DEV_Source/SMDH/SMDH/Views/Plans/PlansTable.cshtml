@@ -14,7 +14,7 @@
             </th>
             <th>Plantype
             </th>
-            <th>Plan Status
+            <th>Plan Status (Success/Totals)
             </th>
             <th>Plan Length
             </th>
@@ -76,18 +76,19 @@
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
-                <td>
-                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                <td>                                   
+                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View & Assign
                     </a>
 
-                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
-                    </a>
+                    @if (item.Status != (int)PlanStatus.Canceled && item.Status != (int)PlanStatus.Finished)
+                    {
+                         <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                        </a>
+                    }                    
 
-                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View
-                    </a>
                 </td>
             </tr>
-                                                                                               break;
+                    break;
                 case (int)PlanTypes.DeliveryPlan:
             <tr class="info">
                 <td>#@item.PlanId
@@ -106,6 +107,10 @@
                     else if (item.Status == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
+                    }
+                    else if (item.Status == (int)PlanStatus.Finished)
+                    {
+                        <span class="label label-success">Finished</span>
                     }
                     else if (item.Status == (int)PlanStatus.Canceled)
                     {
@@ -132,18 +137,29 @@
                     <a class="btn action view" href="/Plans/Details/@item.PlanId">
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
-                <td>
-                    <a href="/Plans/Edit/@item.PlanId" class="btn btn-mini btn-primary"><i class="icon-pencil"></i>Edit
+                <td>         
+                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View & Assign
                     </a>
-
-                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                    
+                    @if (item.Status == (int)PlanStatus.Assigned)
+                    {
+                        <a href="/Plans/Edit/@item.PlanId" class="btn btn-mini btn-primary"><i class="icon-pencil"></i>Edit Orders
                     </a>
-
-                    <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View
+                    }
+                    else if (item.Status == (int)PlanStatus.Finished)
+                    {
+                        <a href="/Plans/Edit/@item.PlanId" class="btn btn-mini btn-info"><i class="icon-shopping-cart"></i>View Order
                     </a>
+                    }
+                    
+                    @if (item.Status != (int)PlanStatus.Canceled && item.Status != (int)PlanStatus.Finished)
+                    {
+                        <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                        </a>
+                    }                    
                 </td>
             </tr>
-                                                                                               break;
+                    break;
                 case (int)PlanTypes.ReturnedPlan:
             <tr class="warning">
                 <td>#@item.PlanId

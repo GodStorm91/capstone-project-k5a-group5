@@ -53,7 +53,7 @@
                     @item.FullAddress
                 </td>
                 <td>
-                    @String.Format("{0:N2}",(item.AmountToBeCollectedFromReceiver))
+                    @String.Format("{0:N0}",(item.AmountToBeCollectedFromReceiver))
                 </td>
                 <td>
                     @(item.DeliveryOption == null ? "None" : item.DeliveryOption.Name)
@@ -67,7 +67,7 @@
                 <td>
                     @if (item.Fee != null)
                     {
-                        @item.Fee
+                         @String.Format("{0:N0}",(item.Fee))
                     }
                     else
                     {
@@ -109,6 +109,36 @@
                                     Canceled
                                   </a>
                                 </li>                                    
+                                }
+                                
+                                @if (item.Status == OrderStatus.ReturnedReducePrice)
+                                {
+                                    
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="requestReDeliver(@item.OrderId);">
+                                    Request ReDeliver Order
+                                  </a>
+                                  </li>
+                                  
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="confirmReturned(@item.OrderId);">
+                                    Confirm Returned
+                                  </a>
+                                  </li>
+                                }
+
+                                @if (item.Status == OrderStatus.Expired)
+                                {
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="extendTime(@item.OrderId);">
+                                    Extend Time
+                                  </a>
+                                  </li>
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="getOrderBack(@item.OrderId);">
+                                    Get Order Back
+                                  </a>
+                                  </li>
                                 }
                               </ul>
                        </div>                             

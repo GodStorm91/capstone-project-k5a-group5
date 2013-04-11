@@ -120,6 +120,13 @@
                                 <li><a href="#" onclick="cancelOrder(@item.OrderId);">Canceled
                                 </a></li>
                             }
+                            
+                            @if (item.OrderStatus == (int)OrderStatus.Returned || item.OrderStatus == (int)OrderStatus.ReDeliverRequest || item.OrderStatus == (int)OrderStatus.CustomerExtend)
+                            {
+                                   <li><a href="#" onclick="pricingOrder(@item.OrderId);">Pricing Order
+                                </a></li>
+                            }
+                                
                         </ul>
                     </div>
                 </td>

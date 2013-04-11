@@ -1,5 +1,6 @@
 ﻿@model SMDH.Models.PriceCategory
 @using SMDH.Models.ViewModels
+@using SMDH.Models.Statuses
 @{
     Layout = null;
 }
@@ -91,13 +92,28 @@
     </div>
 </div>
 <div class="modal-footer">
+    @if (ViewBag.Order.OrderStatus == (int)OrderStatus.CustomerExtend || ViewBag.Order.OrderStatus == (int)OrderStatus.Returned || ViewBag.Order.OrderStatus == (int)OrderStatus.ReDeliverRequest)
+    {
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-dismiss="modal" aria-hidden="true" onclick="changeOrderStatus(@ViewBag.Order.OrderId)">Change Order Status</button>
+    }
+    
     <button class="btn" data-dismiss="modal" aria-hidden="true">
-        Cancel</button>
+        Close</button>
 </div>
 <script>
     $(document).ready(function () {
         //$('#tblData').dataTable();
     });
+
+    var changeOrderStatus = function (orderId) {
+        $.post("/Orders/ChangeOrderStatus", { id: orderId }, function (data) {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                bootbox.alert("Can't change order status!");
+            }
+        });
+    }
 
     $('#btnCreate').click(function (event) {
         if ($('#ddlPriceTag').val() == '') {

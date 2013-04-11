@@ -69,6 +69,10 @@ namespace SMDH.Controllers
                                     break;
                                 case "rejected": statuses.Add((int)OrderStatus.Rejected);
                                     break;
+                                case "customerextend": statuses.Add((int)OrderStatus.CustomerExtend);
+                                    break;
+                                case "redeliverrequest": statuses.Add((int)OrderStatus.ReDeliverRequest);
+                                    break;
                             }
                         }
                     }
@@ -367,6 +371,19 @@ namespace SMDH.Controllers
         {
             var order = _repository.Find(id);
             if (!_repository.MarkAsReturnedReducePrice(order))
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
+        }
+
+        public ActionResult ChangeOrderStatus(int id)
+        {
+            var order = _repository.Find(id);
+            if (!_repository.ChangeOrderStatus(order))
             {
                 return Json(new { success = false });
             }
