@@ -781,8 +781,8 @@
                                             @foreach (var item in Model)
                                             {
                                                 string itemNo = "itemNo" + item.ProductId;
-                                                <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
                                                 <tr>
+                                                     <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
                                                     <td>
                                                         <img style="width:40px;height:30px;" src="@item.ImageURL" onmouseover="showMouseOver('@item.ImageURL','@item.Description')" onmouseout="noi_dung.style.visibility='hidden';"/>
                                                     </td>
