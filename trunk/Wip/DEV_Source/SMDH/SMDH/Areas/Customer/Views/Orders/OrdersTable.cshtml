@@ -140,6 +140,25 @@
                                   </a>
                                   </li>
                                 }
+                                
+                                @if (item.Status == OrderStatus.RePricingApproveRequest)
+                                {
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="repricingApprove(@item.OrderId);">
+                                    Approve Price
+                                  </a>
+                                  </li>
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="requestReprice(@item.OrderId);">
+                                    Request Reprice
+                                  </a>
+                                  </li>
+                                    <li>
+                                  <a href="javascript:void(0)" onclick="confirmReturned(@item.OrderId);">
+                                    Cancel
+                                  </a>
+                                  </li>
+                                }
                               </ul>
                        </div>                             
                 </td>

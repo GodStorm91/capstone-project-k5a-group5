@@ -72,6 +72,10 @@ namespace SMDH.Areas.Customer.Controllers
                                     break;
                                 case "expired": statuses.Add((int)OrderStatus.Expired);
                                     break;
+                                case "repricingapproverequest": statuses.Add((int)OrderStatus.RePricingApproveRequest);
+                                    break;
+                                case "confirmreturned": statuses.Add((int)OrderStatus.ConfirmReturned);
+                                    break;
                             }
                         }
                     }
@@ -86,7 +90,7 @@ namespace SMDH.Areas.Customer.Controllers
                                             && statuses.Contains(o.OrderStatus)).ToList();
             //orders = context.Orders.Where(o => o.Request.CustomerId == 1//userInfo.CustomerId
             //                                && statuses.Contains(o.OrderStatus)).ToList();
-            ViewBag.Customer = "Test company";//userInfo.Customer.CompanyName;
+            ViewBag.Customer = userInfo.Customer.CompanyName;
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -429,6 +433,40 @@ namespace SMDH.Areas.Customer.Controllers
                 var order = context.Orders.Single(o => o.OrderId == id);
                 if (order.OrderStatus != (int)OrderStatus.ReturnedReducePrice) return Json(new { success = false });
                 order.OrderStatus = (int)OrderStatus.ConfirmReturned;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult RePricingApprove(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.RePricingApproveRequest) return Json(new { success = false });
+                order.OrderStatus = (int)OrderStatus.Collected;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult RequestReprice(int id)
+        {
+            try
+            {
+                var order = context.Orders.Single(o => o.OrderId == id);
+                if (order.OrderStatus != (int)OrderStatus.RePricingApproveRequest) return Json(new { success = false });
+                order.OrderStatus = (int)OrderStatus.ReDeliverRequest;
                 context.SubmitChanges();
                 return Json(new { success = true });
             }

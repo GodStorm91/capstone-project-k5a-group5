@@ -37,13 +37,13 @@ namespace SMDH.Controllers
 
             var numberOfOrdersList = new List<int>();
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Draft).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Approved).Count());
+            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.RePricingApproveRequest).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ReturnedReducePrice || 
                 o.OrderStatus == (int)OrderStatus.Expired).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.PlannedForCollecting).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Delivering).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ToBeReturned).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Returned).Count());
+            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ConfirmReturned).Count());
             
             return Json(new {requests= numberOfRequestsList, orders= numberOfOrdersList});
 
