@@ -217,6 +217,8 @@
                 $('.city').removeClass('hide');
                 $('.district').removeClass('hide');
                 $('.ward').removeClass('hide');
+                $('#addnotrequired').addClass('hide')
+                $('#addrequired').removeClass('hide')
                 //                $('#ddlCityProvince').prop('disabled', false);
                 //                $('#ddlDistrict').prop('disabled', false);
                 //                $('#txtWard').prop('disabled', false);
@@ -230,6 +232,8 @@
                 $('.ward').addClass('hide');
                 $('.hubtype').removeClass('hide');
                 $('.hub').removeClass('hide');
+                $('#addnotrequired').removeClass('hide')
+                $('#addrequired').addClass('hide')
                 //alert("radio 2 checked");
                 //                $('#ddlCityProvince').prop('disabled', true);
                 //                $('#ddlDistrict').prop('disabled', true);
@@ -782,7 +786,7 @@
                                             {
                                                 string itemNo = "itemNo" + item.ProductId;
                                                 <tr>
-                                                     <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
+                                                    <input class="input-mini" style="text-align:right" type="hidden" value="@item.ProductId"/>
                                                     <td>
                                                         <img style="width:40px;height:30px;" src="@item.ImageURL" onmouseover="showMouseOver('@item.ImageURL','@item.Description')" onmouseout="noi_dung.style.visibility='hidden';"/>
                                                     </td>
@@ -873,7 +877,7 @@
                                             <input type="email" id="email" name="email" placeholder="email" />
                                         </div>
                                     </div>
-                                    <div style="margin-left: 80px; font-size: 14px;">
+                                    <div style="margin-left: 44px; font-size: 14px;">
                                         Delivery(*)&nbsp;&nbsp;&nbsp;
                                             <label class="radio inline">
                                                 <input type="radio" name="optionsRadios" onclick="chMd(this);" id="optionsRadios1" value="option1">
@@ -924,8 +928,10 @@
                                     </div>
 
                                     <div class="control-group">
-                                        <label class="control-label" for="address">
-                                            Address(*)</label>
+                                        <label class="control-label" for="address" id="addnotrequired">
+                                            Your address</label>
+                                        <label class="control-label hide" for="address" id="addrequired">
+                                            Your address(*)</label>
                                         <div class="controls">
                                             <input name="address" type="text" id="address" />
                                         </div>
@@ -946,7 +952,7 @@
                                         <div class="controls">
                                             @Html.DropDownList("Hub", ViewBag.Hubs as SelectList, "-- Choose a Hub --", new { id = "ddlHub", Class = "chzn-select" })
                                         </div>
-                                        <label class="control-label" id="HubAddressLabel">
+                                        <label class="control-label hide" id="HubAddressLabel">
                                         </label>
                                     </div>
                                     <div>
@@ -964,7 +970,7 @@
                                 <h5>Map</h5>
                             </div>
                             <div>
-                                <div id="map_canvas" style="height: 436px;">
+                                <div id="map_canvas" style="height: 440px;">
                                 </div>
                             </div>
                         </div>
@@ -975,237 +981,239 @@
                 </div>
             </div>
         </div>
-        <!-- Carousel nav -->
-        @* <a class="carousel-control left" href="#myCarousel" data-slide="prev" onclick="prev()">&lsaquo;</a>
+    </div>
+    <!-- Carousel nav -->
+    @* <a class="carousel-control left" href="#myCarousel" data-slide="prev" onclick="prev()">&lsaquo;</a>
             <a class="carousel-control right" href="#myCarousel" data-slide="next" onclick="next()">&rsaquo;</a>
         </div>       *@
-        <script>
-            function triggerResize() {
-                //google.maps.event.trigger(goMap, "resize");
-                //google.maps.event.trigger(map_canvas, "resize");
+    <script>
+        function triggerResize() {
+            //google.maps.event.trigger(goMap, "resize");
+            //google.maps.event.trigger(map_canvas, "resize");
+        }
+
+        setInterval(function () {
+            google.maps.event.trigger(map_canvas, "resize");
+        }, 200)
+
+        function hideWard() {
+            $('.result-widget').html("");
+        }
+
+        function searchWard(chars) {
+            $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
+                var strList = "<ul>";
+                for (var i = 0; i < data.wardList.length; i++) {
+                    strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
+                }
+                strList += '</ul>';
+                $('#resultWard').html(strList);
+
+            });
+        }
+
+        function changeHubCategoriesHandler() {
+            var items = '<option value="-1">-- All Locations --</option>';
+            $('#ddlHub').html(items);
+            var hubId = -1;
+            var hubLists = null;
+            if (arguments[0]) {
+                hubId = arguments[0];
             }
-
-            setInterval(function () {
-                google.maps.event.trigger(map_canvas, "resize");
-            }, 200)
-
-            function hideWard() {
-                $('.result-widget').html("");
-            }
-
-            function searchWard(chars) {
-                $.post('/Ward/GetWardsFromDistrictIdAndChars', { id: $('#ddlDistrict').val(), str: $('#txtWard').val() }, function (data) {
-                    var strList = "<ul>";
-                    for (var i = 0; i < data.wardList.length; i++) {
-                        strList += '<li><a href="" data-isbn="9780545317801">' + data.wardList[i].WardName + '</li>';
-                    }
-                    strList += '</ul>';
-                    $('#resultWard').html(strList);
-
+            alert(hubId);
+            var id = $('#ddlHubCategories option:selected').val();
+            if (id == '') id = -1;
+            //alert(id);
+            $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
+                items = '<option value="-1">-- All Locagions --</option>';
+                $.each(data, function (i, hub) {
+                    items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
+                    //alert(hub.HubId);
                 });
-            }
-
-            function changeHubCategoriesHandler() {
-                var items = '<option value="-1">-- All Locations --</option>';
                 $('#ddlHub').html(items);
-                var hubId = -1;
-                var hubLists = null;
-                if (arguments[0]) {
-                    hubId = arguments[0];
+                $('#ddlHub').trigger("liszt:updated");
+                $('#ddlHub').val(hubId);
+
+                if (hubId == -1) {
+                    clearOverlays();
+                    addMarkerForMultipleHub(data);
                 }
-                alert(hubId);
-                var id = $('#ddlHubCategories option:selected').val();
-                if (id == '') id = -1;
-                //alert(id);
-                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-                    items = '<option value="-1">-- All Locagions --</option>';
-                    $.each(data, function (i, hub) {
-                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
-                        //alert(hub.HubId);
-                    });
-                    $('#ddlHub').html(items);
-                    $('#ddlHub').trigger("liszt:updated");
-                    $('#ddlHub').val(hubId);
 
-                    if (hubId == -1) {
-                        clearOverlays();
-                        addMarkerForMultipleHub(data);
-                    }
+            });
 
+
+        }
+
+        hubDistrictId = -1;
+        hubWardId = -1;
+
+        $("#ddlHubCategories").change(function () {
+            changeHubCategoriesHandler();
+        });
+
+
+
+        $("#ddlCityProvince").change(function (event, districtId, wardId, wardName) {
+            var items = '<option value="-1">-- All Districts --</option>';
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("change");
+            var id = $('#ddlCityProvince option:selected').val();
+
+            if (id == '') id = -1;
+            $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+                items = '<option value="-1">-- All Districts --</option>';
+                $.each(data, function (i, district) {
+                    items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
                 });
+                $('#ddlDistrict').html(items);
+                $('#ddlDistrict').val(hubDistrictId);
+                if (districtId != undefined) {
+                    $('#ddlDistrict').val(districtId);
+                    //append information to form for submitting ?
+                    $('#txtWard').val(wardName);
+                }
+                $('#ddlDistrict').trigger("liszt:updated");
+            });
+        });
 
+        //            function changeHubCategoriesHandler() {
+        //                var items = '<option value="-1">-- All Locations --</option>';
+        //                $('#ddlHub').html(items);
+        //                $('#ddlHub').trigger("change");
+        //                var hubId = -1;
+        //                var hubLists = null;
+        //                if (arguments[0]) {
+        //                    hubId = arguments[0];
+        //                }
+        //                var id = $('#ddlHubCategories option:selected').val();
+        //                if (id == '') id = -1;
+        //                alert("Hub CategoriesId :   " + id);
+        //                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
+        //                    items = '<option value="-1">-- All Locagions --</option>';
+        //                    $.each(data, function (i, hub) {
+        //                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
+        //                        //alert(hub.HubId);
+        //                    });
+        //                    $('#ddlHub').html(items);
+        //                    $('#ddlHub').trigger("liszt:updated");
+        //                    $('#ddlHub').val(hubId);
 
+        //                    if (hubId == -1) {
+        //                        alert("Clear overlays");
+        //                        clearOverlays();
+        //                        addMarkerForMultipleHub(data);
+        //                    }
+
+        //                });
+
+        //            }
+
+        $("#ddlHubCategories").change(function () {
+            changeHubCategoriesHandler();
+        });
+
+        $("#ddlHub").change(function () {
+            removeMarkerHub();
+            alert("changed : " + $('#ddlHub option:selected').val());
+            //CLEAR MOI OVERLAYS
+            clearOverlays();
+
+            //DROP LAI Pins + tu focus den pin da co
+            //neu chon ddlHub la load All (id = -1)                
+            var id = $('#ddlHub option:selected').val();
+
+            if (id == -1) {
+                var hubCategoryId = $('#ddlHubCategories option:selected').val();
+                $.getJSON("/HubCategories/GetHubsByHubCategory/" + hubCategoryId, function (data) {
+                    addMarkerForMultipleHub(data);
+                });
+            } else {
+                $.getJSON('/Hubs/Find/' + id, function (data) {
+                    alert(data);
+                    var content = "Name : " + data.Name + "<br>" +
+                      "Dia chi:" + data.Address;
+                    $('#HubDistrictId').val(data.DistrictId);
+                    $('#HubWardId').val(data.WardId);
+                    $('#HubLatitude').val(data.Latitude);
+                    $('#HubLongitude').val(data.Longitude);
+                    $('#HubAddress').val(data.Address);
+                    $('#HubAddressLabel').html(data.Address);
+                    //change dropdownlist value to match the value in HUb
+                    //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
+                    //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
+                    //$('#ddlWard').val(hubWardId);
+                    addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                });
             }
 
-            hubDistrictId = -1;
-            hubWardId = -1;
-
-            $("#ddlHubCategories").change(function () {
-                changeHubCategoriesHandler();
-            });
+        });
 
 
+        $("#ddlCityProvince").change(function () {
+            var items = '<option value="-1">-- All Districts --</option>';
+            $('#ddlDistrict').html(items);
+            $('#ddlDistrict').trigger("change");
+            var id = $('#ddlCityProvince option:selected').val();
 
-            $("#ddlCityProvince").change(function (event, districtId, wardId, wardName) {
-                var items = '<option value="-1">-- All Districts --</option>';
-                $('#ddlDistrict').html(items);
-                $('#ddlDistrict').trigger("change");
-                var id = $('#ddlCityProvince option:selected').val();
-
-                if (id == '') id = -1;
-                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
-                    items = '<option value="-1">-- All Districts --</option>';
-                    $.each(data, function (i, district) {
-                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
-                    });
-                    $('#ddlDistrict').html(items);
-                    $('#ddlDistrict').val(hubDistrictId);
-                    if (districtId != undefined) {
-                        $('#ddlDistrict').val(districtId);
-                        //append information to form for submitting ?
-                        $('#txtWard').val(wardName);
-                    }
-                    $('#ddlDistrict').trigger("liszt:updated");
+            if (id == '') id = -1;
+            $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
+                items = '<option value="-1">-- All Districts --</option>';
+                $.each(data, function (i, district) {
+                    items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
                 });
-            });
-
-            //            function changeHubCategoriesHandler() {
-            //                var items = '<option value="-1">-- All Locations --</option>';
-            //                $('#ddlHub').html(items);
-            //                $('#ddlHub').trigger("change");
-            //                var hubId = -1;
-            //                var hubLists = null;
-            //                if (arguments[0]) {
-            //                    hubId = arguments[0];
-            //                }
-            //                var id = $('#ddlHubCategories option:selected').val();
-            //                if (id == '') id = -1;
-            //                alert("Hub CategoriesId :   " + id);
-            //                $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-            //                    items = '<option value="-1">-- All Locagions --</option>';
-            //                    $.each(data, function (i, hub) {
-            //                        items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
-            //                        //alert(hub.HubId);
-            //                    });
-            //                    $('#ddlHub').html(items);
-            //                    $('#ddlHub').trigger("liszt:updated");
-            //                    $('#ddlHub').val(hubId);
-
-            //                    if (hubId == -1) {
-            //                        alert("Clear overlays");
-            //                        clearOverlays();
-            //                        addMarkerForMultipleHub(data);
-            //                    }
-
-            //                });
-
-            //            }
-
-            $("#ddlHubCategories").change(function () {
-                changeHubCategoriesHandler();
-            });
-
-            $("#ddlHub").change(function () {
-                removeMarkerHub();
-                alert("changed : " + $('#ddlHub option:selected').val());
-                //CLEAR MOI OVERLAYS
-                clearOverlays();
-
-                //DROP LAI Pins + tu focus den pin da co
-                //neu chon ddlHub la load All (id = -1)                
-                var id = $('#ddlHub option:selected').val();
-
-                if (id == -1) {
-                    var hubCategoryId = $('#ddlHubCategories option:selected').val();
-                    $.getJSON("/HubCategories/GetHubsByHubCategory/" + hubCategoryId, function (data) {
-                        addMarkerForMultipleHub(data);
-                    });
-                } else {
-                    $.getJSON('/Hubs/Find/' + id, function (data) {
-                        alert(data);
-                        var content = "Name : " + data.Name + "<br>" +
-                          "Dia chi:" + data.Address;
-                        $('#HubDistrictId').val(data.DistrictId);
-                        $('#HubWardId').val(data.WardId);
-                        $('#HubLatitude').val(data.Latitude);
-                        $('#HubLongitude').val(data.Longitude);
-                        $('#HubAddress').val(data.Address);
-                        $('#HubAddressLabel').html(data.Address);
-                        //change dropdownlist value to match the value in HUb
-                        //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
-                        //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
-                        //$('#ddlWard').val(hubWardId);
-                        addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
-                    });
-                }
-
-            });
-
-
-            $("#ddlCityProvince").change(function () {
-                var items = '<option value="-1">-- All Districts --</option>';
                 $('#ddlDistrict').html(items);
-                $('#ddlDistrict').trigger("change");
-                var id = $('#ddlCityProvince option:selected').val();
-
-                if (id == '') id = -1;
-                $.getJSON('/District/GetDistrictsOfCityProvince/' + id, function (data) {
-                    items = '<option value="-1">-- All Districts --</option>';
-                    $.each(data, function (i, district) {
-                        items += "<option value='" + district.DistrictId + "'>" + district.Name + "</option>";
-                    });
-                    $('#ddlDistrict').html(items);
-                    $('#ddlDistrict').trigger("liszt:updated");
-                });
+                $('#ddlDistrict').trigger("liszt:updated");
             });
+        });
 
-            $("#ddlDistrict").change(function () {
-                var items = '<option value="-1">-- All Wards --</option>';
+        $("#ddlDistrict").change(function () {
+            var items = '<option value="-1">-- All Wards --</option>';
+            $('#ddlWard').html(items);
+            $('#ddlWard').trigger("change");
+            var id = $('#ddlDistrict option:selected').val();
+            if (id == '') id = -1;
+            $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
+                items = '<option value="-1">-- All Wards --</option>';
+                $.each(data, function (i, ward) {
+                    items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
+                });
                 $('#ddlWard').html(items);
-                $('#ddlWard').trigger("change");
-                var id = $('#ddlDistrict option:selected').val();
-                if (id == '') id = -1;
-                $.getJSON('/Ward/GetWardsOfDistrict/' + id, function (data) {
-                    items = '<option value="-1">-- All Wards --</option>';
-                    $.each(data, function (i, ward) {
-                        items += "<option value='" + ward.WardId + "'>" + ward.Name + "</option>";
-                    });
-                    $('#ddlWard').html(items);
-                });
             });
+        });
 
-            $('#address').blur(function () {
-                findLocation();
-            });
+        $('#address').blur(function () {
+            findLocation();
+        });
 
-            function clearOverlays() {
-                if (hubsMarkerArray.length > 0) {
-                    for (var i = 0; i < hubsMarkerArray.length; i++) {
-                        hubsMarkerArray[i].setMap(null);
-                    }
+        function clearOverlays() {
+            if (hubsMarkerArray.length > 0) {
+                for (var i = 0; i < hubsMarkerArray.length; i++) {
+                    hubsMarkerArray[i].setMap(null);
                 }
             }
+        }
 
-            var setupDataTable = function () {
-                $('#tableproduct').dataTable({
-                    "bRetrieve": true,
-                    "sDom": "<''f>t",
-                    "aaSorting": [],
-                    "bAutoWidth": true,
-                    "aoColumns": [
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    null
-                    ],
-                    "aaSorting": [[2, "asc"]]
-                });
-            };
-
-            $(document).ready(function () {
-                setupDataTable();
+        var setupDataTable = function () {
+            $('#tableproduct').dataTable({
+                "bRetrieve": true,
+                "sDom": "<''f>t",
+                "aaSorting": [],
+                "bAutoWidth": true,
+                "aoColumns": [
+                                null,
+                                null,
+                                null,
+                                null,
+                                null
+                ],
+                "aaSorting": [[2, "asc"]]
             });
-        </script>
+        };
+
+        $(document).ready(function () {
+            setupDataTable();
+            $('#myCarousel').carousel('pause')
+        });
+    </script>
 </body>
 </html>

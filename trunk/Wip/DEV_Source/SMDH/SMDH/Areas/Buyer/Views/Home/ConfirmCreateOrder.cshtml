@@ -2,89 +2,128 @@
     ViewBag.Title = "Congratulations";
 }
 <style type="text/css">
-body {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 62.5%;
-	margin: 0px;
-}
-.container {
-	width:810px;
-	margin: 0 auto;
-	font-size: 1.0em;
-}
-.steps {
-	background: #aaa;
-	padding: 1px 0;
-	overflow: hidden;
-}
-.steps ul, .steps li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-.steps ul { float: left; }
-.steps li {
-	float: left;
-	
-}
-.steps li a {
-	display: block;
-	padding: 15px 20px;
-	background: #d0d0d0;
-	color: #fff;
-	line-height: 1.5em;
-	text-decoration: none;
-}
-.steps li a strong { font-size: 2em; }
-.steps li a:hover { background: #666; }
-.steps li.step, .steps li.step a {
-	position: relative;
-	z-index: 3;
-}
-.steps li.step-2, .steps li.step-2 a { z-index: 2; }
-.steps li.step-3, .steps li.step-3 a { z-index: 1; }
-.steps li.step-1 a, .steps li.step-2 a, .steps li.step-3 a {
-	background: transparent url(/images/step.png) center right no-repeat;
-	padding-right: 25px;
-}
-.steps li.step-2, .steps li.step-3 { margin-left: -30px; }
-.steps li.step-2 a { padding-left: 45px; }
-.steps li.step-3 a {
-	padding-left: 45px;
-	padding-right: 10px;
-  background-position: center left;
-}
-.steps li.step-3 a
-{
-    background: transparent url(/images/step_over.png) center right no-repeat; 
-}
-.steps li.step a:hover { background: transparent url(/images/step_over.png) center right no-repeat; }
+    body {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 62.5%;
+        margin: 0px;
+    }
+
+    .container {
+        width: 810px;
+        margin: 0 auto;
+        font-size: 1.0em;
+    }
+
+    .steps {
+        /*background: #aaa;*/
+        padding: 1px 0;
+        overflow: hidden;
+    }
+
+        .steps ul, .steps li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .steps ul {
+            float: left;
+        }
+
+        .steps li {
+            float: left;
+        }
+
+            .steps li a {
+                display: block;
+                padding: 15px 20px;
+                background: #d0d0d0;
+                color: #fff;
+                line-height: 1.5em;
+                text-decoration: none;
+            }
+
+                .steps li a strong {
+                    font-size: 2em;
+                }
+
+                .steps li a:hover {
+                    background: #666;
+                }
+
+            .steps li.step, .steps li.step a {
+                position: relative;
+                z-index: 3;
+            }
+
+            .steps li.step-2, .steps li.step-2 a {
+                z-index: 2;
+            }
+
+            .steps li.step-3, .steps li.step-3 a {
+                z-index: 1;
+            }
+
+                .steps li.step-1 a, .steps li.step-2 a, .steps li.step-3 a {
+                    background: transparent url(/images/step.png) center right no-repeat;
+                    padding-right: 25px;
+                }
+
+            .steps li.step-2, .steps li.step-3 {
+                margin-left: -30px;
+            }
+
+                .steps li.step-2 a {
+                    padding-left: 45px;
+                }
+
+                .steps li.step-3 a {
+                    padding-left: 45px;
+                    padding-right: 10px;
+                    background-position: center left;
+                }
+
+                .steps li.step-3 a {
+                    background: transparent url(/images/step_over.png) center right no-repeat;
+                }
+
+            .steps li.step a:hover {
+                background: transparent url(/images/step_over.png) center right no-repeat;
+            }
 
 
-.steps li.step-3 a:hover { background-position: center left; }
+            .steps li.step-3 a:hover {
+                background-position: center left;
+            }
 
-.table tr:hover
-{
-
-}
+    .table tr:hover {
+    }
 </style>
-  <div class="container" style="margin-left:120px;margin-top:20px;">
-	<div class="steps">
-  	<ul>
-    	<li class="step step-1">
-      	<a  href="#"><strong>Step 1</strong><br />Some random text that describes the step</a>
-      </li>
-      <li class="step step-2">
-      	<a  href="#"><strong>Step 2</strong><br />Some random text that describes the step</a>
-      </li>
-      <li class="step step-3">
-      	<a href="#"><strong>Step 3</strong><br />Some random text that describes the step</a>
-      </li>
-    </ul>
-  </div>
+<div class="container" style="margin-left: 200px;">
+    <div class="steps">
+        <ul>
+            <li class="step step-1">
+                <a href="#"><strong>Step 1</strong><br />
+                    CHOOSE ITEM</a>
+            </li>
+            <li class="step step-2">
+                <a href="#"><strong>Step 2</strong><br />
+                    YOUR INFORMATION</a>
+            </li>
+            <li class="step step-3">
+                <a href="#"><strong>Step 3</strong><br />
+                    THANKS FOR BUYING WITH US</a>
+            </li>
+        </ul>
+    </div>
 </div>
-<h2>Thankyou for shopping with us</h2>
-@if (Model.HubId != -1)
-{
-    <h3>Your passcode is: <b>@Model.Passcode</b></h3>
-}
+<div class="row-fluid">
+    <div class="span12">
+        <h2>Thankyou for shopping with us</h2>
+        @if (Model.HubId != -1)
+        {
+            <h3>Your passcode is: <b>@Model.Passcode</b></h3>
+        }
+    </div>
+</div>
+
