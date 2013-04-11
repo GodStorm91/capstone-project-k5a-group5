@@ -97,6 +97,36 @@ namespace SMDH.Models.Concrete
                     
                 }
 
+
+                if (plan.PlanTypeId == (int)PlanTypes.ReturnedPlan)
+                {
+                    if (plan.Status == (int)Statuses.CollectionPlanStatus.Finished || plan.Status == (int)Statuses.CollectionPlanStatus.Canceled) return false;
+                    List<int> orderIds = new List<int>();
+                    foreach (var cargo in plan.Cargos)
+                    {
+                        orderIds.Add(cargo.OrderId.Value);
+                    }
+
+                    var orderIdsTmp = context.Orders.Where(r => orderIds.Contains(r.OrderId));
+                    if (orderIdsTmp.Any(r => r.OrderStatus != (int)OrderStatus.PlannedForReturn)) return false;
+
+                    var orders = orderIdsTmp.ToArray();
+
+                    EFOrdersRepository orderRepo = new EFOrdersRepository();
+                    for (int i = 0; i < orders.Length; i++)
+                    {
+                        orderRepo.RemoveFromPlan(plan, orders[i]);
+                    }
+                    using (var myContext = new SMDHDataContext())
+                    {
+                        var myPlan = myContext.Plans.Single(p => p.PlanId == plan.PlanId);
+                        myPlan.Status = (int)Statuses.CollectionPlanStatus.Canceled;
+                        myPlan.CreatedDate = DateTime.Now;
+                        myContext.SubmitChanges();
+                    }
+
+                }
+
                 return true;
             }
             catch (Exception)
@@ -158,10 +188,9 @@ namespace SMDH.Models.Concrete
             var orderRepo = new EFOrdersRepository();
             using (var trans = new TransactionScope())
             {
-                using (var myContext = new SMDHDataContext())
-                {
-                    myContext.Plans.InsertOnSubmit(plan);
-                    myContext.SubmitChanges();
+                
+                    context.Plans.InsertOnSubmit(plan);
+                    //context.SubmitChanges();
                     var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
                                                             && r.OrderStatus == (int)OrderStatus.Collected).ToList(); // Only Order status that is collected can be add to Delivery Plan
 
@@ -171,7 +200,7 @@ namespace SMDH.Models.Concrete
                         return true;
 
                     }
-                }
+                
                 
             }
 
@@ -262,6 +291,35 @@ namespace SMDH.Models.Concrete
             plan.CreatedDate = DateTime.Now;
             context.SubmitChanges();
             return true;
+        }
+
+        public bool CreateReturnedPlan(Plan plan, int[] orderIds)
+        {
+            plan.CreatedDate = DateTime.Now;
+            plan.Status = (int)CollectionPlanStatus.New;//Which status goes here ?
+            plan.CreatedByUserId = 1;
+            plan.PlanTypeId = (int)PlanTypes.ReturnedPlan;
+            var orderRepo = new EFOrdersRepository();
+            
+            //context.SubmitChanges();
+            using (var trans = new TransactionScope())
+            {
+
+                context.Plans.InsertOnSubmit(plan);                    
+                    var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
+                                                            && r.OrderStatus == (int)OrderStatus.WaitingForReturn).ToList(); // Only Order status that is collected can be add to Delivery Plan
+
+                    if (orders.Count == orderIds.Length && orderRepo.AddToPlan(plan, orders))
+                    {
+                        trans.Complete();
+                        return true;
+
+                    }
+                
+
+            }
+
+            return false;
         }
     }
 }

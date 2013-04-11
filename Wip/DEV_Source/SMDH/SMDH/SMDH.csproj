@@ -1511,6 +1511,9 @@
     <Content Include="Views\Plans\Details_ForEdit.cshtml" />
     <Content Include="Views\Plans\Edit.cshtml" />
     <Content Include="Views\Plans\OrdersTable.cshtml" />
+    <Content Include="Views\Plans\AutoScheduleReturnedPlan.cshtml" />
+    <Content Include="Views\Plans\EditAutoScheduleReturnedPlan.cshtml" />
+    <Content Include="Views\Plans\ViewDetailsReturnedPlans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

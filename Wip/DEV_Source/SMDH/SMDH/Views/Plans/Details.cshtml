@@ -108,7 +108,7 @@
                                                         <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
                                                     </div>
                                                 }
-                                                else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                                                else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan || Model.PlanTypeId == (int)PlanTypes.ReturnedPlan)
                                                 {
                                                     <div style="margin-top: 3px;">
                                                         <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span>
@@ -121,7 +121,7 @@
                                                     <span class="icon-globe"></span><small>@request.CollectionAddress</small>
                                                 </div>
                                             }
-                                            else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan)
+                                            else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan || Model.PlanTypeId == (int)PlanTypes.ReturnedPlan)
                                             {
                                                 <div>
                                                     <span class="icon-globe"></span><small>@request.DeliverAddress</small>
