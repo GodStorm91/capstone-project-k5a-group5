@@ -411,7 +411,7 @@ namespace SMDH.Models.Concrete
                     //plan.Cargos.Remove(cargo);
                 }
 
-                myOrder.OrderStatus = (int)OrderStatus.Collected;
+                myOrder.OrderStatus = plan.PlanTypeId == (int)PlanTypes.DeliveryPlan ? (int)OrderStatus.Collected : (int)OrderStatus.WaitingForReturn;
                 if (commit) context.SubmitChanges();
 
                 return true;
@@ -463,7 +463,7 @@ namespace SMDH.Models.Concrete
                 foreach (var order in orders)
                 {
                     var myOrder = context.Orders.Single(o => o.OrderId == order.OrderId);
-                    myOrder.OrderStatus = (int)OrderStatus.PlannedForDelivering;
+                    myOrder.OrderStatus = plan.PlanTypeId == (int)PlanTypes.DeliveryPlan ? (int)OrderStatus.PlannedForDelivering : (int)OrderStatus.PlannedForReturn;
                     if (!AddToPlan(plan, order, false)) return false;
                 }
 

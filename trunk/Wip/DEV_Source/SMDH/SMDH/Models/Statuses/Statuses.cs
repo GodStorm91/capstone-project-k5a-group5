@@ -40,6 +40,7 @@ namespace SMDH.Models.Statuses
         ReDeliverRequest = 18,
         ConfirmReturned = 19,
         RePricingApproveRequest = 20,
+        PlannedForReturn = 21,
         Expired = 15
     }
 

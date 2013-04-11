@@ -171,13 +171,22 @@
                     @((PlanTypes)item.PlanTypeId)
                 </td>
                 <td>
-                    @* @if (item.Status == (int)PlanStatus.Assigned)
+                    @if (item.Status == (int)PlanStatus.Assigned)
                     {
                         <span class="label label-info">Assigned</span>
-                    }else
+                    }
+                    else if (item.Status == (int)PlanStatus.New)
                     {
                         <span class="label label-danger">Not Assigned yet</span>
-                    }*@
+                    }
+                    else if (item.Status == (int)PlanStatus.Finished)
+                    {
+                        <span class="label label-success">Finished</span>
+                    }
+                    else if (item.Status == (int)PlanStatus.Canceled)
+                    {
+                        <span class="label label-important">Canceled</span>
+                    }
                 </td>
 
                 @*                <td>
@@ -201,11 +210,14 @@
                         <img src="/img/icons/notepad.png" alt="View" title="View"></a>
                 </td>*@
                 <td>
-                    <a href="javascript:void(0)" class="btn btn-mini btn-primary" onclick="edit(@item.PlanId)"><i class="icon-pencil"></i>Edit
+                     <a href="javascript:void(0)" class="btn btn-mini btn-success" onclick="viewPlan(@item.PlanId)"><i class="icon-search"></i>View & Assign
                     </a>
 
-                    <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
-                    </a>
+                    @if (item.Status != (int)PlanStatus.Canceled && item.Status != (int)PlanStatus.Finished)
+                    {
+                        <a href="javascript:void(0)" class="btn btn-mini btn-danger" onclick="cancelPlan(@item.PlanId)"><i class="icon-remove"></i>Canceled
+                        </a>
+                    }                
                 </td>
             </tr>
                     break;
