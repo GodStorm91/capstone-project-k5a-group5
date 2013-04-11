@@ -555,6 +555,32 @@
         });
     }
 
+    var repricingApprove = function(orderId){
+        bootbox.confirm('Approve this order\' price ?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/RePricingApprove/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    var requestReprice = function(orderId){
+        bootbox.confirm('Request reqprice this order?', function (confirmed) {
+            if (confirmed) {
+                $.post('/Customer/Orders/RequestReprice/' + orderId, function (result) {
+                    if (result.success) {
+                        $.blockUI();
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
     $('.report_range').daterangepicker({
         ranges: {
             'Today': ['today', 'today'],

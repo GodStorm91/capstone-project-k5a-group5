@@ -41,8 +41,8 @@ namespace SMDH.Areas.Customer.Controllers
 
         [HttpPost]
         public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList, string pricesList, string receiverName, string receiverAddress,
-            int receiverAddressWardId, int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
-             int customerId, int requestId, int hubId = -1)
+            int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
+             int customerId, int requestId,int receiverAddressWardId = 1, int hubId = -1)
         {
             EFOrdersRepository _repository = new EFOrdersRepository();
             EFItemsRepository itemRepo = new EFItemsRepository();
