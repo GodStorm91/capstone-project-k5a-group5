@@ -119,10 +119,46 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <h2>Thankyou for shopping with us</h2>
-        @if (Model.HubId != -1)
+        @*<h2>Thankyou for shopping with us</h2>*@
+        @if (Model.DeliveryTypeId == 2)
         {
-            <h3>Your passcode is: <b>@Model.Passcode</b></h3>
+@*<h3>Your passcode is: <b>@Model.Passcode</b></h3>*@
+            
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>Thanks for shopping with us</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div>
+                        <strong>Your Receive Address : @Model.ReceiverAddress</strong>
+                    </div>
+                    <div>
+                        <strong>Your Passcode : @Model.Passcode</strong>
+                    </div>
+                    <div>
+                        <strong>We will send email to you when item in hub</strong>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>Thanks for shopping with us</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
+                        <strong>Your Address : @Model.ReceiverAddress</strong>
+                    </div>
+                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
+                        <strong>Total amount : @(String.Format("{0,12:N0}", Model.AmountToBeCollectedFromReceiver)) VNĐ</strong>
+                    </div>
+                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
+                        <strong>We will send to you in 3 days after @Model.CreatedDate</strong>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 </div>
