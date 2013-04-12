@@ -11,7 +11,7 @@
     </div>
 @using (Html.BeginForm("ConfirmEdit", "Products", FormMethod.Post, new { id = "edit-form", Class = "form-horizontal", enctype = "multipart/form-data" }))
 {
-    <div class="modal-body">
+    <div class="modal-body" style="overflow-y: visible;">
         @Html.ValidationSummary(true)
         <fieldset>
             @Html.HiddenFor(model => model.ProductId)
