@@ -19,7 +19,7 @@ namespace SMDH.Models
         public int ProductId { get; set; }
 
         [DisplayName("Product Category")]
-        [Required(ErrorMessage = "The Product Category of Product is required.")]
+        [Required(ErrorMessage = "The Category of Product is required.")]
         public string ProductCategory { get; set; }
 
         [DisplayName("Name")]

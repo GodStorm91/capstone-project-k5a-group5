@@ -2,7 +2,7 @@
 <div class="form-horizontal">
     <div class="control-group">
         <label class="control-label">
-            Name
+            Name(*)
         </label>
         <div class="controls">
             @Html.TextBoxFor(model => model.Name, new { placeholder = "Name" })
@@ -20,7 +20,7 @@
     </div>
     <div class="control-group">
         <label class="control-label">
-            Category
+            Category(*)
         </label>
         <div class="controls">
             @Html.TextBoxFor(model => model.ProductCategory, new { placeholder = "Category" })
@@ -47,7 +47,7 @@
     </div>
     <div class="control-group">
         <label class="control-label">
-            Price
+            Price(*)
         </label>
         <div class="controls">
             @Html.TextBoxFor(model => model.ProductPrice, new { placeholder = "Price" })

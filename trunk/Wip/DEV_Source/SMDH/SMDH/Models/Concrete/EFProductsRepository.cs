@@ -46,7 +46,6 @@ namespace SMDH.Models.Concrete
         {
             product.CustomerId = customerid;
             product.IsPermanent = true;
-            product.Active = true;
             context.Products.InsertOnSubmit(product);
             context.SubmitChanges();
             return true;
