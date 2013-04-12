@@ -53,8 +53,8 @@
                 </td>
                 <td>@item.ProductWeight
                 </td>
-                <td>
-                    @item.ProductPrice
+                <td style="text-align:right;">
+                    @(String.Format("{0,12:N0}", item.ProductPrice))
                 </td>
                 <td>@item.Description
                 </td>
