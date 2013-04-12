@@ -19,17 +19,21 @@ namespace SMDH.Models
         public int ProductId { get; set; }
 
         [DisplayName("Product Category")]
+        [MaxLength(255)]
         [Required(ErrorMessage = "The Category of Product is required.")]
         public string ProductCategory { get; set; }
 
         [DisplayName("Name")]
+        [MaxLength(255)]
         [Required(ErrorMessage = "The Name of Product is required.")]
         public string Name { get; set; }
 
         [DisplayName("Size")]
+        [MaxLength(255)]
         public string Size { get; set; }
 
         [DisplayName("Product Weight")]
+        [MaxLength(255)]
         public string ProductWeight { get; set; }
 
         [DisplayName("Product Price")]
