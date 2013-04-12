@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using SMDH.Infrastructure;
+using SMDH.Utilities;
 
 namespace SMDH
 {
@@ -13,6 +14,7 @@ namespace SMDH
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        protected static DateTime whenTaskLastRan;
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -33,6 +35,7 @@ namespace SMDH
 
         protected void Application_Start()
         {
+            whenTaskLastRan = DateTime.Now;
             AreaRegistration.RegisterAllAreas();
 
             HtmlHelper.ClientValidationEnabled = true;
@@ -43,5 +46,21 @@ namespace SMDH
 
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
         }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            DoTask();
+        }
+
+        static void DoTask()
+        {
+            var oneDayAgo = DateTime.Now.AddDays(-1);
+            if (whenTaskLastRan < oneDayAgo)
+            {
+                Utilities.Utilities.UpdateOrderInHubStatus();
+            }
+        }
+
+        
     }
 }

@@ -252,10 +252,11 @@ namespace SMDH.Models.Concrete
                         if (order.DeliveryTypeId == (int)DeliveryTypeId.Buffer && order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                         {
                             order.OrderStatus = (int)OrderStatus.Delivering; //In hub
+                            order.DeliveryDate = DateTime.Now;
                         }
                         else if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                         {
-                            order.OrderStatus = (int)OrderStatus.Delivered; //Mark this status as Delivered
+                            order.OrderStatus = (int)OrderStatus.Delivered; //Mark this status as Delivered                            
                             order.DeliveryDate = DateTime.Now;
                         }                     
                     

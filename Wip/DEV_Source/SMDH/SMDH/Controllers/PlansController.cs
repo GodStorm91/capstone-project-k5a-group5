@@ -1445,7 +1445,11 @@ namespace SMDH.Controllers
                 {
                     return Json(new { success = true });
                 }
-                
+
+            }
+            else if (plan.PlanTypeId == (int)PlanTypes.ReturnedPlan)
+            {
+
             }
 
             return Json(new { success = false });
