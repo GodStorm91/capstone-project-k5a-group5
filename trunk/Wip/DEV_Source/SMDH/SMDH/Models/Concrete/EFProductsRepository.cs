@@ -71,7 +71,7 @@ namespace SMDH.Models.Concrete
 
         public List<Product> GetProductsByCustomerId(int customerId)
         {
-            return context.Products.Where(o => o.CustomerId == customerId).ToList();
+            return context.Products.Where(o => o.CustomerId == customerId && o.Active == true).ToList();
         }
     }
 }
