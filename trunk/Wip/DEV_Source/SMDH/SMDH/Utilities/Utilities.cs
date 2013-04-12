@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using SMDH.Models;
+using SMDH.Models.Statuses;
 
 namespace SMDH.Utilities
 {
@@ -56,6 +58,32 @@ namespace SMDH.Utilities
             }
 
             return new string(chars);
+        }
+
+        public static void UpdateOrderInHubStatus()
+        {
+            var context = new SMDHDataContext();
+            var orderInHub = context.Orders.Where(o => o.OrderStatus == (int)OrderStatus.Delivering);
+            foreach (var order in orderInHub)
+            {
+                if (order.DeliveryDate.Value.AddDays(7) > DateTime.Now)
+                {
+                    order.OrderStatus = (int)OrderStatus.Expired;
+                    order.DueDate = DateTime.Now.AddDays(3);
+                }
+            }
+
+            //user have three more days to configure 
+            var orderExpired = context.Orders.Where(o => o.OrderStatus == (int)OrderStatus.Expired);
+            foreach (var order in orderExpired)
+            {
+                if (order.DueDate > DateTime.Now)
+                {
+                    order.OrderStatus = (int)OrderStatus.WaitingForReturn;
+                }
+            }
+
+            context.SubmitChanges();
         }
     }
 }

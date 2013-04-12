@@ -381,6 +381,7 @@ namespace SMDH.Areas.Customer.Controllers
                 var order = context.Orders.Single(o => o.OrderId == id);
                 if (order.OrderStatus != (int)OrderStatus.Expired) return Json(new { success = false }) ;
                 order.OrderStatus = (int)OrderStatus.CustomerExtend;
+                order.DueDate = order.DueDate.Value.AddDays(7);
                 context.SubmitChanges();
                 return Json(new { success = true });
             }

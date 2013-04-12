@@ -79,7 +79,11 @@
             strList.push($(this).attr('id'));
         });
         $.post("/Customer/Requests/AddExistingOrdersToRequest", { requestId: $('#requestId').val(), orderStringList: strList.toString() }, function (data) {
-            
+            if (data.success) {
+                window.location.reload();
+            } else {
+                bootbox.alert("Can't add order(s) to request!");
+            }
         });
     });
 </script>

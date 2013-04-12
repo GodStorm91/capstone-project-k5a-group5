@@ -34,6 +34,8 @@ namespace SMDH.Areas.Customer.Controllers
             ViewBag.City = new SelectList(context.CityProvinces.Where(o => o.IsActive).ToArray(), "CityProvinceId", "Name");
             ViewBag.District = new SelectList(new List<District>());
             ViewBag.Ward = new SelectList(new List<Ward>());
+            ViewBag.DeliveryOption = new SelectList(context.DeliveryOptions.Where(d => d.IsActive).ToArray(), "DeliveryOptionId", "Name");
+            ViewBag.OrderPaymentType = new SelectList(context.OrderPaymentTypes.Where(o => o.IsActive).ToArray(), "OrderPaymentTypeId", "Name");
             ViewBag.Items = products;
             ViewBag.RequestId = requestId;
             return View(products);
@@ -42,7 +44,7 @@ namespace SMDH.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList, string pricesList, string receiverName, string receiverAddress,
             int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
-             int customerId, int requestId,int receiverAddressWardId = 1, int hubId = -1)
+             int customerId, int requestId,int receiverAddressWardId = 1, int hubId = -1, int deliveryOption = 1, int orderPaymentType = 1)
         {
             EFOrdersRepository _repository = new EFOrdersRepository();
             EFItemsRepository itemRepo = new EFItemsRepository();
@@ -55,6 +57,7 @@ namespace SMDH.Areas.Customer.Controllers
             {
                 toBeCollectedAmount += context.Products.Single(p => p.ProductId == itemsListArr[i]).ProductPrice.Value * quantitiesListArr[i];
             }
+            order.RequestId = requestId;
             order.AmountToBeCollectedFromReceiver = toBeCollectedAmount;
             order.DeliveryTypeId = deliveryType;
             order.ReceiverAddress = receiverAddress;
@@ -65,8 +68,8 @@ namespace SMDH.Areas.Customer.Controllers
             order.ReceiverName = receiverName;
             order.Latitude = latitude;
             order.Longitude = longitude;
-            order.DeliveryOptionId = 1;
-            order.OrderPaymentTypeId = 1;
+            order.DeliveryOptionId = deliveryOption;
+            order.OrderPaymentTypeId = orderPaymentType;
             order.OrderStatus = (int)OrderStatus.New;
             order.CustomerId = customerId;
             order.CreatedDate = DateTime.Now;
@@ -678,17 +681,26 @@ namespace SMDH.Areas.Customer.Controllers
 
         public ActionResult AddExistingOrdersToRequest(int requestId, string orderStringList)
         {
-            int[] orderIds = parseStringToList(orderStringList);
-            var request = context.Requests.Single(o => o.RequestId == requestId);
-            for (int i = 0; i < orderIds.Length; i++)
+            try
             {
-                var order = context.Orders.Single(o => o.OrderId == orderIds[i]);
-                order.RequestId = requestId;
+                int[] orderIds = parseStringToList(orderStringList);
+                var request = context.Requests.Single(o => o.RequestId == requestId);
+                for (int i = 0; i < orderIds.Length; i++)
+                {
+                    var order = context.Orders.Single(o => o.OrderId == orderIds[i]);
+                    order.RequestId = requestId;
+                }
+
+                context.SubmitChanges();
+
+                return Json(new { success = true });
             }
-
-            context.SubmitChanges();
-
-            return Json(new { success = true });
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+           
         }
 
         public ActionResult RejectForRepricing(int id)
