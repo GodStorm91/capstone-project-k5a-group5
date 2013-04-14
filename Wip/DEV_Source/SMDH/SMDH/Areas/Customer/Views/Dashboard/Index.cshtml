@@ -150,8 +150,17 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    var source = new EventSource('/Notifications/CheckNotification');
+
+    source.onmessage = function (e) {
+        //alert(e);
+        var returnedItem = JSON.parse(e.data);
+        updateDashboard(returnedItem.orders, returnedItem.requests);
+    }
+    
     $(function () {
-        checkNotifications();
+        //checkNotifications();
     });
 
     function checkNotifications() {

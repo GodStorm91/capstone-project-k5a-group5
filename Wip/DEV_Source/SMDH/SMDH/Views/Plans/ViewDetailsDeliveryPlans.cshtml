@@ -458,4 +458,47 @@
     //            }
     //        });
     //    }; 
+
+    viewPlan = function (modelId) {
+        alert("in view plan");
+        $.ajax({
+            url: '/Plans/Details/' + modelId,
+            type: 'POST',
+            dataType: 'html',
+            success: function (data) {
+                alert("Ok");
+                $('#editModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#editModal').modal();
+
+                map = new OpenLayers.Map('map');
+                $.post("/Plans/CalculateRouteOfPlan", { id: modelId }, function (data) {
+                    segments = data.segments;
+                    waypoints = data.waypoints;
+                    //bootbox.alert("complete calculate route. segments:" + segments.length + " waypoitns:" + waypoints.length);
+
+
+                    //Create a Google layer
+
+                    // if i use this instead of gmap then everything works.
+                    var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
+				{
+				numZoomLevels: 20
+});
+                    map.addLayer(gmap);
+                    map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
+                    show(0);
+                });
+            }
+        });
+    }
 </script>

@@ -1449,7 +1449,10 @@ namespace SMDH.Controllers
             }
             else if (plan.PlanTypeId == (int)PlanTypes.ReturnedPlan)
             {
-
+                if (_repository.MarkReturnedPlanFinished(plan))
+                {
+                    return Json(new { success = true });
+                }
             }
 
             return Json(new { success = false });

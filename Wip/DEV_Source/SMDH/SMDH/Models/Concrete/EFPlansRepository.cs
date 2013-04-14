@@ -273,6 +273,35 @@ namespace SMDH.Models.Concrete
             }
         }
 
+        public bool MarkReturnedPlanFinished(Plan plan)
+        {
+            try
+            {
+                using (var myContext = new SMDHDataContext())
+                {
+                    plan = myContext.Plans.Single(p => p.PlanId == plan.PlanId);
+                    if (plan.Status != (int)Statuses.DeliveryPlanStatus.Assigned) return false;
+                    foreach (var cargo in plan.Cargos)
+                    {
+
+                        var order = cargo.Order;
+                        if (order.OrderStatus == (int)OrderStatus.PlannedForReturn)
+                        {
+                            order.OrderStatus = (int)OrderStatus.Returned;
+                        }
+                    }
+                    plan.Status = (int)PlanStatus.Finished;
+                    plan.CreatedDate = DateTime.Now;
+                    myContext.SubmitChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public bool MarkAsReturned(Plan plan)
         {
             plan = context.Plans.Single(p => p.PlanId == plan.PlanId);

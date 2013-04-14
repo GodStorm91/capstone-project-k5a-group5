@@ -166,3 +166,22 @@
         }
     </tbody>
 </table>
+ <div class="control-group">
+    <div class="controls">      
+      @if (ViewBag.ApproveAllDisplay)
+      {
+          <button type="submit" class="btn btn-success" id="btnApproveAll">Approve All</button>
+      }      
+    </div>
+  </div>
+  <script type="text/javascript">
+      $('#btnApproveAll').click(function () {
+          $.post("/Customer/Orders/ApproveAll", function (data) {
+              if (data.success) {
+                  window.location.reload();
+              } else {
+                  bootbox.alert("Can't approve all");
+              }
+          });
+      });
+  </script>

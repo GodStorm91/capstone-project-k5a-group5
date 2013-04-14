@@ -6,15 +6,23 @@ using System.Web.Mvc;
 using SMDH.Models.Statuses;
 using SMDH.Models;
 using System.Web.Security;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Web.Script.Serialization;
+using System.Text;
 
 namespace SMDH.Controllers
 {
     public class NotificationsController : Controller
     {
+        private static BlockingCollection<string> _data = new BlockingCollection<string>();
         SMDHDataContext context = new SMDHDataContext();
         //
         // GET: /Notifications/
-
+        static NotificationsController()
+        {
+            _data.Add("started");
+        }
         public ActionResult Index()
         {
             return View();
@@ -22,30 +30,41 @@ namespace SMDH.Controllers
 
         public ActionResult CheckNotification()
         {
-            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
-            var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId).ToList();
+            var result = string.Empty;
+            var sb = new StringBuilder();
+            //if (_data.TryTake(out result, TimeSpan.FromMilliseconds(1000)))
+            //{
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
+                var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId).ToList();
+                var numberOfRequestsList = new List<int>();
+                numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.New).Count());
+                numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Pricing).Count());
+                numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved).Count());
+                numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Collected).Count());
+                numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Canceled).Count());
+
+                var numberOfOrdersList = new List<int>();
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Draft).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.RePricingApproveRequest).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ReturnedReducePrice ||
+                    o.OrderStatus == (int)OrderStatus.Expired).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.PlannedForCollecting).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Delivering).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ToBeReturned).Count());
+                numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ConfirmReturned).Count());
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                var serializedObject = ser.Serialize(new { orders = numberOfOrdersList, requests = numberOfRequestsList });
+                sb.AppendFormat("data: {0}\n\n", serializedObject);
+            //}
+
             //var requests = context.Requests.Where(r => r.CustomerId == 1).ToList();
             //var orders = context.Orders.Where(o => o.Request.CustomerId == 1).ToList();
 
-            var numberOfRequestsList = new List<int>();
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.New).Count());
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Pricing).Count());
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved).Count());
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Collected).Count());
-            numberOfRequestsList.Add(requests.Where(r => r.RequestStatus == (int)RequestStatus.Canceled).Count());            
+            return Content(sb.ToString(), "text/event-stream");
 
-            var numberOfOrdersList = new List<int>();
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Draft).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.RePricingApproveRequest).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ReturnedReducePrice || 
-                o.OrderStatus == (int)OrderStatus.Expired).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.PlannedForCollecting).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.Delivering).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ToBeReturned).Count());
-            numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ConfirmReturned).Count());
-            
-            return Json(new {requests= numberOfRequestsList, orders= numberOfOrdersList});
+
+            //return Json(new { requests = numberOfRequestsList, orders = numberOfOrdersList });
 
         }
 

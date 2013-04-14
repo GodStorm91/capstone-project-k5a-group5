@@ -85,6 +85,14 @@ namespace SMDH.Areas.Customer.Controllers
             {
             }
 
+            if (statuses.Count == 1 && statuses.ElementAt(0) == (int)OrderStatus.Draft)
+            {
+                ViewBag.ApproveAllDisplay = true;
+            }
+            else
+            {
+                ViewBag.ApproveAllDisplay = false;
+            }
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId
                                             && statuses.Contains(o.OrderStatus)).ToList();
@@ -470,6 +478,28 @@ namespace SMDH.Areas.Customer.Controllers
                 order.OrderStatus = (int)OrderStatus.ReDeliverRequest;
                 context.SubmitChanges();
                 return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult ApproveAll()
+        {
+            try
+            {
+                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                 var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId && o.OrderStatus == (int)OrderStatus.Draft);
+                 foreach (var order in orders)
+                 {
+                     order.OrderStatus = (int)OrderStatus.New;
+                 }
+
+                 context.SubmitChanges();
+                 return Json(new { success = true });
+
             }
             catch (Exception)
             {
