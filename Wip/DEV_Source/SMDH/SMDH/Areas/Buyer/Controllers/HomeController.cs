@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using SMDH.Helpers;
 using SMDH.Models.ViewModels;
 using SMDH.Models.Statuses;
+using SMDH.Utilities;
 
 namespace SMDH.Areas.Buyer.Controllers
 {
@@ -187,12 +188,14 @@ namespace SMDH.Areas.Buyer.Controllers
             //user want to deliver to Hub so a passcode must be generated
             if (hubId != -1)
             {
-                string passCode = Utilities.Utilities.CreateRandomPassword(7);
+                string passCode = Utilities.Utilities.CreateRandomPw(receiverPhone);
                 order.Passcode = passCode;
+                Utilities.Utilities.sendmails(passCode, receiverEmail);
             }
 
             if (_repository.ConfirmAdd(order))
             {
+                
                 for (int i = 0; i < itemsListArr.Length; i++)
                 {
                     Item item = new Item();

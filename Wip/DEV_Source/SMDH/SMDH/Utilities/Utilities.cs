@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using SMDH.Models;
 using SMDH.Models.Statuses;
+using System.Net.Mail;
 
 namespace SMDH.Utilities
 {
@@ -46,6 +47,102 @@ namespace SMDH.Utilities
             }
         }
 
+        public static void sendmails(string passcode,string toemail)
+        {
+            System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage();
+            mailMessage.From = new MailAddress("test.hdms@gmail.com");
+            mailMessage.To.Add(new MailAddress(toemail));
+            mailMessage.Subject = "Order Information";
+            mailMessage.Body = "Thanks for shopping with us.<br/>Your passcode is : " + passcode +"<br/>.We will contact to you if your order in hub.";
+            mailMessage.IsBodyHtml = true;
+            SmtpClient smtp = new System.Net.Mail.SmtpClient();
+            {
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                smtp.Credentials = new NetworkCredential("test.hdms@gmail.com", "HdmsTest1");
+                smtp.Timeout = 20000;
+            }
+            Object userState = mailMessage;
+
+            //Attach event handler for async callback
+            smtp.SendCompleted += new SendCompletedEventHandler(smtpClient_SendCompleted);
+
+            try
+            {
+                //Send the email asynchronously
+                smtp.SendAsync(mailMessage, userState);
+            }
+            catch (SmtpException smtpEx)
+            {
+                //Error handling here
+            }
+            catch (Exception ex)
+            {
+                //Error handling here
+            }
+        }
+
+        public static void smtpClient_SendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+
+            //Get UserState as MailMessage instance from SendMail()
+            MailMessage mailMessage = e.UserState as MailMessage;
+
+            if (e.Cancelled)
+            {
+                string s = "Sending of email message was cancelled. Address=" + mailMessage.To[0].Address;
+            }
+
+            if (e.Error != null)
+            {
+                string s = "Error occured, info=" + e.Error.Message;
+            }
+            else
+            {
+                string s = "Mail sent successfully";
+            }
+
+        }
+
+        public static void SendMailWithoutPasscode(string toEmail)
+        {
+            System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage();
+            mailMessage.From = new MailAddress("test.hdms@gmail.com");
+            mailMessage.To.Add(new MailAddress(toEmail));
+            mailMessage.Subject = "Order Information";
+            mailMessage.Body = "Your Order in hub right now.<br/>Please come and take it after 7 days from now.<br/>.Thanks and best regards";
+            mailMessage.IsBodyHtml = true;
+            SmtpClient smtp = new System.Net.Mail.SmtpClient();
+            {
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                smtp.Credentials = new NetworkCredential("test.hdms@gmail.com", "HdmsTest1");
+                smtp.Timeout = 20000;
+            }
+            Object userState = mailMessage;
+
+            //Attach event handler for async callback
+            smtp.SendCompleted += new SendCompletedEventHandler(smtpClient_SendCompleted);
+
+            try
+            {
+                //Send the email asynchronously
+                smtp.SendAsync(mailMessage, userState);
+            }
+            catch (SmtpException smtpEx)
+            {
+                //Error handling here
+            }
+            catch (Exception ex)
+            {
+                //Error handling here
+            }
+        }
+
         public static string CreateRandomPassword(int passwordLength)
         {
             string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789!@$?_-";
@@ -58,6 +155,16 @@ namespace SMDH.Utilities
             }
 
             return new string(chars);
+        }
+
+        public static string CreateRandomPw(string phone)
+        {
+            string second = DateTime.Now.Second.ToString();
+            string date = DateTime.Now.Day.ToString();
+            string month = DateTime.Now.Month.ToString();
+            string year = DateTime.Now.Year.ToString();
+            string passcode = second + date + month + year + phone.Substring(phone.Length - Math.Min(4, phone.Length));
+            return passcode;
         }
 
         public static void UpdateOrderInHubStatus()
