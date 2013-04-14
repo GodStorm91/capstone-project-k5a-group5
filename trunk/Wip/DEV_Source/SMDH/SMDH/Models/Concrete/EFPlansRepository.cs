@@ -6,6 +6,7 @@ using SMDH.Models.Abstract;
 using SMDH.Models.ViewModels;
 using SMDH.Models.Statuses;
 using System.Transactions;
+using SMDH.Utilities;
 
 namespace SMDH.Models.Concrete
 {
@@ -253,6 +254,7 @@ namespace SMDH.Models.Concrete
                         {
                             order.OrderStatus = (int)OrderStatus.Delivering; //In hub
                             order.DeliveryDate = DateTime.Now;
+                            SMDH.Utilities.Utilities.SendMailWithoutPasscode(order.ReceiverMail);
                         }
                         else if (order.OrderStatus == (int)OrderStatus.PlannedForDelivering)
                         {
