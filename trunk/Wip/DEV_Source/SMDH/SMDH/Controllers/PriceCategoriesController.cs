@@ -66,6 +66,12 @@ namespace SMDH.Controllers
                 pc.Price = priceTagInfo.Price;
                 context.PriceCategories.InsertOnSubmit(pc);
                 context.SubmitChanges();
+                EFOrdersRepository orderRepo = new EFOrdersRepository();
+                context.SubmitChanges();
+                if (!orderRepo.UpdateOrderFee(pc.OrderId.Value))
+                {
+                    return Json(new { success = false, canBeApprove = false });
+                }
                 var order = context.Orders.Single(o => o.OrderId == pc.OrderId);
 
                 return RedirectToAction("ApproveOrders", "Requests", new { id = order.Request.RequestId });
@@ -94,8 +100,12 @@ namespace SMDH.Controllers
                 var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 pc.UserId = userInfo.UserId;
                 context.PriceCategories.InsertOnSubmit(pc);
+                EFOrdersRepository orderRepo = new EFOrdersRepository();
                 context.SubmitChanges();
-
+                if (!orderRepo.UpdateOrderFee(orderId))
+                {
+                    return Json(new { success = false, canBeApprove = false });
+                }
                 //Check if all request of order contains price
                 var myOrder = context.Orders.Single(o => o.OrderId == orderId);
                 var request = myOrder.Request;

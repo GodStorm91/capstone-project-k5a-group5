@@ -154,6 +154,15 @@ namespace SMDH.Areas.Customer.Controllers
 
             requests = _repository.GetRequestsByStatuses(statuses);
 
+            if (statuses.Count == 1 && statuses.ElementAt(0) == (int)RequestStatus.Pricing)
+            {
+                ViewBag.ApproveAllDisplay = true;
+            }
+            else
+            {
+                ViewBag.ApproveAllDisplay = false;
+            }
+
             var userInfo = context.UserInfos.Single(r => r.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             requests = userInfo.Customer.Requests.Where(r => statuses.Contains(r.RequestStatus)).ToList();
             ////requests = context.Requests.Where(r => statuses.Contains(r.RequestStatus) && r.CustomerId == 1).ToList();
@@ -757,6 +766,27 @@ namespace SMDH.Areas.Customer.Controllers
                 return RedirectToAction("Index", "Dashboard");
             }
 
+        }
+
+        public ActionResult ApproveAll()
+        {
+            try
+            {
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Pricing && r.CustomerId == userInfo.CustomerId);
+                foreach (var request in requests)
+                {
+                    request.RequestStatus = (int)RequestStatus.Approved;
+                    request.ApprovedDate = DateTime.Now;
+                }
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
         }
     }
 }

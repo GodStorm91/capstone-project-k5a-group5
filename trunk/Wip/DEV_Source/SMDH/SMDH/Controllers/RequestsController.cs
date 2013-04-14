@@ -68,7 +68,7 @@ namespace SMDH.Controllers
             {
             }
 
-            requests = _repository.GetRequestsByStatuses(statuses);
+            requests = _repository.GetRequestsByStatuses(statuses);           
 
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
@@ -323,5 +323,6 @@ namespace SMDH.Controllers
             }
 
         }
+      
     }
 }
