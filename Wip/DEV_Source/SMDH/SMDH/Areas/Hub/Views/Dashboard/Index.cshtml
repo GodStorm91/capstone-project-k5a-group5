@@ -19,12 +19,11 @@
 <script src="/js/date.js" type="text/javascript"></script>
 <script src="/js/accounting.js" type="text/javascript"></script>
 <style type="text/css">
-    .table td.amount
-    {
+    .table td.amount {
         text-align: right;
     }
-    .table td.orderid
-    {
+
+    .table td.orderid {
         width: 100px;
     }
 </style>
@@ -37,17 +36,54 @@
     </div>
     <div class="widget-body">
         <form action="javascript:void(0);" class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label">
-                Passcode</label>
-            <div class="controls">
-                <input type="text" id="txtPasscode" />
-                <button type="submit" class="btn btn-primary" id="btnConfirm">
-                    Confirm</button>
+            <div class="control-group">
+                <label class="control-label">
+                    Passcode</label>
+                <div class="controls">
+                    <input type="text" id="txtPasscode" />
+                    <button type="submit" class="btn btn-primary" id="btnConfirm">
+                        Confirm</button>
+                </div>
+                <div id="txtResultTable" style="margin-top: 10px;">
+                    @*                    <table id="orderdetail" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>OrderID
+                                </th>
+                                <th>Due Date
+                                </th>
+                                <th>Order Payment Type
+                                </th>
+                                <th>Receiver Name
+                                </th>
+                                <th>Receiver Phone
+                                </th>
+                                <th>Amount
+                                </th>
+                                <th>Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>OrderID</td>
+
+                                <td>Due Date</td>
+
+                                <td>Order Payment Type</td>
+
+                                <td>Receiver Name</td>
+
+                                <td>Receiver Phone</td>
+
+                                <td>Amount</td>
+                                <td>Action</td>
+
+                            </tr>
+                        </tbody>
+                    </table>*@
+                </div>
             </div>
-            <div id="txtResultTable">
-            </div>
-        </div>
         </form>
     </div>
 </div>
@@ -77,20 +113,15 @@
                                 <th>
                                     <input type="checkbox" id="checkallinhub" name="title-table-checkbox" />
                                 </th>
-                                <th style="width: 70px;">
-                                    OrderID
+                                <th style="width: 70px;">OrderID
                                 </th>
-                                <th style="width: 70px;">
-                                    Item No.
+                                <th style="width: 70px;">Item No.
                                 </th>
-                                <th>
-                                    Amount
+                                <th>Amount
                                 </th>
-                                <th>
-                                    Due Date
+                                <th>Due Date
                                 </th>
-                                <th>
-                                    Action
+                                <th>Action
                                 </th>
                             </tr>
                         </thead>
@@ -102,17 +133,13 @@
                     <table id="InHub" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">
-                                    OrderID
+                                <th style="width: 70px;">OrderID
                                 </th>
-                                <th style="width: 70px;">
-                                    Item No.
+                                <th style="width: 70px;">Item No.
                                 </th>
-                                <th>
-                                    Amount
+                                <th>Amount
                                 </th>
-                                <th>
-                                    Due Date
+                                <th>Due Date
                                 </th>
                             </tr>
                         </thead>
@@ -124,17 +151,13 @@
                     <table id="Delivered" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">
-                                    OrderID
+                                <th style="width: 70px;">OrderID
                                 </th>
-                                <th style="width: 70px;">
-                                    Item No.
+                                <th style="width: 70px;">Item No.
                                 </th>
-                                <th>
-                                    Due Date
+                                <th>Due Date
                                 </th>
-                                <th>
-                                    Delivery Date
+                                <th>Delivery Date
                                 </th>
                             </tr>
                         </thead>
@@ -146,14 +169,11 @@
                     <table id="WaitingForReturn" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">
-                                    OrderID
+                                <th style="width: 70px;">OrderID
                                 </th>
-                                <th style="width: 70px;">
-                                    Item No.
+                                <th style="width: 70px;">Item No.
                                 </th>
-                                <th>
-                                    Due Date
+                                <th>Due Date
                                 </th>
                                 @*                            <th>
                                 Action
@@ -168,14 +188,11 @@
                     <table id="Return" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">
-                                    OrderID
+                                <th style="width: 70px;">OrderID
                                 </th>
-                                <th style="width: 70px;">
-                                    Item No.
+                                <th style="width: 70px;">Item No.
                                 </th>
-                                <th>
-                                    Collected Date
+                                <th>Collected Date
                                 </th>
                             </tr>
                         </thead>
@@ -246,55 +263,111 @@
                 //            '</div>' +
                 //        '</div>';
 
-                var resulttable = '<div class="widget">' +
-                    '<div class="span4 offset1">' +
-                        '<div class="widget">' +
-                            '<div class="widget-header">' +
-                                '<h5>' +
-                                    'Order No : ' +
-                        +data.result.OrderId + '</h5>' +
-                            '</div>' +
-                            '<div class="widget-header">' +
-                                '<h5>' +
-                                    'Due Date : ' + data.result.DueDateString + '</h5>' +
-                            '</div>' +
-                            '<div class="widget-header">' +
-                                '<h5>' +
-                                    'Order Payment Type : ' + data.result.OrderPaymentType + '</h5>' +
-                            '</div>' +
-                        '</div>' +
-                '</div>' +
-                '<div class="span4">' +
-                '<div class="widget">' +
-                '<div class="widget-header">' +
-                '<h5>' +
-                'Receiver Name : ' +
-                        data.result.ReceiverName +
-                    '</h5>' +
-                '</div>' +
-                '<div class="widget-header">' +
-                '<h5>' +
-                'Receiver Phone : ' +
-                        data.result.ReceiverPhone + '</h5>' +
-                '</div>' +
-                '<div class="widget-header">' +
-                '<h5>' +
-                'Amount : ' +
-                        accounting.formatMoney(data.result.AmountToBeCollected, "", 0, ',', '.') +
-                    ' VND</h5>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="span2" style="margin-top:20px;">' +
-                '<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
-                        'Customer Received</button>' +
-                '<button class="btn btn-danger" id="btnReject" style="width: 100%;" onclick="markAsWaitingReturn(' + data.result.OrderId + ')">' +
-                        'Customer Rejected</button>' +
-                '</div>';
+                //var resulttable = '<div class="widget">' +
+                //    '<div class="span4 offset1">' +
+                //        '<div class="widget">' +
+                //            '<div class="widget-header">' +
+                //                '<h5>' +
+                //                    'Order No : ' +
+                //        +data.result.OrderId + '</h5>' +
+                //            '</div>' +
+                //            '<div class="widget-header">' +
+                //                '<h5>' +
+                //                    'Due Date : ' + data.result.DueDateString + '</h5>' +
+                //            '</div>' +
+                //            '<div class="widget-header">' +
+                //                '<h5>' +
+                //                    'Order Payment Type : ' + data.result.OrderPaymentType + '</h5>' +
+                //            '</div>' +
+                //        '</div>' +
+                //'</div>' +
+                //'<div class="span4">' +
+                //'<div class="widget">' +
+                //'<div class="widget-header">' +
+                //'<h5>' +
+                //'Receiver Name : ' +
+                //        data.result.ReceiverName +
+                //    '</h5>' +
+                //'</div>' +
+                //'<div class="widget-header">' +
+                //'<h5>' +
+                //'Receiver Phone : ' +
+                //        data.result.ReceiverPhone + '</h5>' +
+                //'</div>' +
+                //'<div class="widget-header">' +
+                //'<h5>' +
+                //'Amount : ' +
+                //        accounting.formatMoney(data.result.AmountToBeCollected, "", 0, ',', '.') +
+                //    ' VND</h5>' +
+                //'</div>' +
+                //'</div>' +
+                //'</div>' +
+                //'</div>' +
+                //'<div class="span2" style="margin-top:20px;">' +
+                //'<button class="btn btn-success" id="btnMarkAsFinished" style="width: 100%;" onclick="markAsDelivered(' + data.result.OrderId + ')">' +
+                //        'Customer Received</button>' +
+                //'<button class="btn btn-danger" id="btnReject" style="width: 100%;" onclick="markAsWaitingReturn(' + data.result.OrderId + ')">' +
+                //        'Customer Rejected</button>' +
+                //'</div>';
 
-                $('#txtResultTable').html(resulttable);
+                var result = '<table id="orderdetail" class="table table-bordered">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th>OrderID' +
+                                '</th>' +
+                                '<th>Due Date' +
+                                '</th>' +
+                                '<th>Order Payment Type' +
+                                '</th>' +
+                                '<th>Receiver Name' +
+                                '</th>' +
+                                '<th>Receiver Phone' +
+                                '</th>' +
+                                '<th>Amount' +
+                                '</th>' +
+                                '<th>Action' +
+                                '</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                for (var i = 0; i < data.result.length; i++) {
+                    result += '<tr>' +
+                                '<td>' + data.result[i].OrderId + '</td>' +
 
+                                '<td>' + data.result[i].DueDateString + '</td>' +
+
+                                '<td>' + data.result[i].OrderPaymentType + '</td>' +
+
+                                '<td>' + data.result[i].ReceiverName + '</td>' +
+
+                                '<td>' + data.result[i].ReceiverPhone + '</td>' +
+
+                                '<td>' + accounting.formatMoney(data.result[i].AmountToBeCollected, "", 0, ',', '.') + ' VND</td>' +
+                                '<td>' +
+                                '<a class="btn btn-mini btn-primary" id="btnMarkAsFinished" onclick="markAsDelivered(' + data.result[i].OrderId + ')">' +
+                                    'Customer Received</a>' +
+                                '<a class="btn btn-mini btn-danger" style="margin-left:10px;" id="btnReject" onclick="markAsWaitingReturn(' + data.result[i].OrderId + ')">' +
+                                    'Customer Rejected</a>' +
+                                '</td>' +
+                            '</tr>';
+                }
+
+                result += '</tbody>' +
+             '</table>' +
+
+         $('#txtResultTable').html(result);
+                $('#orderdetail').dataTable({
+                    "aaSorting": [[1, "desc"]],
+                    "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                    ]
+                });
             }
         });
 
@@ -312,7 +385,7 @@
         { "mDataProp": [3], sDefaultContent: "n/a", "sType": "numeric", "sClass": "amount" },
         { "mDataProp": [4], sDefaultContent: "n/a", "sType": "date" },
         { "mDataProp": [5], sDefaultContent: "n/a" }
-        ],
+            ],
             "bProcessing": false,
             "bServerSide": false,
             "bPaginate": true,
@@ -340,7 +413,7 @@
         { "mDataProp": [1], sDefaultContent: "n/a" },
         { "mDataProp": [2], sDefaultContent: "n/a", "sClass": "amount" },
         { "mDataProp": [3], sDefaultContent: "n/a" }
-        ],
+            ],
             "bProcessing": false,
             "bServerSide": false,
             "bSort": true,
@@ -361,7 +434,7 @@
         { "mDataProp": [1], sDefaultContent: "n/a" },
         { "mDataProp": [2], sDefaultContent: "n/a" },
         { "mDataProp": [3], sDefaultContent: "n/a" }
-        ],
+            ],
             "bProcessing": true,
             "bServerSide": false,
             "bSort": true,
@@ -383,7 +456,7 @@
         { "mDataProp": [2], sDefaultContent: "n/a" },
             //        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "15%" },
             //        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "15%" }
-        ],
+            ],
             "bProcessing": false,
             "bServerSide": false,
             "bSort": true,
@@ -403,7 +476,7 @@
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
         { "mDataProp": [2], sDefaultContent: "n/a" }
-        ],
+            ],
             "bProcessing": false,
             "bServerSide": false,
             "bSort": true,
@@ -470,6 +543,6 @@
         });
     }
 
-    
+
 
 </script>
