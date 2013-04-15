@@ -205,15 +205,17 @@ namespace SMDH.Areas.Hub.Controllers
         {
             try
             {
-                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-                var result = context.Orders.Where(x => x.Passcode.ToString() == passCode && x.OrderStatus == (int)OrderStatus.Delivering && userInfo.HubId == x.HubId ).Single();
+                //var result = context.Orders.Where(x => x.Passcode.ToString() == passCode && x.OrderStatus == (int)OrderStatus.Delivering).Single();
+                var result = from o in context.Orders
+                              where o.Passcode.ToString() == passCode && o.OrderStatus == (int)OrderStatus.Delivering
+                              select new OrderViewModel(o);
                 if (result == null)
                 {
                     return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
-                OrderViewModel returnResult = new OrderViewModel(result);
+                //OrderViewModel returnResult = new OrderViewModel(result);
 
-                return Json(new { success = true, result = returnResult }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, result = result }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

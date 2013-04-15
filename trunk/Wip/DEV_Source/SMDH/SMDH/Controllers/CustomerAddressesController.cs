@@ -76,7 +76,6 @@ namespace SMDH.Controllers
         public ActionResult Edit(int id)
         {
             CustomerAddress customeraddress = context.CustomerAddresses.Single(x => x.CustomerAddressId == id);
-
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).OrderBy(cp => cp.DisplayOrder).ToArray(), "CityProvinceId", "Name", customeraddress.District.CityProvinceId);
             ViewBag.PossibleDistricts = new SelectList(customeraddress.District.CityProvince.Districts.Where(d => d.IsActive).OrderBy(d => d.DisplayOrder).ToArray(), "DistrictId", "Name", customeraddress.DistrictId);
             ViewBag.PossibleWards = new SelectList(customeraddress.District.Wards.Where(w => w.IsActive).OrderBy(w => w.DisplayOrder).ToArray(), "WardId", "Name", customeraddress.WardId);
