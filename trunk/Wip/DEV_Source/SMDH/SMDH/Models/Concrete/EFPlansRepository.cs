@@ -195,7 +195,7 @@ namespace SMDH.Models.Concrete
                     var orders = context.Orders.Where(r => orderIds.Contains(r.OrderId)
                                                             && r.OrderStatus == (int)OrderStatus.Collected).ToList(); // Only Order status that is collected can be add to Delivery Plan
 
-                    if (orders.Count == orderIds.Length && orderRepo.AddToPlan(plan, orders))
+                    if (orderRepo.AddToPlan(plan, orders))
                     {
                         trans.Complete();
                         return true;

@@ -119,9 +119,9 @@ namespace SMDH.Controllers
                 }
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, reason= e.Message}, JsonRequestBehavior.AllowGet);
                 throw;
             }
 
@@ -131,7 +131,7 @@ namespace SMDH.Controllers
         {
             try
             {
-                var ordersAvailable = context.Orders.Where(o => o.CustomerId == customerId && o.RequestId == null);
+                var ordersAvailable = context.Orders.Where(o => o.CustomerId == customerId && o.RequestId == null && o.OrderStatus == (int)OrderStatus.New);
                 if (ordersAvailable.Count() < requestsNum * ordersInRequest)
                 {
                     return Json(new { success = false });
@@ -165,10 +165,11 @@ namespace SMDH.Controllers
                     for (int i = 0; i < requestsNum; i++)
                     {
                         Request request = new Request();
-                        UserInfo uf = context.UserInfos.Single(u => u.CustomerId == customerId);
+                        UserInfo uf = context.UserInfos.First(u => u.CustomerId == customerId);
                         request.CreatedByUserId = uf.UserId;
                         request.RequestedDate = DateTime.Now;
-                        request.RequestStatus = (int)RequestStatus.Pricing;
+                        request.RequestStatus = (int)RequestStatus.New;
+                        request.CustomerId = customerId;                        
                         var customer = context.Customers.Single(c => c.CustomerId == customerId);
                         var customerAddresses = context.CustomerAddresses.Where(ca => ca.CustomerId == customerId);
                         int[] listAddress = new int[customerAddresses.Count()];
@@ -183,23 +184,25 @@ namespace SMDH.Controllers
                         int addressIndex = rnd.Next(0, customerAddresses.Count());
                         request.CollectionAddressId = listAddress[addressIndex];
                         context.Requests.InsertOnSubmit(request);
+                        context.SubmitChanges();
 
                         for (int k = 0; k < ordersInRequest; k++)
                         {
                             var order = context.Orders.Single(o => o.OrderId == listOrdersInAddress[i, k]);
                             order.RequestId = request.RequestId;
+                            order.OrderStatus = (int)OrderStatus.Requested;
                         }
 
                         context.SubmitChanges();
 
                     }
 
-                    return Json(new { success = true });
+                    return Json(new { success = true },JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Json(new { success = false });
+                return Json(new { success = false, data= e.Message }, JsonRequestBehavior.AllowGet);
                 throw;
             }
         }

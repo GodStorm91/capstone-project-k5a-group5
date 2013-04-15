@@ -165,10 +165,10 @@ namespace SMDH.Areas.Hub.Controllers
         {
             try
             {
-                //var userInfo = context.UserInfoes.Find((Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var request = context.Requests.Single(o=> o.RequestId == order.RequestId);
-                //if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
-                ViewBag.Customer = "Cty Vikey";// userInfo.Customer.CompanyName;
+                if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
+                ViewBag.Customer = userInfo.Customer.CompanyName;
                 if (ModelState.IsValid)
                 {
                     //context.Entry(order).State = EntityState.Modified;
@@ -205,7 +205,8 @@ namespace SMDH.Areas.Hub.Controllers
         {
             try
             {
-                var result = context.Orders.Where(x => x.Passcode.ToString() == passCode && x.OrderStatus == (int)OrderStatus.Delivering).Single();
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var result = context.Orders.Where(x => x.Passcode.ToString() == passCode && x.OrderStatus == (int)OrderStatus.Delivering && userInfo.HubId == x.HubId ).Single();
                 if (result == null)
                 {
                     return Json(new { success = false }, JsonRequestBehavior.AllowGet);
@@ -224,7 +225,8 @@ namespace SMDH.Areas.Hub.Controllers
 
         public ActionResult ChangeStatusByPasscode(int selectedId)
         {
-            var order = context.Orders.FirstOrDefault(x => x.OrderId == selectedId);
+            var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+            var order = context.Orders.FirstOrDefault(x => x.OrderId == selectedId && x.HubId == userInfo.HubId);
             if (order == null)
             {
                 return Redirect("/Hubs/");
