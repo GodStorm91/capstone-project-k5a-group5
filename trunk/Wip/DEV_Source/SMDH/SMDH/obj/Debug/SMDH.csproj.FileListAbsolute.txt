@@ -1,10 +1,10 @@
-D:\CapstonProj\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.dll
-D:\CapstonProj\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.pdb
-D:\CapstonProj\Wip\DEV_Source\SMDH\SMDH\obj\Debug\SMDH.csprojResolveAssemblyReference.cache
-D:\CapstonProj\Wip\DEV_Source\SMDH\SMDH\obj\Debug\SMDH.dll
-D:\CapstonProj\Wip\DEV_Source\SMDH\SMDH\obj\Debug\SMDH.pdb
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.dll
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.pdb
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\EntityFramework.dll
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\Ninject.dll
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\EntityFramework.xml
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\Ninject.pdb
+E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\Ninject.xml
 E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\obj\Debug\ResolveAssemblyReference.cache
 E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\obj\Debug\SMDH.dll
 E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\obj\Debug\SMDH.pdb
-E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.dll
-E:\capstone-project-k5a-group5\Wip\DEV_Source\SMDH\SMDH\bin\SMDH.pdb

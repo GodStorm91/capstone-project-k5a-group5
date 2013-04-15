@@ -2,34 +2,251 @@
     ViewBag.Title = "Index";
 }
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="/js/date-picker/date.js" type="text/javascript"></script>
+<script src="/js/date-picker/daterangepicker.js" type="text/javascript"></script>
+<link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
+<h2>
+    Chart Types:</h2>
+<!--Div that will hold the pie chart-->
 
-<h2>Index</h2>
- 
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>  
-  <script type="text/javascript">
-      google.load("visualization", "1", { packages: ["corechart"] });
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-          alert("in draw chart");
-          var tdata = new google.visualization.DataTable();
-          tdata.addColumn('string', 'Month');
-          tdata.addColumn('number', 'Fee');
-          tdata.addColumn('number', 'Amount to be collected');
-          alert("start post");
-          $.post("/Report/GetData", function (data) {
-              alert("receive data");
-              for (var i = 0; i < data.length; i++) {
-                  tdata.addRow([data[i].Date, data[i].TotalFee, data[i].TotalAmountToBeCollected]);
-              }
-              //Instantiate and draw our chart , passing some options
-              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-              var options = {
-                  title: "Expenses, Salary For the current year"
-              };
-              alert("in drawing");
-              chart.draw(tdata, options);
-          });      
-      }
-  </script>
-  <div id="chart_div" style="width: 900px; height: 500px;"></div>
+<script type="text/javascript">
+
+        google.load("visualization", "1", { packages: ["corechart"] });      
+        
+</script>
+<div class="span12">
+    <div class="widget no-margin">
+        <div class="widget-header">
+            <div class="title">
+                Revenue By Months
+            </div>
+            <span class="tools"><a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a></span>
+        </div>
+        <div class="widget-body">
+            <input type="text" name="report_range1" id="report_rangRevenueByMonths" class="report_range" placeholder="29/01/2013 to 31/01/2013" />
+            <input type="text"" id="gasolinePrice" />
+            <input type="button" class="btn btn-success" value="Filter" onclick="viewRevenueByMonths()" />
+            <div id="area_chart">
+            </div>
+        </div>        
+    </div>
+</div>
+<div class="span12">
+    <div class="widget no-margin">
+        <div class="widget-header">
+            <div class="title">
+                Revenue By Customer
+            </div>
+            <span class="tools"><a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a></span>
+        </div>
+        <div class="widget-body">
+            <input type="text" name="report_range1" id="report_revenueByCustomer" class="report_range"  placeholder="29/01/2013 to 31/01/2013" />            
+            <input type="button" class="btn btn-success" value="Filter" onclick="viewRevenueByCustomer()" />
+            <div id="pie_chart">
+            </div>
+        </div>
+        </div>
+ </div>
+
+ <div class="span12">
+    <div class="widget no-margin">
+        <div class="widget-header">
+            <div class="title">
+                Distance Traveled By Date
+            </div>
+            <span class="tools"><a class="fs1" aria-hidden="true" data-icon="&#xe090;"></a></span>
+        </div>
+        <div class="widget-body">
+            <input type="text" name="report_range1" id="report_DistanceTraveled" class="report_range"  placeholder="29/01/2013 to 31/01/2013" />            
+            <input type="button" class="btn btn-success" value="Filter" onclick="viewDistanceTraveledByDate()" />
+            <div id="bar_chart">
+            </div>
+        </div>
+        </div>
+ </div>
+<script type="text/javascript">
+
+function viewDistanceTraveledByDate(){
+     var startDate = "";
+    var endDate = "";
+    if ($('#report_DistanceTraveled').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_DistanceTraveled').val().split("to");
+            var dateParts = dateRangeParts[0].split("/");
+            startDate =  dateParts[0] + dateParts[1] + dateParts[2];
+        }
+        if ($('#report_DistanceTraveled').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_DistanceTraveled').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
+            endDate = dateParts[0] + dateParts[1] + dateParts[2];
+        }
+    if (startDate== '' || endDate==''){
+        bootbox.alert("Can't display chart");
+    }else{
+        //google.setOnLoadCallback(drawRevenueChart);
+        drawDistanceByDate(startDate,endDate);
+    }
+}
+
+function viewRevenueByCustomer(){
+    var startDate = "";
+    var endDate = "";
+    if ($('#report_revenueByCustomer').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_revenueByCustomer').val().split("to");
+            var dateParts = dateRangeParts[0].split("/");
+            startDate =  dateParts[0] + dateParts[1] + dateParts[2];
+        }
+        if ($('#report_revenueByCustomer').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_revenueByCustomer').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
+            endDate = dateParts[0] + dateParts[1] + dateParts[2];
+        }
+    if (startDate== '' || endDate==''){
+        bootbox.alert("Can't display chart");
+    }else{
+        //google.setOnLoadCallback(drawRevenueChart);
+        drawRevenueByCustomer(startDate,endDate);
+    }
+}
+
+function viewRevenueByMonths(){
+    var startDate = "";
+    var endDate = "";
+    var gasolinePrice = $('#gasolinePrice').val();
+    if ($('#report_rangRevenueByMonths').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_rangRevenueByMonths').val().split("to");
+            var dateParts = dateRangeParts[0].split("/");
+            startDate =  dateParts[0] + dateParts[1] + dateParts[2];
+        }
+        if ($('#report_rangRevenueByMonths').val() != '') {
+            //getDateFromFormat($('#startDateFilter').val(),'dd/MM/y');
+            var dateRangeParts = $('#report_rangRevenueByMonths').val().split("to");
+            var dateParts = dateRangeParts[1].split("/");
+            endDate = dateParts[0] + dateParts[1] + dateParts[2];
+        }
+    if (startDate== '' || endDate=='' || gasolinePrice == ''){
+        bootbox.alert("Can't display chart");
+    }else{
+        //google.setOnLoadCallback(drawRevenueChart);
+        drawRevenueChart(startDate,endDate,gasolinePrice);
+    }
+    
+}
+
+function drawDistanceByDate(startDate, endDate){
+        var tdata = new google.visualization.DataTable();
+            tdata.addColumn('string', 'Date');
+            tdata.addColumn('number', 'Total Distance');                    
+            $.post("/Report/GetDataForPlanDistanceChart",{startDate : startDate, endDate : endDate} , function (data) {       
+                alert(data.length);         
+                for (var i = 0; i < data.length; i++) {
+                    tdata.addRow([data[i].Date, data[i].TotalDistance]);
+                }
+                //Instantiate and draw our chart , passing some options
+                var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
+                var options = {
+                    title: "Revenue for the For the current period " + $('#report_DistanceTraveled').val()
+                };                
+                chart.draw(tdata, options);
+            });
+}
+
+function drawRevenueChart(startDate, endDate, gasolinePrice) {            
+            var tdata = new google.visualization.DataTable();
+            tdata.addColumn('number', 'Month');
+            tdata.addColumn('number', 'Revenue');
+            tdata.addColumn('number', 'Expense');            
+            $.post("/Report/GetDataForRevenueChart",{startDate : startDate, endDate : endDate, gasolinePrice : gasolinePrice} , function (data) {                
+                for (var i = 0; i < data.orders.length; i++) {
+                    tdata.addRow([data.orders[i].Month, data.orders[i].TotalFee, data.orders[i].TotalFee * 0.3]);
+                }
+                //Instantiate and draw our chart , passing some options
+                var chart = new google.visualization.AreaChart(document.getElementById('area_chart'));
+                var options = {
+                    title: "Revenue for the For the current period " + $('#report_rangRevenueByMonths').val() + " By Customers"
+                };                
+                chart.draw(tdata, options);
+            });
+        }     
+
+function drawRevenueByCustomer(startDate, endDate) {            
+            var tdata = new google.visualization.DataTable();
+            tdata.addColumn('string', 'Customer');
+            tdata.addColumn('number', 'Revenue');                    
+            $.post("/Report/GetDataForCustomerRevenuePieChart",{startDate : startDate, endDate : endDate} , function (data) {       
+                alert(data.length);         
+                for (var i = 0; i < data.length; i++) {
+                    tdata.addRow([data[i].CustomerName, data[i].TotalFee]);
+                }
+                //Instantiate and draw our chart , passing some options
+                var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+                var options = {
+                    title: "Revenue for the For the current period " + $('#report_revenueByCustomer').val()
+                };                
+                chart.draw(tdata, options);
+            });
+        }     
+    $('.report_range').daterangepicker({
+        ranges: {
+//            'Today': ['today', 'today'],
+//            'Yesterday': ['yesterday', 'yesterday'],
+//            'Last 7 Days': [Date.today().add({
+//                days: -6
+//            }), 'today'],
+//            'Last 30 Days': [Date.today().add({
+//                days: -29
+//            }), 'today'],
+//            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Three Months': [Date.today().moveToFirstDayOfMonth().add({
+                months: -3
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })],
+
+            'Half Year' :  [Date.today().moveToFirstDayOfMonth().add({
+                months: -6
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })],
+
+            'One Year' :  [Date.today().moveToFirstDayOfMonth().add({
+                months: -12
+            }), Date.today().moveToFirstDayOfMonth().add({
+                days: -1
+            })],
+        },
+        opens: 'right',
+        format: 'dd/MM/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
+            days: -29
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '31/12/2013',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+  function (start, end) {
+      $('.report_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+  });
+
+    //Set the initial state of the picker label
+    $('.report_range span').html(Date.today().add({
+        days: -29
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
+</script>
