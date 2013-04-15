@@ -84,7 +84,7 @@
                             {
                                 string addressId = "";                        
                             <li id="group-@i" style="background-color:#d9edf7;">
-                                <div id="add-@i" style="float: right;">
+                                <div class="divadd" id="add-@i" style="float: right;">
                                     <a class="label label-success" onclick="addtoplan(@i)"><i class="icon-arrow-right"></i>
                                     </a>
                                 </div>
@@ -221,7 +221,7 @@
                     var collectionAddress = "";
                     resultItemString += '<div>';
                     resultItemString += '<li id="group-' + k + '" style="background-color:#d9edf7;">' +
-                        '<div id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
+                        '<div class="divadd" id="add-' + k + '" style="float:right;"><a class="label label-success" onclick="addtoplan(' + k + ')"><i class="icon-arrow-right"></i></a></div>' + '<div>';
                     var list = data.groupList[i];
                     for (var j = 0; j < list.length; j++) {
                         var item = list[j];
