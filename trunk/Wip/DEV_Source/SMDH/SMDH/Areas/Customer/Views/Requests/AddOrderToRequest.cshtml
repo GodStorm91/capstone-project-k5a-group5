@@ -105,11 +105,11 @@
 
     </script>
     <style type="text/css">
-        body {
+        /*body {
             font-family: Verdana, Geneva, sans-serif;
             font-size: 62.5%;
             margin: 0px;
-        }
+        }*/
 
         .container {
             width: 810px;
@@ -742,7 +742,12 @@
     </div>
     <div class="row-fluid">
         <div class="span12">
-            <a href="/Customer/requests/addorders/@ViewBag.requestId">Back to request</a>
+            <img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px"/>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <a class="btn btn-primary" href="/Customer/requests/addorders/@ViewBag.requestId">Back to request</a>
         </div>
     </div>
     <div id="myCarousel" class="carousel slide">
@@ -750,13 +755,7 @@
         <div class="carousel-inner">
             <div class="active item">
                 <div class="row-fluid">
-                    <div class="span4">
-                        <img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px"/>
-                        <p>
-                            <h4>@ViewBag.CompanyInfo.CompanyName</h4>
-                        </p>
-                    </div>
-                    <div class="span4 offset3">
+                    <div class="span6 offset6">
                         Total Amount :<input class="input-medium" type="text" id="totalPrice" value="" style="text-align: right;" disabled="disabled">
                     </div>
                 </div>
@@ -1142,7 +1141,7 @@
                         $('#HubLatitude').val(data.Latitude);
                         $('#HubLongitude').val(data.Longitude);
                         $('#HubAddress').val(data.Address);
-                    $('#HubAddressLabel').html(data.Address);
+                        $('#HubAddressLabel').html(data.Address);
                         //change dropdownlist value to match the value in HUb
                         //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
                         //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
