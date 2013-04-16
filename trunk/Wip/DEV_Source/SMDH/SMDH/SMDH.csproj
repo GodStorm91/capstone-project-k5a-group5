@@ -115,6 +115,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -148,6 +149,7 @@
     <Compile Include="Models\Metadata\HubMetadata.cs" />
     <Compile Include="Models\Metadata\ItemMetadata.cs" />
     <Compile Include="Models\Metadata\OrderMetadata.cs" />
+    <Compile Include="Models\Metadata\ProductMetadata.cs" />
     <Compile Include="Models\Metadata\RequestMetadata.cs" />
     <Compile Include="Models\Metadata\UserInfoMetadata.cs" />
     <Compile Include="Models\mTsp\MTspHelper.cs" />
@@ -1517,6 +1519,24 @@
     <Content Include="Views\Plans\ViewDetailsReturnedPlans.cshtml" />
     <Content Include="Views\Requests\Note.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Contacts\Create.cshtml" />
+    <Content Include="Views\Contacts\Delete.cshtml" />
+    <Content Include="Views\Contacts\Details.cshtml" />
+    <Content Include="Views\Contacts\Edit.cshtml" />
+    <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Contacts\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Hubs\Create.cshtml" />
+    <Content Include="Views\Hubs\Delete.cshtml" />
+    <Content Include="Views\Hubs\Details.cshtml" />
+    <Content Include="Views\Hubs\Edit.cshtml" />
+    <Content Include="Views\Hubs\Index.cshtml" />
+    <Content Include="Views\Hubs\_CreateOrEdit.cshtml" />
+    <Content Include="Views\CustomerAddresses\Create.cshtml" />
+    <Content Include="Views\CustomerAddresses\Delete.cshtml" />
+    <Content Include="Views\CustomerAddresses\Details.cshtml" />
+    <Content Include="Views\CustomerAddresses\Edit.cshtml" />
+    <Content Include="Views\CustomerAddresses\Index.cshtml" />
+    <Content Include="Views\CustomerAddresses\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
