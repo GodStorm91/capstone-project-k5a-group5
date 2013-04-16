@@ -68,5 +68,24 @@ namespace SMDH.Controllers
 
         }
 
+        public ActionResult CheckTiktakNotifications()
+        {
+            var sb = new StringBuilder();
+            var resultList = new List<int>();
+            resultList.Add(context.Orders.Where(o => (o.OrderStatus == (int)OrderStatus.CustomerExtend )||(o.OrderStatus == (int)OrderStatus.ReDeliverRequest) ||
+                (o.OrderStatus == (int)OrderStatus.Returned)
+                ).Count());
+            resultList.Add(context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.RePricing || r.RequestStatus == (int)RequestStatus.New).Count());
+            resultList.Add(context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Approved).Count());
+            resultList.Add(context.Orders.Where(o => o.OrderStatus == (int)OrderStatus.Collected).Count());
+            resultList.Add(context.Orders.Where(o => o.OrderStatus == (int)OrderStatus.WaitingForReturn).Count());
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            var serializedObject = ser.Serialize(resultList);
+            sb.AppendFormat("data: {0}\n\n", serializedObject);          
+
+            return Content(sb.ToString(), "text/event-stream");
+
+        }
+
     }
 }

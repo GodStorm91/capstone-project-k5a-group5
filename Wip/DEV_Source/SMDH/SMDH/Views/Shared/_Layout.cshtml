@@ -158,24 +158,47 @@
         </div>
         <ul class="mini-nav">
             <li>
-                <a href="#">
+                <a  href="/Orders?status=customerextend&status=returned&status=redeliverrequest">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
+                    <div id="waitingPricingOrders">
                     <span class="info-label badge badge-warning">3
                     </span>
+                    </div>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/Requests?&status=new&status=repricing">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
-                    <span class="info-label badge badge-info">5
+                    <div id="waitingPricingRequests"><span class="info-label badge badge-info">5
                     </span>
+                    </div>
+                 </a>
+            </li>
+            <li>
+                <a href="/Plans/AutoScheduleCollectionPlan">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <div id="approvedRequests">
+                    <span class="info-label badge badge-inverse">9
+                    </span>
+                    </div>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/Plans/AutoScheduleDeliveryPlan">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <div id="collectedOrders">
+                    <span class="info-label badge badge-important">9
+                    </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/Plans/AutoScheduleReturnedPlan">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <div id="waitingReturnOrders">
                     <span class="info-label badge badge-success">9
                     </span>
+                    </div>
                 </a>
             </li>
         </ul>
@@ -237,6 +260,31 @@
         </div>
     </div>
     <script>
+        var source = new EventSource('/Notifications/CheckTiktakNotifications');
+
+        source.onmessage = function (e) {
+            //alert(e);
+            var returnedItem = JSON.parse(e.data);
+            updateDashboard(returnedItem);
+        }
+
+        function updateDashboard(returnedItem) {
+            $('#waitingPricingOrders').html('<span class="info-label badge badge-warning">' + returnedItem[0] +
+                    '</span>');
+            $('#waitingPricingRequests').html('<span class="info-label badge badge-info">' + returnedItem[1] +
+                    '</span>');
+            $('#approvedRequests').html('<span class="info-label badge badge-inverse">' + returnedItem[2] +
+                    '</span>');
+
+            $('#collectedOrders').html('<span class="info-label badge badge-important">' + returnedItem[3] +
+                    '</span>');
+
+            $('#waitingReturnOrders').html('<span class="info-label badge badge-success">' + returnedItem[4] +
+                    '</span>');
+
+        }
+
+
         $('#Plans').click(function () {
             $('.plansubmenu').removeClass('hide');
             $('.configsubmenu').addClass('hide');
