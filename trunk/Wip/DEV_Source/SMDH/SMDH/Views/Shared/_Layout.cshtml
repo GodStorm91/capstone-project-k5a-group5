@@ -14,7 +14,6 @@
     <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
     <!-- Load plugins -->
@@ -75,7 +74,7 @@
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-57-precomposed.png" />
     <script type="text/javascript">
         //adding load class to body and hide page
-        document.documentElement.className += 'loadstate';
+        //document.documentElement.className += 'loadstate';
 
         $(document).ready(function () {
             var block = function () {
@@ -129,10 +128,20 @@
     </script>
 </head>
 <body>
-    <div id="qLoverlay">
+    <div id="overlay">
+        <ul>
+            <li class="li1"></li>
+            <li class="li2"></li>
+            <li class="li3"></li>
+            <li class="li4"></li>
+            <li class="li5"></li>
+            <li class="li6"></li>
+        </ul>
+    </div>
+    @*    <div id="qLoverlay">
     </div>
     <div id="qLbar">
-    </div>
+    </div>*@
     <header>
         <a href="/Dashboard" class="logo">
             <img src="/img/mylogo/logo4.png" style="height: 95px; width: 250px; margin-top: -15px;" alt="logo" />
@@ -264,6 +273,8 @@
         </div>
     </div>
     <script>
+        $("#overlay").delay(1250).fadeOut(500);
+
         var source = new EventSource('/Notifications/CheckTiktakNotifications');
         source.onmessage = function (e) {
             //alert(e);
