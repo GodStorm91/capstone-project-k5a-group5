@@ -221,6 +221,24 @@
         });
 
     };
+
+    function markAsWaitingForReturn() {
+        var orderId = arguments[0];
+        bootbox.confirm("Mark this order as waiting for return ?", function (confirmed) {
+            if (confirmed) {
+                $.post("/Orders/MarkAsWaitingForReturn/", { orderId: orderId }, function (data) {
+                    if (data.success) {
+                        window.location = '/Hub/Dashboard/'
+                    } else {
+                        bootbox.alert("Can not mark this as waiting for return!");
+                    }
+                });
+
+            }
+        });
+
+    };
+
     $('#btnConfirm').click(function (e) {
         var passCode = $('#txtPasscode').val();
         $.post("/Hub/Orders/SubmitPasscode/", { passCode: passCode }, function (data) {
@@ -346,7 +364,7 @@
                                 '<td>' +
                                 '<a class="btn btn-mini btn-primary" id="btnMarkAsFinished" onclick="markAsDelivered(' + data.result[i].OrderId + ')">' +
                                     'Customer Received</a>' +
-                                '<a class="btn btn-mini btn-danger" style="margin-left:10px;" id="btnReject" onclick="markAsWaitingReturn(' + data.result[i].OrderId + ')">' +
+                                '<a class="btn btn-mini btn-danger" style="margin-left:10px;" id="btnReject" onclick="markAsWaitingForReturn(' + data.result[i].OrderId + ')">' +
                                     'Customer Rejected</a>' +
                                 '</td>' +
                             '</tr>';
