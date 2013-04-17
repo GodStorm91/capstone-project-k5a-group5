@@ -312,6 +312,31 @@ namespace SMDH.Models.Concrete
 
         }
 
+        public bool MarkAsWaitingForReturn(Order order)
+        {
+            try
+            {
+                if (order.OrderStatus == (int)OrderStatus.Delivering)
+                {
+                    order.OrderStatus = (int)OrderStatus.WaitingForReturn;
+                    context.SubmitChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;  
+                }
+
+                
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+
+        }
+
         public bool MarkAsDelivered(Order order, bool commit)
         {
             throw new NotImplementedException();

@@ -341,6 +341,19 @@ namespace SMDH.Controllers
             }
         }
 
+        public ActionResult MarkAsWaitingForReturn(int orderId)
+        {
+            var order = _repository.Find(orderId);
+            if (!_repository.MarkAsWaitingForReturn(order))
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
+        }
+
         public ActionResult MarkOrderAsFinished(int id)
         {
             var order = _repository.Find(id);
