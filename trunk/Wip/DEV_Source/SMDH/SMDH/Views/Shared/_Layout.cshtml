@@ -14,6 +14,7 @@
     <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
     <!-- Load plugins -->
@@ -123,6 +124,8 @@
             $("#alert").fadeOut(700);
         }
 
+        $('#test1').tooltip('show');
+
     </script>
 </head>
 <body>
@@ -132,7 +135,7 @@
     </div>
     <header>
         <a href="/Dashboard" class="logo">
-            <img src="/img/mylogo/logo4.png" style="height: 95px; width: 100px; margin-top: -15px;" alt="logo" />
+            <img src="/img/mylogo/logo4.png" style="height: 95px; width: 250px; margin-top: -15px;" alt="logo" />
         </a>
         <div class="btn-group">
             <button class="btn btn-primary">
@@ -158,28 +161,29 @@
         </div>
         <ul class="mini-nav">
             <li>
-                <a  href="/Orders?status=customerextend&status=returned&status=redeliverrequest">
+                <a data-animation="true" data-toggle="tooltip" title="Order" href="/Orders?status=customerextend&status=returned&status=redeliverrequest">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
                     <div id="waitingPricingOrders">
-                    <span class="info-label badge badge-warning">3
-                    </span>
+                        <span class="info-label badge badge-warning">3
+                        </span>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="/Requests?&status=new&status=repricing">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
-                    <div id="waitingPricingRequests"><span class="info-label badge badge-info">5
-                    </span>
+                    <div id="waitingPricingRequests">
+                        <span class="info-label badge badge-info">5
+                        </span>
                     </div>
-                 </a>
+                </a>
             </li>
             <li>
                 <a href="/Plans/AutoScheduleCollectionPlan">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
                     <div id="approvedRequests">
-                    <span class="info-label badge badge-inverse">9
-                    </span>
+                        <span class="info-label badge badge-inverse">9
+                        </span>
                     </div>
                 </a>
             </li>
@@ -187,8 +191,8 @@
                 <a href="/Plans/AutoScheduleDeliveryPlan">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
                     <div id="collectedOrders">
-                    <span class="info-label badge badge-important">9
-                    </span>
+                        <span class="info-label badge badge-important">9
+                        </span>
                     </div>
                 </a>
             </li>
@@ -196,8 +200,8 @@
                 <a href="/Plans/AutoScheduleReturnedPlan">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
                     <div id="waitingReturnOrders">
-                    <span class="info-label badge badge-success">9
-                    </span>
+                        <span class="info-label badge badge-success">9
+                        </span>
                     </div>
                 </a>
             </li>
@@ -261,7 +265,6 @@
     </div>
     <script>
         var source = new EventSource('/Notifications/CheckTiktakNotifications');
-
         source.onmessage = function (e) {
             //alert(e);
             var returnedItem = JSON.parse(e.data);
@@ -283,7 +286,6 @@
                     '</span>');
 
         }
-
 
         $('#Plans').click(function () {
             $('.plansubmenu').removeClass('hide');
@@ -315,7 +317,7 @@
         if (url.indexOf("Requests") >= 0 && url.indexOf("Order") < 0) {
             $('#RequestsMN').addClass('selected');
         }
-        if (url.indexOf("Orders" ) >= 0 && url.indexOf("Request") < 0) {
+        if (url.indexOf("Orders") >= 0 && url.indexOf("Request") < 0) {
             $('#OrdersMN').addClass('selected');
         }
         if (url.indexOf("Customers") >= 0) {
