@@ -160,33 +160,44 @@
           </li>
         </ul>
       </div>
-      <ul class="mini-nav">
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
-            <span class="info-label badge badge-warning">
-              3
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
-            <span class="info-label badge badge-info">
-              5
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
-            <span class="info-label badge badge-success">
-              9
-            </span>
-          </a>
-        </li>
-      </ul>
-      
+       <ul class="mini-nav">
+            <li>
+                <a data-animation="true" data-toggle="tooltip" title="Order" href="/Customer/Orders?&status=draft">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
+                    <div id="waitingPricingOrders">
+                        <span class="info-label badge badge-warning">3
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/Customer/Orders?&status=repricingapproverequest">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
+                    <div id="waitingPricingRequests">
+                        <span class="info-label badge badge-info">5
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/Customer/Orders?&status=returnedreduceprice&status=expired">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <div id="approvedRequests">
+                        <span class="info-label badge badge-inverse">9
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/Customer/Requests?&status=pricing">
+                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
+                    <div id="collectedOrders">
+                        <span class="info-label badge badge-important">9
+                        </span>
+                    </div>
+                </a>
+            </li>           
+        </ul>
     </header>
     <div class="container-fluid">
         <div class="dashboard-container">
@@ -197,5 +208,27 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var source = new EventSource('/Notifications/CheckNotification');
+        source.onmessage = function (e) {
+            //alert(e);
+            var returnedItem = JSON.parse(e.data);
+            updateDashboard(returnedItem.orders, returnedItem.requests);
+        }
+
+        function updateDashboard(orders,requests) {
+            $('#waitingPricingOrders').html('<span class="info-label badge badge-warning">' + orders[0] +
+                    '</span>');
+            $('#waitingPricingRequests').html('<span class="info-label badge badge-info">' + orders[1] +
+                    '</span>');
+            $('#approvedRequests').html('<span class="info-label badge badge-inverse">' + orders[2] +
+                    '</span>');
+
+            $('#collectedOrders').html('<span class="info-label badge badge-important">' + requests[1] +
+                    '</span>');
+            
+
+        }
+    </script>
 </body>
 </html>

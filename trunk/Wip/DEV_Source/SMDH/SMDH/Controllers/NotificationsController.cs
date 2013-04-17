@@ -66,7 +66,7 @@ namespace SMDH.Controllers
 
             //return Json(new { requests = numberOfRequestsList, orders = numberOfOrdersList });
 
-        }
+        }        
 
         public ActionResult CheckTiktakNotifications()
         {

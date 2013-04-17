@@ -157,28 +157,12 @@
         //alert(e);
         var returnedItem = JSON.parse(e.data);
         updateDashboard(returnedItem.orders, returnedItem.requests);
-    }
+    }   
     
-    $(function () {
-        //checkNotifications();
-    });
-
-    function checkNotifications() {
-        $.post("/Notifications/CheckNotification", null, function (data, s) {
-                //showAlert(data.content, data.link, 5000);
-
-                //create Notifications widget
-                //document.getElementById("notificationBox").innerHTML = makeHtml(data); // "<ul><li>Con mat may</li></ul>"; //makeHtml();//<ul><li>Con mat may</li></ul>
-                updateDashboard(data.orders, data.requests)
-                //clearTimeout(timerId);            
-
-            checkNotifications();
-        })
-    }
 
     function updateDashboard(orders, requests) {
         $('#OrdersNeedToApprove').html("Need To Approve(" + orders[0] + ")");
-        $('#OrdersApproved').html("Approved(" + orders[1] + ")");
+        $('#OrdersApproved').html("Repricing(" + orders[1] + ")");
         $('#OrdersRejected').html("Returned / Expired (" + orders[2] + ")");
         $('#OrdersRequested').html("Requested(" + orders[3] + ")");
         $('#OrdersDelivering').html("Delivering(" + orders[4] + ")");
