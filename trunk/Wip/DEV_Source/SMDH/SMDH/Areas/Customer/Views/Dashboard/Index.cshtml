@@ -2,10 +2,28 @@
     ViewBag.Title = "Dashboard";
     ViewBag.Heading = "Dashboard";
 }
+<link rel="stylesheet" type="text/css" href="/css/select2.css" />
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
+<script src="/js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@*<script src="/js/crud.js" type="text/javascript"></script>*@
+<script src="/js/form-action.js" type="text/javascript"></script>
+<script src="/js/chosen.jquery.js" type="text/javascript"></script>
+<link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date.js" type="text/javascript"></script>
+<script src="/js/accounting.js" type="text/javascript"></script>
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/js/date-picker/date.js" type="text/javascript"></script>
+<script src="/js/date-picker/daterangepicker.js" type="text/javascript"></script>
+<link href="/css/timepicker.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <div class="row-fluid">
     <div class="span12">
-        <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">
-            Product Management</a></div>
+        <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">Product Management</a>
+    </div>
 </div>
 <div class="row-fluid">
     <div class="span12">
@@ -72,7 +90,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="metro-nav-block nav-block-green">
+                        <div class="metro-nav-block nav-block-green double">
                             <a href="/Customer/Orders?&status=confirmreturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
                                 </div>
@@ -94,6 +112,9 @@
                 <div class="title">
                     Requests
                 </div>
+                <span class="tools">
+                    <a class="btn btn-info btn-small" id="btnNew" style="color: white;" href="#" data-original-title="">Create Request</a>
+                </span>
             </div>
             <div class="widget-body quick-actions">
                 <div class="row-fluid">
@@ -149,7 +170,34 @@
         </div>
     </div>
 </div>
+
+<div class="modal hide fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
 <script type="text/javascript">
+
+    $("#btnNew").click(function () {
+        $('#editModal').html('');
+        $.ajax({
+            url: '/Customer/Requests/Create',
+            type: 'POST',
+            dataType: 'html',
+            success: function (data) {
+                $('#createModal').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.editor-field').keypress(function (e) {
+                    if (e.which == 13) {
+                        $(this).parents('form').submit();
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('#createModal').modal();
+            }
+        });
+    });
 
     var source = new EventSource('/Notifications/CheckNotification');
 
@@ -157,8 +205,8 @@
         //alert(e);
         var returnedItem = JSON.parse(e.data);
         updateDashboard(returnedItem.orders, returnedItem.requests);
-    }   
-    
+    }
+
 
     function updateDashboard(orders, requests) {
         $('#OrdersNeedToApprove').html("Need To Approve(" + orders[0] + ")");
