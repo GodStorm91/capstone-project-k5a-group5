@@ -848,7 +848,7 @@
                         </div>
                     </div>
                     <div class="span12">
-                        <a class="btn btn-link" href="#myCarousel" data-slide="next" onclick="next()">Next</a>
+                        <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="next()">Next</a>
                     </div>
                 </div>
 
@@ -981,7 +981,7 @@
                         </div>
                     </div>
                     <div class="span12">
-                        <a class="btn btn-link" href="#myCarousel" data-slide="prev" onclick="prev()">Back</a>
+                        <a class="btn btn-primary" href="#myCarousel" data-slide="prev" onclick="prev()">Back</a>
                     </div>
                 </div>
             </div>
@@ -1029,7 +1029,7 @@
                 if (id == '') id = -1;
                 //alert(id);
                 $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-                    items = '<option value="-1">-- All Locagions --</option>';
+                    items = '<option value="-1">-- All Locations --</option>';
                     $.each(data, function (i, hub) {
                         items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
                         //alert(hub.HubId);
