@@ -11,6 +11,7 @@ using SMDH.Models.ViewModels;
 
 namespace SMDH.Controllers
 {
+     [Authorize(Roles = "Office Staff")]
     public class PriceCategoriesController : Controller
     {
         //

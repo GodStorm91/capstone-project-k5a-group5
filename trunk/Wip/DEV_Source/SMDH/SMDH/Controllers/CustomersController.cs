@@ -9,7 +9,7 @@ using SMDH.Models.Concrete;
 
 namespace SMDH.Controllers
 {
-    [Authorize]
+     [Authorize(Roles = "Office Staff")]
     public class CustomersController : Controller
     {
         private ICustomerRepository _repository;

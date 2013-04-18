@@ -45,7 +45,7 @@ using OsmSharp.Routing.Core.Graph.DynamicGraph.PreProcessed;
 
 namespace SMDH.Controllers
 {
-    [Authorize]
+     [Authorize(Roles = "Office Staff")]
     public class PlansController : Controller
     {
         private IPlanRepository _repository;
@@ -832,71 +832,80 @@ namespace SMDH.Controllers
 
         public ActionResult EditAutoScheduleCollectionPlanAJax(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
-            string[] strRequestsIds = requestsIdsList.Split(',');
-            int[] requestIds = new int[strRequestsIds.Length];
-            List<RequestViewModel> requestViewModel = new List<RequestViewModel>();
-            List<List<RequestViewModel>> returnList = new List<List<RequestViewModel>>();
-            for (int i = 0; i < requestIds.Length; i++)
+            try
             {
-                requestIds[i] = Int16.Parse(strRequestsIds[i]);
-            }
-
-            //planNumber must be greateer than reqestIds
-            if (requestIds.Length < planNumber)
-            {
-                return null;
-            }
-            else
-            {
-                var requests = context.Requests.Where(o => requestIds.Contains(o.RequestId));
-                var requestsList = requests.ToList();
-                List<GeoCoordinate> pointList = new List<GeoCoordinate>();
-                foreach (var request in requests)
+                string[] strRequestsIds = requestsIdsList.Split(',');
+                int[] requestIds = new int[strRequestsIds.Length];
+                List<RequestViewModel> requestViewModel = new List<RequestViewModel>();
+                List<List<RequestViewModel>> returnList = new List<List<RequestViewModel>>();
+                for (int i = 0; i < requestIds.Length; i++)
                 {
-                    requestViewModel.Add(new RequestViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
-                }
-                for (int i = 0; i < requests.Count(); i++)
-                {
-                    pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                    requestIds[i] = Int16.Parse(strRequestsIds[i]);
                 }
 
-                PointCollection pointCollection = new PointCollection();
-                for (int i = 0; i < pointList.Count; i++)
+                //planNumber must be greateer than reqestIds
+                if (requestIds.Length < planNumber)
                 {
-                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    return null;
                 }
-
-                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
-                for (int i = 0; i < listPointCollection.Count; i++)
+                else
                 {
-                    PointCollection cluster = listPointCollection[i];
-                    List<RequestViewModel> listItem = new List<RequestViewModel>();
-                    for (int j = 0; j < cluster.Count; j++)
+                    var requests = context.Requests.Where(o => requestIds.Contains(o.RequestId));
+                    var requestsList = requests.ToList();
+                    List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                    foreach (var request in requests)
                     {
-                        listItem.Add(new RequestViewModel(requestsList.ElementAt(cluster.ElementAt(j).Id)));
+                        requestViewModel.Add(new RequestViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
                     }
-                    returnList.Add(listItem);
+                    for (int i = 0; i < requests.Count(); i++)
+                    {
+                        pointList.Add(new GeoCoordinate((double)requestViewModel.ElementAt(i).Latitude, (double)requestViewModel.ElementAt(i).Longitude));
+                    }
+
+                    PointCollection pointCollection = new PointCollection();
+                    for (int i = 0; i < pointList.Count; i++)
+                    {
+                        pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    }
+
+                    List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+                    for (int i = 0; i < listPointCollection.Count; i++)
+                    {
+                        PointCollection cluster = listPointCollection[i];
+                        List<RequestViewModel> listItem = new List<RequestViewModel>();
+                        for (int j = 0; j < cluster.Count; j++)
+                        {
+                            listItem.Add(new RequestViewModel(requestsList.ElementAt(cluster.ElementAt(j).Id)));
+                        }
+                        returnList.Add(listItem);
+                    }
+
+                    ViewBag.NumberOfPlans = planNumber;
+                    string listRequestsIds = "";
+                    for (int i = 0; i < requestIds.Length - 1; i++)
+                    {
+                        listRequestsIds += requestIds[i] + ",";
+                    }
+                    listRequestsIds += requestIds[requestIds.Length - 1];
+
+                    ViewBag.SelectedRequestsIds = listRequestsIds;
+
+                    PointCollection pointCluster = listPointCollection[0];
+
+
+                    //Solve mTsp;
+                    MTspHelper.initialize();
+                    MTspHelper.solveTsp(pointList, planNumber, returnList, null);
                 }
 
-                ViewBag.NumberOfPlans = planNumber;
-                string listRequestsIds = "";
-                for (int i = 0; i < requestIds.Length - 1; i++)
-                {
-                    listRequestsIds += requestIds[i] + ",";
-                }
-                listRequestsIds += requestIds[requestIds.Length - 1];
-
-                ViewBag.SelectedRequestsIds = listRequestsIds;
-
-                PointCollection pointCluster = listPointCollection[0];
-
-
-                //Solve mTsp;
-                MTspHelper.initialize();
-                MTspHelper.solveTsp(pointList, planNumber,returnList,null);
+                return Json(new {success = true, waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.requestsLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
             }
-
-            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.requestsLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
+            catch (Exception)
+            {
+                return Json(new { success = false});
+                throw;
+            }
+            
         }
 
         public ActionResult EditAutoScheduleCollectionPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
@@ -1162,70 +1171,79 @@ namespace SMDH.Controllers
 
         public ActionResult EditAutoScheduleDeliveryPlanAJax(string ordersIdLists, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)
         {
-            string[] strRequestsIds = ordersIdLists.Split(',');
-            int[] requestIds = new int[strRequestsIds.Length];
-            List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
-            List<List<OrderViewModel>> returnList = new List<List<OrderViewModel>>();
-            for (int i = 0; i < requestIds.Length; i++)
+            try
             {
-                requestIds[i] = Int16.Parse(strRequestsIds[i]);
-            }
-
-            //planNumber must be greateer than reqestIds
-            if (requestIds.Length < planNumber)
-            {
-                return null;
-            }
-            else
-            {
-                var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
-                var requestsList = requests.ToList();
-                List<GeoCoordinate> pointList = new List<GeoCoordinate>();
-                foreach (var request in requests)
+                string[] strRequestsIds = ordersIdLists.Split(',');
+                int[] requestIds = new int[strRequestsIds.Length];
+                List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
+                List<List<OrderViewModel>> returnList = new List<List<OrderViewModel>>();
+                for (int i = 0; i < requestIds.Length; i++)
                 {
-                    orderViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
-                }
-                for (int i = 0; i < requests.Count(); i++)
-                {
-                    pointList.Add(new GeoCoordinate((double)orderViewModel.ElementAt(i).Latitude, (double)orderViewModel.ElementAt(i).Longitude));
+                    requestIds[i] = Int16.Parse(strRequestsIds[i]);
                 }
 
-                PointCollection pointCollection = new PointCollection();
-                for (int i = 0; i < pointList.Count; i++)
+                //planNumber must be greateer than reqestIds
+                if (requestIds.Length < planNumber)
                 {
-                    pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    return null;
                 }
-
-                List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
-                for (int i = 0; i < listPointCollection.Count; i++)
+                else
                 {
-                    PointCollection cluster = listPointCollection[i];
-                    List<OrderViewModel> listItem = new List<OrderViewModel>();
-                    for (int j = 0; j < cluster.Count; j++)
+                    var requests = context.Orders.Where(o => requestIds.Contains(o.OrderId));
+                    var requestsList = requests.ToList();
+                    List<GeoCoordinate> pointList = new List<GeoCoordinate>();
+                    foreach (var request in requests)
                     {
-                        listItem.Add(new OrderViewModel(requestsList.ElementAt(cluster.ElementAt(j).Id)));
+                        orderViewModel.Add(new OrderViewModel(request, weightedDeliveryTypeScore, weightedDateScore));
                     }
-                    returnList.Add(listItem);
+                    for (int i = 0; i < requests.Count(); i++)
+                    {
+                        pointList.Add(new GeoCoordinate((double)orderViewModel.ElementAt(i).Latitude, (double)orderViewModel.ElementAt(i).Longitude));
+                    }
+
+                    PointCollection pointCollection = new PointCollection();
+                    for (int i = 0; i < pointList.Count; i++)
+                    {
+                        pointCollection.Add(new Point(i, pointList[i].Latitude, pointList[i].Longitude));
+                    }
+
+                    List<PointCollection> listPointCollection = MTspHelper.DoKMeans(pointCollection, planNumber);
+                    for (int i = 0; i < listPointCollection.Count; i++)
+                    {
+                        PointCollection cluster = listPointCollection[i];
+                        List<OrderViewModel> listItem = new List<OrderViewModel>();
+                        for (int j = 0; j < cluster.Count; j++)
+                        {
+                            listItem.Add(new OrderViewModel(requestsList.ElementAt(cluster.ElementAt(j).Id)));
+                        }
+                        returnList.Add(listItem);
+                    }
+
+                    ViewBag.NumberOfPlans = planNumber;
+                    string listRequestsIds = "";
+                    for (int i = 0; i < requestIds.Length - 1; i++)
+                    {
+                        listRequestsIds += requestIds[i] + ",";
+                    }
+                    listRequestsIds += requestIds[requestIds.Length - 1];
+
+                    ViewBag.SelectedRequestsIds = listRequestsIds;
+
+                    PointCollection pointCluster = listPointCollection[0];
+
+                    //Solve mTsp;
+                    MTspHelper.initialize();
+                    MTspHelper.solveTsp(pointList, planNumber, null, returnList);
                 }
 
-                ViewBag.NumberOfPlans = planNumber;
-                string listRequestsIds = "";
-                for (int i = 0; i < requestIds.Length - 1; i++)
-                {
-                    listRequestsIds += requestIds[i] + ",";
-                }
-                listRequestsIds += requestIds[requestIds.Length - 1];
-
-                ViewBag.SelectedRequestsIds = listRequestsIds;
-
-                PointCollection pointCluster = listPointCollection[0];
-
-                //Solve mTsp;
-                MTspHelper.initialize();
-                MTspHelper.solveTsp(pointList, planNumber,null, returnList);
+                return Json(new {success = true, waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.ordersLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
             }
-
-            return Json(new { waypoints = MTspHelper.waypointLists, segments = MTspHelper.segmentsLists, requests = MTspHelper.ordersLists, distanceList = MTspHelper.planDistanceLists, timeList = MTspHelper.planTimeLists });
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+            
         }
 
         public ActionResult EditAutoScheduleDeliveryPlan(string requestsIdsList, int planNumber = 2, int selectedPlan = 0, double weightedDeliveryTypeScore = 0.5, double weightedDateScore = 0.5)

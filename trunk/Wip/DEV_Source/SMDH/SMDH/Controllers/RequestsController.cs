@@ -10,6 +10,7 @@ using SMDH.Models.Statuses;
 
 namespace SMDH.Controllers
 {
+     [Authorize(Roles = "Office Staff")]
     public class RequestsController : Controller
     {
 

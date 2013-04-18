@@ -193,106 +193,115 @@ namespace SMDH.Models.mTsp
 
         public static string doTspCalculation(List<GeoCoordinate> points, VehicleEnum vehicle, List<GeoCoordinate> segments, List<GeoCoordinate> waypoints, List<RequestViewModel> listRequest, List<OrderViewModel> listOrder)
         {
-            _waypoints = new List<GeoCoordinate>();
-
-            //clear all points in waypoints because it we will add it up later
-            waypoints.Clear();
-
-            List<RouterPoint> resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
-            IRouter<RouterPoint> router = new Router<PreProcessedEdge>(osm_data, interpreter, new DykstraRoutingPreProcessed(osm_data.TagsIndex));
-
-            //Add point from _points to routerpoints
-            for (int i = 0; i < points.Count; i++)
+            try
             {
-                RouterPoint resolved = router.Resolve(VehicleEnum.Car, points.ElementAt<GeoCoordinate>(i));
-                if (resolved != null && router.CheckConnectivity(VehicleEnum.Car, resolved, 100)) 
-                {
-                    resolvedPoints.Add(resolved);
-                }
-            }
-            //Start to solve
-            RouterTSPGenetic<RouterPoint> tsp_solver = new RouterTSPGenetic<RouterPoint>(router);
-            OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car, resolvedPoints.ToArray(),0,true);
-         
-            //double totalTime = 0;
-            //double totalDistance = 0;
-            //int order = 0;          
-            for (int i = 0; i < tsp.Entries.Length; i++)
-            {
-                RoutePointEntry entry = tsp.Entries[i];
+                _waypoints = new List<GeoCoordinate>();
 
-                //Initialize a new segment if needded 
-                
-                if (entry.Points != null)
+                //clear all points in waypoints because it we will add it up later
+                waypoints.Clear();
+
+                List<RouterPoint> resolvedPoints = new List<OsmSharp.Routing.Core.RouterPoint>();
+                IRouter<RouterPoint> router = new Router<PreProcessedEdge>(osm_data, interpreter, new DykstraRoutingPreProcessed(osm_data.TagsIndex));
+
+                //Add point from _points to routerpoints
+                for (int i = 0; i < points.Count; i++)
                 {
-                    //loop for all points to create the way
-                    for (int p_idx = 0; p_idx < entry.Points.Length; p_idx++)
+                    RouterPoint resolved = router.Resolve(VehicleEnum.Car, points.ElementAt<GeoCoordinate>(i));
+                    if (resolved != null && router.CheckConnectivity(VehicleEnum.Car, resolved, 100))
                     {
-                        RoutePoint point = entry.Points[p_idx];
-                        waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
+                        resolvedPoints.Add(resolved);
                     }
                 }
+                //Start to solve
+                RouterTSPGenetic<RouterPoint> tsp_solver = new RouterTSPGenetic<RouterPoint>(router);
+                OsmSharpRoute tsp = tsp_solver.CalculateTSP(VehicleEnum.Car, resolvedPoints.ToArray(), 0, true);
 
-                segments.Add(new GeoCoordinate(entry.Latitude, entry.Longitude));
-            }
-            //Calculate time and distances
-            double tempTime = 0;
-            double tempDistance = 0;
-            for (int i = 0; i < waypoints.Count - 1; i++)
-            {
-                RouterPoint rpoint1 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i]);
-                RouterPoint rpoint2 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i + 1]);
-                OsmSharpRoute tempRoute = router.Calculate(OsmSharp.Routing.Core.VehicleEnum.Car, rpoint1, rpoint2);
-                tempTime += tempRoute.TotalTime;
-                tempDistance += tempRoute.TotalDistance;                
-            }
-
-            planDistanceLists.Add(tempDistance);
-            planTimeLists.Add(tempTime);
-
-            waypoints.RemoveAt(waypoints.Count - 1);
-            List<RequestViewModel> requestListToAdd = new List<RequestViewModel>();
-            List<OrderViewModel> orderListToAdd = new List<OrderViewModel>();
-            if (listRequest != null)
-            {
-                _flagArr = new bool[listRequest.Count];
-                for (int i = 0; i < _flagArr.Length; i++)
+                //double totalTime = 0;
+                //double totalDistance = 0;
+                //int order = 0;          
+                for (int i = 0; i < tsp.Entries.Length; i++)
                 {
-                    _flagArr[i] = false;
+                    RoutePointEntry entry = tsp.Entries[i];
+
+                    //Initialize a new segment if needded 
+
+                    if (entry.Points != null)
+                    {
+                        //loop for all points to create the way
+                        for (int p_idx = 0; p_idx < entry.Points.Length; p_idx++)
+                        {
+                            RoutePoint point = entry.Points[p_idx];
+                            waypoints.Add(new GeoCoordinate(point.Latitude, point.Longitude));
+                        }
+                    }
+
+                    segments.Add(new GeoCoordinate(entry.Latitude, entry.Longitude));
                 }
-            }
-            else
-            {
-                _flagArr = new bool[listOrder.Count];
-                for (int i = 0; i < _flagArr.Length; i++)
+                //Calculate time and distances
+                double tempTime = 0;
+                double tempDistance = 0;
+                for (int i = 0; i < waypoints.Count - 1; i++)
                 {
-                    _flagArr[i] = false;
+                    RouterPoint rpoint1 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i]);
+                    RouterPoint rpoint2 = router.Resolve(OsmSharp.Routing.Core.VehicleEnum.Car, waypoints[i + 1]);
+                    OsmSharpRoute tempRoute = router.Calculate(OsmSharp.Routing.Core.VehicleEnum.Car, rpoint1, rpoint2);
+                    tempTime += tempRoute.TotalTime;
+                    tempDistance += tempRoute.TotalDistance;
                 }
-            }
-                
-            for (int i = 1; i < waypoints.Count; i++)
-            {
+
+                planDistanceLists.Add(tempDistance);
+                planTimeLists.Add(tempTime);
+
+                waypoints.RemoveAt(waypoints.Count - 1);
+                List<RequestViewModel> requestListToAdd = new List<RequestViewModel>();
+                List<OrderViewModel> orderListToAdd = new List<OrderViewModel>();
                 if (listRequest != null)
                 {
-                    requestListToAdd.Add(GetNearestRequestPoint(waypoints[i], listRequest));
+                    _flagArr = new bool[listRequest.Count];
+                    for (int i = 0; i < _flagArr.Length; i++)
+                    {
+                        _flagArr[i] = false;
+                    }
                 }
                 else
                 {
-                    orderListToAdd.Add(GetNearestOrderPoint(waypoints[i], listOrder));
+                    _flagArr = new bool[listOrder.Count];
+                    for (int i = 0; i < _flagArr.Length; i++)
+                    {
+                        _flagArr[i] = false;
+                    }
                 }
-            }
 
-            if (listRequest != null)
-            {
-                requestsLists.Add(requestListToAdd);
+                for (int i = 1; i < waypoints.Count; i++)
+                {
+                    if (listRequest != null)
+                    {
+                        requestListToAdd.Add(GetNearestRequestPoint(waypoints[i], listRequest));
+                    }
+                    else
+                    {
+                        orderListToAdd.Add(GetNearestOrderPoint(waypoints[i], listOrder));
+                    }
+                }
+
+                if (listRequest != null)
+                {
+                    requestsLists.Add(requestListToAdd);
+                }
+                else
+                {
+                    ordersLists.Add(orderListToAdd);
+                }
+                byte[] streamByte = tsp.SaveToByteArray();
+                string tempString = System.Text.Encoding.Default.GetString(streamByte);
+                return tempString;
             }
-            else
+            catch (Exception)
             {
-                ordersLists.Add(orderListToAdd);
+                
+                throw;
             }
-            byte[] streamByte = tsp.SaveToByteArray();
-            string tempString = System.Text.Encoding.Default.GetString(streamByte);
-            return tempString;
+            
         }
 
         private static RequestViewModel GetNearestRequestPoint(GeoCoordinate point , List<RequestViewModel> listRequest)
