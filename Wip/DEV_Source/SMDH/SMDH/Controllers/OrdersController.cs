@@ -12,7 +12,7 @@ using SMDH.Utilities;
 
 namespace SMDH.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Office Staff")]
     public class OrdersController : Controller
     {
         private IOrderRepository _repository;

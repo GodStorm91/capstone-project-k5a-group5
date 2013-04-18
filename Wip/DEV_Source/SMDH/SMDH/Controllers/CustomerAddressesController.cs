@@ -10,6 +10,7 @@ using SMDH.Models;
 
 namespace SMDH.Controllers
 {
+     [Authorize(Roles = "Office Staff")]
     public class CustomerAddressesController : StaffDefaultController
     {
         private SMDHDataContext context = new SMDHDataContext();

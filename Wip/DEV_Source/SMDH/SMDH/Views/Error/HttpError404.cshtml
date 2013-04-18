@@ -1,5 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <title>@ViewBag.Title</title>
@@ -72,133 +75,39 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114-precomposed.png" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72-precomposed.png" />
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-57-precomposed.png" />
-    <script type="text/javascript">
-        //adding load class to body and hide page
-        //document.documentElement.className += 'loadstate';
-
-        $(document).ready(function () {
-            var block = function () {
-                $.blockUI({ message: 'processing...' });
-                $('.modal').block({ message: 'processing...' });
-            };
-            var unblock = function () {
-                $.unblockUI();
-                $('.modal').unblock();
-            };
-            //$(document).ajaxStart(block).ajaxStop(unblock);                       
-
-            $('.myToolTip').tooltip();
-
-            $("#alert").hide();
-        });
-
-        function showAlert(textToshow, link, timeToShow) {
-
-            var timerId = 500;
-
-            $("#alertText").html(textToshow);
-            document.getElementById("alertLink").href = link;
-            $("#alert").fadeIn(1000, function () {
-                $("#alertText").fadeIn(700);
-            });
-            timerId = setTimeout(function () {
-                hideAlert();
-            }, timeToShow);
-
-            document.getElementById("alert").onmouseover = function () {
-
-                clearTimeout(timerId);
-            }
-
-            document.getElementById("alert").onmouseout = function () {
-                alert("Mouse out");
-                timerId = setTimeout(function () {
-                    hideAlert();
-                }, timeToShow);
-            }
-
-        }
-
-        function hideAlert() {
-            $("#alert").fadeOut(700);
-        }
-
-    </script>
+    <title>Error</title>
 </head>
 <body>
-    <div id="overlay">
-        <ul>
-            <li class="li1"></li>
-            <li class="li2"></li>
-            <li class="li3"></li>
-            <li class="li4"></li>
-            <li class="li5"></li>
-            <li class="li6"></li>
-        </ul>
-    </div>
-    @*    <div id="qLoverlay">
-    </div>
-    <div id="qLbar">
-    </div>*@
-    <header>
-      <a href="/Dashboard" class="logo">
-        <img src="/img/mylogo/logo4.png" style="height:95px;width:250px;margin-top: -15px;" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary">
-          @User.Identity.Name
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
-            </a>
-          </li>
-          <li>
-                    <a href="/Account/ChangePassword">Change Password
-                    </a>
-                </li>
-          <li>
-            <a href="/Account/Logoff">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>     
-      
-    </header>
-    <div class="container-fluid">
-        <div class="dashboard-container">
-            <div class="dashboard-wrapper">
-                <div class="left-sidebar">
-                    @RenderBody()
+    <div class="dashboard-wrapper">
+        <div class="left-sidebar">
+            <div class="row-fluid page-not-found">
+                <div class="span6 number">
+                    400
                 </div>
+                 <div class="span6">
+                <h3>
+                  Page is not found.
+                </h3>
+                <p>
+                  We can not find the page you're looking for.
+                  <br>
+                  Try the search bar below.
+                </p>
+                <form>
+                  <div class="input-append">
+                    
+                    <input class="x-large" type="text" placeholder="Search Here">
+                    <button class="btn btn-info">
+                      Search
+                    </button>
+                    
+                    <a href="index.html" class="fs1 icomoon-home-2 " aria-hidden="true" data-icomoon="" style="display: inline-block; margin: 8px;">
+                    </a>
+                  </div>
+                </form>
+              </div>
             </div>
         </div>
     </div>
-
-    <script src="/js/jquery.scrollUp.js">
-    </script>
-
-    <script type="text/javascript">
-        $("#overlay").delay(1250).fadeOut(500);
-        //ScrollUp
-        $(function () {
-            $.scrollUp({
-                scrollName: 'scrollUp', // Element ID
-                topDistance: '300', // Distance from top before showing element (px)
-                topSpeed: 300, // Speed back to top (ms)
-                animation: 'fade', // Fade, slide, none
-                animationInSpeed: 400, // Animation in speed (ms)
-                animationOutSpeed: 400, // Animation out speed (ms)
-                scrollText: 'Scroll to top', // Text for element
-                activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-            });
-        });
-    </script>
 </body>
 </html>

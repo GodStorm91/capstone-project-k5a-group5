@@ -8,7 +8,7 @@ using SMDH.Utilities;
 
 namespace SMDH.Controllers
 {
-    [Authorize]
+     [Authorize(Roles = "Office Staff")]
     public class PriceTagController : Controller
     {
         private SMDHDataContext context = new SMDHDataContext();

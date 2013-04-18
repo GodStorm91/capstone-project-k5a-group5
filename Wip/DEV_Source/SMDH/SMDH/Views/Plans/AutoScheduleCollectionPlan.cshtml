@@ -353,14 +353,20 @@
 
         $.post('/Plans/EditAutoScheduleCollectionPlanAjax', { requestsIdsList: selectedrq.toString(), planNumber: planNumber }, function (data) {
             //alert(data.waypoints.length);
-            localStorage.setItem('waypoints', JSON.stringify(data.waypoints));
-            localStorage.setItem('segments', JSON.stringify(data.segments));
-            //should save the function here
-            localStorage.setItem('requests', JSON.stringify(data.requests));
-            localStorage.setItem('planDistanceLists', JSON.stringify(data.distanceList));
-            localStorage.setItem('planTimeLists', JSON.stringify(data.timeList));
-            $('#toBeSubmit').submit();
-            $.unblockUI();
+            if (data.success) {
+                localStorage.setItem('waypoints', JSON.stringify(data.waypoints));
+                localStorage.setItem('segments', JSON.stringify(data.segments));
+                //should save the function here
+                localStorage.setItem('requests', JSON.stringify(data.requests));
+                localStorage.setItem('planDistanceLists', JSON.stringify(data.distanceList));
+                localStorage.setItem('planTimeLists', JSON.stringify(data.timeList));
+                $('#toBeSubmit').submit();
+
+            } else {
+                bootbox.alert("Can't solve the plan! Please check again");
+                $.unblockUI();
+            }
+
         });
 
 
