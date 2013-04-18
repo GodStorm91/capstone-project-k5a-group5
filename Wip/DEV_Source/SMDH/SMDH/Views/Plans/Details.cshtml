@@ -35,112 +35,112 @@
                         </a>
                     </div>
                     <div class="collapse in" id="Assign">
-                        <div class="widget-body">
+                        <div class="widget-body" style="border-bottom: none;">
                             <div>
                                 @if (ViewBag.PossibleDeliveryStaffs != null)
                                 {
                                     foreach (var d in ViewBag.PossibleDeliveryStaffs)
                                     {
-                                    <span>
+                                    <span style="float: left; width: 120px;">
                                         <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                        @d.FirstName@d.LastName</span>                              
+                                        @d.FirstName @d.LastName</span>                              
                                     }
                                 }
                                 @if (ViewBag.Assignto != null)
                                 {
                                     foreach (var d in ViewBag.Assignto)
                                     {                                        
-                                    <span>
+                                    <span style="float: left; width: 120px;">
                                         <input type="checkbox" style="margin-bottom: 5px;margin-left:10px;" class="radios" name="deliveryman" value="@d.DeliveryMenId" id="deliverymen@d.DeliveryMenId" />
-                                        @d.FirstName@d.LastName</span>     
+                                        @d.FirstName @d.LastName</span>     
                                     }
                                 }
+                            </div>
+                            <div style="clear:both;"></div>
+                            <div style="margin-top:10px;">
+                                <input type="submit" class="btn btn-mini btn-primary" value="Assign" id="btnAssign" /><input
+                                    style="margin-left: 10px;" type="submit" class="btn btn-mini btn-danger" value="Unassign"
+                                    id="btnUnassign" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row-fluid">
-            <div class="span12">
-                @*            <div id="listbutton">
-            </div>*@
-                <input type="submit" class="btn btn-primary" value="Assign" id="btnAssign" /><input
-                    style="margin-left: 30px;" type="submit" class="btn btn-danger" value="Unassign"
-                    id="btnUnassign" />
-                @if (ViewBag.Assignto != null && Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
-                {
-                    <button class="btn btn-success" id="markAsFinishedBtn" style="float: right;">
-                        Mark as Finished</button>
-                }
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget">
+                <div class="widget-header">
+                    <a href="#Details" data-toggle="collapse" class="collapsed">
+                        <div class="title">
+                            Click to see map and details
+                        </div>
+                        <span class="tools">
+                            @if (ViewBag.Assignto != null && Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
+                            {
+                                <button class="btn btn-mini btn-success" id="markAsFinishedBtn" style="float: right;">
+                                    Mark as Finished</button>
+                            }
 
-                @if (Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
-                {
-                    <button class="btn btn-warning" id="cancelBtn" style="float: right; margin-right:10px;" onclick="cancelPlan(@Model.PlanId)">
-                        Cancel</button>
-                }
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="widget">
-                    <div class="widget-header">
-                        <a href="#Details" data-toggle="collapse" class="collapsed">
-                            <div class="title">
-                                Click to see map and details
-                            </div>
-                        </a>
-                    </div>
-                    <div class="collapse" id="Details">
-                        <div style="width: 230px; height: 295px; overflow-y: scroll; float: left;" id="requestDetailsZone">
-                            <ul class="site-stats">
-                                @foreach (var request in ViewBag.RequestDetails)
-                                {
-                                    <li id="request-@request.RequestId">
+                            @if (Model.Status != (int)PlanStatus.Finished && Model.Status != (int)PlanStatus.Canceled)
+                            {
+                                <button class="btn btn-mini btn-warning" id="cancelBtn" style="float: right; margin-right:10px;" onclick="cancelPlan(@Model.PlanId)">
+                                    Cancel Plan</button>
+                            }
+                        </span>
+                    </a>
+                </div>
+                <div class="collapse" id="Details">
+                    <div style="width: 230px; height: 295px; overflow-y: scroll; float: left;" id="requestDetailsZone">
+                        <ul class="site-stats">
+                            @foreach (var request in ViewBag.RequestDetails)
+                            {
+                                <li id="request-@request.RequestId">
+                                    <div>
                                         <div>
                                             <div>
-                                                <div>
-                                                    <span class="icon-user"></span><span class="label label-info">@request.Customer</span>
-                                                </div>
-                                                @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
-                                                {
-                                                    <div style="margin-top: 3px;">
-                                                        <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
-                                                    </div>
-                                                }
-                                                else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan || Model.PlanTypeId == (int)PlanTypes.ReturnedPlan)
-                                                {
-                                                    <div style="margin-top: 3px;">
-                                                        <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span>
-                                                    </div>
-                                                }
+                                                <span class="icon-user"></span><span class="label label-info">@request.Customer</span>
                                             </div>
                                             @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
                                             {
-                                                <div>
-                                                    <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                                <div style="margin-top: 3px;">
+                                                    <span class="icon-calendar"></span><span class="label label-info">@request.RequestedDate</span>
                                                 </div>
                                             }
                                             else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan || Model.PlanTypeId == (int)PlanTypes.ReturnedPlan)
                                             {
-                                                <div>
-                                                    <span class="icon-globe"></span><small>@request.DeliverAddress</small>
+                                                <div style="margin-top: 3px;">
+                                                    <span class="icon-calendar"></span><span class="label label-info">@request.CreatedDate</span>
                                                 </div>
                                             }
                                         </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div style="width: 438px; float: left">
-                            <div id="map" style="height: 295px;">
-                            </div>
+                                        @if (Model.PlanTypeId == (int)PlanTypes.CollectionPlan)
+                                        {
+                                            <div>
+                                                <span class="icon-globe"></span><small>@request.CollectionAddress</small>
+                                            </div>
+                                        }
+                                        else if (Model.PlanTypeId == (int)PlanTypes.DeliveryPlan || Model.PlanTypeId == (int)PlanTypes.ReturnedPlan)
+                                        {
+                                            <div>
+                                                <span class="icon-globe"></span><small>@request.DeliverAddress</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div style="width: 438px; float: left">
+                        <div id="map" style="height: 295px;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @*<div class="span4">
+    </div>
+    @*<div class="span4">
             <div class="widget-box">
                 <div class="widget-title">
                     <span class="icon"><i class="icon-list-alt"></i></span>
@@ -183,8 +183,8 @@
                 </div>
             </div>
         </div>*@
-    </div>
-    @*<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+</div>
+@*<div class="modal hide fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -218,103 +218,81 @@
             Close</button>
     </div>
 </div>*@
-    <script type="text/javascript">
-        var assignman = new Array();
-        var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
+<script type="text/javascript">
+    var assignman = new Array();
+    var Assign = @Html.Raw(Json.Encode(@ViewBag.Assignto));
         var PlanId = @Model.PlanId;
-        var isFinished = false;
-        var isCanceled = false;
+    var isFinished = false;
+    var isCanceled = false;
         
-        if ('@(Model.Status == (int)PlanStatus.Finished)' == "True")
+    if ('@(Model.Status == (int)PlanStatus.Finished)' == "True")
         {
             isFinished = true;
         }       
 
         if ('@(Model.Status == (int)PlanStatus.Canceled)' == "True")
-        {
-            isCanceled = true;
-        }       
+    {
+        isCanceled = true;
+    }       
         
-        var checkBoxs = $("input[name=deliveryman]");
-        var j = 0;
-        $.each(checkBoxs, function() {
+    var checkBoxs = $("input[name=deliveryman]");
+    var j = 0;
+    $.each(checkBoxs, function() {
             
-            if (Assign == null) return;
-            for(var k=0;k<Assign.length;k++)
-            {
-                if(Assign[k].DeliveryMenId == $(this).val()){
-                    $(this).prop('checked',true);
-                }
+        if (Assign == null) return;
+        for(var k=0;k<Assign.length;k++)
+        {
+            if(Assign[k].DeliveryMenId == $(this).val()){
+                $(this).prop('checked',true);
             }
-            j++;                
-        });
+        }
+        j++;                
+    });
 
-        if (Assign != null && !isFinished && !isCanceled)
-        {
-            $('#btnAssign').attr('value', 'Reassign');
-        }  
+    if (Assign != null && !isFinished && !isCanceled)
+    {
+        $('#btnAssign').attr('value', 'Reassign');
+    }  
         
-        if (isFinished || isCanceled)
-        {
-            $('#btnUnassign').addClass('hide');
-            $('#btnAssign').addClass('hide');
-        }      
+    if (isFinished || isCanceled)
+    {
+        $('#btnUnassign').addClass('hide');
+        $('#btnAssign').addClass('hide');
+    }      
         
-        $('#markAsFinishedBtn').click(function() {
-            $.post("/Plans/MarkAsFinished/", {planId: PlanId}, function(data){
-                if (data.success){
-                    $.blockUI();
-                    window.location.reload();
-                }else{
-                    bootbox.alert('Cant mark this plan as finished.');
-                }
-            });
-        });   
+    $('#markAsFinishedBtn').click(function() {
+        $.post("/Plans/MarkAsFinished/", {planId: PlanId}, function(data){
+            if (data.success){
+                $.blockUI();
+                window.location.reload();
+            }else{
+                bootbox.alert('Cant mark this plan as finished.');
+            }
+        });
+    });   
         
    
 
-        $('#btnAssign').click(function () {
-            alert("details");
-            var listdeliveryman = new Array();
-            var listNotChooseDeliveryMan = new Array();
-            var i = 0;
-            var j = 0;
-            $.each(checkBoxs, function() {
-                if ($(this).is(":checked")){
-                    listdeliveryman[i] = $(this).val();
-                    i++;
-                } else
-                {
-                    listNotChooseDeliveryMan[j] = $(this).val();
-                    j++;
-                }
-            });
-            if(listdeliveryman.length <= 0)
+    $('#btnAssign').click(function () {
+        alert("details");
+        var listdeliveryman = new Array();
+        var listNotChooseDeliveryMan = new Array();
+        var i = 0;
+        var j = 0;
+        $.each(checkBoxs, function() {
+            if ($(this).is(":checked")){
+                listdeliveryman[i] = $(this).val();
+                i++;
+            } else
             {
-                bootbox.alert('Please choose one or more deliveryman');
-            }else{
-                $.ajaxSettings.traditional = true;
-                $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
-                    if(result.success){
-                        $.blockUI();
-                        window.location.reload();
-                    }else{
-                        bootbox.alert('Unable to assign. Please refresh and try again.');
-                    }
-                });
-            }
-        });
-
-        $('#btnUnassign').click(function(){
-            alert("details");
-            var listdeliveryman = new Array();
-            var listNotChooseDeliveryMan = new Array();
-            var i = 0;
-            var j = 0;
-            $.each(checkBoxs, function() {
                 listNotChooseDeliveryMan[j] = $(this).val();
                 j++;
-            });
+            }
+        });
+        if(listdeliveryman.length <= 0)
+        {
+            bootbox.alert('Please choose one or more deliveryman');
+        }else{
             $.ajaxSettings.traditional = true;
             $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
                 if(result.success){
@@ -324,60 +302,82 @@
                     bootbox.alert('Unable to assign. Please refresh and try again.');
                 }
             });
-        });
+        }
+    });
 
-        var removeFromPlan = function(requestId){
-            bootbox.confirm('Remove this request from plan?', function(confirmed){
-                if(confirmed){
+    $('#btnUnassign').click(function(){
+        alert("details");
+        var listdeliveryman = new Array();
+        var listNotChooseDeliveryMan = new Array();
+        var i = 0;
+        var j = 0;
+        $.each(checkBoxs, function() {
+            listNotChooseDeliveryMan[j] = $(this).val();
+            j++;
+        });
+        $.ajaxSettings.traditional = true;
+        $.post('/Plans/Assign/', { PlanId: PlanId, listdeliveryman : listdeliveryman, listNotAssignedDeliveryMen: listNotChooseDeliveryMan}, function (result) {
+            if(result.success){
+                $.blockUI();
+                window.location.reload();
+            }else{
+                bootbox.alert('Unable to assign. Please refresh and try again.');
+            }
+        });
+    });
+
+    var removeFromPlan = function(requestId){
+        bootbox.confirm('Remove this request from plan?', function(confirmed){
+            if(confirmed){
                     
-                    $.post('/Request/RemoveFromCollectionPlan/'+requestId, function (result) {
-                        if(result.success){
-                            $.blockUI();
-                            window.location.reload();
-                        } else {
-                            bootbox.alert('Failed to remove this request from the collection plan.');
-                        }
-                    });
-                }
-            });        
-        };
+                $.post('/Request/RemoveFromCollectionPlan/'+requestId, function (result) {
+                    if(result.success){
+                        $.blockUI();
+                        window.location.reload();
+                    } else {
+                        bootbox.alert('Failed to remove this request from the collection plan.');
+                    }
+                });
+            }
+        });        
+    };
 
-        var selectAll = function(){
-            $('#mark-collected-form input[type="checkbox"]').attr('checked','checked');
-        };
+    var selectAll = function(){
+        $('#mark-collected-form input[type="checkbox"]').attr('checked','checked');
+    };
 
-        var selectNone = function(){
-            $('#mark-collected-form input[type="checkbox"]').removeAttr('checked');
-        };
+    var selectNone = function(){
+        $('#mark-collected-form input[type="checkbox"]').removeAttr('checked');
+    };
 
-        $('#mark-collected-form').submit(function(){
-            $.post($(this).attr("action"), $(this).serialize(), function(result){
-                if(result.success){
-                    $.blockUI();
-                    window.location.reload();
-                } else {
-                    bootbox.alert('Failed to mark as collected.');
-                }
-            });
-            return false;
+    $('#mark-collected-form').submit(function(){
+        $.post($(this).attr("action"), $(this).serialize(), function(result){
+            if(result.success){
+                $.blockUI();
+                window.location.reload();
+            } else {
+                bootbox.alert('Failed to mark as collected.');
+            }
         });
+        return false;
+    });
 
-        $('#markAsCollectedBtn').click(function(){
-            $('#mark-collected-form').submit();
-        });
+    $('#markAsCollectedBtn').click(function(){
+        $('#mark-collected-form').submit();
+    });
         
         
-        var cancelPlan = function(planId){
-            //bootbox.confirm('Remove all requests and cancel this plan?', function(confirmed){
-            //        if(confirmed){
-            $.post('/Plans/Cancel/'+planId, function(result){
-                if(result.success){
-                    $.blockUI();
-                    window.location = '/Plans/';
-                }
-            });
-            //    }                
-            //});
+    var cancelPlan = function(planId){
+        //bootbox.confirm('Remove all requests and cancel this plan?', function(confirmed){
+        //        if(confirmed){
+        $.post('/Plans/Cancel/'+planId, function(result){
+            if(result.success){
+                $.blockUI();
+                window.location = '/Plans/';
+            }
+        });
+        //    }                
+        //});
                     
-        };
-    </script>
+    };
+</script>

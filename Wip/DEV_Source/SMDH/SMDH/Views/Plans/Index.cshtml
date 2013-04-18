@@ -173,7 +173,7 @@
                     }
                 });
                 $('#editModal').modal();
-
+                $('#tableassign').dataTable();
                 map = new OpenLayers.Map('map');
                 $.post("/Plans/CalculateRouteOfPlan", { id: modelId }, function (data) {
                     segments = data.segments;
@@ -186,8 +186,8 @@
                     // if i use this instead of gmap then everything works.
                     var gmap = new OpenLayers.Layer.Google("Google Streets", // the default
 				{
-				numZoomLevels: 20
-});
+				    numZoomLevels: 20
+				});
                     map.addLayer(gmap);
                     map.setCenter(new OpenLayers.LonLat(106.6613, 10.80079).transform(epsg4326, epsg900913), 16);
                     show(0);
@@ -241,7 +241,7 @@
                     }
                 });
                 $('#editModal').modal();
-                
+
 
                 //show(row);
             }
