@@ -131,36 +131,32 @@
     <div id="qLbar">
     </div>
     <header>
-      <a href="/Dashboard" class="logo">
-        <img src="/img/mylogo/logo4.png" style="height:95px;width:250px;margin-top: -15px;" alt="logo" />
-      </a>
-      <div class="btn-group">
-        <button class="btn btn-primary">
-          @User.Identity.Name
-        </button>
-        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-          <span class="caret">
-          </span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <li>
-            <a href="#">
-              Edit Profile
+        <a href="/Dashboard" class="logo">
+            <img src="/img/mylogo/logo4.png" style="height: 95px; width: 250px; margin-top: -15px;" alt="logo" />
+        </a>
+        <div class="btn-group">
+            <button class="btn btn-primary">
+                @User.Identity.Name
+            </button>
+            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li>
+                    <a href="#">Edit Profile
             </a>
-          </li>
-          <li>
-            <a href="/Account/ChangePassword">
-              Change Password
+                </li>
+                <li>
+                    <a href="/Account/ChangePassword">Change Password
             </a>
-          </li>
-          <li>
-            <a href="/Account/LogOff">
-              Logout
+                </li>
+                <li>
+                    <a href="/Account/LogOff">Logout
             </a>
-          </li>
-        </ul>
-      </div>
-       <ul class="mini-nav">
+                </li>
+            </ul>
+        </div>
+        <ul class="mini-nav">
             <li>
                 <a data-animation="true" data-toggle="tooltip" title="Order" href="/Customer/Orders?&status=draft">
                     <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
@@ -196,7 +192,7 @@
                         </span>
                     </div>
                 </a>
-            </li>           
+            </li>
         </ul>
     </header>
     <div class="container-fluid">
@@ -216,7 +212,7 @@
             updateDashboard(returnedItem.orders, returnedItem.requests);
         }
 
-        function updateDashboard(orders,requests) {
+        function updateDashboard(orders, requests) {
             $('#waitingPricingOrders').html('<span class="info-label badge badge-warning">' + orders[0] +
                     '</span>');
             $('#waitingPricingRequests').html('<span class="info-label badge badge-info">' + orders[1] +
@@ -226,9 +222,28 @@
 
             $('#collectedOrders').html('<span class="info-label badge badge-important">' + requests[1] +
                     '</span>');
-            
+
 
         }
+    </script>
+
+    <script src="/js/jquery.scrollUp.js">
+    </script>
+
+    <script type="text/javascript">
+        //ScrollUp
+        $(function () {
+            $.scrollUp({
+                scrollName: 'scrollUp', // Element ID
+                topDistance: '300', // Distance from top before showing element (px)
+                topSpeed: 300, // Speed back to top (ms)
+                animation: 'fade', // Fade, slide, none
+                animationInSpeed: 400, // Animation in speed (ms)
+                animationOutSpeed: 400, // Animation out speed (ms)
+                scrollText: 'Scroll to top', // Text for element
+                activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+            });
+        });
     </script>
 </body>
 </html>
