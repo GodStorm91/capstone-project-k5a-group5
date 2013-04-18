@@ -154,13 +154,13 @@
     //        alert("Clicked");
     //    });
     viewPlan = function (modelId) {
-        alert("in view plan");
+        //alert("in view plan");
         $.ajax({
             url: '/Plans/Details/' + modelId,
             type: 'POST',
             dataType: 'html',
             success: function (data) {
-                alert("Ok");
+               // alert("Ok");
                 $('#editModal').html(data);
                 $("form").removeData("validator");
                 $("form").removeData("unobtrusiveValidation");
@@ -284,17 +284,17 @@
             $(this).css('background-color', '#F5F5F5');
         })
         $('#plan-' + id).css('background-color', '#dff0d8');
-        alert(id);
+        //alert(id);
         var j = 0;
         var waypointsArr = new Array();
         waypointsArr.length = 0;
         var lats = new Array();
         var lons = new Array();
-        alert(waypoints[id].length);
+        //alert(waypoints[id].length);
         $.each(waypoints[id], function (index, waypoint) {
             lats[j] = waypoint.Latitude;
             lons[j] = waypoint.Longitude;
-            alert(waypoint.Latitude + " " + waypoint.Longitude);
+            //alert(waypoint.Latitude + " " + waypoint.Longitude);
             waypointsArr.push({
                 location: new OpenLayers.LonLat(lons[j], lats[j]).transform(epsg4326, epsg900913)
             });

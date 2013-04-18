@@ -1030,7 +1030,7 @@
                 if (arguments[0]) {
                     hubId = arguments[0];
                 }
-                alert(hubId);
+                //alert(hubId);
                 var id = $('#ddlHubCategories option:selected').val();
                 if (id == '') id = -1;
                 //alert(id);
@@ -1124,7 +1124,7 @@
 
             $("#ddlHub").change(function () {
                 removeMarkerHub();
-                alert("changed : " + $('#ddlHub option:selected').val());
+                //alert("changed : " + $('#ddlHub option:selected').val());
                 //CLEAR MOI OVERLAYS
                 clearOverlays();
 
@@ -1139,7 +1139,7 @@
                     });
                 } else {
                     $.getJSON('/Hubs/Find/' + id, function (data) {
-                        alert(data);
+                        //alert(data);
                         var content = "Name : " + data.Name + "<br>" +
                           "Dia chi:" + data.Address;
                         $('#HubDistrictId').val(data.DistrictId);
@@ -1196,7 +1196,7 @@
             });
 
             function clearOverlays() {
-                alert("HubMarker Array:" + hubsMarkerArray);
+                //alert("HubMarker Array:" + hubsMarkerArray);
                 if (hubsMarkerArray.length > 0) {
                     for (var i = 0; i < hubsMarkerArray.length; i++) {
                         hubsMarkerArray[i].setMap(null);

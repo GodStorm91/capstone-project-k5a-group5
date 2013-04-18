@@ -142,7 +142,7 @@ function drawDistanceByDate(startDate, endDate){
             tdata.addColumn('string', 'Date');
             tdata.addColumn('number', 'Total Distance');                    
             $.post("/Report/GetDataForPlanDistanceChart",{startDate : startDate, endDate : endDate} , function (data) {       
-                alert(data.length);         
+               // alert(data.length);         
                 for (var i = 0; i < data.length; i++) {
                     tdata.addRow([data[i].Date, data[i].TotalDistance]);
                 }
@@ -178,7 +178,7 @@ function drawRevenueByCustomer(startDate, endDate) {
             tdata.addColumn('string', 'Customer');
             tdata.addColumn('number', 'Revenue');                    
             $.post("/Report/GetDataForCustomerRevenuePieChart",{startDate : startDate, endDate : endDate} , function (data) {       
-                alert(data.length);         
+               // alert(data.length);         
                 for (var i = 0; i < data.length; i++) {
                     tdata.addRow([data[i].CustomerName, data[i].TotalFee]);
                 }

@@ -525,7 +525,7 @@
     }
 
     var openAddExistingOrderModal = function (requestId) {
-        alert(requestId);
+        //alert(requestId);
         $.post('/Customer/Orders/AddExistingOrders', { requestId: requestId }, function (data) {
             $('#mainModal').html(data);
             refreshValidation();
@@ -560,7 +560,7 @@
             bootbox.alert('No order added yet');
             return;
         }
-        alert($('.widget-body .no-item').length);
+        //alert($('.widget-body .no-item').length);
         if ($('.widget-body .no-item').length > 0) {
             bootbox.alert('One or more orders contain no item.');
             return;
