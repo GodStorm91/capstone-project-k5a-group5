@@ -60,8 +60,8 @@
                 <td>
                     @item.FullAddress
                 </td>
-                <td>
-                    @item.AmountToBeCollectedFromReceiver
+                <td style="text-align:right">
+                     @(String.Format("{0,12:N0}", item.AmountToBeCollectedFromReceiver))
                 </td>
                 <td>
                     @(item.DeliveryOption == null ? "None" : item.DeliveryOption.Name)
@@ -97,10 +97,10 @@
                         <text>000</text>
                     }
                 </td>
-                <td>
+                <td style="text-align:right">
                     @if (item.Fee != null)
                     {
-                        @item.Fee
+                        @(String.Format("{0,12:N0}", item.Fee))
                     }
                     else
                     {

@@ -7,6 +7,10 @@ setupDataTable = function (model) {
         "bRetrieve": true,
         "sDom": "<'row-fluid'<'span6 tblBtnGroup'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
         "aaSorting": [],
+        "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [-1] // <-- gets last column and turns off sorting
+            }],
         "fnDrawCallback": function (oSettings) {
             $(".toggleActivate").click(function () {
                 var currentNode = $(this);

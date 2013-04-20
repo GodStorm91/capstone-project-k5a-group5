@@ -219,7 +219,7 @@
     var setupDataTable = function () {
         $('#main-table').dataTable({
             "bRetrieve": true,
-            "sDom": "<'row-fluid'<'span6 tblBtnGroup'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'><'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aaSorting": [],
             "bAutoWidth": true,
             "aoColumns": [
@@ -229,7 +229,7 @@
                             null,
                             null,
                             null,
-                            null
+                            { "bSortable": false }
             ],
             "aaSorting": [[2, "asc"]]
         });
