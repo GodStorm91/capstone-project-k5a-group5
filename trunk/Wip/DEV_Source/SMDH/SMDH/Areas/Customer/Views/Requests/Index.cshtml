@@ -3,8 +3,10 @@
 @using SMDH.Models.Statuses
 @{
     ViewBag.Title = "Requests";
-    ViewBag.Heading = "Requests";
+    ViewBag.Heading = "Requests Management";
 }
+<link rel="stylesheet" type="text/css" href="/css/DT_bootstrap.css" />
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="/css/select2.css" />
 <script type="text/javascript" charset="utf-8" language="javascript" src="/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf-8" language="javascript" src="/js/DT_bootstrap.js"></script>
@@ -216,9 +218,9 @@
                             null,
                             null,
                             null,
-                            null
+                            { "bSortable": false }
             ],
-            "aaSorting": [[2, "asc"]]
+            "aaSorting": [[2, "desc"]]
         });
 
         $("div.tblBtnGroup").html('<a href="#" role="button" data-toggle="modal" class="btn DTTT_button_text btn-success" id="btnNew"><span>Add</span></a>');

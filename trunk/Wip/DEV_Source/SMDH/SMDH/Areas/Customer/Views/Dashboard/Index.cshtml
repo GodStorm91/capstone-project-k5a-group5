@@ -36,12 +36,13 @@
             <div class="widget-body quick-actions">
                 <div class="row-fluid">
                     <div class="metro-nav">
-                        <div class="metro-nav-block nav-block-yellow current double">
+                        <div class="metro-nav-block nav-block-yellow double">
                             <a href="/Customer/Orders?&status=draft">
-                                <div class="fs1" aria-hidden="true" data-icon="&#xe006;">
+                                <div class="fs1" aria-hidden="true" data-icon="&#xe000;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[0]</div>
                                 <div class="brand" id="OrdersNeedToApprove">
-                                    Need To Approve(@ViewBag.NumberOfOrders[0])
+                                    Need To Approve
                                 </div>
                             </a>
                         </div>
@@ -49,8 +50,9 @@
                             <a href="/Customer/Orders?&status=repricingapproverequest">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0fe;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[1]</div>
                                 <div class="brand" id="OrdersApproved">
-                                    Repricing(@ViewBag.NumberOfOrders[1])
+                                    Repricing
                                 </div>
                             </a>
                         </div>
@@ -58,8 +60,9 @@
                             <a href="/Customer/Orders?&status=returnedreduceprice&status=expired">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe000;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[2]</div>
                                 <div class="brand" id="OrdersRejected">
-                                    Returned / Expired(@ViewBag.NumberOfOrders[2])
+                                    Returned / Expired
                                 </div>
                             </a>
                         </div>
@@ -67,8 +70,9 @@
                             <a href="/Customer/Orders?status=plannedforcollecting">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[3]</div>
                                 <div class="brand" id="OrdersRequested">
-                                    Requested(@ViewBag.NumberOfOrders[3])
+                                    Requested
                                 </div>
                             </a>
                         </div>
@@ -76,8 +80,9 @@
                             <a href="/Customer/Orders?&status=delivering">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[4]</div>
                                 <div class="brand" id="OrdersDelivering">
-                                    Delivering(@ViewBag.NumberOfOrders[4])
+                                    Delivering
                                 </div>
                             </a>
                         </div>
@@ -85,8 +90,9 @@
                             <a href="/Customer/Orders?&status=tobereturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe14a;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[5]</div>
                                 <div class="brand" id="OrdersWaitingForReturn">
-                                    Waiting For Return(@ViewBag.NumberOfOrders[5])
+                                    Waiting For Return
                                 </div>
                             </a>
                         </div>
@@ -94,8 +100,9 @@
                             <a href="/Customer/Orders?&status=confirmreturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe00d;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfOrders[6]</div>
                                 <div class="brand" id="OrdersReturned">
-                                    Confirm Returned(@ViewBag.NumberOfOrders[6])
+                                    Confirm Returned
                                 </div>
                             </a>
                         </div>
@@ -119,12 +126,13 @@
             <div class="widget-body quick-actions">
                 <div class="row-fluid">
                     <div class="metro-nav">
-                        <div class="metro-nav-block nav-block-yellow current double">
+                        <div class="metro-nav-block nav-block-yellow double">
                             <a href="/Customer/Requests?&status=new">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a0;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfRequests[0]</div>
                                 <div class="brand" id="RequestsWaitingForPrice">
-                                    Waiting For Price(@ViewBag.NumberOfRequests[0])
+                                    Waiting For Price
                                 </div>
                             </a>
                         </div>
@@ -132,8 +140,9 @@
                             <a href="/Customer/Requests?&status=pricing">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0d2;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfRequests[1]</div>
                                 <div class="brand" id="RequestsNeedToApprove">
-                                    Need To Approved(@ViewBag.NumberOfRequests[1])
+                                    Need To Approved
                                 </div>
                             </a>
                         </div>
@@ -141,8 +150,9 @@
                             <a href="/Customer/Requests?status=approved">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe096;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfRequests[2]</div>
                                 <div class="brand" id="RequestsApproved">
-                                    Approved(@ViewBag.NumberOfRequests[2])
+                                    Approved
                                 </div>
                             </a>
                         </div>
@@ -150,8 +160,9 @@
                             <a href="/Customer/Requests?&status=collected">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0b8;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfRequests[3]</div>
                                 <div class="brand" id="RequestsCollected">
-                                    Collected(@ViewBag.NumberOfRequests[3])
+                                    Collected
                                 </div>
                             </a>
                         </div>
@@ -159,8 +170,9 @@
                             <a href="/Customer/Requests?status=canceled">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0a9;">
                                 </div>
+                                <div class="info">@ViewBag.NumberOfRequests[4]</div>
                                 <div class="brand" id="RequestsCanceled">
-                                    Canceled(@ViewBag.NumberOfRequests[4])
+                                    Canceled
                                 </div>
                             </a>
                         </div>
