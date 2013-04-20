@@ -206,12 +206,12 @@
                                     json.data[i].EditDateString +
                                      '</td>' +
                                         '<td>' + "<a href='javascript:void(0)' class='btn btn-mini btn-primary' onclick='editPrice(" + json.data[i].PriceCategoryId + ")'><i class='icon-pencil'></i>Edit" +
-                    "</a>" + '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' + +'</td>' +
+                    "</a>" + '<a href="javascript:void(0)" onclick="deletepriceCateogory(' + json.data[i].PriceCategoryId + ')"><i class="icon-remove"></i></a>' +'</td>' +
                      '</tr>';
                     }
 
                     strTable += '<tr>' +
-                        '<td colspan="5">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                        '<td colspan="6">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
                      '</tr>';
 
                     strTable2 += '<tr>' +
@@ -336,7 +336,7 @@
                     }
 
                     strTable += '<tr>' +
-                        '<td colspan="5">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
+                        '<td colspan="6">Total Price: ' + accounting.formatMoney(totalPrice) + 'VND</td>' +
                      '</tr>';
 
                     strTable2 += '<tr>' +
