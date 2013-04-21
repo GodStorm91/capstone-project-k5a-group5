@@ -87,6 +87,31 @@ $primary-font-color: #ffffff;*/
 /*  Opacity  */
 /*  CSS  */
 
+#toTop {
+    bottom: 0px;
+    margin-right: 20px;
+    width: 70px;
+    height: 40px;
+    padding: 10px 5px;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    float:right;
+    background-color: #e3623e;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ed6d49), color-stop(85%, #ed6d49), to(#bd3813));
+    background-image: -webkit-linear-gradient(#ed6d49, #ed6d49 85%, #bd3813);
+    background-image: -moz-linear-gradient(top, #ed6d49, #ed6d49 85%, #bd3813);
+    background-image: -o-linear-gradient(#ed6d49, #ed6d49 85%, #bd3813);
+    background-image: linear-gradient(#ed6d49, #ed6d49 85%, #bd3813);
+    background-repeat: no-repeat;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-transition: bottom 150ms linear;
+    -moz-transition: bottom 150ms linear;
+    transition: bottom 150ms linear;
+}
+
 #overlay {
     background: #080808;
     position: fixed;
