@@ -2584,7 +2584,7 @@ legend + .control-group {
     }
 
     .btn:active, .btn.active {
-        color:white;
+        color: white;
         background-color: rgb(214, 61, 12);
     }
 
@@ -7644,6 +7644,9 @@ header {
     margin: 0 1% 1% 0;
     overflow: hidden;
     z-index: 1;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
     .metro-nav .metro-nav-block [data-icon]::before {
