@@ -123,7 +123,7 @@
         }
 
         .steps {
-            background: #aaa;
+            /*background: #aaa;*/
             padding: 1px 0;
             overflow: hidden;
         }
@@ -155,9 +155,9 @@
                         font-size: 2em;
                     }
 
-                    .steps li a:hover {
+                /*.steps li a:hover {
                         background: #666;
-                    }
+                    }*/
 
                 .steps li.step, .steps li.step a {
                     position: relative;
@@ -195,14 +195,14 @@
                     background: transparent url(/images/step_over.png) center right no-repeat;
                 }
 
-                .steps li.step a:hover {
+        /*.steps li.step a:hover {
                     background: transparent url(/images/step_over.png) center right no-repeat;
                 }
 
 
                 .steps li.step-3 a:hover {
                     background-position: center left;
-                }
+                }*/
 
         .table tr:hover {
         }
@@ -219,6 +219,8 @@
                 $('.city').removeClass('hide');
                 $('.district').removeClass('hide');
                 $('.ward').removeClass('hide');
+                $('#addnotrequired').addClass('hide')
+                $('#addrequired').removeClass('hide')
                 //                $('#ddlCityProvince').prop('disabled', false);
                 //                $('#ddlDistrict').prop('disabled', false);
                 //                $('#txtWard').prop('disabled', false);
@@ -232,6 +234,8 @@
                 $('.ward').addClass('hide');
                 $('.hubtype').removeClass('hide');
                 $('.hub').removeClass('hide');
+                $('#addnotrequired').removeClass('hide')
+                $('#addrequired').addClass('hide')
                 //alert("radio 2 checked");
                 //                $('#ddlCityProvince').prop('disabled', true);
                 //                $('#ddlDistrict').prop('disabled', true);
@@ -254,7 +258,7 @@
         function initialize() {
             var myLatlng = new google.maps.LatLng(10.776198, 106.632982);
             var myOptions = {
-                zoom: 18,
+                zoom: 10,
                 center: myLatlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
@@ -289,6 +293,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     var latitude = results[0].geometry.location.lat();
                     var longitude = results[0].geometry.location.lng();
+                    initialize();
                     addMarkerHouse(latitude, longitude);
                     localStorage.setItem('HomeLat', latitude);
                     localStorage.setItem('HomeLon', longitude);
@@ -296,7 +301,7 @@
                     //if radio is Hub then load the nearest hub
                     if ($('#optionsRadios2').is(":checked")) {
                         $.post("/Buyer/Home/GetNearestHubFromLatLong", { latitude: latitude, longitude: longitude }, function (data) {
-                            addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, content, false, data.nearestHub.HubId);
+                            addMarkerHub(data.nearestHub.Latitude, data.nearestHub.Longitude, "", false, data.nearestHub.HubId);
                             setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
                             $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
                             $('#HubDistrictId').val(data.nearestHub.DistrictId);
@@ -305,6 +310,33 @@
                             $('#HubLatitude').val(data.nearestHub.Latitude);
                             $('#HubLongitude').val(data.nearestHub.Longitude);
                             $('#HubAddressLabel').html(data.nearestHub.Address);
+
+                            var polylineOptionsActual = new google.maps.Polyline({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.5,
+                                strokeWeight: 5,
+                                map: goMap
+                            });
+                            directions = new google.maps.DirectionsService();
+                            displayer = new google.maps.DirectionsRenderer({
+                                draggable: false,
+                                suppressMarkers: true,
+                                polylineOptions: polylineOptionsActual
+                            });
+                            displayer.setMap(goMap);
+                            //displayer.setPanel(document.getElementById("directionsPanel"));
+                            var ppt = [{ location: new google.maps.LatLng(latitude, longitude) }, { location: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude) }];
+                            directions.route({
+                                origin: new google.maps.LatLng(latitude, longitude),
+                                destination: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude),
+                                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                                waypoints: ppt
+                            }, function (response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                    displayer.setDirections(response);
+                                }
+                            });
+
                             var id = 8;
                             id = data.nearestHub.HubId;
                             changeHubCategoriesHandler(id);
@@ -405,16 +437,6 @@
                         min: 0,
                         required: true
                     },
-
-                    DeliveryOption: {
-                        min: 0,
-                        required: true
-                    },
-
-                    OrderPaymentTypeId: {
-                        min: 0,
-                        required: true
-                    },
                     //                        Ward: {
                     //                            min: 0,
                     //                            required: true
@@ -464,16 +486,6 @@
                         required: "Required",
                         min: "Required"
                     },
-
-                    OrderPaymentTypeId: {
-                        required: "Required",
-                        min: "Required"
-                    },
-
-                    DeliveryOption: {
-                        required: "Required",
-                        min: "Required"
-                    },
                     address: "Required"
 
                 }
@@ -516,8 +528,6 @@
             var receiverEmail = $("<input>").attr("type", "hidden").attr("name", "receiverEmail").val($('#email').val());
             var receiverPhone = $("<input>").attr("type", "hidden").attr("name", "receiverPhone").val($('#phone').val());
             var deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("1");
-            var deliveryOption = $("<input>").attr("type", "hidden").attr("name", "deliveryOption").val($('#ddlDeliveryOption').val());
-            var orderPaymentType = $("<input>").attr("type", "hidden").attr("name", "orderPaymentType").val($('#ddlOrderPaymentType').val());
             var totalPrice = $("<input>").attr("type", "hidden").attr("name", "toBeCollectedAmount").val($('#totalPrice').val());
             var hubId = $("<input>").attr("type", "hidden").attr("name", "hubId").val($('#ddlHub').val());
             //alert($('#totalPrice').val());
@@ -802,7 +812,7 @@
                                                     <td style="width: 100px">@item.Name
                                                     </td>
                                                     <td style="text-align: right; width: 100px;">
-                                                        @(String.Format("{0,12:N0}", item.ProductPrice))
+                                                        @item.ProductPrice
                                                     </td>
                                                     <td style="width: 100px;">
                                                         <input class="input-mini" style="text-align:right" type="text" value="1" id="@itemNo"/>
@@ -1119,10 +1129,13 @@
             //            }
 
             $("#ddlHubCategories").change(function () {
+            initialize();
                 changeHubCategoriesHandler();
             });
 
             $("#ddlHub").change(function () {
+            var homelat = localStorage.getItem('HomeLat');
+            var homelon = localStorage.getItem('HomeLon');
                 removeMarkerHub();
                 //alert("changed : " + $('#ddlHub option:selected').val());
                 //CLEAR MOI OVERLAYS
@@ -1152,7 +1165,35 @@
                         //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
                         //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
                         //$('#ddlWard').val(hubWardId);
+                    initialize();
                         addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                    addMarkerHouse(homelat, homelon);
+
+                    var polylineOptionsActual = new google.maps.Polyline({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 5,
+                        map: goMap
+                    });
+                    directions = new google.maps.DirectionsService();
+                    displayer = new google.maps.DirectionsRenderer({
+                        draggable: false,
+                        suppressMarkers: true,
+                        polylineOptions: polylineOptionsActual
+                    });
+                    displayer.setMap(goMap);
+                    //displayer.setPanel(document.getElementById("directionsPanel"));
+                    var ppt = [{ location: new google.maps.LatLng(homelat, homelon) }, { location: new google.maps.LatLng(data.Latitude, data.Longitude) }];
+                    directions.route({
+                        origin: new google.maps.LatLng(homelat, homelon),
+                        destination: new google.maps.LatLng(data.Latitude, data.Longitude),
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                        waypoints: ppt
+                    }, function (response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            displayer.setDirections(response);
+                        }
+                    });
                     });
                 }
 
@@ -1224,7 +1265,7 @@
 
             $(document).ready(function () {
                 setupDataTable();
-                //$('#myCarousel').carousel('pause')
+            $('#myCarousel').carousel('pause')
             });
 
         </script>
