@@ -256,7 +256,7 @@
         function initialize() {
             var myLatlng = new google.maps.LatLng(10.776198, 106.632982);
             var myOptions = {
-                zoom: 18,
+                zoom: 10,
                 center: myLatlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
@@ -1143,6 +1143,7 @@
         //            }
 
         $("#ddlHubCategories").change(function () {
+            initialize();
             changeHubCategoriesHandler();
         });
 
