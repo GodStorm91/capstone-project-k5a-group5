@@ -291,6 +291,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     var latitude = results[0].geometry.location.lat();
                     var longitude = results[0].geometry.location.lng();
+                    initialize();
                     addMarkerHouse(latitude, longitude);
                     localStorage.setItem('HomeLat', latitude);
                     localStorage.setItem('HomeLon', longitude);
@@ -347,35 +348,6 @@
             });
         }
 
-        function drawDirection(directions, displayer, ppt) {
-            var polylineOptionsActual = new google.maps.Polyline({
-                strokeColor: '#FFFEE',
-                strokeOpacity: 0.5,
-                strokeWeight: 5,
-                map: goMap
-            });
-            directions = new google.maps.DirectionsService();
-            displayer = new google.maps.DirectionsRenderer({
-                draggable: false,
-                suppressMarkers: true,
-                polylineOptions: polylineOptionsActual
-            });
-            displayer.setMap(map);
-            //displayer.setPanel(document.getElementById("directionsPanel"));
-            var ppt = [
-                wpt[number][1], wpt[number][2], wpt[number][3], wpt[number][4], wpt[number][5], wpt[number][6], wpt[number][7], wpt[number][8]
-            ];
-            directions.route({
-                origin: wpt[number][0].location,
-                destination: wpt[number][0].location,
-                travelMode: google.maps.DirectionsTravelMode.DRIVING,
-                waypoints: ppt
-            }, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    displayer.setDirections(response);
-                }
-            });
-        }
 
         function addMarkerHouse(lat, long) {
             var myLatLng = new google.maps.LatLng(lat, long);
@@ -1175,6 +1147,8 @@
         });
 
         $("#ddlHub").change(function () {
+            var homelat = localStorage.getItem('HomeLat');
+            var homelon = localStorage.getItem('HomeLon');
             removeMarkerHub();
             //alert("changed : " + $('#ddlHub option:selected').val());
             //CLEAR MOI OVERLAYS
@@ -1200,11 +1174,40 @@
                     $('#HubLongitude').val(data.Longitude);
                     $('#HubAddress').val(data.Address);
                     $('#HubAddressLabel').html(data.Address);
+
                     //change dropdownlist value to match the value in HUb
                     //$('#ddlCityProvince').val("1"); //fixed to Ho Chi Minh city                    
                     //$('#ddlCityProvince').trigger("change", [data.DistrictId, data.WardId, data.WardName]);
                     //$('#ddlWard').val(hubWardId);
+                    initialize();
                     addMarkerHub(data.Latitude, data.Longitude, content, true, data.HubId);
+                    addMarkerHouse(homelat, homelon);
+
+                    var polylineOptionsActual = new google.maps.Polyline({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 5,
+                        map: goMap
+                    });
+                    directions = new google.maps.DirectionsService();
+                    displayer = new google.maps.DirectionsRenderer({
+                        draggable: false,
+                        suppressMarkers: true,
+                        polylineOptions: polylineOptionsActual
+                    });
+                    displayer.setMap(goMap);
+                    //displayer.setPanel(document.getElementById("directionsPanel"));
+                    var ppt = [{ location: new google.maps.LatLng(homelat, homelon) }, { location: new google.maps.LatLng(data.Latitude, data.Longitude) }];
+                    directions.route({
+                        origin: new google.maps.LatLng(homelat, homelon),
+                        destination: new google.maps.LatLng(data.Latitude, data.Longitude),
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                        waypoints: ppt
+                    }, function (response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            displayer.setDirections(response);
+                        }
+                    });
                 });
             }
 
