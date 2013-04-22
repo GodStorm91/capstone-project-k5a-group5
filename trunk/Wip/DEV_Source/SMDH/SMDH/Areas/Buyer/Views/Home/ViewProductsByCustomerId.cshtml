@@ -307,6 +307,33 @@
                             $('#HubLatitude').val(data.nearestHub.Latitude);
                             $('#HubLongitude').val(data.nearestHub.Longitude);
                             $('#HubAddressLabel').html(data.nearestHub.Address);
+
+                            var polylineOptionsActual = new google.maps.Polyline({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.5,
+                                strokeWeight: 5,
+                                map: goMap
+                            });
+                            directions = new google.maps.DirectionsService();
+                            displayer = new google.maps.DirectionsRenderer({
+                                draggable: false,
+                                suppressMarkers: true,
+                                polylineOptions: polylineOptionsActual
+                            });
+                            displayer.setMap(goMap);
+                            //displayer.setPanel(document.getElementById("directionsPanel"));
+                            var ppt = [{ location: new google.maps.LatLng(latitude, longitude) }, { location: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude) }];
+                            directions.route({
+                                origin: new google.maps.LatLng(latitude, longitude),
+                                destination: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude),
+                                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                                waypoints: ppt
+                            }, function (response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                    displayer.setDirections(response);
+                                }
+                            });
+
                             var id = 8;
                             id = data.nearestHub.HubId;
                             changeHubCategoriesHandler(id);
@@ -318,8 +345,36 @@
                     bootbox.alert("Sorry we can find your address please try again! Or click on map to set location by Manual!");
                 }
             });
+        }
 
-
+        function drawDirection(directions, displayer, ppt) {
+            var polylineOptionsActual = new google.maps.Polyline({
+                strokeColor: '#FFFEE',
+                strokeOpacity: 0.5,
+                strokeWeight: 5,
+                map: goMap
+            });
+            directions = new google.maps.DirectionsService();
+            displayer = new google.maps.DirectionsRenderer({
+                draggable: false,
+                suppressMarkers: true,
+                polylineOptions: polylineOptionsActual
+            });
+            displayer.setMap(map);
+            //displayer.setPanel(document.getElementById("directionsPanel"));
+            var ppt = [
+                wpt[number][1], wpt[number][2], wpt[number][3], wpt[number][4], wpt[number][5], wpt[number][6], wpt[number][7], wpt[number][8]
+            ];
+            directions.route({
+                origin: wpt[number][0].location,
+                destination: wpt[number][0].location,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                waypoints: ppt
+            }, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    displayer.setDirections(response);
+                }
+            });
         }
 
         function addMarkerHouse(lat, long) {
@@ -729,15 +784,18 @@
             <ul>
                 <li class="step step-1">
                     <a href="javascript:void(0)"><strong>Step 1</strong><br />
-                        CHOOSE ITEM</a>
+                        <h4>CHOOSE ITEM</h4>
+                    </a>
                 </li>
                 <li class="step step-2">
                     <a href="javascript:void(0)"><strong>Step 2</strong><br />
-                        YOUR INFORMATION</a>
+                        <h4>YOUR INFORMATION</h4>
+                    </a>
                 </li>
                 <li class="step step-3">
                     <a href="javascript:void(0)"><strong>Step 3</strong><br />
-                        THANKS FOR BUYING WITH US</a>
+                        <h4>THANKS FOR BUYING WITH US</h4>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -755,7 +813,7 @@
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS4nCidV6PliBBvvFjEn9KVxzTBup1roNCYyNhzu57VBncmfB7Y" width="100px" height="150px" />
                     </div>*@
                     <div class="span6">
-                     <a class="btn btn-primary" href="/Buyer/Home/ViewInformationOrder">View Information Order</a>
+                        <a class="btn btn-primary" href="/Buyer/Home/ViewInformationOrder">View Information Order</a>
                     </div>
                     <div class="span6">
                         Total Amount :&nbsp;&nbsp;&nbsp;<input class="input-medium" type="text" id="totalPrice"
@@ -1029,7 +1087,7 @@
             if (id == '') id = -1;
             //alert(id);
             $.getJSON('/HubCategories/GetHubsByHubCategory/' + id, function (data) {
-                items = '<option value="-1">-- All Locagions --</option>';
+                items = '<option value="-1">-- All Locations --</option>';
                 $.each(data, function (i, hub) {
                     items += "<option value='" + hub.HubId + "'>" + hub.Name + "</option>";
                     //alert(hub.HubId);
