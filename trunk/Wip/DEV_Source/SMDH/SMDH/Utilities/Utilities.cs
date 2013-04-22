@@ -164,7 +164,7 @@ namespace SMDH.Utilities
             string month = DateTime.Now.Month.ToString();
             string year = DateTime.Now.Year.ToString();
             string passcode = second + date + month + year + phone.Substring(phone.Length - Math.Min(4, phone.Length));
-            return passcode;
+            return passcode.Substring(0,7);
         }
 
         public static void UpdateOrderInHubStatus()

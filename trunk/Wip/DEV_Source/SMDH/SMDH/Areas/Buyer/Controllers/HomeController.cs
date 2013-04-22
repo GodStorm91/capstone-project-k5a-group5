@@ -193,7 +193,7 @@ namespace SMDH.Areas.Buyer.Controllers
                 Utilities.Utilities.sendmails(passCode, receiverEmail);
             }
 
-            if (_repository.ConfirmAdd(order))
+            if (_repository.ConfirmAdd(order,context))
             {
                 
                 for (int i = 0; i < itemsListArr.Length; i++)
