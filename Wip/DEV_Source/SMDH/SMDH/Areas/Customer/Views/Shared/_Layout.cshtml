@@ -238,7 +238,20 @@
             $('#collectedOrders').html('<span class="info-label badge badge-important">' + requests[1] +
                     '</span>');
 
+                $('#OrdersNeedToApprove').html(orders[0]);
+                $('#OrdersApproved').html(orders[1]);
+                $('#OrdersRejected').html(orders[2]);
+                $('#OrdersRequested').html(orders[3]);
+                $('#OrdersDelivering').html(orders[4]);
+                $('#OrdersWaitingForReturn').html(orders[5]);
+                $('#OrdersReturned').html(orders[6]);
 
+                $('#RequestsWaitingForPrice').html(requests[0]);
+                $('#RequestsNeedToApprove').html(requests[1]);
+                $('#RequestsApproved').html(requests[2]);
+                $('#RequestsCollected').html(requests[3]);
+                $('#RequestsCanceled').html(requests[4]);
+            
         }
     </script>
 

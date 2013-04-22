@@ -475,6 +475,23 @@ namespace SMDH.Models.Concrete
 
 
         }
+
+        public bool ConfirmAdd(Order order, SMDHDataContext yourContext)
+        {
+            try
+            {
+                yourContext.Orders.InsertOnSubmit(order);
+                yourContext.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+
+
+        }
 		
 		public bool AddToPlan(Plan plan, List<Order> orders)
         {

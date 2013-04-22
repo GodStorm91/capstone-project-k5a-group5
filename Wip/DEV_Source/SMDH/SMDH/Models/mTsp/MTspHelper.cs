@@ -440,7 +440,7 @@ namespace SMDH.Models.mTsp
                         {
                             if (cluster.Count > 1) //cluster shall have minimum one point
                             {
-                                Point removedPoint = cluster.RemovePoint(point);
+                                Point removedPoint = cluster.RemovePoint(pointIndex);
                                 allClusters[nearestCluster].AddPoint(removedPoint);
                                 movements += 1;
                             }

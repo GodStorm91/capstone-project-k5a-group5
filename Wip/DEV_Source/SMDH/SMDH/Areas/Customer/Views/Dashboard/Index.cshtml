@@ -22,7 +22,8 @@
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <div class="row-fluid">
     <div class="span12">
-        <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">Product Management</a>
+        <a style="float: right; margin-bottom: 20px; margin-left: 10px;" class="btn btn-primary" href="/Customer/Products/">Configuration</a>
+        <a style="float: right; margin-bottom: 20px;" class="btn btn-primary" href="/Customer/Products/">Product Management</a>        
     </div>
 </div>
 <div class="row-fluid">
@@ -40,8 +41,8 @@
                             <a href="/Customer/Orders?&status=draft">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0f2;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[0]</div>
-                                <div class="brand" id="OrdersNeedToApprove">
+                                <div class="info" id="OrdersNeedToApprove">@ViewBag.NumberOfOrders[0]</div>
+                                <div class="brand">
                                     Need To Approve
                                 </div>
                             </a>
@@ -50,8 +51,8 @@
                             <a href="/Customer/Orders?&status=repricingapproverequest">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe038;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[1]</div>
-                                <div class="brand" id="OrdersApproved">
+                                <div class="info" id="OrdersApproved">@ViewBag.NumberOfOrders[1]</div>
+                                <div class="brand">
                                     Repricing
                                 </div>
                             </a>
@@ -60,8 +61,8 @@
                             <a href="/Customer/Orders?&status=returnedreduceprice&status=expired">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe047;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[2]</div>
-                                <div class="brand" id="OrdersRejected">
+                                <div class="info" id="OrdersRejected">@ViewBag.NumberOfOrders[2]</div>
+                                <div class="brand">
                                     Returned / Expired
                                 </div>
                             </a>
@@ -70,8 +71,8 @@
                             <a href="/Customer/Orders?status=plannedforcollecting">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe07c;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[3]</div>
-                                <div class="brand" id="OrdersRequested">
+                                <div class="info" id="OrdersRequested">@ViewBag.NumberOfOrders[3]</div>
+                                <div class="brand">
                                     Requested
                                 </div>
                             </a>
@@ -80,8 +81,8 @@
                             <a href="/Customer/Orders?&status=delivering">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe07d;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[4]</div>
-                                <div class="brand" id="OrdersDelivering">
+                                <div class="info" id="OrdersDelivering">@ViewBag.NumberOfOrders[4]</div>
+                                <div class="brand">
                                     Delivering
                                 </div>
                             </a>
@@ -90,8 +91,8 @@
                             <a href="/Customer/Orders?&status=tobereturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe136;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[5]</div>
-                                <div class="brand" id="OrdersWaitingForReturn">
+                                <div class="info" id="OrdersWaitingForReturn">@ViewBag.NumberOfOrders[5]</div>
+                                <div class="brand">
                                     Waiting For Return
                                 </div>
                             </a>
@@ -100,8 +101,8 @@
                             <a href="/Customer/Orders?&status=confirmreturned">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe103;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfOrders[6]</div>
-                                <div class="brand" id="OrdersReturned">
+                                <div class="info" id="OrdersReturned">@ViewBag.NumberOfOrders[6]</div>
+                                <div class="brand">
                                     Confirm Returned
                                 </div>
                             </a>
@@ -130,8 +131,8 @@
                             <a href="/Customer/Requests?&status=new">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe038;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfRequests[0]</div>
-                                <div class="brand" id="RequestsWaitingForPrice">
+                                <div class="info" id="RequestsWaitingForPrice">@ViewBag.NumberOfRequests[0]</div>
+                                <div class="brand">
                                     Waiting For Price
                                 </div>
                             </a>
@@ -140,8 +141,8 @@
                             <a href="/Customer/Requests?&status=pricing">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0b0;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfRequests[1]</div>
-                                <div class="brand" id="RequestsNeedToApprove">
+                                <div class="info" id="RequestsNeedToApprove">@ViewBag.NumberOfRequests[1]</div>
+                                <div class="brand">
                                     Need To Approved
                                 </div>
                             </a>
@@ -150,8 +151,8 @@
                             <a href="/Customer/Requests?status=approved">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0fe;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfRequests[2]</div>
-                                <div class="brand" id="RequestsApproved">
+                                <div class="info" id="RequestsApproved">@ViewBag.NumberOfRequests[2]</div>
+                                <div class="brand">
                                     Approved
                                 </div>
                             </a>
@@ -160,8 +161,8 @@
                             <a href="/Customer/Requests?&status=collected">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0d4;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfRequests[3]</div>
-                                <div class="brand" id="RequestsCollected">
+                                <div class="info" id="RequestsCollected">@ViewBag.NumberOfRequests[3]</div>
+                                <div class="brand">
                                     Collected
                                 </div>
                             </a>
@@ -170,8 +171,8 @@
                             <a href="/Customer/Requests?status=canceled">
                                 <div class="fs1" aria-hidden="true" data-icon="&#xe0fa;">
                                 </div>
-                                <div class="info">@ViewBag.NumberOfRequests[4]</div>
-                                <div class="brand" id="RequestsCanceled">
+                                <div class="info" id="RequestsCanceled">@ViewBag.NumberOfRequests[4]</div>
+                                <div class="brand">
                                     Canceled
                                 </div>
                             </a>
@@ -209,32 +210,7 @@
                 $('#createModal').modal();
             }
         });
-    });
-
-    var source = new EventSource('/Notifications/CheckNotification');
-
-    source.onmessage = function (e) {
-        //alert(e);
-        var returnedItem = JSON.parse(e.data);
-        updateDashboard(returnedItem.orders, returnedItem.requests);
-    }
-
-
-    function updateDashboard(orders, requests) {
-        $('#OrdersNeedToApprove').html("Need To Approve(" + orders[0] + ")");
-        $('#OrdersApproved').html("Repricing(" + orders[1] + ")");
-        $('#OrdersRejected').html("Returned / Expired (" + orders[2] + ")");
-        $('#OrdersRequested').html("Requested(" + orders[3] + ")");
-        $('#OrdersDelivering').html("Delivering(" + orders[4] + ")");
-        $('#OrdersWaitingForReturn').html("Waiting For Return(" + orders[5] + ")");
-        $('#OrdersReturned').html("Returned(" + orders[6] + ")");
-
-        $('#RequestsWaitingForPrice').html("Waiting For Price(" + requests[0] + ")");
-        $('#RequestsNeedToApprove').html("Need To Approved(" + requests[1] + ")");
-        $('#RequestsApproved').html("Approved(" + requests[2] + ")");
-        $('#RequestsCollected').html("Collected(" + requests[3] + ")");
-        $('#RequestsCanceled').html("Canceled(" + requests[4] + ")");
-    }
+    });   
 </script>
 @*<div class="widget">
     <div class="widget-header">
