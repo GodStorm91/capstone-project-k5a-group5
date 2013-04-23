@@ -1,0 +1,17 @@
+﻿<h2>Configuration</h2>
+<form action="/Customer/Configuration/ConfirmSave" method="post">
+<div>
+    <input type="checkbox" id="allowDraft" name="allowDraft" /> Draft -> New
+    <input type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" /> Returned reduced price -> Confirm Ended
+    <input type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" /> Repricing approve request -> Collected
+    <input type="checkbox" id="isOrderImmediately" name="isOrderImmediately" /> Immediately 
+    After <input type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" /> minutes
+</div>
+<div>
+<input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" /> Auto approve request
+Request price below: <input type="text" id="maxRequestPrice" name="maxRequestPrice" />
+<input type="checkbox" id="isRequestImmediately" name="isRequestImmediately" /> Immediately 
+After <input type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" /> minutes
+</div>
+<button type="submit">Ok</button>
+</form>
