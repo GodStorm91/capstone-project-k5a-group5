@@ -131,6 +131,7 @@
   <ItemGroup>
     <Compile Include="Areas\Buyer\BuyerAreaRegistration.cs" />
     <Compile Include="Areas\Buyer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\ConfigurationController.cs" />
     <Compile Include="Areas\Customer\Controllers\CustomerDefaultController.cs" />
     <Compile Include="Areas\Customer\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
@@ -212,6 +213,7 @@
     </Compile>
     <Compile Include="Models\Statuses\EntityTypes.cs" />
     <Compile Include="Models\Statuses\Statuses.cs" />
+    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\Utilities\AddressHelper.cs" />
     <Compile Include="Models\Utilities\GoogleMapsHelper.cs" />
     <Compile Include="Models\ViewModels\DateViewModel.cs" />
@@ -280,6 +282,7 @@
     <Content Include="Buyer\Home\js\jquery-1.8.2.min.js" />
     <Content Include="Buyer\Home\js\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="Buyer\Home\js\maruti.js" />
+    <Content Include="Configurations\a4c43593-5652-421c-8be7-98836dcc9e95.xml" />
     <Content Include="css\application.css" />
     <Content Include="css\base.css" />
     <Content Include="css\bluemoonmain.css" />
@@ -1609,6 +1612,7 @@
     <Content Include="Areas\Customer\Views\Orders\AddExistingOrders.cshtml" />
     <Content Include="Areas\Customer\Views\Requests\AddOrderToRequest.cshtml" />
     <Content Include="Areas\Customer\Views\Requests\Note.cshtml" />
+    <Content Include="Areas\Customer\Views\Configuration\Index.cshtml" />
     <None Include="Areas\Hub\css\Open Notebook.onetoc2" />
     <None Include="Areas\Hub\js\Open Notebook.onetoc2" />
     <Content Include="Areas\Hub\Views\Dashboard\Index.cshtml" />
