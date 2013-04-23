@@ -1,17 +1,134 @@
-﻿<h2>Configuration</h2>
-<form action="/Customer/Configuration/ConfirmSave" method="post">
-<div>
-    <input type="checkbox" id="allowDraft" name="allowDraft" /> Draft -> New
-    <input type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" /> Returned reduced price -> Confirm Ended
-    <input type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" /> Repricing approve request -> Collected
-    <input type="checkbox" id="isOrderImmediately" name="isOrderImmediately" /> Immediately 
-    After <input type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" /> minutes
+﻿@{
+    ViewBag.Title = "Configuration";
+    ViewBag.Heading = "Configuration";
+}
+
+@*<form action="/Customer/Configuration/ConfirmSave" method="post">
+       <div>
+        <input type="checkbox" id="allowDraft" name="allowDraft" />
+        Draft -> New
+    <input type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" />
+        Returned reduced price -> Confirm Ended
+    <input type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" />
+        Repricing approve request -> Collected
+    <input type="checkbox" id="isOrderImmediately" name="isOrderImmediately" />
+        Immediately 
+    After
+        <input type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" />
+        minutes
+    </div>
+        <div>
+        <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" />
+        Auto approve request
+Request price below:
+        <input type="text" id="maxRequestPrice" name="maxRequestPrice" />
+        <input type="checkbox" id="isRequestImmediately" name="isRequestImmediately" />
+        Immediately 
+After
+        <input type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" />
+        minutes
+    </div>
+    <button type="submit">Ok</button>
+</form>*@
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    Confirguration
+                </div>
+            </div>
+            <div class="widget-body">
+
+                <form action="/Customer/Configuration/ConfirmSave" method="post" class="form-horizontal no-margin">
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox">
+                                @if (ViewBag.allowDraft == true)
+                                {
+                                    <input type="checkbox" id="allowDraft" name="allowDraft" value="true" checked />
+                                }
+                                else
+                                { 
+                                    <input type="checkbox" id="allowDraft" name="allowDraft" value="true" />
+                                }
+                                Draft -> New
+                            </label>
+                            <label class="checkbox">
+                                @if (ViewBag.enableReturnedReducedPrice == true)
+                                {
+                                    <input type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" checked />
+                                }
+                                else
+                                { 
+                                    <input type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" />
+                                }
+                                Returned reduced price -> Confirm Ended
+                            </label>
+                            <label class="checkbox">
+                                @if (ViewBag.enableRepricingApproveRequest == true)
+                                {
+                                    <input type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" checked /> 
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" /> 
+                                }
+                                Repricing approve request -> Collected
+                            </label>
+                            <label class="checkbox">
+                                @if (ViewBag.orderImmediately == true)
+                                {
+                                    <input type="checkbox" id="isOrderImmediately" name="isOrderImmediately" value='true' checked />
+                                }
+                                else
+                                { 
+                                    <input type="checkbox" id="isOrderImmediately" name="isOrderImmediately" value='true' />
+                                }
+                                Immediately After
+                                <input style="width:100px;" type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" />
+                                minutes
+                            </label>
+                            <label class="checkbox">
+                                @if (ViewBag.requestFlag == true)
+                                {
+                                    <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' checked />
+                                }
+                                else
+                                { 
+                                    <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' />
+                                }
+                                Auto approve request
+                                Request price below:
+                                <input style="width: 100px;" type="text" id="maxRequestPrice" name="maxRequestPrice" />
+                            </label>
+                            <label class="checkbox">
+                                @if (ViewBag.requestImmediately == true)
+                                {
+                                    <input type="checkbox" id="isRequestImmediately" name="isRequestImmediately" value='true' checked />
+                                }
+                                else
+                                { 
+                                    <input type="checkbox" id="isRequestImmediately" name="isRequestImmediately" value='true' />
+                                }
+                                Immediately After
+                                <input style="width:100px;" type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" />
+                                minutes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions no-margin">
+                        <button type="submit" class="btn btn-info pull-left">
+                            Ok
+                        </button>
+                        <div class="clearfix">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-<input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" /> Auto approve request
-Request price below: <input type="text" id="maxRequestPrice" name="maxRequestPrice" />
-<input type="checkbox" id="isRequestImmediately" name="isRequestImmediately" /> Immediately 
-After <input type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" /> minutes
-</div>
-<button type="submit">Ok</button>
-</form>

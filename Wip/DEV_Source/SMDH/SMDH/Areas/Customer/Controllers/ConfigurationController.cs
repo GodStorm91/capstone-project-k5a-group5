@@ -37,7 +37,7 @@ namespace SMDH.Areas.Customer.Controllers
             try
             {
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableDraft"] = allowDraft;
-                HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"] = allowRepricingApproveRequest;
+                HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"] = allowReturnedReducedPrice;
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"] = allowRepricingApproveRequest;
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"] = allowDraft || allowRepricingApproveRequest || allowReturnedReducedPrice;
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"] = isOrderImmediately;
@@ -48,11 +48,12 @@ namespace SMDH.Areas.Customer.Controllers
                 HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["interval"] = isRequestAfterMinutes;
                 HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["minPrice"] = maxRequestPrice;
 
-                return Json(new { data = true });
+                //return Json(new { data = true });
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                return Json(new { success = false });
+                return RedirectToAction("Index");
                 throw;
             }      
         }
