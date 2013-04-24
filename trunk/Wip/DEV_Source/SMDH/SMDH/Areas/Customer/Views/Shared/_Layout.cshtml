@@ -209,7 +209,7 @@
     <div class="container-fluid">
         <div class="dashboard-container">
             <div>
-                <h4 style="color:white;">@ViewBag.Heading</h4>
+                <h4 style="color: white;">@ViewBag.Heading</h4>
             </div>
             <div class="dashboard-wrapper">
                 <div class="left-sidebar">
@@ -225,6 +225,7 @@
             //alert(e);
             var returnedItem = JSON.parse(e.data);
             updateDashboard(returnedItem.orders, returnedItem.requests);
+            loadconfig(returnedItem.config);
         }
 
         function updateDashboard(orders, requests) {
@@ -238,24 +239,35 @@
             $('#collectedOrders').html('<span class="info-label badge badge-important">' + requests[1] +
                     '</span>');
 
-                $('#OrdersNeedToApprove').html(orders[0]);
-                $('#OrdersApproved').html(orders[1]);
-                $('#OrdersRejected').html(orders[2]);
-                $('#OrdersRequested').html(orders[3]);
-                $('#OrdersDelivering').html(orders[4]);
-                $('#OrdersWaitingForReturn').html(orders[5]);
-                $('#OrdersReturned').html(orders[6]);
+            $('#OrdersNeedToApprove').html(orders[0]);
+            $('#OrdersApproved').html(orders[1]);
+            $('#OrdersRejected').html(orders[2]);
+            $('#OrdersRequested').html(orders[3]);
+            $('#OrdersDelivering').html(orders[4]);
+            $('#OrdersWaitingForReturn').html(orders[5]);
+            $('#OrdersReturned').html(orders[6]);
 
-                $('#RequestsWaitingForPrice').html(requests[0]);
-                $('#RequestsNeedToApprove').html(requests[1]);
-                $('#RequestsApproved').html(requests[2]);
-                $('#RequestsCollected').html(requests[3]);
-                $('#RequestsCanceled').html(requests[4]);
-            
+            $('#RequestsWaitingForPrice').html(requests[0]);
+            $('#RequestsNeedToApprove').html(requests[1]);
+            $('#RequestsApproved').html(requests[2]);
+            $('#RequestsCollected').html(requests[3]);
+            $('#RequestsCanceled').html(requests[4]);
+
         }
+
+        function loadconfig(config) {
+            if (config[3] == "True") {
+                if (config[4] == "True") {
+                    $.post("/Customer/Orders/ApproveAll");
+                } else {
+
+                }
+            }
+        }
+
     </script>
 
-@*    <script src="/js/jquery.scrollUp.js">
+    @*    <script src="/js/jquery.scrollUp.js">
     </script>
 
     <script type="text/javascript">
