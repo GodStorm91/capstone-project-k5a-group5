@@ -30,7 +30,7 @@ namespace SMDH.Controllers
 
             var orders = from p in context.Orders
                          where (p.CreatedDate > startDateDT && p.CreatedDate < endDateDT)
-                         group p by p.CreatedDate.Value.Day into g
+                         group p by p.CreatedDate.Day into g
 
                          select new { Month = g.Key, TotalFee = g.Sum(p => p.Fee) };
 

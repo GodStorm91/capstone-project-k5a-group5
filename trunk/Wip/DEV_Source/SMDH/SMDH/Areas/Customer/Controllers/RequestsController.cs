@@ -44,7 +44,7 @@ namespace SMDH.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult ConfirmCreateOrder(string itemsList, string quantitiesList, string pricesList, string receiverName, string receiverAddress,
             int receiverAddressDistrictId, decimal longitude, decimal latitude, string receiverPhone, string receiverEmail, int deliveryType,
-             int customerId, int requestId,int receiverAddressWardId = 1, int hubId = -1, int deliveryOption = 1, int orderPaymentType = 1)
+             int customerId, int requestId, int receiverAddressWardId = 1, int hubId = -1, int deliveryOption = 1, int orderPaymentType = 1)
         {
             EFOrdersRepository _repository = new EFOrdersRepository();
             EFItemsRepository itemRepo = new EFItemsRepository();
@@ -709,7 +709,7 @@ namespace SMDH.Areas.Customer.Controllers
                 return Json(new { success = false });
                 throw;
             }
-           
+
         }
 
         public ActionResult RejectForRepricing(int id)
@@ -788,5 +788,77 @@ namespace SMDH.Areas.Customer.Controllers
                 throw;
             }
         }
+
+        public ActionResult AutoApprove()
+        {
+            try
+            {
+                //orders 
+                var allowDraft = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableDraft"];
+                var enableReturnedReducedPrice = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"];
+                var enableRepricingApproveRequest = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"];
+                var orderFlag = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"];
+                var orderImmediately = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"];
+                var orderInterval = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"];
+
+                //request
+                var requestFlag = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["flag"];
+                var requestImmediately = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["immediately"];
+                var requestInterval = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["interval"];
+                var minPrice = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["minPrice"];
+                //-------
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var requests = context.Requests.Where(r => r.RequestStatus == (int)RequestStatus.Pricing && r.CustomerId == userInfo.CustomerId);
+                foreach (var request in requests)
+                {
+                    if ((bool)requestFlag == true)
+                    {
+                        if ((int)minPrice == 0)
+                        {
+                            if ((bool)requestImmediately == true)
+                            {
+                                request.RequestStatus = (int)RequestStatus.Approved;
+                                request.ApprovedDate = DateTime.Now;
+                            }
+                            else
+                            {
+                                if (request.PricedDate.Value.AddMinutes((int)requestInterval) <= DateTime.Now)
+                                {
+                                    request.RequestStatus = (int)RequestStatus.Approved;
+                                    request.ApprovedDate = DateTime.Now;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (request.TotalFee <= (int)minPrice)
+                            {
+                                if ((bool)requestImmediately == true)
+                                {
+                                    request.RequestStatus = (int)RequestStatus.Approved;
+                                    request.ApprovedDate = DateTime.Now;
+                                }
+                                else
+                                {
+                                    if (request.PricedDate.Value.AddMinutes((int)requestInterval) <= DateTime.Now)
+                                    {
+                                        request.RequestStatus = (int)RequestStatus.Approved;
+                                        request.ApprovedDate = DateTime.Now;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
     }
 }
