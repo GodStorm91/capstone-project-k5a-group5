@@ -33,6 +33,7 @@ namespace SMDH.Models
                 {
                     case Statuses.RequestStatus.Draft:
                         validOrderStatuses.Add((int)OrderStatus.Draft);
+                        validOrderStatuses.Add((int)OrderStatus.New);
                         validOrderStatuses.Add((int)OrderStatus.Approved);
                         validOrderStatuses.Add((int)OrderStatus.Rejected);
                         break;

@@ -54,24 +54,25 @@ namespace SMDH.Controllers
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ToBeReturned).Count());
             numberOfOrdersList.Add(orders.Where(o => o.OrderStatus == (int)OrderStatus.ConfirmReturned).Count());
 
-            var configlist = new List<string>();
+            var configflag = new List<string>();    
+            var interval = new List<int>();
             //orders 
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableDraft"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableDraft"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"].ToString());
+            interval.Add((int)HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"]);
 
             //request
-            configlist.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["flag"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["immediately"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["interval"].ToString());
-            configlist.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["minPrice"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["flag"].ToString());
+            configflag.Add(HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["immediately"].ToString());
+            interval.Add((int)HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["interval"]);
+            interval.Add((int)HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["minPrice"]);
 
 
             JavaScriptSerializer ser = new JavaScriptSerializer();
-            var serializedObject = ser.Serialize(new { orders = numberOfOrdersList, requests = numberOfRequestsList, config = configlist });
+            var serializedObject = ser.Serialize(new { orders = numberOfOrdersList, requests = numberOfRequestsList, config = configflag, interval = interval });
             sb.AppendFormat("data: {0}\n\n", serializedObject);
             //}
 

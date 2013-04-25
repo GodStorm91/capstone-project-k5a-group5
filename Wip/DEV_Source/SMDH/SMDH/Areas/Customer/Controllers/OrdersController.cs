@@ -125,7 +125,7 @@ namespace SMDH.Areas.Customer.Controllers
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var order = context.Orders.Find(id);
-            var order = context.Orders.Single(o=> o.OrderId == id);
+            var order = context.Orders.Single(o => o.OrderId == id);
             if (order.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = userInfo.Customer.CompanyName;
             ViewBag.Items = context.Items.Where(i => i.OrderId == id).ToList();
@@ -140,7 +140,7 @@ namespace SMDH.Areas.Customer.Controllers
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             //var request = context.Requests.Find(requestId);
-            var request = context.Requests.Single( o=> o.RequestId == requestId);
+            var request = context.Requests.Single(o => o.RequestId == requestId);
             if (request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = "Test Company";//userInfo.Customer.CompanyName;
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name");
@@ -169,11 +169,11 @@ namespace SMDH.Areas.Customer.Controllers
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
                 if (request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
                 ViewBag.Customer = userInfo.Customer.CompanyName;
-                
+
                 if (orderRepo.AddToRequest(request, order))
                 {
                     var myContext = new SMDHDataContext();
-                    order = myContext.Orders.Single( o => o.OrderId == order.OrderId);
+                    order = myContext.Orders.Single(o => o.OrderId == order.OrderId);
                     var orderDetails = new OrderViewModel(order);
                     return Json(new { success = true, order = orderDetails });
                 }
@@ -192,7 +192,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult Edit(int id)
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-            var order = context.Orders.Single(o => o.OrderId == id);            
+            var order = context.Orders.Single(o => o.OrderId == id);
             if (order.Request.CustomerId != userInfo.CustomerId) throw new HttpException(404, "Not found!");
             ViewBag.Customer = userInfo.Customer.CompanyName;
             ViewBag.PossibleCityProvinces = new SelectList(context.CityProvinces.Where(cp => cp.IsActive).ToArray(), "CityProvinceId", "Name", order.District.CityProvinceId);
@@ -210,7 +210,7 @@ namespace SMDH.Areas.Customer.Controllers
         public ActionResult ConfirmEdit(Order order)
         {
             try
-            {                
+            {
                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
                 var myOrder = context.Orders.Single(o => order.OrderId == o.OrderId);
                 GetLatitudeAndLongitudeFromAddress(order);
@@ -341,7 +341,7 @@ namespace SMDH.Areas.Customer.Controllers
             try
             {
                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-                var order = context.Orders.Single(o=> o.OrderId == id);
+                var order = context.Orders.Single(o => o.OrderId == id);
                 if (order.Request.CustomerId != userInfo.CustomerId) return Json(new { success = false });
                 ViewBag.Customer = userInfo.Customer.CompanyName;
                 EFOrdersRepository orderRepo = new EFOrdersRepository();
@@ -373,7 +373,7 @@ namespace SMDH.Areas.Customer.Controllers
                 throw;
             }
         }
-        
+
         public ActionResult AddExistingOrders(int requestId)
         {
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
@@ -387,7 +387,7 @@ namespace SMDH.Areas.Customer.Controllers
             try
             {
                 var order = context.Orders.Single(o => o.OrderId == id);
-                if (order.OrderStatus != (int)OrderStatus.Expired) return Json(new { success = false }) ;
+                if (order.OrderStatus != (int)OrderStatus.Expired) return Json(new { success = false });
                 order.OrderStatus = (int)OrderStatus.CustomerExtend;
                 order.DueDate = order.DueDate.Value.AddDays(7);
                 context.SubmitChanges();
@@ -490,16 +490,66 @@ namespace SMDH.Areas.Customer.Controllers
         {
             try
             {
-                 var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
-                 var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId && o.OrderStatus == (int)OrderStatus.Draft);
-                 foreach (var order in orders)
-                 {
-                     order.OrderStatus = (int)OrderStatus.New;
-                 }
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId && o.OrderStatus == (int)OrderStatus.Draft);
+                foreach (var order in orders)
+                {
+                    order.OrderStatus = (int)OrderStatus.New;
+                }
 
-                 context.SubmitChanges();
-                 return Json(new { success = true });
+                context.SubmitChanges();
+                return Json(new { success = true });
 
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+                throw;
+            }
+        }
+
+        public ActionResult AutoApproveOrder()
+        {
+            try
+            {
+                //orders 
+                var allowDraft = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableDraft"];
+                var enableReturnedReducedPrice = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableReturnedReducedPrice"];
+                var enableRepricingApproveRequest = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"];
+                var orderFlag = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"];
+                var orderImmediately = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"];
+                var orderInterval = HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"];
+
+                //request
+                var requestFlag = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["flag"];
+                var requestImmediately = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["immediately"];
+                var requestInterval = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["interval"];
+                var minPrice = HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["minPrice"];
+                //-------
+                var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
+                var orders = context.Orders.Where(o => o.CustomerId == userInfo.CustomerId && o.OrderStatus == (int)OrderStatus.Draft);
+                foreach (var order in orders)
+                {
+                    if ((bool)orderFlag == true)
+                    {
+                        if ((bool)allowDraft == true)
+                        {
+                            if ((bool)orderImmediately == true)
+                            {
+                                order.OrderStatus = (int)OrderStatus.New;
+                            }
+                            else
+                            {
+                                if (order.CreatedDate.AddMinutes((int)orderInterval) <= DateTime.Now)
+                                {
+                                    order.OrderStatus = (int)OrderStatus.New;
+                                }
+                            }
+                        }
+                    }
+                }
+                context.SubmitChanges();
+                return Json(new { success = true });
             }
             catch (Exception)
             {
