@@ -234,24 +234,34 @@ namespace SMDH.Areas.Hub.Controllers
             }
         }
 
-        //public ActionResult changestatustoReturn(int orderid)
-        //{
-        //    try
-        //    {
-        //        var order = context.Orders.FirstOrDefault(o => o.OrderId == orderid);
-        //        if (order == null)
-        //        {
-        //            return Redirect("/Hubs/Dashboard");
-        //        }
-        //        order.OrderStatus = (int)HubStatus.Return;
-        //        context.SubmitChanges();
-        //        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch
-        //    {
-        //        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-        //        throw;
-        //    }
-        //}
+        public ActionResult ViewInformationOrder(string id = "")
+        {
+
+            ViewBag.PhoneNumber = id;
+            return View();
+        }
+
+        public ActionResult GetOrdersByPhone(string phoneNumber)
+        {
+            var orders = context.Orders.Where(o => o.ReceiverPhone == phoneNumber);
+            List<OrderViewModel> result = new List<OrderViewModel>();
+            foreach (var order in orders)
+            {
+                result.Add(new OrderViewModel(order));
+            }
+
+            return Json(result);
+
+        }
+
+        public ActionResult ViewOrderDetails(string txtPasscode)
+        {
+
+            var order = context.Orders.Single(o => o.Passcode == txtPasscode);
+            ViewBag.Customer = context.Customers.Single(c => c.CustomerId == order.CustomerId).DisplayName;
+            ViewBag.Items = context.Items.Where(i => i.OrderId == order.OrderId).ToList();
+            OrderViewModel orderView = new OrderViewModel(order);
+            return View(orderView);
+        }
     }
 }
