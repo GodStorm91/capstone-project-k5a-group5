@@ -225,7 +225,7 @@
             //alert(e);
             var returnedItem = JSON.parse(e.data);
             updateDashboard(returnedItem.orders, returnedItem.requests);
-            loadconfig(returnedItem.config, returnedItem.interval);
+            loadconfig();
         }
 
         function updateDashboard(orders, requests) {
@@ -273,7 +273,7 @@
         //    }
         //});
 
-        function loadconfig(config, interval) {
+        function loadconfig() {
             $.post("/Customer/Orders/AutoApproveOrder");
             $.post("/Customer/Requests/AutoApprove");
         }

@@ -41,7 +41,7 @@ namespace SMDH.Areas.Customer.Controllers
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["enableRepricingApproveRequest"] = allowRepricingApproveRequest;
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["flag"] = allowDraft || allowRepricingApproveRequest || allowReturnedReducedPrice;
                 HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["immediately"] = isOrderImmediately;
-                HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"] = isOrderImmediately ? -1 : isOrderAfterMinutes;
+                HttpContext.Profile.GetProfileGroup("OrdersConfiguration")["interval"] = isOrderImmediately ? 1 : isOrderAfterMinutes;
 
                 HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["flag"] = autoApproveRequest;
                 HttpContext.Profile.GetProfileGroup("RequestsConfiguration")["immediately"] = isRequestImmediately;
