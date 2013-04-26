@@ -4,116 +4,127 @@
 }
 <script src="/js/jquery.numeric.js" type="text/javascript"></script>
 <div class="row-fluid">
-    <div class="span12">
-        <div class="widget">
-            <div class="widget-header">
-                <div class="title">
-                    Confirguration
+    <form action="/Customer/Configuration/ConfirmSave" method="post" class="form-horizontal no-margin">
+        <div class="control-group">
+            <div class="controls">
+                <div class="span6">
+                    <h3>Auto Order</h3>
+                    <label class="checkbox">
+                        @if (ViewBag.allowDraft == true)
+                        {
+                            <input class="order" type="checkbox" id="allowDraft" name="allowDraft" value="true" checked />
+                        }
+                        else
+                        { 
+                            <input class="order" type="checkbox" id="allowDraft" name="allowDraft" value="true" />
+                        }
+                        Auto Approve Order
+                    </label>
+                    <label class="checkbox">
+                        @if (ViewBag.enableReturnedReducedPrice == true)
+                        {
+                            <input class="order" type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" checked />
+                        }
+                        else
+                        { 
+                            <input class="order" type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" />
+                        }
+                        Returned reduced price -> Confirm Ended
+                    </label>
+                    <label class="checkbox">
+                        @if (ViewBag.enableRepricingApproveRequest == true)
+                        {
+                            <input class="order" type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" checked /> 
+                        }
+                        else
+                        {
+                            <input class="order" type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" /> 
+                        }
+                        Repricing approve request -> Collected
+                    </label>
+                    <label class="checkbox">
+                        @if (ViewBag.orderImmediately == true)
+                        {
+                            <input style="float: left" class="hide" type="radio" id="isOrderImmediately" name="isOrderImmediately" value='true' checked />
+                        }
+                        else
+                        { 
+                            <input style="float: left" class="hide" type="radio" id="isOrderImmediately" name="isOrderImmediately" value='true' />
+                        }
+                        <label style="float: left; margin-left: 10px;" class="immediately hide">Immediately</label>
+
+                    </label>
+                    <label class="checkbox">
+                        @if (ViewBag.orderImmediately == true)
+                        {
+                            <input style="float: left" type="radio" id="ordermins" name="isOrderImmediately" value='false' />
+                        }
+                        else
+                        { 
+                            <input style="float: left" type="radio" id="ordermins" name="isOrderImmediately" value='false' checked />
+                        }
+                        <label style="float: left; margin-left: 10px;" class="ordermins">After </label>
+                        <input class="numeric" style="width:100px;float:left;margin-left:5px;" type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" />
+                        <label style="float: left; margin-left: 5px;" class="ordermins">minutes</label></label>
+                </div>
+                <div class="span6">
+                    <h3>Auto Request</h3>
+                    <label class="checkbox">
+                        @if (ViewBag.requestFlag == true)
+                        {
+                            <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' checked />
+                        }
+                        else
+                        { 
+                            <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' />
+                        }
+                        Auto approve request
+                                
+                    </label>
+                    <label class="checkbox">
+                        <label style="float: left;" class="rqbelow hide">Request price below </label>
+                        <input class="numeric" style="width: 100px; float: left; margin-left: 5px;" type="text" id="maxRequestPrice" name="maxRequestPrice" />
+                    </label>
+                    <label class="checkbox" style="margin-top: 15px;">
+                        @if (ViewBag.requestImmediately == true)
+                        {
+                            <input style="float: left;" type="radio" id="isRequestImmediately" name="isRequestImmediately" value='true' checked />
+                        }
+                        else
+                        { 
+                            <input style="float: left;" type="radio" id="isRequestImmediately" name="isRequestImmediately" value='true' />
+                        }
+                        <label style="float: left; margin-left: 10px;" class="imrq hide">Immediately</label>
+
+                    </label>
+                    <label class="checkbox">
+                        @if (ViewBag.requestImmediately == true)
+                        {
+                            <input style="float: left;" type="radio" id="requestimmins" name="isRequestImmediately" value='false' />
+                        }
+                        else
+                        { 
+                            <input style="float: left;" type="radio" id="requestimmins" name="isRequestImmediately" value='false' checked />
+                        }
+
+                        <label style="float: left; margin-left: 10px;" class="immins">After</label>
+                        <input class="numeric" style="width:100px;float:left;margin-left:5px;" type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" />
+                        <label style="float: left; margin-left: 5px;" class="immins">minutes</label>
+                    </label>
                 </div>
             </div>
-            <div class="widget-body">
-
-                <form action="/Customer/Configuration/ConfirmSave" method="post" class="form-horizontal no-margin">
-                    <div class="control-group">
-                        <div class="controls">
-                            <label class="checkbox">
-                                @if (ViewBag.allowDraft == true)
-                                {
-                                    <input class="order" type="checkbox" id="allowDraft" name="allowDraft" value="true" checked />
-                                }
-                                else
-                                { 
-                                    <input class="order" type="checkbox" id="allowDraft" name="allowDraft" value="true" />
-                                }
-                                Draft -> New
-                            </label>
-                            <label class="checkbox">
-                                @if (ViewBag.enableReturnedReducedPrice == true)
-                                {
-                                    <input class="order" type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" checked />
-                                }
-                                else
-                                { 
-                                    <input class="order" type="checkbox" id="allowReturnedReducedPrice" name="allowReturnedReducedPrice" value="true" />
-                                }
-                                Returned reduced price -> Confirm Ended
-                            </label>
-                            <label class="checkbox">
-                                @if (ViewBag.enableRepricingApproveRequest == true)
-                                {
-                                    <input class="order" type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" checked /> 
-                                }
-                                else
-                                {
-                                    <input class="order" type="checkbox" id="allowRepricingApproveRequest" name="allowRepricingApproveRequest" value="true" /> 
-                                }
-                                Repricing approve request -> Collected
-                            </label>
-                            <label class="checkbox">
-                                @if (ViewBag.orderImmediately == true)
-                                {
-                                    <input class="hide" type="checkbox" id="isOrderImmediately" name="isOrderImmediately" value='true' checked />
-                                }
-                                else
-                                { 
-                                    <input class="hide" type="checkbox" id="isOrderImmediately" name="isOrderImmediately" value='true' />
-                                }
-                                <label class="immediately hide">Immediately</label>
-
-                            </label>
-                            <label class="checkbox">
-                                <label class="ordermins hide">After</label>
-                                <input class="numeric hide" style="width:100px;" type="text" id="isOrderAfterMinutes" name="isOrderAfterMinutes" value="@ViewBag.orderInterval" />
-                                <label class="ordermins hide">minutes</label></label>
-                            <label class="checkbox">
-                                @if (ViewBag.requestFlag == true)
-                                {
-                                    <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' checked />
-                                }
-                                else
-                                { 
-                                    <input type="checkbox" name="autoApproveRequest" id="autoApproveRequest" value='true' />
-                                }
-                                Auto approve request
-                                
-                            </label>
-                            <label class="checkbox">
-                                <label class="rqbelow hide">Request price below:</label>
-                                <input class="numeric hide" style="width: 100px;" type="text" id="maxRequestPrice" name="maxRequestPrice" />
-                            </label>
-                            <label class="checkbox">
-                                @if (ViewBag.requestImmediately == true)
-                                {
-                                    <input class="hide" type="checkbox" id="isRequestImmediately" name="isRequestImmediately" value='true' checked />
-                                }
-                                else
-                                { 
-                                    <input class="hide" type="checkbox" id="isRequestImmediately" name="isRequestImmediately" value='true' />
-                                }
-                                <label class="imrq hide">Immediately</label>
-
-                            </label>
-                            <label class="checkbox">
-                                <label class="immins hide">After</label>
-                                <input class="numeric hide" style="width:100px;" type="text" id="isRequestAfterMinutes" name="isRequestAfterMinutes" value="@ViewBag.requestInterval" />
-                                <label class="immins hide">minutes</label>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-actions no-margin">
-                        <button type="submit" class="btn btn-info pull-left">
-                            Ok
-                        </button>
-                        <div class="clearfix">
-                        </div>
-                    </div>
-
-                </form>
-
+        </div>
+        <div class="form-actions no-margin">
+            <button type="submit" class="btn btn-info pull-left">
+                Ok
+            </button>
+            <div class="clearfix">
             </div>
         </div>
-    </div>
+
+    </form>
 </div>
+
 
 <script>
     $(".numeric").numeric({ decimal: false, negative: false }, function () { alert("Positive integers only"); this.value = ""; this.focus(); });
@@ -129,15 +140,15 @@
         $('#isOrderAfterMinutes').removeClass('hide');
     }
 
-    $('#isOrderImmediately').change(function () {
-        if (this.checked) {
-            $('.ordermins').addClass('hide');
-            $('#isOrderAfterMinutes').addClass('hide');
-        } else {
-            $('.ordermins').removeClass('hide');
-            $('#isOrderAfterMinutes').removeClass('hide');
-        }
-    });
+    //$('#isOrderImmediately').change(function () {
+    //    if (this.checked) {
+    //        $('.ordermins').addClass('hide');
+    //        $('#isOrderAfterMinutes').addClass('hide');
+    //    } else {
+    //        $('.ordermins').removeClass('hide');
+    //        $('#isOrderAfterMinutes').removeClass('hide');
+    //    }
+    //});
 
     $('#allowDraft').change(function () {
         var total = $('.order:checked').length;
@@ -146,16 +157,11 @@
             $('.immediately').addClass('hide');
             $('.ordermins').addClass('hide');
             $('#isOrderAfterMinutes').addClass('hide');
+            $('#ordermins').addClass('hide');
         } else {
             $('#isOrderImmediately').removeClass('hide');
             $('.immediately').removeClass('hide');
-            if ($('#isOrderImmediately:checked').length == 0) {
-                $('.ordermins').removeClass('hide');
-                $('#isOrderAfterMinutes').removeClass('hide');
-            } else {
-                $('.ordermins').addClass('hide');
-                $('#isOrderAfterMinutes').addClass('hide');
-            }
+            $('#ordermins').removeClass('hide');
         }
     });
 
@@ -166,16 +172,11 @@
             $('.immediately').addClass('hide');
             $('.ordermins').addClass('hide');
             $('#isOrderAfterMinutes').addClass('hide');
+            $('#ordermins').addClass('hide');
         } else {
             $('#isOrderImmediately').removeClass('hide');
             $('.immediately').removeClass('hide');
-            if ($('#isOrderImmediately:checked').length == 0) {
-                $('.ordermins').removeClass('hide');
-                $('#isOrderAfterMinutes').removeClass('hide');
-            } else {
-                $('.ordermins').addClass('hide');
-                $('#isOrderAfterMinutes').addClass('hide');
-            }
+            $('#ordermins').removeClass('hide');
         }
     });
 
@@ -186,16 +187,11 @@
             $('.immediately').addClass('hide');
             $('.ordermins').addClass('hide');
             $('#isOrderAfterMinutes').addClass('hide');
+            $('#ordermins').addClass('hide');
         } else {
             $('#isOrderImmediately').removeClass('hide');
             $('.immediately').removeClass('hide');
-            if ($('#isOrderImmediately:checked').length == 0) {
-                $('.ordermins').removeClass('hide');
-                $('#isOrderAfterMinutes').removeClass('hide');
-            } else {
-                $('.ordermins').addClass('hide');
-                $('#isOrderAfterMinutes').addClass('hide');
-            }
+            $('#ordermins').removeClass('hide');
         }
     });
 
@@ -213,15 +209,15 @@
         $('#isRequestAfterMinutes').removeClass('hide');
     }
 
-    $('#isRequestImmediately').change(function () {
-        if (this.checked) {
-            $('.immins').addClass('hide');
-            $('#isRequestAfterMinutes').addClass('hide');
-        } else {
-            $('.immins').removeClass('hide');
-            $('#isRequestAfterMinutes').removeClass('hide');
-        }
-    });
+    //$('#isRequestImmediately').change(function () {
+    //    if (this.checked) {
+    //        $('.immins').addClass('hide');
+    //        $('#isRequestAfterMinutes').addClass('hide');
+    //    } else {
+    //        $('.immins').removeClass('hide');
+    //        $('#isRequestAfterMinutes').removeClass('hide');
+    //    }
+    //});
 
     $('#autoApproveRequest').change(function () {
         if (this.checked) {
@@ -229,13 +225,16 @@
             $('.rqbelow').removeClass('hide');
             $('#maxRequestPrice').removeClass('hide');
             $('.imrq').removeClass('hide');
-            if ($('#isRequestImmediately:checked').length == 0) {
-                $('.immins').removeClass('hide');
-                $('#isRequestAfterMinutes').removeClass('hide');
-            } else {
-                $('.immins').addClass('hide');
-                $('#isRequestAfterMinutes').addClass('hide');
-            }
+            $('#requestimmins').removeClass('hide');
+            $('.immins').removeClass('hide');
+            $('#isRequestAfterMinutes').removeClass('hide');
+            //if ($('#isRequestImmediately:checked').length == 0) {
+            //    $('.immins').removeClass('hide');
+            //    $('#isRequestAfterMinutes').removeClass('hide');
+            //} else {
+            //    $('.immins').addClass('hide');
+            //    $('#isRequestAfterMinutes').addClass('hide');
+            //}
         } else {
             $('#isRequestImmediately').addClass('hide');
             $('.rqbelow').addClass('hide');
@@ -243,6 +242,7 @@
             $('.imrq').addClass('hide');
             $('.immins').addClass('hide');
             $('#isRequestAfterMinutes').addClass('hide');
+            $('#requestimmins').addClass('hide');
         }
     });
 
