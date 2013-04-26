@@ -125,7 +125,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <a href="/Hub/Dashboard/ViewInformationOrder/@Model.ReceiverPhone" class="btn btn-mini"><i class="icon-arrow-left"></i>Back to check Order</a>
+        <a href="/Hub/Dashboard/ViewInformationOrder/@Model.ReceiverPhone" class="btn btn-primary"><i class="icon-arrow-left"></i>Back to check Order</a>
     </div>
 </div>
 <div class="row-fluid" style="margin-top: 10px;">
@@ -134,7 +134,6 @@
             <div class="widget">
                 <div class="widget-body">
                     <form class="no-margin">
-                        @Model.Customer
                         <div class="control-group">
                             <label class="control-label" for="name">
                                 Customer : @Model.Customer
@@ -163,14 +162,14 @@
                                 Status : <span class="label label-warning">@Regex.Replace(Model.Status.ToString(), "(\\B[A-Z])", " $1")</span>&nbsp;
                             </label>
                             <label class="control-label" for="name">
-                                Due Date :  @if (Model.DueDate != null)
-                                            {
+                                Due Date :   @if (Model.DueDate != null && !Model.DueDate.ToString().Equals(""))
+                                             {
                                     <span class="label label-important">@String.Format("{0:dd/MM/yyyy hh:mm tt}", Model.DueDate)</span><text>&nbsp;</text>
-                                            }
-                                            else
-                                            {
+                                             }
+                                             else
+                                             {
                                     <span class="label label-important">Not set yet</span><text>&nbsp;</text>
-                                            }
+                                             }
                             </label>
 
 
