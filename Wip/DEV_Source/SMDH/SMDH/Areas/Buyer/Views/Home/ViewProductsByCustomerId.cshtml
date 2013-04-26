@@ -63,17 +63,17 @@
 
         function prev() {
             if (slideCounter > 1) {
-                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat");
+                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat").css("background-size", "330px 65px");
                 slideCounter--;
-                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat");
+                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat").css("background-size", "330px 65px");
             }
         }
 
         function next() {
             if (slideCounter < 3) {
-                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat");
+                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step.png) center right no-repeat").css("background-size", "330px 65px");
                 slideCounter++;
-                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat");
+                $(".step-" + slideCounter + " a").css("background", "transparent url(/images/step_over.png) center right no-repeat").css("background-size", "330px 65px");
             }
         }
 
@@ -150,7 +150,12 @@
                 }
 
                     .steps li a strong {
-                        font-size: 2em;
+                        font-size: 20px;
+                    }
+
+                    .steps li a h4 {
+                        font-size: 18px;
+                        line-height: 20px;
                     }
 
                 /*.steps li a:hover {
@@ -173,6 +178,7 @@
                     .steps li.step-1 a, .steps li.step-2 a, .steps li.step-3 a {
                         background: transparent url(/images/step.png) center right no-repeat;
                         padding-right: 25px;
+                        background-size: 330px 65px;
                     }
 
                 .steps li.step-2, .steps li.step-3 {
@@ -191,6 +197,7 @@
 
                 .steps li.step-1 a {
                     background: transparent url(/images/step_over.png) center right no-repeat;
+                    background-size: 160px 65px;
                 }
 
         /*.steps li.step a:hover {
@@ -746,25 +753,23 @@
 
     <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
     </form>
-    <div class="row-fluid">
-        <div class="span6">
-            <img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px" />
-        </div>
+    <div class="span3">
+        <img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px" />
     </div>
-    <div class="container" style="margin-left: 200px;">
-        <div class="steps">
+    <div class="span9">
+        <div class="steps" style="margin-top: 20px;">
             <ul>
                 <li class="step step-1">
-                    <a href="javascript:void(0)"><strong>Step 1</strong><br />
+                    <a style="background-size: 330px 65px;" href="javascript:void(0)"><strong>Step 1</strong><br />
                         <h4>CHOOSE ITEM</h4>
                     </a>
                 </li>
-                <li class="step step-2">
+                <li style="background-size: 330px 65px;" class="step step-2">
                     <a href="javascript:void(0)"><strong>Step 2</strong><br />
                         <h4>YOUR INFORMATION</h4>
                     </a>
                 </li>
-                <li class="step step-3">
+                <li style="background-size: 330px 65px;" class="step step-3">
                     <a href="javascript:void(0)"><strong>Step 3</strong><br />
                         <h4>THANKS FOR BUYING WITH US</h4>
                     </a>
@@ -772,6 +777,7 @@
             </ul>
         </div>
     </div>
+
     <div id="noi_dung" style="margin-left: 60px; margin-top: -10px;">
         <img src="" width="100px" height="150px" /><br />
         <div class="des"></div>
@@ -784,13 +790,13 @@
                     @*                    <div class="span6">
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS4nCidV6PliBBvvFjEn9KVxzTBup1roNCYyNhzu57VBncmfB7Y" width="100px" height="150px" />
                     </div>*@
-                    <div class="span6">
+                    <div class="span6" style="margin-top: -13px;">
                         <a class="btn btn-primary" href="/Buyer/Home/ViewInformationOrder">View Information Order</a>
                     </div>
-                    <div class="span6">
-                        Total Amount :&nbsp;&nbsp;&nbsp;<input class="input-medium" type="text" id="totalPrice"
+                    @*                    <div class="span6">
+                        Total Amount :<input class="input-medium" type="text" id="totalPrice"
                             value="" style="text-align: right;" disabled="disabled">
-                    </div>
+                    </div>*@
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
@@ -849,6 +855,8 @@
                                 <div class="widget-box">
                                     <div class="widget-title">
                                         <h5>Cart Add</h5>
+                                        <div class="buttons">Total Amount :
+                                            <input class="input-medium" type="text" id="totalPrice" value="" style="text-align: right; height: 15px;" disabled="disabled"></div>
                                     </div>
                                     <div class="widget-content">
                                         <div style="overflow-y: scroll; height: 380px;">
@@ -875,7 +883,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="span12">
+                    <div class="span1 offset10">
                         <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="next()">Next</a>
                     </div>
                 </div>
@@ -1004,7 +1012,7 @@
                                 <h5>Map</h5>
                             </div>
                             <div>
-                                <div id="map_canvas" style="height: 440px;">
+                                <div id="map_canvas" style="height: 415px;">
                                 </div>
                             </div>
                         </div>
