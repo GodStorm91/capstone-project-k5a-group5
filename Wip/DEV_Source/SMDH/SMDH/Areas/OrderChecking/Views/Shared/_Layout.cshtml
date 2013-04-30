@@ -60,7 +60,7 @@
     <!-- Init plugins -->
     <script type="text/javascript" src="/js/statistic.js"></script>
     <!-- Control graphs ( chart, pies and etc) -->
-    <script type="text/javascript" src="/js/main.js"></script>
+    @*<script type="text/javascript" src="/js/main.js"></script>*@
     <script src="/js/jquery.blockUI.js" type="text/javascript"></script>
     <script src="/js/bootbox.min.js" type="text/javascript"></script>
     <script src="/js/jquery.noty.js" type="text/javascript"></script>
@@ -123,13 +123,6 @@
             $("#alert").fadeOut(700);
         }
 
-        function OpenPopup(url) {
-            url = url + encodeURIComponent("/buyer/home/ViewProductsByCustomerId?customerId=" + @ViewBag.CustomerId);
-            newwindow = window.open(url, 'Share on Social Network', 'height=400,width=500');
-            if (window.focus) { newwindow.focus() }
-            return false;
-        }
-
     </script>
 </head>
 <body>
@@ -143,15 +136,15 @@
             <li class="li6"></li>
         </ul>
     </div>
-    @*<div id="qLoverlay">
+    @*    <div id="qLoverlay">
     </div>
     <div id="qLbar">
     </div>*@
     <header>
-        <a href="/Dashboard" class="logo">
+        <a href="/OrderChecking/OrderChecking/ViewInformationOrder" class="logo">
             <img src="/img/mylogo/logo4.png" style="height: 95px; width: 250px; margin-top: -15px;" alt="logo" />
         </a>
-        <div class="btn-group">
+@*        <div class="btn-group">
             <button class="btn btn-primary">
                 @User.Identity.Name
             </button>
@@ -161,71 +154,22 @@
             <ul class="dropdown-menu pull-right">
                 <li>
                     <a href="#">Edit Profile
-            </a>
+                    </a>
                 </li>
                 <li>
                     <a href="/Account/ChangePassword">Change Password
-            </a>
-                </li>
-                <li>
-                    <a href="/Account/LogOff">Logout
-            </a>
-                </li>
-            </ul>
-        </div>
-        <ul class="mini-nav">
-            @if (ViewBag.CustomerId != null)
-            { 
-                <li>
-                    <a data-animation="true" data-toggle="tooltip" title="Order" onclick="return OpenPopup('http://www.facebook.com/sharer.php?u=')">
-                        <div class="fs1" aria-hidden="true" data-icon="&#xe16a;"></div>
                     </a>
                 </li>
-            }
-            <li>
-                <a data-animation="true" data-toggle="tooltip" title="Order" href="/Customer/Orders?&status=draft">
-                    <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
-                    <div id="waitingPricingOrders">
-                        <span class="info-label badge badge-warning">3
-                        </span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="/Customer/Orders?&status=repricingapproverequest">
-                    <div class="fs1" aria-hidden="true" data-icon="&#xe006;"></div>
-                    <div id="waitingPricingRequests">
-                        <span class="info-label badge badge-info">5
-                        </span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="/Customer/Orders?&status=returnedreduceprice&status=expired">
-                    <div class="fs1" aria-hidden="true" data-icon="&#xe007;"></div>
-                    <div id="approvedRequests">
-                        <span class="info-label badge badge-inverse">9
-                        </span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="/Customer/Requests?&status=pricing">
-                    <div class="fs1" aria-hidden="true" data-icon="&#xe038;"></div>
-                    <div id="collectedOrders">
-                        <span class="info-label badge badge-important">9
-                        </span>
-                    </div>
-                </a>
-            </li>
-        </ul>
+                <li>
+                    <a href="/Account/Logoff">Logout
+                    </a>
+                </li>
+            </ul>
+        </div>*@
 
     </header>
     <div class="container-fluid">
         <div class="dashboard-container">
-            <div>
-                <h4 style="color: white;">@ViewBag.Heading</h4>
-            </div>
             <div class="dashboard-wrapper">
                 <div class="left-sidebar">
                     @RenderBody()
@@ -233,72 +177,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $("#overlay").delay(1250).fadeOut(500);
+    </script>
+@*    <script src="/js/jquery.scrollUp.js">
+    </script>
+
     <script type="text/javascript">
         $("#overlay").delay(1250).fadeOut(500);
-        var source = new EventSource('/Notifications/CheckNotification');
-        source.onmessage = function (e) {
-            //alert(e);
-            var returnedItem = JSON.parse(e.data);
-            updateDashboard(returnedItem.orders, returnedItem.requests);
-            loadconfig();
-        }
-
-        function updateDashboard(orders, requests) {
-            $('#waitingPricingOrders').html('<span class="info-label badge badge-warning">' + orders[0] +
-                    '</span>');
-            $('#waitingPricingRequests').html('<span class="info-label badge badge-info">' + orders[1] +
-                    '</span>');
-            $('#approvedRequests').html('<span class="info-label badge badge-inverse">' + orders[2] +
-                    '</span>');
-
-            $('#collectedOrders').html('<span class="info-label badge badge-important">' + requests[1] +
-                    '</span>');
-
-            $('#OrdersNeedToApprove').html(orders[0]);
-            $('#OrdersApproved').html(orders[1]);
-            $('#OrdersRejected').html(orders[2]);
-            $('#OrdersRequested').html(orders[3]);
-            $('#OrdersDelivering').html(orders[4]);
-            $('#OrdersWaitingForReturn').html(orders[5]);
-            $('#OrdersReturned').html(orders[6]);
-
-            $('#RequestsWaitingForPrice').html(requests[0]);
-            $('#RequestsNeedToApprove').html(requests[1]);
-            $('#RequestsApproved').html(requests[2]);
-            $('#RequestsCollected').html(requests[3]);
-            $('#RequestsCanceled').html(requests[4]);
-
-        }
-
-        //$.pnotify({
-        //    title: "Pines Notify",
-        //    text: "Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.",
-        //    nonblock: false,
-        //    before_close: function (pnotify) {
-        //        // You can access the notice's options with this. It is read only.
-        //        //pnotify.opts.text;
-
-        //        // You can change the notice's options after the timer like this:
-        //        pnotify.pnotify({
-        //            title: pnotify.opts.title + " - Enjoy your Stay",
-        //            before_close: null
-        //        });
-        //        pnotify.pnotify_queue_remove();
-        //        return false;
-        //    }
-        //});
-
-        function loadconfig() {
-            $.post("/Customer/Orders/AutoApproveOrder");
-            $.post("/Customer/Requests/AutoApprove");
-        }
-
-    </script>
-
-    @*    <script src="/js/jquery.scrollUp.js">
-    </script>
-
-    <script type="text/javascript">
         //ScrollUp
         $(function () {
             $.scrollUp({

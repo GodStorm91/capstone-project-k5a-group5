@@ -19,6 +19,7 @@ namespace SMDH.Areas.Customer.Controllers
             var userInfo = context.UserInfos.Single(uf => uf.UserId == (Guid)(Membership.GetUser(User.Identity.Name)).ProviderUserKey);
             var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
             var orders = context.Orders.Where(o => o.Request.CustomerId == userInfo.CustomerId).ToList();
+            ViewBag.CustomerId = userInfo.CustomerId;
             //var requests = context.Requests.Where(r => r.CustomerId == 1).ToList();
             //var orders = context.Orders.Where(o => o.Request.CustomerId == 1).ToList();
 

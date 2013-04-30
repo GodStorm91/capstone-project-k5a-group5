@@ -133,7 +133,7 @@
             <h3 id="myModalLabel">Passcode</h3>
         </div>
         <div class="modal-body" style="text-align: center">
-            <form class="form-horizontal" action="/Hub/Dashboard/ViewOrderDetails" id="passcodeForm">
+            <form class="form-horizontal" method="post" action="/OrderChecking/OrderChecking/ViewOrderDetails" id="passcodeForm">
                 <fieldset>
                     <label>Please enter the passcode to view order detail:</label></br>
             		<input type="text" id="txtPasscode" name="txtPasscode" />
@@ -169,7 +169,7 @@
         });
 
         function loadOrdersTable() {
-            $.post("/Hub/Dashboard/GetOrdersByPhone", { phoneNumber: $('#txtPhoneNumber').val() }, function (result) {
+            $.post("/OrderChecking/OrderChecking/GetOrdersByPhone", { phoneNumber: $('#txtPhoneNumber').val() }, function (result) {
                 if (result.length == 0) {
                     bootbox.alert("0 records found");
                 } else {
