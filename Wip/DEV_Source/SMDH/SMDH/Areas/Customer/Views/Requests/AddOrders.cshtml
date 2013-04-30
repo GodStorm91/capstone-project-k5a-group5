@@ -567,7 +567,7 @@
         }
         $.post('/Customer/Requests/Submit/' + id, function (result) {
             $.blockUI();
-            if (result.success) window.location = '/Customer/Requests';
+            if (result.success) window.location = '/Customer/Dashboard';
             else bootbox.alert('There was error processing this request. Please try refresh and try again.');
         });
     };
