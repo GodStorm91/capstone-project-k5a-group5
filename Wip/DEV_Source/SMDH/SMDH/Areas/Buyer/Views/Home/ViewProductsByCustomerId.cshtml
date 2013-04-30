@@ -40,9 +40,9 @@
         !function ($) {
             $(function () {
                 // carousel demo
-                $('#myCarousel').carousel('pause')
+                $('.carousel').carousel('pause');
             })
-        }(window.jQuery)
+        } (window.jQuery);
     </script>
     <script>
         function hideWard() {
@@ -641,8 +641,13 @@
         //        }
         function addCart(tag) {
             var tem = $(tag).parent().parent();
+
             var inputFiled = tem.children("td").children("input");
+
             var quantity = inputFiled.val();
+
+//            var price = tem.children("td").eq(2).text().replace(",", "");
+//            alert(price);
 
             var id = tem.children("input[type=hidden]").val();
             if (!isPositiveInteger(quantity)) {
@@ -650,42 +655,55 @@
                 inputFiled.focus();
                 return;
             }
-            if (quantity > 100) {
-                alert("Quantity must be a positive integer less than 100 !!!");
-                inputFiled.focus();
-                return;
-            }
+//            if (quantity > 100) {
+//                alert("Quantity must be a positive integer less than 100 !!!");
+//                inputFiled.focus();
+//                return;
+//            }
             //            if (quantity <= 0) {
             //                alert("Quantity must be positive integer!!!");
             //                inputFiled.focus();
             //                return;
             //            }
-            var flag = true;
+            var isOverQuati = true;
             $('.buy_tr').each(function (index) {
                 if ($(this).children("input[type=hidden]").val() == id) {
                     var quaTem = $("#quantity" + id).text();
-                    var amoTem = $("#amount" + id).text();
-                    var finalQuan = parseInt(quaTem) + parseInt(quantity);
-                    $("#quantity" + id).text(finalQuan);
-                    $("#amount" + id).text(accounting.formatNumber(finalQuan *
-                            tem.children("td").eq(2).text()));
-                    flag = false;
+                    if (parseInt(quaTem)+parseInt( quantity) > 100) {
+                        alert("Product of quantity has maximum 100!!!");
+                        isOverQuati = false;
+                        return;
+                    }
                 }
             });
+            if (isOverQuati) {
+                var flag = true;
+                $('.buy_tr').each(function (index) {
+                    if ($(this).children("input[type=hidden]").val() == id) {
+                        var quaTem = $("#quantity" + id).text();
+                        var amoTem = $("#amount" + id).text();
+                        var finalQuan = parseInt(quaTem) + parseInt(quantity);
+                        $("#quantity" + id).text(finalQuan);
+                        $("#amount" + id).text(accounting.formatNumber(finalQuan *
+                            tem.children("td").eq(2).text().replace(",", "").replace(",", "").replace(",", "").replace(",", "")));
+                        flag = false;
+                    }
+                });
 
-            if (flag) {
-                var textHtml = '<tr align="center" class="buy_tr"><input class="input-mini" style="text-align:right" type="hidden" value="' +
+                if (flag) {
+                    var textHtml = '<tr align="center" class="buy_tr"><input class="input-mini" style="text-align:right" type="hidden" value="' +
                     tem.children("input[type=hidden]").val() +
                      '"/><td>' + tem.children("td").eq(1).text() + '</td><td style="text-align:right">' + accounting.formatNumber(tem.children("td").eq(2).text()) +
                     '</td><td style="text-align:right" id="quantity' + tem.children("input[type=hidden]").val() + '">' +
                     tem.children("td").children("input[type=text]").val() +
-				'</td><td style="text-align:right"id="amount' + tem.children("input[type=hidden]").val() + '">' + accounting.formatNumber(tem.children("td").eq(2).text() * tem.children("td").children("input").val()) +
+				'</td><td style="text-align:right"id="amount' + tem.children("input[type=hidden]").val() + '">' + accounting.formatNumber(tem.children("td").eq(2).text().replace(",", "").replace(",", "").replace(",", "").replace(",", "") * tem.children("td").children("input").val()) +
                 '</td><td><button class="btn btn-danger" onclick="removeCart(this)" type="button">Remove</button></td></tr>';
-                $('#tblAddCart tbody').append(textHtml);
-            }
-            totalPrice += tem.children("td").eq(2).text() * tem.children("td").children("input").val();
+                    $('#tblAddCart tbody').append(textHtml);
+                }
+            totalPrice += tem.children("td").eq(2).text().replace(",", "").replace(",", "").replace(",", "").replace(",", "") * tem.children("td").children("input").val();
 
             $('#totalPrice').val(accounting.formatNumber(totalPrice));
+        }
 
             // alert($(tag).parent().parent().prop("tagName"))
         }
@@ -753,25 +771,25 @@
 
     <form id="toBeSubmit" action="/Buyer/Home/ConfirmCreateOrder" method="post">
     </form>
-    <div class="span3">
+    <div class="span3" style="margin-top:20px;">
         <img src="@ViewBag.CompanyInfo.LogoURL" width="100px" height="150px" />
     </div>
     <div class="span9">
-        <div class="steps" style="margin-top: 20px;">
+        <div class="steps" style="margin-top: 10px;">
             <ul>
                 <li class="step step-1">
-                    <a style="background-size: 330px 65px;" href="javascript:void(0)"><strong>Step 1</strong><br />
-                        <h4>CHOOSE ITEM</h4>
+                    <a  href="javascript:void(0)"><strong>Step 1</strong><br />
+                        <h5>CHOOSE ITEM</h5>
                     </a>
                 </li>
-                <li style="background-size: 330px 65px;" class="step step-2">
+                <li  class="step step-2">
                     <a href="javascript:void(0)"><strong>Step 2</strong><br />
-                        <h4>YOUR INFORMATION</h4>
+                        <h5>YOUR INFORMATION</h5>
                     </a>
                 </li>
-                <li style="background-size: 330px 65px;" class="step step-3">
+                <li  class="step step-3">
                     <a href="javascript:void(0)"><strong>Step 3</strong><br />
-                        <h4>THANKS FOR BUYING WITH US</h4>
+                        <h5>THANKS FOR BUYING WITH US</h5>
                     </a>
                 </li>
             </ul>
@@ -790,7 +808,7 @@
                     @*                    <div class="span6">
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS4nCidV6PliBBvvFjEn9KVxzTBup1roNCYyNhzu57VBncmfB7Y" width="100px" height="150px" />
                     </div>*@
-                    <div class="span6" style="margin-top: -13px;">
+                    <div class="span6" style="margin-top: -19px;">
                         <a class="btn btn-primary" href="/OrderChecking/OrderChecking/ViewInformationOrder">View Information Order</a>
                     </div>
                     @*                    <div class="span6">
@@ -884,11 +902,11 @@
                         </div>
                     </div>
                     <div class="span1 offset10">
-                        <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="next()">Next</a>
+                        <a class="btn btn-primary" href="#myCarousel" data-slide="next" onclick="next()" style="width:70px;">Next</a>
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" style="margin-top:-25px;">
                 <div class="row-fluid">
                     <div class="span6">
                         <div class="widget-box">
@@ -997,10 +1015,10 @@
                                         <label class="control-label hide" id="HubAddressLabel">
                                         </label>
                                     </div>
-                                    <div>
-                                        <button type="button" class="btn btn-success" style="width: 100px;" onclick="submitInfo()">
+                                    @*<div>
+                                        <button type="button" class="btn btn-success" style="width:70px;" onclick="submitInfo()">
                                             OK</button>
-                                    </div>
+                                    </div>*@
                                 </form>
                             </div>
                         </div>
@@ -1012,13 +1030,18 @@
                                 <h5>Map</h5>
                             </div>
                             <div>
-                                <div id="map_canvas" style="height: 415px;">
+                                <div id="map_canvas" style="height: 385px;">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="span12">
-                        <a class="btn btn-primary" href="#myCarousel" data-slide="prev" onclick="prev()">Back</a>
+                    <div class="span12 inline">
+                        <a class="btn btn-primary" href="#myCarousel" data-slide="prev" onclick="prev()" style="width:70px;">Back</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary btn-success" style="width:100px;" onclick="submitInfo()">
+                                            Finish</button>
                     </div>
                 </div>
             </div>
