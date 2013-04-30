@@ -184,7 +184,7 @@ namespace SMDH.Areas.Hub.Controllers
             foreach (var r in researchlist)
             {
                 OrderViewModel orderView = new OrderViewModel(r);
-                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.DueDate.ToString() });
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.DueDate.ToString(),orderView.Note.ToString() });
             }
 
             return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
@@ -207,7 +207,7 @@ namespace SMDH.Areas.Hub.Controllers
             foreach (var r in researchlist)
             {
                 OrderViewModel orderView = new OrderViewModel(r);
-                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.CollectedDate.ToString()});
+                orders.Add(new String[] { orderView.OrderId.ToString(), orderView.ItemNo.ToString(), orderView.CollectedDate.ToString(), orderView.Note.ToString()});
             }
 
             return Json(new { sEcho = 10, iTotalRecords = researchlist.Count(), iTotalDisplayRecords = researchlist.Count(), aaData = orders }, JsonRequestBehavior.AllowGet);     
