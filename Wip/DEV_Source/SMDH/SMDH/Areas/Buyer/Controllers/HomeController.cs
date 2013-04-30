@@ -179,6 +179,8 @@ namespace SMDH.Areas.Buyer.Controllers
             order.OrderStatus = (int)OrderStatus.Draft;
             order.CustomerId = customerId;
             order.CreatedDate = DateTime.Now;
+
+            ViewBag.DeliveryType = deliveryType;
             if (hubId != -1)
             {
                 order.HubId = hubId;

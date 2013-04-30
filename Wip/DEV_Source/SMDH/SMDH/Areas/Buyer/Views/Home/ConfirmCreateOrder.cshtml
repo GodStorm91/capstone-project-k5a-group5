@@ -47,7 +47,7 @@
                     font-size: 2em;
                 }
 
-                /*.steps li a:hover {
+            /*.steps li a:hover {
                     background: #666;
                 }*/
 
@@ -87,12 +87,12 @@
                     background: transparent url(/images/step_over.png) center right no-repeat;
                 }
 
-            /*.steps li.step a:hover {
+    /*.steps li.step a:hover {
                 background: transparent url(/images/step_over.png) center right no-repeat;
             }*/
 
 
-            /*.steps li.step-3 a:hover {
+    /*.steps li.step-3 a:hover {
                 background-position: center left;
             }*/
 
@@ -104,15 +104,18 @@
         <ul>
             <li class="step step-1">
                 <a href="#"><strong>Step 1</strong><br />
-                    <h4>CHOOSE ITEM</h4></a>
+                    <h4>CHOOSE ITEM</h4>
+                </a>
             </li>
             <li class="step step-2">
                 <a href="#"><strong>Step 2</strong><br />
-                    <h4>YOUR INFORMATION</h4></a>
+                    <h4>YOUR INFORMATION</h4>
+                </a>
             </li>
             <li class="step step-3">
                 <a href="#"><strong>Step 3</strong><br />
-                    <h4>THANKS FOR BUYING WITH US</h4></a>
+                    <h4>THANKS FOR BUYING WITH US</h4>
+                </a>
             </li>
         </ul>
     </div>
@@ -126,17 +129,20 @@
             
             <div class="widget-box">
                 <div class="widget-title">
-                    <h5>Thanks for shopping with us</h5>
+                    <h3>Thanks for shopping with us</h3>
                 </div>
                 <div class="widget-content nopadding">
-                    <div>
-                        <h3>Your Receive Address : @Model.ReceiverAddress</h3>
+                    <div style="margin-left:10px;">
+                        <h4>- You chose buffer delivery type.</h4>
                     </div>
-                    <div>
-                        <h3>Your Passcode : @Model.Passcode</h3>
+                    <div style="margin-left:10px;">
+                        <h4>- Your Receive Address : @Model.ReceiverAddress ,TP Ho Chi Minh</h4>
                     </div>
-                    <div>
-                        <h3>We will send email to you when item in hub</h3>
+                    <div style="margin-left:10px;">
+                        <h4>- Your Passcode : @Model.Passcode</h4>
+                    </div>
+                    <div style="margin-left:10px;">
+                        <h4>- We will send email to you when order in hub.Please take passcode to hub staff for receiving order.Time for receiving is 7 days from you got an email.</h4>
                     </div>
                 </div>
             </div>
@@ -145,17 +151,20 @@
         {
             <div class="widget-box">
                 <div class="widget-title">
-                    <h5>Thanks for shopping with us</h5>
+                    <h3>Thanks for shopping with us</h3>
                 </div>
                 <div class="widget-content nopadding">
-                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
-                        <strong>Your Address : @Model.ReceiverAddress</strong>
+                    <div>
+                        <h3>You chose Direct Delivery type.</h3>
                     </div>
-                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
-                        <strong>Total amount : @(String.Format("{0,12:N0}", Model.AmountToBeCollectedFromReceiver)) VNĐ</strong>
+                    <div>
+                        <h3>Your Receive Address : @Model.ReceiverAddress</h3>
                     </div>
-                    <div style="margin-left:10px;margin-top:20px; font-size:small;">
-                        <strong>We will send to you in 3 days after @Model.CreatedDate</strong>
+                    <div>
+                        <h3>Total amount : @(String.Format("{0,12:N0}", Model.AmountToBeCollectedFromReceiver)) VNĐ</h3>
+                    </div>
+                    <div>
+                        <h3>We will contact to you before delivering 3 days after @Model.CreatedDate</h3>
                     </div>
                 </div>
             </div>
