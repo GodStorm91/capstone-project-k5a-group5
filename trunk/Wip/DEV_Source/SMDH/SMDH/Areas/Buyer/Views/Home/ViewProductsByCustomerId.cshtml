@@ -310,6 +310,7 @@
                             setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
                             $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
                             $('#HubDistrictId').val(data.nearestHub.DistrictId);
+                            alert("HubWardId:" + data.nearestHub.WardId);
                             $('#HubWardId').val(data.nearestHub.WardId);
                             $('#HubAddress').val(data.nearestHub.Address);
                             $('#HubLatitude').val(data.nearestHub.Latitude);
@@ -330,7 +331,7 @@
                             });
                             displayer.setMap(goMap);
                             //displayer.setPanel(document.getElementById("directionsPanel"));
-                            var ppt = [{ location: new google.maps.LatLng(latitude, longitude) }, { location: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude) }];
+                            var ppt = [{ location: new google.maps.LatLng(latitude, longitude) }, { location: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)}];
                             directions.route({
                                 origin: new google.maps.LatLng(latitude, longitude),
                                 destination: new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude),
@@ -514,7 +515,7 @@
         }
 
         function createFormInformation(wardId) {
-            //$('#toBeSubmit').remove();
+            $formSubmit = $("<form action='/Buyer/Home/ConfirmCreateOrder' method='post'></form>");
             var customerId = $("<input>").attr("type", "hidden").attr("name", "customerId").val(getURLParameter("customerId"));
             var itemsList = $("<input>").attr("type", "hidden").attr("name", "itemsList").val(itemIdArray.toString());
             var quantitiesList = $("<input>").attr("type", "hidden").attr("name", "quantitiesList").val(quantityArray.toString());
@@ -540,42 +541,44 @@
             var longitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val(localStorage.getItem('HomeLon'));
             //alert("After Home Lat");
             //alert($('#HubAddress').val());
+            alert($('#optionsRadios2').is(":checked"));
             if ($('#optionsRadios2').is(":checked")) {
                 receiverAddress = $("<input>").attr("type", "hidden").attr("name", "receiverAddress").val($('#HubAddress').val());
                 receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($('#HubDistrictId').val());
                 receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val($('#HubWardId').val());
+                alert($('#HubWardId').val());
                 latitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val($('#HubLongitude').val());
                 longitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val($('#HubLatitude').val());
                 deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("2");
             }
 
-            $('#toBeSubmit').append($(itemsList));
-            $('#toBeSubmit').append($(quantitiesList));
+            $formSubmit.append($(itemsList));
+            $formSubmit.append($(quantitiesList));
             //alert("s1");
-            $('#toBeSubmit').append($(pricesList));
+            $formSubmit.append($(pricesList));
             //alert("s1");
-            $('#toBeSubmit').append($(receiverName));
-            $('#toBeSubmit').append($(receiverAddress));
+            $formSubmit.append($(receiverName));
+            $formSubmit.append($(receiverAddress));
             //alert("s1");
-            $('#toBeSubmit').append($(receiverAddressWardId));
+            $formSubmit.append($(receiverAddressWardId));
             //alert("s1");
-            $('#toBeSubmit').append($(receiverAddressDistrictId));
+            $formSubmit.append($(receiverAddressDistrictId));
             //alert("s1");
-            $('#toBeSubmit').append($(receiverEmail));
+            $formSubmit.append($(receiverEmail));
 
             //alert("s1");
-            $('#toBeSubmit').append($(receiverPhone));
+            $formSubmit.append($(receiverPhone));
             //alert("s1");
-            $('#toBeSubmit').append($(deliveryType));
+            $formSubmit.append($(deliveryType));
             //alert("s1");
-            $('#toBeSubmit').append($(totalPrice));
+            $formSubmit.append($(totalPrice));
             //alert("s1");
-            $('#toBeSubmit').append($(latitude));
+            $formSubmit.append($(latitude));
             //alert("s1");
-            $('#toBeSubmit').append($(longitude));
+            $formSubmit.append($(longitude));
 
-            $('#toBeSubmit').append($(customerId));
-            $('#toBeSubmit').append($(hubId));
+            $formSubmit.append($(customerId));
+            $formSubmit.append($(hubId));
         }
 
         $.validator.setDefaults({
@@ -585,7 +588,7 @@
                     return;
                 }
                 //alert("submit form");
-                $('#toBeSubmit').submit();
+                $formSubmit.submit();
             }
         });
 
@@ -743,20 +746,20 @@
         //                                    $(tag).focus();
         //                                }
         //        }
-        $('#btnBuy').live("click", function () {
-            var buyArray = new Array();
-            $('.buy_tr').each(function (index) {
-                var itemArray = new Array();
-                itemArray.push($(this).children("input[type=hidden]").val());
-                itemArray.push($(this).children("td").children("input[type=text]").val());
-                buyArray.push(itemArray);
-            });
-            $.post('/CustomerOrder/Add', {
-                buyArray: buyArray
-            }, function (result) {
+//        $('#btnBuy').live("click", function () {
+//            var buyArray = new Array();
+//            $('.buy_tr').each(function (index) {
+//                var itemArray = new Array();
+//                itemArray.push($(this).children("input[type=hidden]").val());
+//                itemArray.push($(this).children("td").children("input[type=text]").val());
+//                buyArray.push(itemArray);
+//            });
+//            $.post('/CustomerOrder/Add', {
+//                buyArray: buyArray
+//            }, function (result) {
 
-            });
-        });
+//            });
+//        });
 
 
     </script>
