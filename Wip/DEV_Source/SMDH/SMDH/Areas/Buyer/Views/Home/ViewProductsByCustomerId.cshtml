@@ -40,9 +40,9 @@
         !function ($) {
             $(function () {
                 // carousel demo
-                $('.carousel').carousel('pause');
+                $('#carousel').carousel('pause');
             })
-        } (window.jQuery);
+        } (window.jQuery)
     </script>
     <script>
         function hideWard() {
@@ -658,11 +658,11 @@
                 inputFiled.focus();
                 return;
             }
-//            if (quantity > 100) {
-//                alert("Quantity must be a positive integer less than 100 !!!");
-//                inputFiled.focus();
-//                return;
-//            }
+            if (quantity > 100) {
+                alert("Quantity must be a positive integer less than 100 !!!");
+                inputFiled.focus();
+                return;
+            }
             //            if (quantity <= 0) {
             //                alert("Quantity must be positive integer!!!");
             //                inputFiled.focus();
