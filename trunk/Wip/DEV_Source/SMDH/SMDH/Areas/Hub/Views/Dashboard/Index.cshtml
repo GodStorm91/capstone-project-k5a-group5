@@ -215,7 +215,7 @@
         var orderId = arguments[0];
         bootbox.confirm("Mark this order as Delivered ?", function (confirmed) {
             if (confirmed) {
-                $.post("/Orders/MarkAsDelivered/", { orderId: orderId }, function (data) {
+                $.post("/Hub/Orders/MarkAsDelivered/", { orderId: orderId }, function (data) {
                     if (data.success) {
                         window.location = '/Hub/Dashboard/'
                     } else {
@@ -232,7 +232,7 @@
         var orderId = arguments[0];
         bootbox.confirm("Mark this order as waiting for return ?", function (confirmed) {
             if (confirmed) {
-                $.post("/Orders/MarkAsWaitingForReturn/", { orderId: orderId }, function (data) {
+                $.post("/Hub/Orders/MarkAsWaitingForReturn/", { orderId: orderId }, function (data) {
                     if (data.success) {
                         window.location = '/Hub/Dashboard/'
                     } else {

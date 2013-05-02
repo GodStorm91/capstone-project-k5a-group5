@@ -302,6 +302,7 @@ namespace SMDH.Areas.Customer.Controllers
                                             order.AmountToBeCollectedFromReceiver = int.Parse(amount);
                                             order.Note = data.Rows[i].Field<string>("Note");
                                             order.OrderStatus = (int)OrderStatus.New;
+                                            order.CreatedDate = DateTime.Now;
 
                                             orders.Add(order);
                                             context.Orders.InsertOnSubmit(order);

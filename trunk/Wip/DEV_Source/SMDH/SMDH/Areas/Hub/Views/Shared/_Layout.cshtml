@@ -89,39 +89,11 @@
 
             $('.myToolTip').tooltip();
 
-            $("#alert").hide();
+          
         });
 
-        function showAlert(textToshow, link, timeToShow) {
 
-            var timerId = 500;
-
-            $("#alertText").html(textToshow);
-            document.getElementById("alertLink").href = link;
-            $("#alert").fadeIn(1000, function () {
-                $("#alertText").fadeIn(700);
-            });
-            timerId = setTimeout(function () {
-                hideAlert();
-            }, timeToShow);
-
-            document.getElementById("alert").onmouseover = function () {
-
-                clearTimeout(timerId);
-            }
-
-            document.getElementById("alert").onmouseout = function () {
-                alert("Mouse out");
-                timerId = setTimeout(function () {
-                    hideAlert();
-                }, timeToShow);
-            }
-
-        }
-
-        function hideAlert() {
-            $("#alert").fadeOut(700);
-        }
+ 
 
     </script>
 </head>
