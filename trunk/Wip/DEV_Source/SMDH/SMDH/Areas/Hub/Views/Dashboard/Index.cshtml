@@ -18,6 +18,7 @@
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="/js/date.js" type="text/javascript"></script>
 <script src="/js/accounting.js" type="text/javascript"></script>
+<script src="/js/jquery.numeric.js" type="text/javascript"></script>
 <style type="text/css">
     .table td.amount {
         text-align: right;
@@ -40,7 +41,7 @@
                 <label class="control-label">
                     Passcode</label>
                 <div class="controls">
-                    <input type="text" id="txtPasscode" />
+                    <input class="numeric" type="text" id="txtPasscode" />
                     <button type="submit" class="btn btn-primary" id="btnConfirm">
                         Confirm</button>
                 </div>
@@ -209,6 +210,7 @@
 <div class="span12" id="btnChangeAll">
 </div>
 <script type="text/javascript">
+    $(".numeric").numeric({ decimal: false, negative: false }, function () { alert("Positive integers only"); this.value = ""; this.focus(); });
     function markAsDelivered() {
         var orderId = arguments[0];
         bootbox.confirm("Mark this order as Delivered ?", function (confirmed) {
