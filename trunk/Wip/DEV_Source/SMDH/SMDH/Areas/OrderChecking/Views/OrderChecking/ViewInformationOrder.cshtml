@@ -15,6 +15,7 @@
 <script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="/js/date.js" type="text/javascript"></script>
 <script src="/js/accounting.js" type="text/javascript"></script>
+<script src="/js/jquery.numeric.js" type="text/javascript"></script>
 <script>
     function showTable() {
         document.getElementById('table').style.visibility = "visible";
@@ -78,11 +79,11 @@
                     <div class="controls">
                         @if (ViewBag.PhoneNumber.Length != 0)
                         {
-                            <input type="text" id="txtPhoneNumber" value="@ViewBag.PhoneNumber"/>
+                            <input class="numeric" type="text" id="txtPhoneNumber" value="@ViewBag.PhoneNumber"/>
                         }
                         else
                         {
-                            <input type="text" id="txtPhoneNumber" />
+                            <input class="numeric" type="text" id="txtPhoneNumber" />
                         }
                         <button type="submit" class="btn btn-primary" id="btnOk">
                             Confirm</button>
@@ -148,6 +149,7 @@
         </div>
     </div>
     <script type="text/javascript">
+        $(".numeric").numeric({ decimal: false, negative: false }, function () { alert("Positive integers only"); this.value = ""; this.focus(); });
         $().ready(function () {
             if ($('#txtPhoneNumber').val() != "") {
                 loadOrdersTable();
