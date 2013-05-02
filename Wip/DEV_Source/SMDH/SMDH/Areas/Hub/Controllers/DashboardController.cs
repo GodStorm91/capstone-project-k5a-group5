@@ -21,7 +21,7 @@ namespace SMDH.Areas.Hub.Controllers
             ////var requests = context.Requests.Where(r => r.CustomerId == userInfo.CustomerId).ToList();
             //----------------------------------------
             List<Order> orders = context.Orders.Where(o => o.HubId== userInfo.HubId).ToList();
-
+            ViewBag.HubName = context.Hubs.Where(h => h.HubId == userInfo.HubId).FirstOrDefault().Name;
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
                 var startDate = DateTime.ParseExact(Request["startDate"], "ddMMyyyy", null);
