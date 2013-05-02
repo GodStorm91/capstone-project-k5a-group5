@@ -310,7 +310,7 @@
                             setTimeout(function () { goMap.panTo(new google.maps.LatLng(data.nearestHub.Latitude, data.nearestHub.Longitude)); }, 5000);
                             $('#ddlHubCategories').val(data.nearestHub.HubCategoryId);
                             $('#HubDistrictId').val(data.nearestHub.DistrictId);
-                            alert("HubWardId:" + data.nearestHub.WardId);
+                            //alert("HubWardId:" + data.nearestHub.WardId);
                             $('#HubWardId').val(data.nearestHub.WardId);
                             $('#HubAddress').val(data.nearestHub.Address);
                             $('#HubLatitude').val(data.nearestHub.Latitude);
@@ -541,12 +541,12 @@
             var longitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val(localStorage.getItem('HomeLon'));
             //alert("After Home Lat");
             //alert($('#HubAddress').val());
-            alert($('#optionsRadios2').is(":checked"));
+            //alert($('#optionsRadios2').is(":checked"));
             if ($('#optionsRadios2').is(":checked")) {
                 receiverAddress = $("<input>").attr("type", "hidden").attr("name", "receiverAddress").val($('#HubAddress').val());
                 receiverAddressDistrictId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressDistrictId").val($('#HubDistrictId').val());
                 receiverAddressWardId = $("<input>").attr("type", "hidden").attr("name", "receiverAddressWardId").val($('#HubWardId').val());
-                alert($('#HubWardId').val());
+                //alert($('#HubWardId').val());
                 latitude = $("<input>").attr("type", "hidden").attr("name", "longitude").val($('#HubLongitude').val());
                 longitude = $("<input>").attr("type", "hidden").attr("name", "latitude").val($('#HubLatitude').val());
                 deliveryType = $("<input>").attr("type", "hidden").attr("name", "deliveryType").val("2");

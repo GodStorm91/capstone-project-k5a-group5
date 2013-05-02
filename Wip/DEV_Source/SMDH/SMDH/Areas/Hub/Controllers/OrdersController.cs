@@ -277,5 +277,35 @@ namespace SMDH.Areas.Hub.Controllers
             return Redirect("/Hub/");
         }
 
+        public ActionResult MarkAsDelivered(int orderId)
+        {
+            var order = context.Orders.Single(o => o.OrderId == orderId);
+            if (order.OrderStatus != (int)OrderStatus.Delivering)
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                order.OrderStatus = (int)OrderStatus.Delivered;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+        }
+
+        public ActionResult MarkAsWaitingForReturn(int orderId)
+        {
+            var order = context.Orders.Single(o => o.OrderId == orderId);
+            if (order.OrderStatus != (int)OrderStatus.Delivering)
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                order.OrderStatus = (int)OrderStatus.WaitingForReturn;
+                context.SubmitChanges();
+                return Json(new { success = true });
+            }
+        }
+
     }
 }
