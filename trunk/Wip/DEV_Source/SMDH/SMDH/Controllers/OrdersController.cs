@@ -28,7 +28,7 @@ namespace SMDH.Controllers
         {
             var orders = new List<Order>();
             var statuses = new List<int>();
-            //statuses.Add((int)OrderStatus.New);
+            statuses.Add((int)OrderStatus.New);
             statuses.Add((int)OrderStatus.Approved);
             statuses.Add((int)OrderStatus.PlannedForCollecting);
             statuses.Add((int)OrderStatus.Collected);
@@ -88,13 +88,13 @@ namespace SMDH.Controllers
             if (!string.IsNullOrWhiteSpace(Request["startDate"]))
             {
                 var startDate = DateTime.ParseExact(Request["startDate"].Trim(), "ddMMyyyy", null);
-                orders = orders.Where(o => o.Request.RequestedDate >= startDate).ToList();
+                orders = orders.Where(o => o.CreatedDate >= startDate).ToList();
                 ViewBag.StartDate = string.Format("{0:dd/MM/yyyy}", startDate);
             }
             if (!string.IsNullOrWhiteSpace(Request["endDate"]))
             {
                 var endDate = DateTime.ParseExact(Request["endDate"].Trim(), "ddMMyyyy", null);
-                orders = orders.Where(o => o.Request.RequestedDate <= endDate).ToList();
+                orders = orders.Where(o => o.CreatedDate <= endDate).ToList();
                 ViewBag.EndDate = string.Format("{0:dd/MM/yyyy}", endDate);
             }
 
