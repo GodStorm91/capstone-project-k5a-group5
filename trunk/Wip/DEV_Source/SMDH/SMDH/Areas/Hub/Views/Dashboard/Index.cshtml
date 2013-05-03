@@ -176,8 +176,6 @@
                                 </th>
                                 <th>Due Date
                                 </th>
-                                <th>Note
-                                </th>
                                 @*                            <th>
                                 Action
                             </th>*@
@@ -196,8 +194,6 @@
                                 <th style="width: 70px;">Item No.
                                 </th>
                                 <th>Collected Date
-                                </th>
-                                <th>Note
                                 </th>
                             </tr>
                         </thead>
@@ -453,7 +449,7 @@
         e.preventDefault();
         $(this).tab('show');
         $('#Delivered').dataTable({
-            "sDom": "<'row-fluid'<'span6'f>>t<'row-fluid'<'span6'l><'span6'p>>",
+            "sDom": "<'row-fluid'<'span6'f>r>t<'row-fluid'<'span6'l><'span6'p>>",
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
@@ -479,7 +475,8 @@
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
         { "mDataProp": [2], sDefaultContent: "n/a" },
-        { "mDataProp": [3], sDefaultContent: "n/a" },
+            //        { "mDataProp": [3], sDefaultContent: "n/a", "sWidth": "15%" },
+            //        { "mDataProp": [4], sDefaultContent: "n/a", "sWidth": "15%" }
             ],
             "bProcessing": false,
             "bServerSide": false,
@@ -499,8 +496,7 @@
             "aoColumns": [
         { "mDataProp": [0], sDefaultContent: "n/a" },
         { "mDataProp": [1], sDefaultContent: "n/a" },
-        { "mDataProp": [2], sDefaultContent: "n/a" },
-        { "mDataProp": [3], sDefaultContent: "n/a" }
+        { "mDataProp": [2], sDefaultContent: "n/a" }
             ],
             "bProcessing": false,
             "bServerSide": false,
