@@ -28,7 +28,7 @@ namespace SMDH.Controllers
         {
             var orders = new List<Order>();
             var statuses = new List<int>();
-            statuses.Add((int)OrderStatus.New);
+            //statuses.Add((int)OrderStatus.New);
             statuses.Add((int)OrderStatus.Approved);
             statuses.Add((int)OrderStatus.PlannedForCollecting);
             statuses.Add((int)OrderStatus.Collected);
